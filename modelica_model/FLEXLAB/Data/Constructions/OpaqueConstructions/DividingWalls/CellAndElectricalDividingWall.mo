@@ -1,4 +1,4 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls;
+within FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls;
 record CellAndElectricalDividingWall =
   Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(final material={
     Buildings.HeatTransfer.Data.Solids.InsulationBoard(x=0.127),

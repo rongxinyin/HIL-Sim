@@ -1,4 +1,4 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls;
+within FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls;
 record ClosetAndElectricalDividingWall =
   Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(final material={
     Buildings.HeatTransfer.Data.Solids.Plywood(x=0.01905),

@@ -1,4 +1,4 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB.Rooms.X1A;
+within FLEXLAB.Rooms.X1A;
 model ClosetFullBed
   "Model of the closet connected to test cell X1A intended to be connected to ThermalZones.Detailed.FLEXLAB.Rooms.X3B.Closet"
   extends Buildings.ThermalZones.Detailed.MixedAir(

@@ -1,4 +1,4 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.Roofs;
+within FLEXLAB.Data.Constructions.OpaqueConstructions.Roofs;
 record CA_T24_2013Roof =
   Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(final material={
     Buildings.HeatTransfer.Data.Solids.GypsumBoard(x=0.016),

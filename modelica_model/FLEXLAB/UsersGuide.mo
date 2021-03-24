@@ -1,4 +1,4 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB;
+within FLEXLAB;
 package UsersGuide "User's Guide"
   extends Modelica.Icons.Information;
 

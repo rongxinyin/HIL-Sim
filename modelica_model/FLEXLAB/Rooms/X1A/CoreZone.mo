@@ -1,4 +1,4 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB.Rooms.X1A;
+within FLEXLAB.Rooms.X1A;
 model CoreZone "Model of LBNL User Test Facility Cell X1A Core Zone"
   extends Buildings.ThermalZones.Detailed.MixedAir(AFlo=19.79,
       nSurBou=1,

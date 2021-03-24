@@ -1,11 +1,11 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions;
+within FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions;
 record ExteriorDoorInsulated =
    Buildings.HeatTransfer.Data.OpaqueConstructions.Generic(final material={
     Buildings.HeatTransfer.Data.Solids.Plywood(x=0.01588),
     Buildings.HeatTransfer.Data.Solids.InsulationBoard(x=0.05),
     Buildings.HeatTransfer.Data.Solids.Plywood(x=0.01588)},
     final nLay=3) "Model of an insulated exterior door"
-    annotation(
+    annotation (
 defaultComponentPrefixes="parameter",
 defaultComponentName="datOpaCon",
 Documentation(info="<html>

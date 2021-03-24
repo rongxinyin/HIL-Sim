@@ -1,4 +1,4 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB.Data;
+within FLEXLAB.Data;
 package Constructions "Constructions commonly found in FLEXLAB test cells"
 extends Modelica.Icons.MaterialPropertiesPackage;
 

@@ -1,4 +1,4 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB;
+within FLEXLAB;
 package Data "Data files commonly used in FLEXLAB models"
   extends Modelica.Icons.MaterialPropertiesPackage;
 

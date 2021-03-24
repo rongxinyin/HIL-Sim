@@ -1,4 +1,4 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB.Rooms.Examples;
+within FLEXLAB.Rooms.Examples;
 model X1AWithVAVZones "Example model showing a use of X1A"
   extends Modelica.Icons.Example;
 
@@ -60,12 +60,12 @@ model X1AWithVAVZones "Example model showing a use of X1A"
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={86,-88})));
-  Buildings.ThermalZones.Detailed.FLEXLAB.Rooms.X1A.Electrical ele(
+  FLEXLAB.Rooms.X1A.Electrical ele(
     redeclare package Medium = Air, nPorts=2,
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial)
     "Model of the electrical room"
     annotation (Placement(transformation(extent={{106,46},{146,86}})));
-  Buildings.ThermalZones.Detailed.FLEXLAB.Rooms.X1A.Closet
+  FLEXLAB.Rooms.X1A.Closet
     clo(
     redeclare package Medium = Air,
     nPorts=2,
@@ -128,7 +128,7 @@ model X1AWithVAVZones "Example model showing a use of X1A"
     "Internal gain heat flow for the closet"
     annotation (Placement(transformation(extent={{-112,150},{-92,170}})));
 
-  Buildings.ThermalZones.Detailed.FLEXLAB.Rooms.X1A.SouthZone southZone(
+  FLEXLAB.Rooms.X1A.SouthZone southZone(
     nPorts=1,
     redeclare package Medium = Air,
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial)
@@ -159,7 +159,7 @@ model X1AWithVAVZones "Example model showing a use of X1A"
       nPorts=1) "Air outlet for X1A south zone"
     annotation (Placement(transformation(extent={{-252,-208},{-232,-188}})));
 
-  Buildings.ThermalZones.Detailed.FLEXLAB.Rooms.X1A.CoreZone coreZone(
+  FLEXLAB.Rooms.X1A.CoreZone coreZone(
     nPorts=1,
     redeclare package Medium = Air,
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial)
@@ -189,13 +189,13 @@ model X1AWithVAVZones "Example model showing a use of X1A"
   Fluid.Sources.Boundary_pT airOutCoreZone(redeclare package Medium = Air,
       nPorts=1) "Air outlet for X1A Core Zone"
     annotation (Placement(transformation(extent={{-252,-96},{-232,-76}})));
-  Buildings.ThermalZones.Detailed.FLEXLAB.Rooms.X1A.NorthZone northZone(
+  FLEXLAB.Rooms.X1A.NorthZone northZone(
     nPorts=1,
     redeclare package Medium = Air,
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial)
     "Model of the X1A NorthZone room"
-    annotation (Placement(transformation(extent={{-218,92},{-178,132}})));
-  Buildings.ThermalZones.Detailed.FLEXLAB.Rooms.X1A.Plenum plenum(
+    annotation (Placement(transformation(extent={{-218,90},{-178,130}})));
+  FLEXLAB.Rooms.X1A.Plenum plenum(
     nPorts=1,
     redeclare package Medium = Air,
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial)
@@ -326,19 +326,20 @@ equation
   connect(airOutCoreZone.ports[1], coreZone.ports[1]) annotation (Line(points={{-232,
           -86},{-224,-86},{-224,-24},{-217,-24}},      color={0,127,255}));
   connect(shaPos.y, northZone.uSha)
-    annotation (Line(points={{-269,150},{-246,150},{-246,130},{-219.6,130}},
+    annotation (Line(points={{-269,150},{-246,150},{-246,128},{-219.6,128}},
                                                        color={0,0,127}));
-  connect(intGai.y, northZone.qGai_flow) annotation (Line(points={{-269,120},{-219.6,
-          120}},                           color={0,0,127}));
+  connect(intGai.y, northZone.qGai_flow) annotation (Line(points={{-269,120},{
+          -244,120},{-244,118},{-219.6,118}},
+                                           color={0,0,127}));
   connect(airOutNorthZone.ports[1], northZone.ports[1]) annotation (Line(points={{-236,50},
-          {-224,50},{-224,102},{-213,102}},           color={0,127,255}));
+          {-224,50},{-224,100},{-213,100}},           color={0,127,255}));
   connect(airInNorthZone.ports[1], northZone.ports[1]) annotation (Line(points={{-234,76},
-          {-224,76},{-224,102},{-213,102}},           color={0,127,255}));
-  connect(preT2[2].port, northZone.surf_conBou[2]) annotation (Line(points={{76,
-          -88},{-134,-88},{-134,22},{-194,22},{-194,96},{-192,96}}, color={191,0,
+          {-224,76},{-224,100},{-213,100}},           color={0,127,255}));
+  connect(preT2[2].port, northZone.surf_conBou[2]) annotation (Line(points={{76,-88},
+          {-134,-88},{-134,22},{-194,22},{-194,94},{-192,94}},      color={191,0,
           0}));
   connect(weaDat.weaBus, northZone.weaBus) annotation (Line(
-      points={{-270,184},{-168,184},{-168,129.9},{-180.1,129.9}},
+      points={{-270,184},{-168,184},{-168,127.9},{-180.1,127.9}},
       color={255,204,51},
       thickness=0.5));
   connect(ele.ports[2], airOutEle.ports[1]) annotation (Line(points={{111,58},{40.5,
@@ -346,7 +347,7 @@ equation
   connect(southZone.surf_conBou[2], coreZone.surf_conBou[3]) annotation (Line(
         points={{-194,-154},{-196,-154},{-196,-30}}, color={191,0,0}));
   connect(coreZone.surf_conBou[2], northZone.surf_conBou[5]) annotation (Line(
-        points={{-196,-30},{-194,-30},{-194,96},{-192,96}}, color={191,0,0}));
+        points={{-196,-30},{-194,-30},{-194,94},{-192,94}}, color={191,0,0}));
   connect(weaDat.weaBus, plenum.weaBus) annotation (Line(
       points={{-270,184},{160,184},{160,-174.1},{-20.1,-174.1}},
       color={255,204,51},
@@ -366,7 +367,7 @@ equation
   connect(intGai3.y, plenum.qGai_flow) annotation (Line(points={{-77,-114},{-72,
           -114},{-72,-184},{-59.6,-184}}, color={0,0,127}));
   connect(northZone.surf_conBou[6], plenum.surf_conBou[4]) annotation (Line(
-        points={{-192,96},{-140,96},{-140,-208},{-32,-208}}, color={191,0,0}));
+        points={{-192,94},{-140,94},{-140,-208},{-32,-208}}, color={191,0,0}));
   connect(coreZone.surf_conBou[4], plenum.surf_conBou[5]) annotation (Line(
         points={{-196,-30},{-160,-30},{-160,-208},{-32,-208}}, color={191,0,0}));
   connect(southZone.surf_conBou[3], plenum.surf_conBou[6]) annotation (Line(

@@ -1,4 +1,4 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions;
+within FLEXLAB.Data.Constructions;
 package OpaqueConstructions "Opaque constructions found in FLEXLAB test cells"
   extends Modelica.Icons.MaterialPropertiesPackage;
 

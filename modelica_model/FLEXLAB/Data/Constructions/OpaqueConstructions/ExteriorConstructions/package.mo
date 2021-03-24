@@ -1,4 +1,4 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions;
+within FLEXLAB.Data.Constructions.OpaqueConstructions;
 package ExteriorConstructions "Exterior walls in FLEXLAB test cells"
   extends Modelica.Icons.MaterialPropertiesPackage;
 

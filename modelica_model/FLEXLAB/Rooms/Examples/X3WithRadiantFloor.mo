@@ -1,4 +1,4 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB.Rooms.Examples;
+within FLEXLAB.Rooms.Examples;
 model X3WithRadiantFloor
   "Example model of test cells X3A and X3B connected to form test bed X3"
   extends Modelica.Icons.Example;
@@ -615,7 +615,7 @@ equation
       color={0,127,255},
       smooth=Smooth.None));
   connect(airConCloA.y[2], airInCloA.m_flow_in) annotation (Line(
-      points={{-126,211},{-126,198},{-130,198},{-130,182}},
+      points={{-126,211},{-126,198},{-130,198},{-130,184}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(airConCloA.y[4], airInCloA.T_in) annotation (Line(
@@ -623,7 +623,7 @@ equation
       color={0,0,127},
       smooth=Smooth.None));
   connect(airConCloB.y[2], airInCloB.m_flow_in) annotation (Line(
-      points={{10,209},{10,200},{6,200},{6,182}},
+      points={{10,209},{10,200},{6,200},{6,184}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(airConCloB.y[4], airInCloB.T_in) annotation (Line(
@@ -640,7 +640,7 @@ equation
       smooth=Smooth.None));
   connect(airConA.y[1], airInA.m_flow_in)
                                         annotation (Line(
-      points={{-149,8},{-142,8},{-142,12},{-134,12}},
+      points={{-149,8},{-142,8},{-142,12},{-136,12}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(airConA.y[4], airInA.T_in)
@@ -658,7 +658,7 @@ equation
       smooth=Smooth.None));
   connect(airConB.y[1], airInB.m_flow_in)
                                         annotation (Line(
-      points={{11,32},{18,32},{18,36},{26,36}},
+      points={{11,32},{18,32},{18,36},{24,36}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(airConB.y[4], airInB.T_in)
@@ -676,7 +676,7 @@ equation
       smooth=Smooth.None));
   connect(airConEleA.y[3], airInEleA.m_flow_in)
                                               annotation (Line(
-      points={{-252,207},{-252,174}},
+      points={{-252,207},{-252,176}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(airConEleA.y[4], airInEleA.T_in) annotation (Line(
@@ -726,7 +726,7 @@ equation
       smooth=Smooth.None));
   connect(airConEleB.y[3], airInEleB.m_flow_in)
                                               annotation (Line(
-      points={{176,207},{176,174}},
+      points={{176,207},{176,176}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(airOutEleB.ports[1], BEle.ports[1]) annotation (Line(
@@ -744,7 +744,7 @@ equation
       smooth=Smooth.None));
   connect(watCon4A1.y[1],watIn4A1. m_flow_in)
                                         annotation (Line(
-      points={{-161,-206},{-144,-206},{-144,-202},{-126,-202}},
+      points={{-161,-206},{-144,-206},{-144,-202},{-128,-202}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(watCon4A1.y[2],watIn4A1. T_in)
@@ -753,7 +753,7 @@ equation
       color={0,0,127},
       smooth=Smooth.None));
   connect(watCon4A2.y[1],watIn4A2. m_flow_in) annotation (Line(
-      points={{-201,-170},{-190,-170},{-190,-166},{-180,-166}},
+      points={{-201,-170},{-190,-170},{-190,-166},{-182,-166}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(watCon4A2.y[2],watIn4A2. T_in) annotation (Line(
@@ -769,7 +769,7 @@ equation
       color={0,127,255},
       smooth=Smooth.None));
   connect(watCon4A3.y[1],watIn4A3. m_flow_in) annotation (Line(
-      points={{-233,-132},{-222,-132},{-222,-128},{-212,-128}},
+      points={{-233,-132},{-222,-132},{-222,-128},{-214,-128}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(watCon4A3.y[2],watIn4A3. T_in) annotation (Line(
@@ -785,7 +785,7 @@ equation
       color={0,127,255},
       smooth=Smooth.None));
   connect(watCon4A4.y[1],watIn4A4. m_flow_in) annotation (Line(
-      points={{-253,-86},{-240,-86},{-240,-82},{-226,-82}},
+      points={{-253,-86},{-240,-86},{-240,-82},{-228,-82}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(watCon4A4.y[2],watIn4A4. T_in) annotation (Line(
@@ -854,7 +854,7 @@ equation
       color={0,0,127},
       smooth=Smooth.None));
   connect(watCon4B1.y[1], watIn4B1.m_flow_in) annotation (Line(
-      points={{165,-206},{150,-206},{150,-202},{138,-202}},
+      points={{165,-206},{150,-206},{150,-202},{140,-202}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(preT.port, sla4B1.surf_b) annotation (Line(
@@ -878,7 +878,7 @@ equation
       color={0,0,127},
       smooth=Smooth.None));
   connect(watCon4B2.y[1], watIn4B2.m_flow_in) annotation (Line(
-      points={{193,-170},{180,-170},{180,-166},{168,-166}},
+      points={{193,-170},{180,-170},{180,-166},{170,-166}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(preT.port, sla4B2.surf_b) annotation (Line(
@@ -902,7 +902,7 @@ equation
       color={0,0,127},
       smooth=Smooth.None));
   connect(watCon4B3.y[1], watIn4B3.m_flow_in) annotation (Line(
-      points={{205,-130},{194,-130},{194,-126},{182,-126}},
+      points={{205,-130},{194,-130},{194,-126},{184,-126}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(preT.port, sla4B3.surf_b) annotation (Line(
@@ -926,7 +926,7 @@ equation
       color={0,0,127},
       smooth=Smooth.None));
   connect(watCon4B4.y[1], watIn4B4.m_flow_in) annotation (Line(
-      points={{251,-86},{240,-86},{240,-82},{228,-82}},
+      points={{251,-86},{240,-86},{240,-82},{230,-82}},
       color={0,0,127},
       smooth=Smooth.None));
   connect(preT.port, sla4B4.surf_b) annotation (Line(

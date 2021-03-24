@@ -1,4 +1,4 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB.Rooms.X1A;
+within FLEXLAB.Rooms.X1A;
 model Electrical "Model of the electrical room attached to test cell X1A"
   extends Buildings.ThermalZones.Detailed.MixedAir(
   hRoo = 3.6576,

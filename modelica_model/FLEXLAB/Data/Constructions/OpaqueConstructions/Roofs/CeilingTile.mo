@@ -1,4 +1,4 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.Roofs;
+within FLEXLAB.Data.Constructions.OpaqueConstructions.Roofs;
 record CeilingTile =
   Buildings.HeatTransfer.Data.OpaqueConstructions.Generic (final material={
     Buildings.HeatTransfer.Data.Solids.CottonBatt(x=0.178),

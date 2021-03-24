@@ -1,4 +1,4 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB.Rooms.X1A;
+within FLEXLAB.Rooms.X1A;
 model NorthZone
   "Model of LBNL User Test Facility Cell X1A North Zone"
   extends Buildings.ThermalZones.Detailed.MixedAir(AFlo=20.96,

@@ -1,4 +1,4 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB.Rooms.X1A;
+within FLEXLAB.Rooms.X1A;
 model Closet "Model of the closet connected to test cell X1A"
   extends Buildings.ThermalZones.Detailed.MixedAir(
   hRoo = 3.6576,

@@ -1,4 +1,4 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB;
+within FLEXLAB;
 package Rooms "Models of individual rooms in FLEXLAB test beds 1A"
 extends Modelica.Icons.Package;
 

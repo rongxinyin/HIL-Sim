@@ -1,4 +1,4 @@
-within Buildings.ThermalZones.Detailed.FLEXLAB.Rooms.X1A;
+within FLEXLAB.Rooms.X1A;
 model Plenum "Model of LBNL User Test Facility Cell X1A Plenum"
   extends Buildings.ThermalZones.Detailed.MixedAir(AFlo=60.55,
       nSurBou=0,
