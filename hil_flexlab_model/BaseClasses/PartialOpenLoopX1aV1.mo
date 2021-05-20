@@ -7,6 +7,7 @@ partial model PartialOpenLoopX1aV1
 
 
   constant Integer numZon=3 "Total number of served VAV boxes";
+  constant Real leakageFrac=0.2 "Leakage fraction of AHU upstream duct";
   parameter Modelica.SIunits.Volume VRooCor=AFloCor*flo.hRoo
     "Room volume core";
   parameter Modelica.SIunits.Volume VRooSou=AFloSou*flo.hRoo
@@ -25,14 +26,22 @@ partial model PartialOpenLoopX1aV1
   final parameter Modelica.SIunits.Area ATot=sum(AFlo) "Total floor area";
 
   constant Real conv=1.2/3600 "Conversion factor for nominal mass flow rate";
-  parameter Modelica.SIunits.MassFlowRate mCor_flow_nominal=6*VRooCor*conv
+    parameter Modelica.SIunits.MassFlowRate mCor_flow_nominal=0.106
     "Design mass flow rate core";
-  parameter Modelica.SIunits.MassFlowRate mSou_flow_nominal=6*VRooSou*conv
+  parameter Modelica.SIunits.MassFlowRate mSou_flow_nominal=0.189
     "Design mass flow rate perimeter 1";
-  parameter Modelica.SIunits.MassFlowRate mPle_flow_nominal=9*VRooPle*conv
+  parameter Modelica.SIunits.MassFlowRate mPle_flow_nominal=0.11
     "Design mass flow rate perimeter 2";
-  parameter Modelica.SIunits.MassFlowRate mNor_flow_nominal=6*VRooNor*conv
+  parameter Modelica.SIunits.MassFlowRate mNor_flow_nominal=0.106
     "Design mass flow rate perimeter 3";
+ // parameter Modelica.SIunits.MassFlowRate mCor_flow_nominal=6*VRooCor*conv
+ //   "Design mass flow rate core";
+ // parameter Modelica.SIunits.MassFlowRate mSou_flow_nominal=6*VRooSou*conv
+ //   "Design mass flow rate perimeter 1";
+ // parameter Modelica.SIunits.MassFlowRate mPle_flow_nominal=9*VRooPle*conv
+ //   "Design mass flow rate perimeter 2";
+ // parameter Modelica.SIunits.MassFlowRate mNor_flow_nominal=6*VRooNor*conv
+ //   "Design mass flow rate perimeter 3";
   parameter Modelica.SIunits.MassFlowRate m_flow_nominal=0.7*(mCor_flow_nominal
        + mSou_flow_nominal + mPle_flow_nominal + mNor_flow_nominal) "Nominal mass flow rate";
   parameter Modelica.SIunits.Angle lat=37.87*3.14159/180 "Latitude";
@@ -236,7 +245,7 @@ partial model PartialOpenLoopX1aV1
   Buildings.Fluid.FixedResistances.Junction splRetRoo1(
     redeclare package Medium = MediumA,
     m_flow_nominal={m_flow_nominal,mSou_flow_nominal + mCor_flow_nominal +
-        mNor_flow_nominal,m_flow_nominal*0.4},
+        mNor_flow_nominal,m_flow_nominal*leakageFrac},
     from_dp=false,
     linearized=true,
     energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
@@ -284,7 +293,7 @@ partial model PartialOpenLoopX1aV1
   Buildings.Fluid.FixedResistances.Junction splSupRoo(
     redeclare package Medium = MediumA,
     m_flow_nominal={m_flow_nominal,mSou_flow_nominal + mCor_flow_nominal +
-        mNor_flow_nominal,m_flow_nominal*0.4},
+        mNor_flow_nominal,m_flow_nominal*leakageFrac},
     from_dp=true,
     linearized=true,
     energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,

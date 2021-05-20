@@ -221,7 +221,7 @@ model FlexlabX1A "Model of a flexlab x1a"
     annotation (Placement(transformation(extent={{-40,170},{-20,190}})));
   Buildings.BoundaryConditions.WeatherData.Bus weaBus "Weather bus"
     annotation (Placement(transformation(extent={{200,190},{220,210}})));
-  Buildings.Examples.FlexlabX1aVAV.ThermalZones.RoomLeakage leaSou(
+  Buildings.Examples.VAVReheat.ThermalZones.RoomLeakage leaSou(
     redeclare package Medium = Medium,
     VRoo=568.77,
     s=49.91/33.27,
@@ -229,7 +229,7 @@ model FlexlabX1A "Model of a flexlab x1a"
     final use_windPressure=use_windPressure)
     "Model for air infiltration through the envelope"
     annotation (Placement(transformation(extent={{-56,408},{-20,448}})));
-  Buildings.Examples.FlexlabX1aVAV.ThermalZones.RoomLeakage leaPle(
+  Buildings.Examples.VAVReheat.ThermalZones.RoomLeakage leaPle(
     redeclare package Medium = Medium,
     VRoo=360.0785,
     s=33.27/49.91,
@@ -237,7 +237,7 @@ model FlexlabX1A "Model of a flexlab x1a"
     final use_windPressure=use_windPressure)
     "Model for air infiltration through the envelope"
     annotation (Placement(transformation(extent={{-56,342},{-20,382}})));
-  Buildings.Examples.FlexlabX1aVAV.ThermalZones.RoomLeakage leaNor(
+  Buildings.Examples.VAVReheat.ThermalZones.RoomLeakage leaNor(
     redeclare package Medium = Medium,
     VRoo=568.77,
     s=49.91/33.27,
@@ -294,8 +294,7 @@ model FlexlabX1A "Model of a flexlab x1a"
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "Fraction of internal heat gain"
     annotation (Placement(transformation(extent={{-140,100},{-120,120}})));
-  Buildings.Fluid.Sensors.RelativePressure senRelPre(redeclare package Medium
-      =                                                                         Medium)
+  Buildings.Fluid.Sensors.RelativePressure senRelPre(redeclare package Medium = Medium)
     "Building pressure measurement"
     annotation (Placement(transformation(extent={{60,240},{40,260}})));
   Buildings.Fluid.Sources.Outside out(nPorts=1, redeclare package Medium = Medium)
@@ -314,48 +313,48 @@ model FlexlabX1A "Model of a flexlab x1a"
     "Gain to change the internal heat gain for south"
     annotation (Placement(transformation(extent={{-60,-38},{-40,-18}})));
   parameter
-    Buildings.Examples.FlexlabX1aVAV.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction9
+    Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction9
     SouthExt
     annotation (Placement(transformation(extent={{-134,468},{-114,488}})));
   parameter
-    Buildings.Examples.FlexlabX1aVAV.Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_1975Roof
+    Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_1975Roof
     R20Wal annotation (Placement(transformation(extent={{-92,466},{-72,486}})));
   parameter
-    Buildings.Examples.FlexlabX1aVAV.Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
+    Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
     R52Wal annotation (Placement(transformation(extent={{-50,468},{-30,488}})));
   parameter
-    Buildings.Examples.FlexlabX1aVAV.Data.Constructions.GlazingSystems.ASHRAE901Gla
+    Data.Constructions.GlazingSystems.ASHRAE901Gla
     glaSys
     annotation (Placement(transformation(extent={{-130,434},{-110,454}})));
   parameter
-    Buildings.Examples.FlexlabX1aVAV.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionWall
+    Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionWall
     parCon annotation (Placement(transformation(extent={{-12,466},{8,486}})));
   parameter
-    Buildings.Examples.FlexlabX1aVAV.Data.Constructions.OpaqueConstructions.DividingWalls.TestCellDividngWall
+    Data.Constructions.OpaqueConstructions.DividingWalls.TestCellDividngWall
     celDiv annotation (Placement(transformation(extent={{28,466},{48,486}})));
   parameter
-    Buildings.Examples.FlexlabX1aVAV.Data.Constructions.OpaqueConstructions.DividingWalls.TestBedDividingWall
+    Data.Constructions.OpaqueConstructions.DividingWalls.TestBedDividingWall
     bedDiv annotation (Placement(transformation(extent={{12,432},{32,452}})));
   parameter
-    Buildings.Examples.FlexlabX1aVAV.Data.Constructions.OpaqueConstructions.DividingWalls.TestZoneDividngWall
+    Data.Constructions.OpaqueConstructions.DividingWalls.TestZoneDividngWall
     zonDiv
     annotation (Placement(transformation(extent={{-130,398},{-110,418}})));
   parameter
-    Buildings.Examples.FlexlabX1aVAV.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction1
+    Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction1
     WestExt
     annotation (Placement(transformation(extent={{-130,368},{-110,388}})));
   parameter
-    Buildings.Examples.FlexlabX1aVAV.Data.Constructions.OpaqueConstructions.Roofs.CeilingTile
+    Data.Constructions.OpaqueConstructions.Roofs.CeilingTile
     ceiling
     annotation (Placement(transformation(extent={{-132,334},{-112,354}})));
   parameter
-    Buildings.Examples.FlexlabX1aVAV.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction3
+    Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction3
     NorthExt annotation (Placement(transformation(extent={{12,402},{32,422}})));
   parameter
-    Buildings.Examples.FlexlabX1aVAV.Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorInsulated
+    Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorInsulated
     extDoo annotation (Placement(transformation(extent={{18,372},{38,392}})));
   parameter
-    Buildings.Examples.FlexlabX1aVAV.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionDoor
+    Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionDoor
     parDoo
     annotation (Placement(transformation(extent={{-130,306},{-110,326}})));
 equation
