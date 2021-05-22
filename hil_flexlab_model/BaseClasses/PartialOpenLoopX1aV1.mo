@@ -184,9 +184,9 @@ partial model PartialOpenLoopX1aV1
   Buildings.Controls.SetPoints.OccupancySchedule occSch(occupancy=3600*{6,19})
     "Occupancy schedule"
     annotation (Placement(transformation(extent={{-318,-220},{-298,-200}})));
-  Buildings.Utilities.Math.Min min(nin=4) "Computes lowest room temperature"
+  Buildings.Utilities.Math.Min min(nin=3) "Computes lowest room temperature"
     annotation (Placement(transformation(extent={{1200,440},{1220,460}})));
-  Buildings.Utilities.Math.Average ave(nin=4)
+  Buildings.Utilities.Math.Average ave(nin=3)
     "Compute average of room temperatures"
     annotation (Placement(transformation(extent={{1200,410},{1220,430}})));
   Buildings.Fluid.Sources.MassFlowSource_T souCoo(

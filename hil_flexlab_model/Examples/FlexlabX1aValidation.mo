@@ -2,8 +2,9 @@ within hil_flexlab_model.Examples;
 model FlexlabX1aValidation
   "Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
-  extends BaseClasses.PartialOpenLoopX1aV1(min(nin=3),
-      ave(nin=3));
+  extends BaseClasses.PartialOpenLoopX1aV1;
+//  extends BaseClasses.PartialOpenLoopX1aV1(min(nin=3),
+//      ave(nin=3));
 
   parameter Modelica.SIunits.VolumeFlowRate VPriSysMax_flow=m_flow_nominal/1.2
     "Maximum expected system primary airflow rate at design stage";
@@ -13,6 +14,7 @@ model FlexlabX1aValidation
     "Sample period of component, set to the same value as the trim and respond that process yPreSetReq";
   parameter Modelica.SIunits.PressureDifference dpDisRetMax=40
     "Maximum return fan discharge static pressure setpoint";
+
 
   Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Controller conVAVNor(
     V_flow_nominal=mNor_flow_nominal,
