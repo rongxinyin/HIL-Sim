@@ -1,4 +1,4 @@
-within hil_modelica_model.Data;
+within hil_flexlab_model.Data;
 package Constructions "Constructions commonly found in FLEXLAB test cells"
 extends Modelica.Icons.MaterialPropertiesPackage;
 

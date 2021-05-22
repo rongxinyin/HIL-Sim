@@ -309,7 +309,8 @@ This is for
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/Guideline36.mos"
         "Simulate and plot"),
     experiment(
-      StopTime=86400,
+      StartTime=23594400,
+      StopTime=23677200,
       __Dymola_NumberOfIntervals=24,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
