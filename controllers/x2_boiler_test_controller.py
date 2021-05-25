@@ -21,7 +21,7 @@ class X2_boiler_test_controller:
         # 1-2h: 55C
         # 2-3h: 60C
         # >3h: 45C
-        elapsed_time = (time_now - start_time).total_seconds
+        elapsed_time = (time_now - start_time).total_seconds()
         if  elapsed_time >= 3*60*60:
             return 45
         elif elapsed_time >= 2*60*60:

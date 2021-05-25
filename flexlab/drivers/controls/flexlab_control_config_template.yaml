@@ -13,24 +13,7 @@ control:
   query_time_minutes: 16
   revert_to_default_time_threshold_seconds: 3600
   default_values:
-    ra_sup_air_flow_sp_cmh_command: -1
-    ra_sup_air_temp_sp_command: -1
-    ra_light_level_sp_command: 100
-    ra_battery_sp_command: 0
-    ra_zone_temp_hsp_command: -1
-    ra_zone_temp_csp_command: -1
-    rb_sup_air_flow_sp_cmh_command: -1
-    rb_sup_air_temp_sp_command: -1
-    rb_light_level_sp_command: 100
-    rb_battery_sp_command: 0
-
-flexgrid:
-  control_flag:
-    ra: False
-    rb: False
-  api:
-      host:
-      port:
+    x2_boiler_sp_C_command: 45
 
 flexlab:
   control_flag:
@@ -42,17 +25,4 @@ flexlab:
     flex_password:
     flexq_login:
   cws_point_map:
-    x2_boiler_setpoint_C_command: 2-B-ADJ-ENABLE
-
-lights:
-  control_flag:
-    ra: False
-    rb: False
-  api:
-    host:
-    port:
-    app_id:
-    app_key:
-  cree_space_uuid_map:
-    ra: a6b5d187-0881-420d-829f-cdbc8f47ffc5
-    rb: e2904fc3-0dc7-48c4-a54e-97e5d14106be
+    x2_boiler_sp_C_command: 2-B-ADJ-ENABLE
