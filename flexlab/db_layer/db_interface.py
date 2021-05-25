@@ -198,7 +198,7 @@ class DB_Interface:
         push new setpoints to database to change FL setpoints
         :param cell: 'x1' or 'x2'
         :param df: dataframe with the following columns:
-                    ['sup_air_flow_sp', 'sup_air_temp_sp', 'light_level_sp', 'battery_sp', 'zone_temp_hsp', 'zone_temp_csp']
+                    ['x2_boiler_sp_C_command']
                     sup_air_flow_sp: kg/s
                     sup_air_temp_sp: C
                     light_level_sp: 0-1
@@ -216,7 +216,7 @@ class DB_Interface:
         for col in df.columns:
             df2 = df[[col]]
             df2.columns = ['value']
-            df2['name'] = cell + '_' + col+'_command'
+            df2['name'] = col
             df_list.append(df2)
         final_df = pd.concat(df_list, axis=0)
         final_df = final_df.reset_index()
