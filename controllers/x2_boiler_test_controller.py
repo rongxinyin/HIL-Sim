@@ -47,7 +47,7 @@ class X2_boiler_test_controller:
         return self.db_interface.push_setpoints_to_db(cell=self.current_cell, df=setpoints)
 
 if __name__ == "__main__":
-    controller = X2_boiler_test_controller(config_file="baseline_controller/baseline_config.yaml")
+    controller = X2_boiler_test_controller(config_file="controllers/boiler_controller_config.yaml")
     completed_minute = -1
     printed_minute = -1
     start_time = controller.tz_utc.localize(datetime.datetime.utcnow()).astimezone(controller.tz_local).replace(tzinfo=None)
