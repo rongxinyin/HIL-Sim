@@ -15,9 +15,13 @@ control:
   default_values:
     x2_boiler_sp_C_command: 45
 
-flexlab:
+plant:
   control_flag:
+    x1: False
     x2: False
+
+flexlab:
+  control_flag: {}
 #    ra: False
 #    rb: False
   api:

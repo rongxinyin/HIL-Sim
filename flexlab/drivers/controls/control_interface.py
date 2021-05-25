@@ -16,6 +16,8 @@ class FL_Control_Interface:
         self.flexgrid_control_flag = self.flexgrid_config .get('control_flag', {'ra': False, 'rb': False})
         self.flexgrid_api_config = self.flexgrid_config.get('api', {})
 
+        self.plant_config = self.config.get('plant', {})
+        self.plant_control_flag = self.plant_config.get('control_flag')
         self.flexlab_config = self.config.get('flexlab', {})
         self.flexlab_control_flag = self.flexlab_config .get('control_flag', {'ra': False, 'rb': False})
         self.cws_point_map = self.flexlab_config.get('cws_point_map')
@@ -104,8 +106,8 @@ class FL_Control_Interface:
             cell = variable[:2]
 
             if variable.endswith("x2_boiler_sp_C_command"):
-                if self.flexlab_control_flag.get(cell):
-                    ret = self.set_flexlab_points(cell=cell, point_name=variable, value=new_value)
+                if self.plant_control_flag.get(cell):
+                    ret = self.set_plant_points(cell=cell, point_name=variable, value=new_value)
                 else:
                     print("flexlab_control_flag for cell {0} is set to False. Not changing setpoints".format(cell))
                     ret = False
@@ -189,6 +191,23 @@ class FL_Control_Interface:
             return True
         except Exception as e:
             print("exception occurred when setting {0} to point {1} in cell {2}, error={3}".format(value, point_name, cell, str(e)))
+            return False
+
+    def set_plant_points(self, cell, point_name, value):
+        flex_sys = "HVAC Plant {}".format(cell[-1])
+
+        channel = self.cws_point_map.get(point_name)
+
+        set_cmd = "ssh %s@flexq.lbl.gov \'{\"cmd\":\"SETDAQ\", \"sys\":\"%s\", \"chn\":\"%s\", \"val\":\"%f\", \"user\":\"%s\",\"pass\":\"%s\"}\'"
+        print(set_cmd % (self.flexq_login, flex_sys, channel, value, self.flex_user, self.flex_password))
+
+        try:
+            subprocess.check_output(
+                set_cmd % (self.flexq_login, flex_sys, channel, value, self.flex_user, self.flex_password), shell=True)
+            return True
+        except Exception as e:
+            print("exception occurred when setting {0} to point {1} in cell {2}, error={3}".format(value, point_name,
+                                                                                                   cell, str(e)))
             return False
 
     # def set_light_level(self, cell, value):

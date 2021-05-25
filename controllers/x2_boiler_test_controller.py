@@ -54,7 +54,7 @@ if __name__ == "__main__":
     while True:
         time_now = datetime.datetime.now()
         minute_now = time_now.minute
-        if minute_now % 15 == 0 and minute_now != completed_minute:
+        if minute_now % 5 == 0 and minute_now != completed_minute:
             # actions = controller.get_actions(et=datetime.datetime(2020, 5, 15, 14, 0, 0, 0))
             try:
                 actions = controller.get_actions(start_time=start_time)
