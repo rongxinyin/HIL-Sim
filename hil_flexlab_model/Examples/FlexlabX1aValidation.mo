@@ -62,6 +62,7 @@ model FlexlabX1aValidation
   Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.ModeAndSetPoints TZonSet[numZon](
     final TZonHeaOn=fill(THeaOn, numZon),
     final TZonHeaOff=fill(THeaOff, numZon),
+    TZonCooOn=fill(24, numZon),
     final TZonCooOff=fill(TCooOff, numZon)) "Zone setpoint temperature"
     annotation (Placement(transformation(extent={{-32,322},{-12,342}})));
   Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow.Zone
@@ -269,7 +270,7 @@ equation
           467.778},{356,467.778}},
                           color={0,0,127}));
   connect(VOut1.V_flow, conAHU.VOut_flow) annotation (Line(points={{-61,-20.9},
-          {-61,218},{-18,218},{-18,454},{356,454},{356,451.778}},color={0,0,127}));
+          {-61,216},{-20,216},{-20,452},{356,452},{356,451.778}},color={0,0,127}));
   connect(TMix.T, conAHU.TMix) annotation (Line(points={{40,-29},{40,444.667},{
           356,444.667}},
                      color={0,0,127}));
@@ -394,8 +395,9 @@ This is for
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/Guideline36.mos"
         "Simulate and plot"),
     experiment(
-      StopTime=86400,
-      __Dymola_NumberOfIntervals=100,
+      StartTime=24454800,
+      StopTime=24627600,
+      Interval=3600,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end FlexlabX1aValidation;

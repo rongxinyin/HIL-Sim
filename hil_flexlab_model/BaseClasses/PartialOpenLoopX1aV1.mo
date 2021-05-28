@@ -42,7 +42,7 @@ partial model PartialOpenLoopX1aV1
  //   "Design mass flow rate perimeter 2";
  // parameter Modelica.Units.SI.MassFlowRate mNor_flow_nominal=6*VRooNor*conv
  //   "Design mass flow rate perimeter 3";
-  parameter Modelica.Units.SI.MassFlowRate m_flow_nominal=0.7*(mCor_flow_nominal
+  parameter Modelica.Units.SI.MassFlowRate m_flow_nominal=1.0*(mCor_flow_nominal
        + mSou_flow_nominal + mPle_flow_nominal + mNor_flow_nominal) "Nominal mass flow rate";
   parameter Modelica.Units.SI.Angle lat=37.87*3.14159/180 "Latitude";
 
@@ -506,12 +506,6 @@ public
     allowFlowReversal=allowFlowReversal,
     dp_nominal=5)  "Pressure drop for return duct"
     annotation (Placement(transformation(extent={{562,38},{542,58}})));
-  Buildings.Fluid.FixedResistances.PressureDrop dpRetDuc2(
-    m_flow_nominal=mPle_flow_nominal,
-    redeclare package Medium = MediumA,
-    allowFlowReversal=allowFlowReversal,
-    dp_nominal=5)  "Pressure drop for return duct"
-    annotation (Placement(transformation(extent={{656,40},{636,60}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,-10}},
@@ -719,10 +713,8 @@ equation
           {516,-30},{516,48},{542,48}}, color={0,127,255}));
   connect(dpRetDuc1.port_a, TSupPle.port_a) annotation (Line(points={{562,48},{570,
           48},{570,76},{578,76}}, color={0,127,255}));
-  connect(splRetRoo1.port_3, dpRetDuc2.port_b) annotation (Line(points={{620,10},
-          {628,10},{628,50},{636,50}}, color={0,127,255}));
-  connect(dpRetDuc2.port_a, flo.portsPle[2]) annotation (Line(points={{656,50},{
-          834,50},{834,442.48},{1010,442.48}}, color={0,127,255}));
+  connect(splRetRoo1.port_3, flo.portsPle[2]) annotation (Line(points={{620,10},
+          {620,442.48},{1010,442.48}}, color={0,127,255}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-380,
             -400},{1420,600}}), graphics={Line(points={{310,404}}, color={28,
               108,200}), Line(
