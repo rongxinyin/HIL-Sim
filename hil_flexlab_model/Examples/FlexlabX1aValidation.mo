@@ -1,6 +1,6 @@
 within hil_flexlab_model.Examples;
 model FlexlabX1aValidation
-  "Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
+  "Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell - Guideline 36 Controller"
   extends Modelica.Icons.Example;
   extends BaseClasses.PartialOpenLoopX1aV1;
 //  extends BaseClasses.PartialOpenLoopX1aV1(min(nin=3),
