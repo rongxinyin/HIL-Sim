@@ -16,7 +16,7 @@ model FlexlabX1aValidation
     "Maximum return fan discharge static pressure setpoint";
 
   Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Controller conVAVNor(
-    V_flow_nominal=mNor_flow_nominal,
+    V_flow_nominal=mNor_flow_nominal/1.2,
     AFlo=AFloNor,
     final samplePeriod=samplePeriod) "Controller for terminal unit north zone"
     annotation (Placement(transformation(extent={{658,32},{678,52}})));
