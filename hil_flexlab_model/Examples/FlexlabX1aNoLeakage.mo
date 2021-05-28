@@ -1,8 +1,8 @@
 within hil_flexlab_model.Examples;
-model FlexlabX1aValidation
+model FlexlabX1aNoLeakage
   "Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
-  extends BaseClasses.PartialOpenLoopX1aV1;
+  extends BaseClasses.PartialOpenLoopX1aNoLeakage;
 //  extends BaseClasses.PartialOpenLoopX1aV1(min(nin=3),
 //      ave(nin=3));
 
@@ -107,18 +107,18 @@ equation
       points={{511,163},{762,163},{762,42},{1018,42}},
       color={0,0,127},
       pattern=LinePattern.Dash));
-  connect(TSupNor.T, conVAVNor.TDis) annotation (Line(points={{695,92},{648,92},
+  connect(TSupNor.T, conVAVNor.TDis) annotation (Line(points={{697,90},{648,90},
           {648,36},{656,36}}, color={0,0,127}));
   connect(TSupCor.T, conVAVCor.TDis) annotation (Line(points={{823,94},{762,94},
           {762,40},{778,40}}, color={0,0,127}));
-  connect(TSupSou.T, conVAVSou.TDis) annotation (Line(points={{1069,90},{1002,
-          90},{1002,36},{1018,36}}, color={0,0,127}));
-  connect(conVAVNor.yDam,nor.yVAV)  annotation (Line(points={{680,48},{692,48}},
-                             color={0,0,127}));
+  connect(TSupSou.T, conVAVSou.TDis) annotation (Line(points={{1069,90},{1002,90},
+          {1002,36},{1018,36}},     color={0,0,127}));
+  connect(conVAVNor.yDam,nor.yVAV)  annotation (Line(points={{680,48},{688,48},
+          {688,46},{694,46}},color={0,0,127}));
   connect(conVAVNor.yVal,nor.yVal)  annotation (Line(points={{680,43},{684,43},
-          {684,32},{692,32}},   color={0,0,127}));
-  connect(conVAVCor.yVal, cor.yVal) annotation (Line(points={{802,47},{808,47},
-          {808,36},{820,36}},   color={0,0,127}));
+          {684,30},{694,30}},   color={0,0,127}));
+  connect(conVAVCor.yVal, cor.yVal) annotation (Line(points={{802,47},{808,47},{
+          808,36},{820,36}},    color={0,0,127}));
   connect(conVAVCor.yDam, cor.yVAV) annotation (Line(points={{802,52},{820,52}},
                               color={0,0,127}));
   connect(conVAVSou.yDam, sou.yVAV) annotation (Line(points={{1042,48},{1048,48},
@@ -148,34 +148,32 @@ equation
   connect(VSupCor_flow.V_flow, VDis_flow.u1[1]) annotation (Line(points={{823,132},
           {472,132},{472,212},{122,212},{122,259},{174,259}},      color={0,0,
           127}));
-  connect(VSupNor_flow.V_flow, VDis_flow.u2[1]) annotation (Line(points={{695,130},
-          {742,130},{742,206},{116,206},{116,252},{174,252}},      color={0,0,
+  connect(VSupNor_flow.V_flow, VDis_flow.u2[1]) annotation (Line(points={{697,128},
+          {742,128},{742,206},{116,206},{116,252},{174,252}},      color={0,0,
           127}));
   connect(VSupSou_flow.V_flow, VDis_flow.u3[1]) annotation (Line(points={{1069,128},
           {1080,128},{1080,202},{110,202},{110,245},{174,245}},      color={0,0,
           127}));
   connect(TSupCor.T, TDis.u1[1]) annotation (Line(points={{823,94},{466,94},{466,
           216},{72,216},{72,293},{108,293}},       color={0,0,127}));
-  connect(TSupNor.T, TDis.u2[1]) annotation (Line(points={{695,92},{688,92},{688,
-          220},{80,220},{80,286},{108,286}},                         color={0,0,
+  connect(TSupNor.T, TDis.u2[1]) annotation (Line(points={{697,90},{688,90},{
+          688,220},{80,220},{80,286},{108,286}},                     color={0,0,
           127}));
   connect(TSupSou.T, TDis.u3[1]) annotation (Line(points={{1069,90},{1032,90},{1032,
           208},{90,208},{90,278},{100,278},{100,279},{108,279}},
                                                     color={0,0,127}));
-  connect(VSupNor_flow.V_flow,conVAVNor. VDis_flow) annotation (Line(points={{695,130},
-          {644,130},{644,40},{656,40}},      color={0,0,127}));
+  connect(VSupNor_flow.V_flow,conVAVNor. VDis_flow) annotation (Line(points={{697,128},
+          {644,128},{644,40},{656,40}},      color={0,0,127}));
   connect(VSupCor_flow.V_flow, conVAVCor.VDis_flow) annotation (Line(points={{823,132},
           {764,132},{764,44},{778,44}},          color={0,0,127}));
   connect(VSupSou_flow.V_flow, conVAVSou.VDis_flow) annotation (Line(points={{1069,
           128},{1008,128},{1008,40},{1018,40}},      color={0,0,127}));
-  connect(TSup.T,conVAVNor. TSupAHU) annotation (Line(points={{340,-29},{340,
-          -20},{546,-20},{546,34},{656,34}},
-                                        color={0,0,127}));
-  connect(TSup.T, conVAVCor.TSupAHU) annotation (Line(points={{340,-29},{340,
-          -20},{764,-20},{764,38},{778,38}}, color={0,0,127}));
-  connect(TSup.T, conVAVSou.TSupAHU) annotation (Line(points={{340,-29},{340,
-          -20},{678,-20},{678,34},{1018,34}},
-                                           color={0,0,127}));
+  connect(TSup.T,conVAVNor. TSupAHU) annotation (Line(points={{340,-29},{340,-20},
+          {546,-20},{546,34},{656,34}}, color={0,0,127}));
+  connect(TSup.T, conVAVCor.TSupAHU) annotation (Line(points={{340,-29},{340,-20},
+          {764,-20},{764,38},{778,38}},      color={0,0,127}));
+  connect(TSup.T, conVAVSou.TSupAHU) annotation (Line(points={{340,-29},{340,-20},
+          {678,-20},{678,34},{1018,34}},   color={0,0,127}));
   connect(yOutDam.y, eco.yExh)
     annotation (Line(points={{-18,-10},{-3,-10},{-3,-34}}, color={0,0,127}));
   connect(swiFreSta.y, gaiHeaCoi.u) annotation (Line(points={{82,-192},{88,-192},
@@ -308,12 +306,11 @@ equation
   connect(TZonSet[1].TZonHeaSet, conAHU.TZonHeaSet) annotation (Line(points={{-10,332},
           {174,332},{174,542.444},{356,542.444}},      color={0,0,127}));
   connect(conVAVNor.yDam_actual, nor.y_actual) annotation (Line(points={{656,38},
-          {652,38},{652,72},{748,72},{748,56},{738,56}}, color={0,0,127}));
+          {652,38},{652,72},{748,72},{748,54},{740,54}}, color={0,0,127}));
   connect(conVAVCor.yDam_actual, cor.y_actual) annotation (Line(points={{778,42},
           {770,42},{770,74},{876,74},{876,60},{866,60}}, color={0,0,127}));
-  connect(conVAVSou.yDam_actual, sou.y_actual) annotation (Line(points={{1018,
-          38},{1012,38},{1012,68},{1126,68},{1126,52},{1112,52}}, color={0,0,
-          127}));
+  connect(conVAVSou.yDam_actual, sou.y_actual) annotation (Line(points={{1018,38},
+          {1012,38},{1012,68},{1126,68},{1126,52},{1112,52}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-320},{1400,
             640}}), graphics={Line(
@@ -394,8 +391,9 @@ This is for
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/Guideline36.mos"
         "Simulate and plot"),
     experiment(
-      StopTime=86400,
-      __Dymola_NumberOfIntervals=100,
+      StartTime=23594400,
+      StopTime=23677200,
+      Interval=300,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
-end FlexlabX1aValidation;
+end FlexlabX1aNoLeakage;
