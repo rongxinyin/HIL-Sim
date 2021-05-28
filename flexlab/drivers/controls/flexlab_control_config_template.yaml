@@ -1,0 +1,32 @@
+database:
+  host:
+  port:
+  username:
+  password:
+  database:
+  setpoints_table: setpoints_test
+
+control:
+  variable_names: [
+    x2_boiler_sp_C_command
+  ]
+  query_time_minutes: 16
+  revert_to_default_time_threshold_seconds: 3600
+  default_values:
+    x2_boiler_sp_C_command: 45
+
+plant:
+  control_flag:
+    x1: False
+    x2: False
+
+flexlab:
+  control_flag: {}
+#    ra: False
+#    rb: False
+  api:
+    flex_user:
+    flex_password:
+    flexq_login:
+  cws_point_map:
+    x2_boiler_sp_C_command: 2-B-ADJ-ENABLE
