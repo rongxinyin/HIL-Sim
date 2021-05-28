@@ -1,0 +1,80 @@
+database:
+  host:
+  port:
+  username:
+  password:
+  database:
+
+cell_data:
+  api:
+    flex_user: x2ab_all
+    flex_password:
+    flexq_login: queryx2
+  boiler:
+    db_table_name: boiler_test
+    cws_point_map:
+      2-B-ADJ-ENABLE: x2_boiler_sp_C
+      2-HWRT-1: x2_hw_ret_temp_C
+      2-HWST-1: x2_hw_sup_temp_C
+
+emulated_battery:
+  url:
+  db_table_name:
+  point_map:
+    real_power_setpoint: real_power_setpoint
+    battery_soc: battery_soc
+
+#  power:
+#    db_table_name:
+#    power_meter_channels_map:
+#      ra_fan_power_W: [A8, A22, A34]
+#      ra_light_power_W: [A27, A41]
+#      ra_plugload_power_W: [A1, A3, A5, A7, A15, A17, A19, A21, A29, A33, A35]
+#      ra_chwp_power_W: [A30]
+#      ra_hwp_power_W: [A18]
+#
+#      rb_fan_power_W: [A10, A24, A36]
+#      rb_light_power_W: [B18, B25, B26, B32, B39, B40]
+#      rb_plugload_power_W: [B1, B3, B5, B7, B15, B17, B19, B21, B29, B33, B35]
+#      rb_chwp_power_W: [A4]
+#      rb_hwp_power_W: [A32]
+
+#    power_thermal_channels_map:
+#      ra_chw_th_load_W:
+#        RA-CHWFM-2: ra_chw_flow
+#        RA-CHWSTS-2: ra_chw_sup_temp
+#        RA-CHWRTS-2: ra_chw_ret_temp
+#      ra_hw_th_load_W:
+#        RA-HWFM-2: ra_hw_flow
+#        RA-HWSTS-2: ra_hw_sup_temp
+#        RA-HWRTS-2: ra_hw_ret_temp
+#      ra_hvac_th_load_W:
+#        hw_load: ra_chw_th_load_W
+#        chw_load: ra_chw_th_load_W
+#        ahu_load: ra_fan_power_W
+#
+#      rb_chw_th_load_W:
+#        RB-CHWFM-2: rb_chw_flow
+#        RB-CHWSTS-2: rb_chw_sup_temp
+#        RB-CHWRTS-2: rb_chw_ret_temp
+#      rb_hw_th_load_W:
+#        RB-HWFM-2: rb_hw_flow
+#        RB-HWSTS-2: rb_hw_sup_temp
+#        RB-HWRTS-2: rb_hw_ret_temp
+#      rb_hvac_th_load_W:
+#        hw_load: rb_chw_th_load_W
+#        chw_load: rb_chw_th_load_W
+#        ahu_load: rb_fan_power_W
+
+weather:
+  db_table_name: weather
+  api:
+    time_threshold: 60
+    flex_user: weather
+    flex_password: weather
+    flexq_login: query
+  cws_point_map:
+    W-OAT-2: oat_C
+    W-RH-3_c7: rh_percentage
+    W-SP-GLOB-IRRAD: global_irradiance_Wm2
+    W-SP-DIFF-IRRAD: diffused_irradiance_Wm2
