@@ -1,8 +1,8 @@
 within hil_flexlab_model.Data.Constructions.OpaqueConstructions.Roofs;
 record CeilingTile =
   Buildings.HeatTransfer.Data.OpaqueConstructions.Generic (final material={
-    Buildings.HeatTransfer.Data.Solids.CottonBatt(x=0.178),
-    Buildings.HeatTransfer.Data.Solids.AcousTile(x=0.0191)},
+    Data.Solids.CottonBatt(x=0.178),
+    Data.Solids.AcousTile(x=0.0191)},
     final nLay=2) "Construction model for a ceiling.
       Used in test cells X1A"
     annotation (
