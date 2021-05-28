@@ -1,0 +1,11 @@
+[Unit]
+Description=Collect sensor data from a battery FMU
+Wants=postgres.service
+
+[Service]
+WorkingDirectory=/home/btmdrl/HIL-Sim/flexlab/drivers
+ExecStart=/home/btmdrl/anaconda3/bin/python emulated_battery_driver.py
+User=btmdrl
+
+[Install]
+WantedBy=multi-user.target

@@ -17,6 +17,13 @@ cell_data:
       2-HWRT-1: x2_hw_ret_temp_C
       2-HWST-1: x2_hw_sup_temp_C
 
+emulated_battery:
+  url:
+  db_table_name:
+  point_map:
+    real_power_setpoint: real_power_setpoint
+    battery_soc: battery_soc
+
 #  power:
 #    db_table_name:
 #    power_meter_channels_map:

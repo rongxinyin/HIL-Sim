@@ -1,0 +1,10 @@
+[Unit]
+Description=Run battery data collection every minute
+
+[Timer]
+OnCalendar=*:0/1
+Persistent=true
+Unit=emulated_battery.service
+
+[Install]
+WantedBy=timers.target
