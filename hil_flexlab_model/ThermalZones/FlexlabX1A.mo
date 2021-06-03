@@ -211,7 +211,7 @@ model FlexlabX1A "Model of a flexlab x1a"
   Modelica.Fluid.Vessels.BaseClasses.VesselFluidPorts_b portsCor[2](
       redeclare package Medium = Medium) "Fluid inlets and outlets"
     annotation (Placement(transformation(extent={{70,38},{110,54}})));
-  Modelica.Blocks.Math.MatrixGain gai(K=20*[0.4; 0.4; 0.2])
+  Modelica.Blocks.Math.MatrixGain gai(K=40*[0.4; 0.4; 0.2])
     "Matrix gain to split up heat gain in radiant, convective and latent gain"
     annotation (Placement(transformation(extent={{-100,100},{-80,120}})));
   Modelica.Blocks.Sources.Constant uSha(k=0)
@@ -223,25 +223,25 @@ model FlexlabX1A "Model of a flexlab x1a"
     annotation (Placement(transformation(extent={{200,190},{220,210}})));
   Buildings.Examples.VAVReheat.ThermalZones.RoomLeakage leaSou(
     redeclare package Medium = Medium,
-    VRoo=568.77,
-    s=49.91/33.27,
+    VRoo=6.49*3.05*3.6576,
+    s=6.49/3.05,
     azi=Buildings.Types.Azimuth.S,
     final use_windPressure=use_windPressure)
     "Model for air infiltration through the envelope"
     annotation (Placement(transformation(extent={{-56,408},{-20,448}})));
   Buildings.Examples.VAVReheat.ThermalZones.RoomLeakage leaPle(
     redeclare package Medium = Medium,
-    VRoo=360.0785,
-    s=33.27/49.91,
-    azi=Buildings.Types.Azimuth.E,
+    VRoo=6.49*(3.05 + 3.05 + 3.23)*1.625,
+    s=6.49/9.33,
+    azi=Buildings.Types.Azimuth.W,
     final use_windPressure=use_windPressure)
     "Model for air infiltration through the envelope"
     annotation (Placement(transformation(extent={{-56,342},{-20,382}})));
   Buildings.Examples.VAVReheat.ThermalZones.RoomLeakage leaNor(
     redeclare package Medium = Medium,
-    VRoo=568.77,
-    s=49.91/33.27,
-    azi=Buildings.Types.Azimuth.N,
+    VRoo=6.49*3.23*3.6576,
+    s=6.49/3.23,
+    azi=Buildings.Types.Azimuth.W,
     final use_windPressure=use_windPressure)
     "Model for air infiltration through the envelope"
     annotation (Placement(transformation(extent={{-56,286},{-20,326}})));
