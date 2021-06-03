@@ -29,7 +29,7 @@ model FlexlabX1aBaseline
   Buildings.Examples.VAVReheat.Controls.RoomTemperatureSetpoint TSetRoo(
     final THeaOn=THeaOn,
     final THeaOff=THeaOff,
-    final TCooOn=TCooOn,
+    final TCooOn=273.15 + 23.3,
     final TCooOff=TCooOff)
     annotation (Placement(transformation(extent={{-300,-358},{-280,-338}})));
   Buildings.Examples.VAVReheat.Controls.DuctStaticPressureSetpoint pSetDuc(

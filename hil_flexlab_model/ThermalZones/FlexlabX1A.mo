@@ -266,17 +266,17 @@ model FlexlabX1A "Model of a flexlab x1a"
         iconTransformation(extent={{378,148},{398,168}})));
   Buildings.Airflow.Multizone.DoorDiscretizedOpen opeSouCor(
     redeclare package Medium = Medium,
-    wOpe=10,
+    wOpe=0.01,
     forceErrorControlOnFlow=false) "Opening between perimeter1 and core"
     annotation (Placement(transformation(extent={{84,0},{104,20}})));
   Buildings.Airflow.Multizone.DoorDiscretizedOpen opeEasCor(
     redeclare package Medium = Medium,
-    wOpe=10,
+    wOpe=0.01,
     forceErrorControlOnFlow=false) "Opening between perimeter2 and core"
     annotation (Placement(transformation(extent={{250,38},{270,58}})));
   Buildings.Airflow.Multizone.DoorDiscretizedOpen opeNorCor(
     redeclare package Medium = Medium,
-    wOpe=10,
+    wOpe=0.01,
     forceErrorControlOnFlow=false) "Opening between perimeter3 and core"
     annotation (Placement(transformation(extent={{80,74},{100,94}})));
   Modelica.Blocks.Sources.CombiTimeTable intGaiFra(
