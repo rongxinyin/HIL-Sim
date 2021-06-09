@@ -13,50 +13,6 @@ model FlexlabX1A "Model of a flexlab x1a"
     min=0.01,
     max=0.99) = 0.33 "Window to wall ratio for exterior walls";
   parameter Modelica.SIunits.Length hWin = 1.5 "Height of windows";
-  parameter Buildings.HeatTransfer.Data.Solids.Plywood matFur(x=0.15, nStaRef=5)
-    "Material for furniture"
-    annotation (Placement(transformation(extent={{140,460},{160,480}})));
-  parameter Buildings.HeatTransfer.Data.Resistances.Carpet matCar "Carpet"
-    annotation (Placement(transformation(extent={{180,460},{200,480}})));
-  parameter Buildings.HeatTransfer.Data.Solids.Concrete matCon(
-    x=0.1,
-    k=1.311,
-    c=836,
-    nStaRef=5) "Concrete"
-    annotation (Placement(transformation(extent={{140,430},{160,450}})));
-  parameter Buildings.HeatTransfer.Data.Solids.Plywood matWoo(
-    x=0.01,
-    k=0.11,
-    d=544,
-    nStaRef=1) "Wood for exterior construction"
-    annotation (Placement(transformation(extent={{140,400},{160,420}})));
-  parameter Buildings.HeatTransfer.Data.Solids.Generic matIns(
-    x=0.087,
-    k=0.049,
-    c=836.8,
-    d=265,
-    nStaRef=5) "Steelframe construction with insulation"
-    annotation (Placement(transformation(extent={{180,400},{200,420}})));
-  parameter Buildings.HeatTransfer.Data.Solids.GypsumBoard matGyp(
-    x=0.0127,
-    k=0.16,
-    c=830,
-    d=784,
-    nStaRef=2) "Gypsum board"
-    annotation (Placement(transformation(extent={{138,372},{158,392}})));
-  parameter Buildings.HeatTransfer.Data.Solids.GypsumBoard matGyp2(
-    x=0.025,
-    k=0.16,
-    c=830,
-    d=784,
-    nStaRef=2) "Gypsum board"
-    annotation (Placement(transformation(extent={{178,372},{198,392}})));
-  parameter Buildings.HeatTransfer.Data.Solids.Plywood matCarTra(
-    k=0.11,
-    d=544,
-    nStaRef=1,
-    x=0.215/0.11) "Wood for floor"
-    annotation (Placement(transformation(extent={{102,460},{122,480}})));
   parameter Real kIntNor(min=0, max=1) = 1
     "Gain factor to scale internal heat gain in north zone";
   constant Modelica.SIunits.Height hRoo=2.74 "Room height";
@@ -323,7 +279,7 @@ model FlexlabX1A "Model of a flexlab x1a"
     Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
     R52Wal annotation (Placement(transformation(extent={{-50,468},{-30,488}})));
   parameter
-    Data.Constructions.GlazingSystems.ASHRAE901Gla
+    Data.Constructions.GlazingSystems.SingleClear3
     glaSys
     annotation (Placement(transformation(extent={{-130,434},{-110,454}})));
   parameter

@@ -29,8 +29,6 @@ partial model PartialOpenLoopX1aNoLeakage
     "Design mass flow rate core";
   parameter Modelica.SIunits.MassFlowRate mSou_flow_nominal=0.189*1.2
     "Design mass flow rate perimeter 1";
-  parameter Modelica.SIunits.MassFlowRate mPle_flow_nominal=0.11*1.2
-    "Design mass flow rate perimeter 2";
   parameter Modelica.SIunits.MassFlowRate mNor_flow_nominal=0.106*1.2
     "Design mass flow rate perimeter 3";
  // parameter Modelica.SIunits.MassFlowRate mCor_flow_nominal=6*VRooCor*conv
@@ -49,7 +47,7 @@ partial model PartialOpenLoopX1aNoLeakage
     "Heating setpoint during on";
   parameter Modelica.SIunits.Temperature THeaOff=285.15
     "Heating setpoint during off";
-  parameter Modelica.SIunits.Temperature TCooOn=297.15
+  parameter Modelica.SIunits.Temperature TCooOn=273.15 + 23.3
     "Cooling setpoint during on";
   parameter Modelica.SIunits.Temperature TCooOff=303.15
     "Cooling setpoint during off";
