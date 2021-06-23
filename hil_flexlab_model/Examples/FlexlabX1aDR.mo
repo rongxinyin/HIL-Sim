@@ -12,7 +12,7 @@ model FlexlabX1aDR
       final unit="K",
       displayUnit="degC",
       min=0), k=273.15 + 10) "Supply air temperature setpoint for heating"
-    annotation (Placement(transformation(extent={{-180,-172},{-160,-152}})));
+    annotation (Placement(transformation(extent={{-200,-172},{-180,-152}})));
   Buildings.Examples.VAVReheat.Controls.FanVFD conFanSup(xSet_nominal(
         displayUnit="Pa") = 410, r_N_min=yFanMin) "Controller for fan"
     annotation (Placement(transformation(extent={{240,-10},{260,10}})));
@@ -32,7 +32,7 @@ model FlexlabX1aDR
     final THeaOff=THeaOff,
     final TCooOn=273.15 + 23.3,
     final TCooOff=TCooOff)
-    annotation (Placement(transformation(extent={{-300,-358},{-280,-338}})));
+    annotation (Placement(transformation(extent={{-320,-358},{-300,-338}})));
   Buildings.Examples.VAVReheat.Controls.DuctStaticPressureSetpoint pSetDuc(
     nin=3,
     controllerType=Modelica.Blocks.Types.SimpleController.PI,
@@ -81,22 +81,30 @@ model FlexlabX1aDR
 
   Buildings.Controls.OBC.CDL.Logical.Or or2
     annotation (Placement(transformation(extent={{0,-180},{20,-160}})));
-  Modelica.Blocks.Sources.CombiTimeTable cooSetDR(
-    table=[0,26.7; 8,23.3; 14,25.6; 18,23.3; 21,26.7; 24,26.7],
-    timeScale=3600,
-    extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
-    "cooling schedule for demand response"
-    annotation (Placement(transformation(extent={{712,-94},{732,-74}})));
+  Modelica.Blocks.Sources.Constant CooTSet(k=273.15)
+    "Zone air temperature set point"
+    annotation (Placement(transformation(extent={{840,-176},{820,-156}})));
+  Modelica.Blocks.Math.Add add
+    annotation (Placement(transformation(extent={{784,-146},{764,-126}})));
+  Modelica.Blocks.Sources.Constant HeaTSet(k=273.15)
+    "Zone air temperature set point"
+    annotation (Placement(transformation(extent={{840,-140},{820,-120}})));
+  Modelica.Blocks.Math.Add add1
+    annotation (Placement(transformation(extent={{784,-182},{764,-162}})));
   Modelica.Blocks.Sources.CombiTimeTable heaSetDR(
-    table=[0,15.6; 8,21.1; 14,21.1; 18,21.1; 21,21.1; 24,15.6],
-    columns=2:size(table, 2),
-    timeScale=3600,
-    extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
-    "heating schedule for demand response"
-    annotation (Placement(transformation(extent={{712,-132},{732,-112}})));
+    table=[0,15.6; 6,15.6; 6,21.1; 20,21.1; 20,15.6; 24,15.6],
+    extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic,
+    timeScale=3600) "heating schedule for demand response"
+    annotation (Placement(transformation(extent={{674,-224},{694,-204}})));
+  Modelica.Blocks.Sources.CombiTimeTable cooSetDR(
+    table=[0,26.7; 6,26.7; 6,23.3; 14,23.3; 14,25.6; 18,25.6; 18,23.3; 20,23.3;
+        20,26.7; 24,26.7],
+    extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic,
+    timeScale=3600) "cooling schedule for demand response"
+    annotation (Placement(transformation(extent={{674,-272},{694,-252}})));
 equation
   connect(TSupSetHea.y, heaCoiCon.u_s) annotation (Line(
-      points={{-159,-162},{-96,-162},{-96,-202},{-82,-202}},
+      points={{-179,-162},{-96,-162},{-96,-202},{-82,-202}},
       color={0,0,127},
       pattern=LinePattern.Dash));
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
@@ -140,12 +148,12 @@ equation
       pattern=LinePattern.Dash));
   connect(conEco.TSupHeaSet, TSupSetHea.y) annotation (Line(
       points={{-81.3333,145.333},{-156,145.333},{-156,-120},{-140,-120},{-140,
-          -162},{-159,-162}},
+          -162},{-179,-162}},
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
   connect(TSetRoo.controlBus, controlBus) annotation (Line(
-      points={{-288,-342},{-240,-342}},
+      points={{-308,-342},{-240,-342}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
@@ -172,7 +180,7 @@ equation
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
   connect(TSupSetHea.y, TSetCoo.TSetHea) annotation (Line(
-      points={{-159,-162},{-140,-162},{-140,-202},{-132,-202}},
+      points={{-179,-162},{-140,-162},{-140,-202},{-132,-202}},
       color={0,0,0},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
@@ -208,15 +216,6 @@ equation
           {1044,44},{1066,44}},     color={0,0,127}));
   connect(conVAVSou.yVal, sou.yVal) annotation (Line(points={{1015,25},{1024,25},
           {1024,28},{1066,28}}, color={0,0,127}));
-  connect(conVAVSou.TRooHeaSet, controlBus.TRooSetHea) annotation (Line(points={{992,37},
-          {980,37},{980,40},{964,40},{964,-342},{-240,-342}},
-                                                     color={0,0,127}));
-  connect(conVAVSou.TRooCooSet, controlBus.TRooSetCoo) annotation (Line(points={{992,30},
-          {964,30},{964,-342},{-240,-342}},          color={0,0,127}));
-  connect(conVAVNor.TRooHeaSet, controlBus.TRooSetHea) annotation (Line(points={{638,47},
-          {594,47},{594,-342},{-240,-342}},             color={0,0,127}));
-  connect(conVAVNor.TRooCooSet, controlBus.TRooSetCoo) annotation (Line(points={{638,40},
-          {594,40},{594,-342},{-240,-342}},             color={0,0,127}));
 
   connect(occSch.tNexOcc, controlBus.dTNexOcc) annotation (Line(
       points={{-297,-204},{-240,-204},{-240,-342}},
@@ -301,10 +300,27 @@ equation
           {811.5,52},{820,52}}, color={0,0,127}));
   connect(conVAVCor.yVal, cor.yVal) annotation (Line(points={{803,37},{812.5,37},
           {812.5,36},{820,36}}, color={0,0,127}));
-  connect(cooSetDR.y[1], conVAVCor.TRooHeaSet) annotation (Line(points={{733,
-          -84},{733,-20},{746,-20},{746,48},{780,48},{780,49}}, color={0,0,127}));
-  connect(heaSetDR.y[1], conVAVCor.TRooCooSet) annotation (Line(points={{733,
-          -122},{754,-122},{754,42},{780,42}}, color={0,0,127}));
+  connect(add1.y, conVAVCor.TRooCooSet) annotation (Line(points={{763,-172},{
+          752,-172},{752,42},{780,42}},
+                                    color={0,0,127}));
+  connect(CooTSet.y, add1.u1)
+    annotation (Line(points={{819,-166},{786,-166}}, color={0,0,127}));
+  connect(HeaTSet.y, add.u1)
+    annotation (Line(points={{819,-130},{786,-130}}, color={0,0,127}));
+  connect(heaSetDR.y[1], add.u2) annotation (Line(points={{695,-214},{804,-214},
+          {804,-142},{786,-142}}, color={0,0,127}));
+  connect(add.y, conVAVCor.TRooHeaSet) annotation (Line(points={{763,-136},{740,
+          -136},{740,50},{780,50},{780,49}}, color={0,0,127}));
+  connect(cooSetDR.y[1], add1.u2) annotation (Line(points={{695,-262},{802,-262},
+          {802,-178},{786,-178}}, color={0,0,127}));
+  connect(add.y, conVAVSou.TRooHeaSet) annotation (Line(points={{763,-136},{740,
+          -136},{740,-68},{912,-68},{912,37},{992,37}}, color={0,0,127}));
+  connect(add1.y, conVAVSou.TRooCooSet) annotation (Line(points={{763,-172},{
+          752,-172},{752,-28},{900,-28},{900,30},{992,30}}, color={0,0,127}));
+  connect(add.y, conVAVNor.TRooHeaSet) annotation (Line(points={{763,-136},{592,
+          -136},{592,47},{638,47}}, color={0,0,127}));
+  connect(add1.y, conVAVNor.TRooCooSet) annotation (Line(points={{763,-172},{
+          602,-172},{602,40},{638,40}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-400},{1440,
             580}})),

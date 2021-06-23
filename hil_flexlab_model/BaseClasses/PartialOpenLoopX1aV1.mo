@@ -503,7 +503,7 @@ public
     m_flow_nominal=mPle_flow_nominal,
     redeclare package Medium = MediumA,
     allowFlowReversal=allowFlowReversal,
-    dp_nominal=10) "Pressure drop for return duct"
+    dp_nominal=40) "Pressure drop for return duct"
     annotation (Placement(transformation(extent={{562,38},{542,58}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
