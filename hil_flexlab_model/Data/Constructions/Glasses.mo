@@ -102,6 +102,7 @@ Buildings.HeatTransfer.Windows.BaseClasses.StateInterpolator</a>.
 revisions="<html>
 <ul>
 <li>
+June 25, 2021, by Rongxin Yin
 September 9, 2010, by Michael Wetter:<br/>
 First implementation.
 </li>
