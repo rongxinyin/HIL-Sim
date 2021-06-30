@@ -13,50 +13,6 @@ model FlexlabX1A "Model of a flexlab x1a"
     min=0.01,
     max=0.99) = 0.33 "Window to wall ratio for exterior walls";
   parameter Modelica.SIunits.Length hWin = 1.5 "Height of windows";
-  parameter Buildings.HeatTransfer.Data.Solids.Plywood matFur(x=0.15, nStaRef=5)
-    "Material for furniture"
-    annotation (Placement(transformation(extent={{140,460},{160,480}})));
-  parameter Buildings.HeatTransfer.Data.Resistances.Carpet matCar "Carpet"
-    annotation (Placement(transformation(extent={{180,460},{200,480}})));
-  parameter Buildings.HeatTransfer.Data.Solids.Concrete matCon(
-    x=0.1,
-    k=1.311,
-    c=836,
-    nStaRef=5) "Concrete"
-    annotation (Placement(transformation(extent={{140,430},{160,450}})));
-  parameter Buildings.HeatTransfer.Data.Solids.Plywood matWoo(
-    x=0.01,
-    k=0.11,
-    d=544,
-    nStaRef=1) "Wood for exterior construction"
-    annotation (Placement(transformation(extent={{140,400},{160,420}})));
-  parameter Buildings.HeatTransfer.Data.Solids.Generic matIns(
-    x=0.087,
-    k=0.049,
-    c=836.8,
-    d=265,
-    nStaRef=5) "Steelframe construction with insulation"
-    annotation (Placement(transformation(extent={{180,400},{200,420}})));
-  parameter Buildings.HeatTransfer.Data.Solids.GypsumBoard matGyp(
-    x=0.0127,
-    k=0.16,
-    c=830,
-    d=784,
-    nStaRef=2) "Gypsum board"
-    annotation (Placement(transformation(extent={{138,372},{158,392}})));
-  parameter Buildings.HeatTransfer.Data.Solids.GypsumBoard matGyp2(
-    x=0.025,
-    k=0.16,
-    c=830,
-    d=784,
-    nStaRef=2) "Gypsum board"
-    annotation (Placement(transformation(extent={{178,372},{198,392}})));
-  parameter Buildings.HeatTransfer.Data.Solids.Plywood matCarTra(
-    k=0.11,
-    d=544,
-    nStaRef=1,
-    x=0.215/0.11) "Wood for floor"
-    annotation (Placement(transformation(extent={{102,460},{122,480}})));
   parameter Real kIntNor(min=0, max=1) = 1
     "Gain factor to scale internal heat gain in north zone";
   constant Modelica.SIunits.Height hRoo=2.74 "Room height";
@@ -91,7 +47,7 @@ model FlexlabX1A "Model of a flexlab x1a"
         layers={SouthExt},
         A={6.49*2.74},
         glaSys={glaSys},
-        hWin={1.8288},
+        hWin={1.716},
         wWin={5.88},
         til={Buildings.Types.Tilt.Wall},
         azi={Buildings.Types.Azimuth.S}),
@@ -211,10 +167,10 @@ model FlexlabX1A "Model of a flexlab x1a"
   Modelica.Fluid.Vessels.BaseClasses.VesselFluidPorts_b portsCor[2](
       redeclare package Medium = Medium) "Fluid inlets and outlets"
     annotation (Placement(transformation(extent={{70,38},{110,54}})));
-  Modelica.Blocks.Math.MatrixGain gai(K=40*[0.4; 0.4; 0.2])
+  Modelica.Blocks.Math.MatrixGain gaiNor(K=35*[0.4; 0.4; 0.2])
     "Matrix gain to split up heat gain in radiant, convective and latent gain"
     annotation (Placement(transformation(extent={{-100,100},{-80,120}})));
-  Modelica.Blocks.Sources.Constant uSha(k=0)
+  Modelica.Blocks.Sources.Constant uSha(k=1)
     "Control signal for the shading device"
     annotation (Placement(transformation(extent={{-80,170},{-60,190}})));
   Modelica.Blocks.Routing.Replicator replicator(nout=1)
@@ -278,8 +234,8 @@ model FlexlabX1A "Model of a flexlab x1a"
     redeclare package Medium = Medium,
     wOpe=0.01,
     forceErrorControlOnFlow=false) "Opening between perimeter3 and core"
-    annotation (Placement(transformation(extent={{80,74},{100,94}})));
-  Modelica.Blocks.Sources.CombiTimeTable intGaiFra(
+    annotation (Placement(transformation(extent={{82,74},{102,94}})));
+  Modelica.Blocks.Sources.CombiTimeTable intGaiNor(
     table=[0,0.05;
            8,0.05;
            9,0.9;
@@ -306,12 +262,6 @@ model FlexlabX1A "Model of a flexlab x1a"
         rotation=180,
         origin={-170,220})));
 
-  Modelica.Blocks.Math.Gain gaiIntNor[3](each k=kIntNor)
-    "Gain for internal heat gain amplification for north zone"
-    annotation (Placement(transformation(extent={{-60,134},{-40,154}})));
-  Modelica.Blocks.Math.Gain gaiIntSou[3](each k=2 - kIntNor)
-    "Gain to change the internal heat gain for south"
-    annotation (Placement(transformation(extent={{-56,72},{-36,92}})));
   parameter
     Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction9
     SouthExt
@@ -323,7 +273,7 @@ model FlexlabX1A "Model of a flexlab x1a"
     Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
     R52Wal annotation (Placement(transformation(extent={{-50,468},{-30,488}})));
   parameter
-    Data.Constructions.GlazingSystems.ASHRAE901Gla
+    Data.Constructions.GlazingSystems.SingleClear3
     glaSys
     annotation (Placement(transformation(extent={{-130,434},{-110,454}})));
   parameter
@@ -363,32 +313,62 @@ model FlexlabX1A "Model of a flexlab x1a"
     timeScale=3600,
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "internal heat gain from lights"
-    annotation (Placement(transformation(extent={{-140,58},{-120,78}})));
+    annotation (Placement(transformation(extent={{246,466},{266,486}})));
   Modelica.Blocks.Sources.CombiTimeTable Plug(
     table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1;
         24,0.05],
     timeScale=3600,
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "internal heat gain from plug"
-    annotation (Placement(transformation(extent={{-140,20},{-120,40}})));
+    annotation (Placement(transformation(extent={{246,428},{266,448}})));
   Modelica.Blocks.Sources.CombiTimeTable occupant(
     table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1;
         24,0.05],
     timeScale=3600,
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "internal heat gain from occupant"
-    annotation (Placement(transformation(extent={{-140,-12},{-120,8}})));
-  Modelica.Blocks.Math.MatrixGain ligGai(K=20*[0.4; 0.4; 0.2])
+    annotation (Placement(transformation(extent={{246,396},{266,416}})));
+  Modelica.Blocks.Math.MatrixGain ligGai(K=10*[0.4; 0.4; 0.2])
     "Matrix gain to split up heat gain in radiant, convective and latent gain"
-    annotation (Placement(transformation(extent={{-102,58},{-82,78}})));
-  Modelica.Blocks.Math.MatrixGain plgGai(K=20*[0.4; 0.4; 0.2])
+    annotation (Placement(transformation(extent={{284,466},{304,486}})));
+  Modelica.Blocks.Math.MatrixGain plgGai(K=10*[0.4; 0.4; 0.2])
     "Matrix gain to split up heat gain in radiant, convective and latent gain"
-    annotation (Placement(transformation(extent={{-102,20},{-82,40}})));
-  Modelica.Blocks.Math.MatrixGain occGai(K=20*[0.4; 0.4; 0.2])
+    annotation (Placement(transformation(extent={{284,428},{304,448}})));
+  Modelica.Blocks.Math.MatrixGain occGai(K=14*[0.4; 0.4; 0.2])
     "Matrix gain to split up heat gain in radiant, convective and latent gain"
-    annotation (Placement(transformation(extent={{-102,-12},{-82,8}})));
+    annotation (Placement(transformation(extent={{284,396},{304,416}})));
   Modelica.Blocks.Math.Sum sumIntGai(nin=3)
-    annotation (Placement(transformation(extent={{-58,20},{-38,40}})));
+    annotation (Placement(transformation(extent={{328,428},{348,448}})));
+  Modelica.Blocks.Sources.CombiTimeTable intGaiPle(
+    table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1; 24,
+        0.05],
+    timeScale=3600,
+    extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
+    "Fraction of internal heat gain"
+    annotation (Placement(transformation(extent={{-138,-62},{-118,-42}})));
+  Modelica.Blocks.Math.MatrixGain gaiPle(K=0*[0.4; 0.4; 0.2])
+    "Matrix gain to split up heat gain in radiant, convective and latent gain"
+    annotation (Placement(transformation(extent={{-100,-62},{-80,-42}})));
+  Modelica.Blocks.Math.MatrixGain gaiSou(K=35*[0.4; 0.4; 0.2])
+    "Matrix gain to split up heat gain in radiant, convective and latent gain"
+    annotation (Placement(transformation(extent={{-100,-24},{-80,-4}})));
+  Modelica.Blocks.Sources.CombiTimeTable intGaiSou(
+    table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1;
+        24,0.05],
+    timeScale=3600,
+    extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
+    "Fraction of internal heat gain"
+    annotation (Placement(transformation(extent={{-138,-24},{-118,-4}})));
+  Modelica.Blocks.Sources.CombiTimeTable intGaiCor(
+    table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1;
+        24,0.05],
+    timeScale=3600,
+    extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
+    "Fraction of internal heat gain"
+    annotation (Placement(transformation(extent={{-138,20},{-118,40}})));
+  Modelica.Blocks.Math.MatrixGain gaiCor(K=35*[0.4; 0.4; 0.2])
+    "Matrix gain to split up heat gain in radiant, convective and latent gain"
+    annotation (Placement(transformation(extent={{-100,20},{-80,40}})));
 equation
   connect(sou.surf_conBou[2], cor.surf_conBou[3]) annotation (Line(
       points={{170,-40},{170,-54},{200,-54},{200,20},{170,20},{170,40.25}},
@@ -415,23 +395,8 @@ equation
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
-  connect(replicator.y, nor.uSha) annotation (Line(
-      points={{-19,180},{130,180},{130,154},{142.4,154}},
-      color={0,0,127},
-      pattern=LinePattern.Dash,
-      smooth=Smooth.None));
   connect(replicator.y, sou.uSha) annotation (Line(
       points={{-19,180},{130,180},{130,-6},{142.4,-6}},
-      color={0,0,127},
-      pattern=LinePattern.Dash,
-      smooth=Smooth.None));
-  connect(replicator.y, cor.uSha) annotation (Line(
-      points={{-19,180},{130,180},{130,74},{142.4,74}},
-      color={0,0,127},
-      pattern=LinePattern.Dash,
-      smooth=Smooth.None));
-  connect(gai.y, cor.qGai_flow)          annotation (Line(
-      points={{-79,110},{120,110},{120,64},{142.4,64}},
       color={0,0,127},
       pattern=LinePattern.Dash,
       smooth=Smooth.None));
@@ -599,25 +564,25 @@ equation
       smooth=Smooth.None,
       thickness=0.5));
   connect(opeNorCor.port_b1, nor.ports[4]) annotation (Line(
-      points={{100,90},{124,90},{124,127.6},{149,127.6}},
+      points={{102,90},{124,90},{124,127.6},{149,127.6}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
   connect(opeNorCor.port_a2, nor.ports[5]) annotation (Line(
-      points={{100,78},{124,78},{124,129.2},{149,129.2}},
+      points={{102,78},{124,78},{124,129.2},{149,129.2}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
   connect(opeNorCor.port_a1, cor.ports[7]) annotation (Line(
-      points={{80,90},{76,90},{76,60},{142,60},{142,47.2},{149,47.2}},
+      points={{82,90},{76,90},{76,60},{142,60},{142,47.2},{149,47.2}},
       color={0,127,255},
       smooth=Smooth.None));
   connect(opeNorCor.port_b2, cor.ports[8]) annotation (Line(
-      points={{80,78},{76,78},{76,60},{142,60},{142,48},{149,48}},
+      points={{82,78},{76,78},{76,60},{142,60},{142,48},{149,48}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
-  connect(intGaiFra.y, gai.u) annotation (Line(
+  connect(intGaiNor.y, gaiNor.u) annotation (Line(
       points={{-119,110},{-102,110}},
       color={0,0,127},
       smooth=Smooth.None,
@@ -645,36 +610,33 @@ equation
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
-  connect(gai.y, gaiIntNor.u) annotation (Line(
-      points={{-79,110},{-68,110},{-68,144},{-62,144}},
-      color={0,0,127},
-      pattern=LinePattern.Dash));
-  connect(gai.y, gaiIntSou.u) annotation (Line(
-      points={{-79,110},{-68,110},{-68,82},{-58,82}},
-      color={0,0,127},
-      pattern=LinePattern.Dash));
-  connect(gaiIntSou.y, sou.qGai_flow) annotation (Line(
-      points={{-35,82},{68,82},{68,-16},{142.4,-16}},
-      color={0,0,127},
-      pattern=LinePattern.Dash));
-  connect(gai.y, ple.qGai_flow) annotation (Line(points={{-79,110},{138,110},{
-          138,88},{356.4,88}}, color={0,0,127}));
-  connect(replicator.y, ple.uSha) annotation (Line(points={{-19,180},{168,180},
-          {168,98},{356.4,98}}, color={0,0,127}));
   connect(Lighting.y, ligGai.u)
-    annotation (Line(points={{-119,68},{-104,68}}, color={0,0,127}));
+    annotation (Line(points={{267,476},{282,476}}, color={0,0,127}));
   connect(Plug.y, plgGai.u)
-    annotation (Line(points={{-119,30},{-104,30}}, color={0,0,127}));
+    annotation (Line(points={{267,438},{282,438}}, color={0,0,127}));
   connect(occupant.y, occGai.u)
-    annotation (Line(points={{-119,-2},{-104,-2}}, color={0,0,127}));
+    annotation (Line(points={{267,406},{282,406}}, color={0,0,127}));
   connect(plgGai.y[1], sumIntGai.u[2])
-    annotation (Line(points={{-81,30},{-60,30}}, color={0,0,127}));
-  connect(occGai.y[1], sumIntGai.u[1]) annotation (Line(points={{-81,-2},{-70,
-          -2},{-70,28.6667},{-60,28.6667}}, color={0,0,127}));
-  connect(ligGai.y[1], sumIntGai.u[3]) annotation (Line(points={{-81,68},{-70,
-          68},{-70,31.3333},{-60,31.3333}}, color={0,0,127}));
-  connect(gaiIntNor.y, nor.qGai_flow)
-    annotation (Line(points={{-39,144},{142.4,144}}, color={0,0,127}));
+    annotation (Line(points={{305,438},{326,438}},
+                                                 color={0,0,127}));
+  connect(occGai.y[1], sumIntGai.u[1]) annotation (Line(points={{305,406},{316,
+          406},{316,436.667},{326,436.667}},color={0,0,127}));
+  connect(ligGai.y[1], sumIntGai.u[3]) annotation (Line(points={{305,476},{316,
+          476},{316,439.333},{326,439.333}},color={0,0,127}));
+  connect(intGaiPle.y, gaiPle.u)
+    annotation (Line(points={{-117,-52},{-102,-52}}, color={0,0,127}));
+  connect(gaiPle.y, ple.qGai_flow) annotation (Line(points={{-79,-52},{324,-52},
+          {324,88},{356.4,88}}, color={0,0,127}));
+  connect(intGaiSou.y, gaiSou.u)
+    annotation (Line(points={{-117,-14},{-102,-14}}, color={0,0,127}));
+  connect(gaiSou.y, sou.qGai_flow) annotation (Line(points={{-79,-14},{32,-14},
+          {32,-16},{142.4,-16}}, color={0,0,127}));
+  connect(intGaiCor.y, gaiCor.u)
+    annotation (Line(points={{-117,30},{-102,30}}, color={0,0,127}));
+  connect(gaiCor.y, cor.qGai_flow) annotation (Line(points={{-79,30},{32,30},{
+          32,64},{142.4,64}}, color={0,0,127}));
+  connect(gaiNor.y, nor.qGai_flow) annotation (Line(points={{-79,110},{32.5,110},
+          {32.5,144},{142.4,144}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=true, extent={{-160,-100},
             {400,500}},
         initialScale=0.1)),     Icon(coordinateSystem(

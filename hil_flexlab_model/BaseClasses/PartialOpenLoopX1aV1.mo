@@ -50,7 +50,7 @@ partial model PartialOpenLoopX1aV1
     "Heating setpoint during on";
   parameter Modelica.SIunits.Temperature THeaOff=285.15
     "Heating setpoint during off";
-  parameter Modelica.SIunits.Temperature TCooOn=297.15
+  parameter Modelica.SIunits.Temperature TCooOn=273.15+23.3
     "Cooling setpoint during on";
   parameter Modelica.SIunits.Temperature TCooOff=303.15
     "Cooling setpoint during off";
@@ -503,7 +503,7 @@ public
     m_flow_nominal=mPle_flow_nominal,
     redeclare package Medium = MediumA,
     allowFlowReversal=allowFlowReversal,
-    dp_nominal=5)  "Pressure drop for return duct"
+    dp_nominal=40) "Pressure drop for return duct"
     annotation (Placement(transformation(extent={{562,38},{542,58}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
