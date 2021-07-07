@@ -5,7 +5,7 @@ model FlexlabX1aDR
   extends BaseClasses.PartialOpenLoopX1aV1(
     heaCoi(show_T=true),
     cooCoi(show_T=true),
-    dpRetDuc1(dp_nominal=30));
+    dpRetDuc1(dp_nominal=10));
 
   Modelica.Blocks.Sources.Constant TSupSetHea(y(
       final quantity="ThermodynamicTemperature",
@@ -421,8 +421,8 @@ This is for
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/ASHRAE2006.mos"
         "Simulate and plot"),
     experiment(
-      StartTime=24454800,
-      StopTime=24627600,
-      Tolerance=1e-06,
+      StartTime=24796800,
+      StopTime=24969600,
+      Interval=300,
       __Dymola_Algorithm="Dassl"));
 end FlexlabX1aDR;

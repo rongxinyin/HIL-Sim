@@ -5,7 +5,7 @@ model FlexlabX1aBaseline
   extends BaseClasses.PartialOpenLoopX1aV1(
     heaCoi(show_T=true),
     cooCoi(show_T=true),
-    dpRetDuc1(dp_nominal=30));
+    dpRetDuc1(dp_nominal=10));
 
   Modelica.Blocks.Sources.Constant TSupSetHea(y(
       final quantity="ThermodynamicTemperature",

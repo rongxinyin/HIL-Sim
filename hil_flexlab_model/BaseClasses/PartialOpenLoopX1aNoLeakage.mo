@@ -231,7 +231,7 @@ partial model PartialOpenLoopX1aNoLeakage
     m_flow_nominal=mCor_flow_nominal,
     VRoo=VRooCor,
     allowFlowReversal=allowFlowReversal) "Middle thermal zone"
-    annotation (Placement(transformation(extent={{824,24},{864,64}})));
+    annotation (Placement(transformation(extent={{870,24},{910,64}})));
   Buildings.Examples.VAVReheat.ThermalZones.VAVBranch sou(
     redeclare package MediumA = MediumA,
     redeclare package MediumW = MediumW,
@@ -254,7 +254,7 @@ partial model PartialOpenLoopX1aNoLeakage
     portFlowDirection_3=if allowFlowReversal then Modelica.Fluid.Types.PortFlowDirection.Bidirectional
          else Modelica.Fluid.Types.PortFlowDirection.Entering)
     "Splitter for room return from north and mid and south zone"
-    annotation (Placement(transformation(extent={{764,10},{784,-10}})));
+    annotation (Placement(transformation(extent={{746,10},{766,-10}})));
   Buildings.Fluid.FixedResistances.Junction splRetCor(
     redeclare package Medium = MediumA,
     m_flow_nominal={mSou_flow_nominal + mCor_flow_nominal,mSou_flow_nominal,
@@ -270,7 +270,7 @@ partial model PartialOpenLoopX1aNoLeakage
     portFlowDirection_3=if allowFlowReversal then Modelica.Fluid.Types.PortFlowDirection.Bidirectional
          else Modelica.Fluid.Types.PortFlowDirection.Entering)
     "Splitter for room return from mid and south zone"
-    annotation (Placement(transformation(extent={{942,10},{962,-10}})));
+    annotation (Placement(transformation(extent={{988,10},{1008,-10}})));
   Buildings.Fluid.FixedResistances.Junction splSupNor(
     redeclare package Medium = MediumA,
     m_flow_nominal={m_flow_nominal,m_flow_nominal - mNor_flow_nominal,
@@ -337,7 +337,7 @@ partial model PartialOpenLoopX1aNoLeakage
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={834,94})));
+        origin={880,94})));
   Buildings.Fluid.Sensors.TemperatureTwoPort TSupSou(
     redeclare package Medium = MediumA,
     initType=Modelica.Blocks.Types.Init.InitialState,
@@ -364,7 +364,7 @@ partial model PartialOpenLoopX1aNoLeakage
       Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={834,132})));
+        origin={880,134})));
   Buildings.Fluid.Sensors.VolumeFlowRate VSupSou_flow(
     redeclare package Medium = MediumA,
     initType=Modelica.Blocks.Types.Init.InitialState,
@@ -463,7 +463,7 @@ equation
       smooth=Smooth.None,
       thickness=0.5));
   connect(splRetCor.port_1, splRetNor.port_2) annotation (Line(
-      points={{942,0},{784,0}},
+      points={{988,0},{766,0}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
@@ -478,7 +478,7 @@ equation
       smooth=Smooth.None,
       thickness=0.5));
   connect(splSupCor.port_3, cor.port_a) annotation (Line(
-      points={{834,-30},{834,24}},
+      points={{834,-30},{834,24},{880,24}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
@@ -534,7 +534,7 @@ equation
       color={0,127,255},
       thickness=0.5));
   connect(cor.port_b,TSupCor. port_a) annotation (Line(
-      points={{834,64},{834,84}},
+      points={{880,64},{880,84}},
       color={0,127,255},
       thickness=0.5));
   connect(sou.port_b, TSupSou.port_a) annotation (Line(
@@ -547,7 +547,7 @@ equation
       color={0,127,255},
       thickness=0.5));
   connect(TSupCor.port_b,VSupCor_flow. port_a) annotation (Line(
-      points={{834,104},{834,122}},
+      points={{880,104},{880,124}},
       color={0,127,255},
       thickness=0.5));
   connect(TSupSou.port_b, VSupSou_flow.port_a) annotation (Line(
@@ -613,25 +613,25 @@ equation
           -40},{844,-40}}, color={0,127,255}));
   connect(VSupNor_flow.port_b, flo.portsNor[1]) annotation (Line(points={{708,138},
           {708,481.18},{896.857,481.18}}, color={0,127,255}));
-  connect(VSupCor_flow.port_b, flo.portsCor[1]) annotation (Line(points={{834,142},
-          {834,302},{802,302},{802,446},{858,446},{858,446.78},{896.857,446.78}},
+  connect(VSupCor_flow.port_b, flo.portsCor[1]) annotation (Line(points={{880,144},
+          {880,248},{800,248},{800,446},{858,446},{858,446.78},{896.857,446.78}},
         color={0,127,255}));
   connect(VSupSou_flow.port_b, flo.portsSou[1]) annotation (Line(points={{1080,
           138},{1080,378},{898,378},{898,412.38},{896.857,412.38}},
                                                                color={0,127,255}));
-  connect(splRetCor.port_2, flo.portsSou[2]) annotation (Line(points={{962,0},{
-          1156,0},{1156,412.38},{905.429,412.38}},
+  connect(splRetCor.port_2, flo.portsSou[2]) annotation (Line(points={{1008,0},
+          {1156,0},{1156,412.38},{905.429,412.38}},
                                               color={0,127,255}));
-  connect(splRetCor.port_3, flo.portsCor[2]) annotation (Line(points={{952,10},
-          {952,304},{864,304},{864,428},{906,428},{906,446.78},{905.429,446.78}},
+  connect(splRetCor.port_3, flo.portsCor[2]) annotation (Line(points={{998,10},
+          {998,304},{864,304},{864,428},{906,428},{906,446.78},{905.429,446.78}},
         color={0,127,255}));
-  connect(splRetNor.port_3, flo.portsNor[2]) annotation (Line(points={{774,10},
-          {774,458},{908,458},{908,482},{905.429,482},{905.429,481.18}},color={0,
+  connect(splRetNor.port_3, flo.portsNor[2]) annotation (Line(points={{756,10},
+          {756,458},{908,458},{908,482},{905.429,482},{905.429,481.18}},color={0,
           127,255}));
   connect(senSupFlo.port_b, splSupNor.port_1)
     annotation (Line(points={{420,-40},{698,-40}}, color={0,127,255}));
   connect(dpRetDuc.port_a, splRetNor.port_1) annotation (Line(points={{400,140},
-          {584,140},{584,0},{764,0}}, color={0,127,255}));
+          {584,140},{584,0},{746,0}}, color={0,127,255}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-380,
             -400},{1420,600}}), graphics={Line(points={{310,404}}, color={28,
               108,200}), Line(
