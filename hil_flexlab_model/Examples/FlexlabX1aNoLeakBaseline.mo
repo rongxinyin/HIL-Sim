@@ -1,5 +1,5 @@
 within hil_flexlab_model.Examples;
-model FlexlabX1aBaselineNoLeak
+model FlexlabX1aNoLeakBaseline
   "Variable air volume flow system with terminal reheat - flexlab baseline"
   extends Modelica.Icons.Example;
   extends BaseClasses.PartialOpenLoopX1aNoLeakage(
@@ -390,7 +390,9 @@ This is for
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/ASHRAE2006.mos"
         "Simulate and plot"),
     experiment(
-      StopTime=87600,
+      StartTime=18571200,
+      StopTime=19009200,
+      Interval=300,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
-end FlexlabX1aBaselineNoLeak;
+end FlexlabX1aNoLeakBaseline;

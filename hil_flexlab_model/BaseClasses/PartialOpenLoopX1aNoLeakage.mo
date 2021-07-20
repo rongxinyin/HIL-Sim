@@ -502,7 +502,7 @@ equation
       thickness=0.5,
       smooth=Smooth.None));
   connect(weaBus, flo.weaBus) annotation (Line(
-      points={{-320,180},{-320,513},{952.571,513}},
+      points={{-320,180},{-320,527.62},{952.571,527.62}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));

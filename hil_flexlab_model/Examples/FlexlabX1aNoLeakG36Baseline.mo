@@ -1,5 +1,5 @@
 within hil_flexlab_model.Examples;
-model FlexlabX1aNoLeakage
+model FlexlabX1aNoLeakG36Baseline
   "Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
   extends BaseClasses.PartialOpenLoopX1aNoLeakage;
@@ -62,6 +62,7 @@ model FlexlabX1aNoLeakage
   Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.ModeAndSetPoints TZonSet[numZon](
     final TZonHeaOn=fill(THeaOn, numZon),
     final TZonHeaOff=fill(THeaOff, numZon),
+    TZonCooOn=fill(23.3, numZon),
     final TZonCooOff=fill(TCooOff, numZon)) "Zone setpoint temperature"
     annotation (Placement(transformation(extent={{-32,322},{-12,342}})));
   Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow.Zone
@@ -391,9 +392,9 @@ This is for
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/Guideline36.mos"
         "Simulate and plot"),
     experiment(
-      StartTime=23594400,
-      StopTime=23677200,
+      StartTime=18571200,
+      StopTime=19009200,
       Interval=300,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
-end FlexlabX1aNoLeakage;
+end FlexlabX1aNoLeakG36Baseline;

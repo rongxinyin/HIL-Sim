@@ -1,5 +1,5 @@
 within hil_flexlab_model.Examples;
-model FlexlabX1aNoLeakageDR
+model FlexlabX1aNoLeakG36DR
   "DR mode - Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
   extends BaseClasses.PartialOpenLoopX1aNoLeakage;
@@ -62,6 +62,7 @@ model FlexlabX1aNoLeakageDR
   Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.ModeAndSetPoints TZonSet[numZon](
     final TZonHeaOn=fill(THeaOn, numZon),
     final TZonHeaOff=fill(THeaOff, numZon),
+    TZonCooOn=fill(23.3, numZon),
     final TZonCooOff=fill(TCooOff, numZon)) "Zone setpoint temperature"
     annotation (Placement(transformation(extent={{-32,322},{-12,342}})));
   Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow.Zone
@@ -92,8 +93,7 @@ model FlexlabX1aNoLeakageDR
   Modelica.Blocks.Math.Add add
     annotation (Placement(transformation(extent={{-124,446},{-144,466}})));
   Modelica.Blocks.Sources.CombiTimeTable cooSetDR(
-    table=[0,0; 10,0; 10,-1.1; 14,-1.1; 14,2.2; 18,2.2; 18,0; 20,0; 20,0; 24,0],
-
+    table=[0,0; 10,0; 10,0; 14,0; 14,2.3; 18,2.3; 18,0; 20,0; 20,0; 24,0],
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic,
     timeScale=3600) "cooling schedule for demand response"
     annotation (Placement(transformation(extent={{-142,400},{-122,420}})));
@@ -406,9 +406,9 @@ This is for
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/Guideline36.mos"
         "Simulate and plot"),
     experiment(
-      StartTime=23594400,
-      StopTime=23677200,
+      StartTime=18571200,
+      StopTime=19009200,
       Interval=300,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
-end FlexlabX1aNoLeakageDR;
+end FlexlabX1aNoLeakG36DR;
