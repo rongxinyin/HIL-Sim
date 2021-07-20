@@ -155,6 +155,73 @@ model FlexlabX1A "Model of a flexlab x1a"
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     final sampleModel=sampleModel) "Core zone"
     annotation (Placement(transformation(extent={{144,36},{184,76}})));
+  Buildings.ThermalZones.Detailed.MixedAir clo(
+    redeclare package Medium = Medium,
+    hRoo = 3.6576,
+    AFlo = 3.93,
+    lat = 0.66098585832754,
+    nConExt = 2,
+    nConBou = 3,
+    nSurBou = 2,
+    nConExtWin = 0,
+    nConPar = 0,
+    surBou(
+        A = {3.6576 * 2.886075 - 2.39*1.22, 2.39 * 1.22},
+        each absIR = 0.9,
+        each absSol = 0.9,
+        each til=Buildings.Types.Tilt.Wall),
+    datConExt(
+        layers = {higIns, R20Wal},
+        A = {3.6576 * 1.667, 3.93},
+        til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling},
+        azi = {Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.N}),
+    datConBou(
+        layers = {higIns, celDiv, slaCon},
+        A = {3.6576*1.524, 3.6576 * 1.524, 3.93},
+        til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Floor},
+        azi = {Buildings.Types.Azimuth.W, Buildings.Types.Azimuth.E, Buildings.Types.Azimuth.N},
+        stateAtSurface_a = {true, false, false}),
+    nPorts=4,
+    intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
+    extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
+    energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
+    final sampleModel=sampleModel) "Closet"
+    annotation (Placement(transformation(extent={{154,312},{194,352}})));
+
+  Buildings.ThermalZones.Detailed.MixedAir ele(
+    redeclare package Medium = Medium,
+    hRoo = 3.6576,
+    AFlo = 2.39,
+    lat = 0.66098585832754,
+    nSurBou = 2,
+    nConExt=4,
+    nConExtWin=0,
+    nConPar=0,
+    nConBou=1,
+    surBou(
+      A = {3.6576 * 1.2641, 3.6576 * 1.524},
+      each absIR = 0.9,
+      each absSol = 0.9,
+      each til = Buildings.Types.Tilt.Wall),
+    datConExt(
+      layers = {NorthExt, NorthExt, extDooUn, R20Wal},
+      A = {3.6576 * 1.26413, 3.6576 * 1.524 - 2.38658 * 1.524, 2.38658*1.524, 2.39},
+      til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling},
+      azi = {Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.W, Buildings.Types.Azimuth.W, Buildings.Types.Azimuth.N}),
+    datConBou(
+     layers = {slaCon},
+     A = {2.39},
+     til = {Buildings.Types.Tilt.Floor},
+     azi = {Buildings.Types.Azimuth.N},
+     each stateAtSurface_a = false),
+    nPorts=4,
+    intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
+    extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
+    energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
+    final sampleModel=sampleModel) "Model of the electrical room"
+    annotation (Placement(transformation(extent={{154,372},{194,412}})));
+
+
   Modelica.Fluid.Vessels.BaseClasses.VesselFluidPorts_b portsSou[2](
       redeclare package Medium = Medium) "Fluid inlets and outlets"
     annotation (Placement(transformation(extent={{70,-42},{110,-26}})));
@@ -176,7 +243,7 @@ model FlexlabX1A "Model of a flexlab x1a"
   Modelica.Blocks.Routing.Replicator replicator(nout=1)
     annotation (Placement(transformation(extent={{-40,170},{-20,190}})));
   Buildings.BoundaryConditions.WeatherData.Bus weaBus "Weather bus"
-    annotation (Placement(transformation(extent={{200,190},{220,210}})));
+    annotation (Placement(transformation(extent={{200,224},{220,244}})));
   Buildings.Examples.VAVReheat.ThermalZones.RoomLeakage leaSou(
     redeclare package Medium = Medium,
     VRoo=6.49*3.05*3.6576,
@@ -184,7 +251,7 @@ model FlexlabX1A "Model of a flexlab x1a"
     azi=Buildings.Types.Azimuth.S,
     final use_windPressure=use_windPressure)
     "Model for air infiltration through the envelope"
-    annotation (Placement(transformation(extent={{-56,408},{-20,448}})));
+    annotation (Placement(transformation(extent={{-56,400},{-20,440}})));
   Buildings.Examples.VAVReheat.ThermalZones.RoomLeakage leaPle(
     redeclare package Medium = Medium,
     VRoo=6.49*(3.05 + 3.05 + 3.23)*1.625,
@@ -209,10 +276,10 @@ model FlexlabX1A "Model of a flexlab x1a"
     annotation (Placement(transformation(extent={{292,310},{312,330}})));
   Modelica.Thermal.HeatTransfer.Sensors.TemperatureSensor temAirNor
     "Air temperature sensor"
-    annotation (Placement(transformation(extent={{292,280},{312,300}})));
+    annotation (Placement(transformation(extent={{296,242},{316,262}})));
   Modelica.Thermal.HeatTransfer.Sensors.TemperatureSensor temAirCor
     "Air temperature sensor"
-    annotation (Placement(transformation(extent={{292,244},{312,264}})));
+    annotation (Placement(transformation(extent={{294,280},{314,300}})));
   Modelica.Blocks.Routing.Multiplex3
     multiplex3 annotation (Placement(transformation(extent={{340,280},{360,300}})));
   Modelica.Blocks.Interfaces.RealOutput TRooAir[3](
@@ -307,6 +374,31 @@ model FlexlabX1A "Model of a flexlab x1a"
     Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionDoor
     parDoo
     annotation (Placement(transformation(extent={{-130,306},{-110,326}})));
+  parameter
+    Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
+    higIns
+    annotation (Placement(transformation(extent={{84,464},{104,484}})));
+
+  parameter
+    Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorUninsulated
+    extDooUn annotation (Placement(transformation(extent={{54,434},{74,454}})));
+
+  parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic
+    slaCon(nLay=3, material={Buildings.HeatTransfer.Data.Solids.Generic(
+        x=0.1524,
+        k=1.13,
+        c=1000,
+        d=1400,
+        nSta=5),Buildings.HeatTransfer.Data.Solids.Generic(
+        x=0.127,
+        k=0.036,
+        c=1200,
+        d=40),Buildings.HeatTransfer.Data.Solids.Generic(
+        x=0.2,
+        k=1.8,
+        c=1100,
+        d=2400)}) "Construction of the slab"
+    annotation (Placement(transformation(extent={{120,464},{140,484}})));
   Modelica.Blocks.Sources.CombiTimeTable Lighting(
     table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1;
         24,0.05],
@@ -353,15 +445,15 @@ model FlexlabX1A "Model of a flexlab x1a"
     "Matrix gain to split up heat gain in radiant, convective and latent gain"
     annotation (Placement(transformation(extent={{-100,-24},{-80,-4}})));
   Modelica.Blocks.Sources.CombiTimeTable intGaiSou(
-    table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1;
-        24,0.05],
+    table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1; 24,
+        0.05],
     timeScale=3600,
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "Fraction of internal heat gain"
     annotation (Placement(transformation(extent={{-138,-24},{-118,-4}})));
   Modelica.Blocks.Sources.CombiTimeTable intGaiCor(
-    table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1;
-        24,0.05],
+    table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1; 24,
+        0.05],
     timeScale=3600,
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "Fraction of internal heat gain"
@@ -369,6 +461,17 @@ model FlexlabX1A "Model of a flexlab x1a"
   Modelica.Blocks.Math.MatrixGain gaiCor(K=35*[0.4; 0.4; 0.2])
     "Matrix gain to split up heat gain in radiant, convective and latent gain"
     annotation (Placement(transformation(extent={{-100,20},{-80,40}})));
+
+  Modelica.Blocks.Sources.CombiTimeTable intGaiClo(table=[0,0,0,0; 86400,0,0,0],
+      tableOnFile=false) "Internal gain heat flow for the closet"
+    annotation (Placement(transformation(extent={{82,370},{102,390}})));
+  Modelica.Fluid.Vessels.BaseClasses.VesselFluidPorts_b portsClo[2](redeclare
+      package Medium = Medium) "Fluid inlets and outlets"
+    annotation (Placement(transformation(extent={{74,316},{114,332}})));
+
+  Modelica.Blocks.Sources.CombiTimeTable intGaiEle(table=[0,0,0,0; 86400,0,0,0],
+      tableOnFile=false) "Internal gain heat flow for the electrical room"
+    annotation (Placement(transformation(extent={{82,402},{102,422}})));
 equation
   connect(sou.surf_conBou[2], cor.surf_conBou[3]) annotation (Line(
       points={{170,-40},{170,-54},{200,-54},{200,20},{170,20},{170,40.25}},
@@ -401,7 +504,7 @@ equation
       pattern=LinePattern.Dash,
       smooth=Smooth.None));
   connect(sou.weaBus, weaBus) annotation (Line(
-      points={{181.9,-6.1},{181.9,8},{210,8},{210,200}},
+      points={{181.9,-6.1},{181.9,8},{210,8},{210,234}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None), Text(
@@ -409,32 +512,32 @@ equation
       index=1,
       extent={{6,3},{6,3}}));
   connect(ple.weaBus, weaBus) annotation (Line(
-      points={{395.9,97.9},{395.9,120},{210,120},{210,200}},
+      points={{395.9,97.9},{395.9,120},{210,120},{210,234}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
   connect(nor.weaBus, weaBus) annotation (Line(
-      points={{181.9,153.9},{182,160},{182,168},{210,168},{210,200}},
+      points={{181.9,153.9},{181.9,168},{210,168},{210,234}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
   connect(cor.weaBus, weaBus) annotation (Line(
-      points={{181.9,73.9},{181.9,90},{210,90},{210,200}},
+      points={{181.9,73.9},{181.9,90},{210,90},{210,234}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
   connect(weaBus, leaSou.weaBus) annotation (Line(
-      points={{210,200},{-80,200},{-80,428},{-56,428}},
+      points={{210,234},{-80,234},{-80,420},{-56,420}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
   connect(weaBus, leaPle.weaBus) annotation (Line(
-      points={{210,200},{-80,200},{-80,362},{-56,362}},
+      points={{210,234},{-80,234},{-80,362},{-56,362}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
   connect(weaBus, leaNor.weaBus) annotation (Line(
-      points={{210,200},{-80,200},{-80,306},{-56,306}},
+      points={{210,234},{-80,234},{-80,306},{-56,306}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
@@ -448,16 +551,6 @@ equation
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
-  connect(temAirNor.T, multiplex3.u2[1]) annotation (Line(
-      points={{312,290},{326,290},{326,290},{338,290}},
-      color={0,0,127},
-      smooth=Smooth.None,
-      pattern=LinePattern.Dash));
-  connect(temAirCor.T, multiplex3.u3[1]) annotation (Line(
-      points={{312,254},{332,254},{332,283},{338,283}},
-      color={0,0,127},
-      smooth=Smooth.None,
-      pattern=LinePattern.Dash));
   connect(sou.heaPorAir, temAirSou.port) annotation (Line(
       points={{163,-24},{224,-24},{224,100},{264,100},{264,350},{290,350}},
       color={191,0,0},
@@ -467,11 +560,11 @@ equation
       color={191,0,0},
       smooth=Smooth.None));
   connect(nor.heaPorAir, temAirNor.port) annotation (Line(
-      points={{163,136},{164,136},{164,290},{292,290}},
+      points={{163,136},{238,136},{238,252},{296,252}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(cor.heaPorAir, temAirCor.port) annotation (Line(
-      points={{163,56},{162,56},{162,254},{292,254}},
+      points={{163,56},{186,56},{186,110},{274,110},{274,290},{294,290}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(sou.ports[1], portsSou[1]) annotation (Line(
@@ -509,7 +602,7 @@ equation
       color={0,127,255},
       smooth=Smooth.None));
   connect(leaSou.port_b, sou.ports[3]) annotation (Line(
-      points={{-20,428},{-2,428},{-2,-72},{134,-72},{134,-34},{149,-34}},
+      points={{-20,420},{-2,420},{-2,-72},{134,-72},{134,-34},{149,-34}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
@@ -593,7 +686,7 @@ equation
       smooth=Smooth.None,
       thickness=0.5));
   connect(out.weaBus, weaBus) annotation (Line(
-      points={{-58,250.2},{-70,250.2},{-70,250},{-80,250},{-80,200},{210,200}},
+      points={{-58,250.2},{-70,250.2},{-70,250},{-80,250},{-80,234},{210,234}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None), Text(
@@ -629,14 +722,49 @@ equation
           {324,88},{356.4,88}}, color={0,0,127}));
   connect(intGaiSou.y, gaiSou.u)
     annotation (Line(points={{-117,-14},{-102,-14}}, color={0,0,127}));
-  connect(gaiSou.y, sou.qGai_flow) annotation (Line(points={{-79,-14},{32,-14},
-          {32,-16},{142.4,-16}}, color={0,0,127}));
+  connect(gaiSou.y, sou.qGai_flow) annotation (Line(points={{-79,-14},{32,-14},{
+          32,-16},{142.4,-16}}, color={0,0,127}));
   connect(intGaiCor.y, gaiCor.u)
     annotation (Line(points={{-117,30},{-102,30}}, color={0,0,127}));
-  connect(gaiCor.y, cor.qGai_flow) annotation (Line(points={{-79,30},{32,30},{
-          32,64},{142.4,64}}, color={0,0,127}));
+  connect(gaiCor.y, cor.qGai_flow) annotation (Line(points={{-79,30},{32,30},{32,
+          64},{142.4,64}}, color={0,0,127}));
   connect(gaiNor.y, nor.qGai_flow) annotation (Line(points={{-79,110},{32.5,110},
           {32.5,144},{142.4,144}}, color={0,0,127}));
+  connect(weaBus, clo.weaBus) annotation (Line(
+      points={{210,234},{226,234},{226,350},{212,350},{212,349.9},{191.9,349.9}},
+      color={255,204,51},
+      thickness=0.5), Text(
+      string="%first",
+      index=-1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+
+  connect(intGaiClo.y, clo.qGai_flow) annotation (Line(points={{103,380},{130,380},
+          {130,340},{152.4,340}}, color={0,0,127}));
+  connect(clo.ports[1],portsClo[1]) annotation (Line(points={{159,319},{126,319},
+          {126,324},{84,324}},  color={0,127,255}));
+  connect(clo.ports[2],portsClo[2]) annotation (Line(points={{159,321},{128,321},
+          {128,324},{104,324}}, color={0,127,255}));
+  connect(ele.surf_surBou[2], clo.surf_conBou[1]) annotation (Line(points={{170.2,
+          378.5},{176,378.5},{176,315.333},{180,315.333}},
+                                        color={191,0,0}));
+  connect(clo.surf_surBou[2], nor.surf_conBou[3]) annotation (Line(points={{170.2,
+          318.5},{170,318.5},{170,119.833}},
+                          color={191,0,0}));
+  connect(weaBus, ele.weaBus) annotation (Line(
+      points={{210,234},{226,234},{226,409.9},{191.9,409.9}},
+      color={255,204,51},
+      thickness=0.5), Text(
+      string="%first",
+      index=-1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(intGaiEle.y, ele.qGai_flow) annotation (Line(points={{103,412},{128.5,
+          412},{128.5,400},{152.4,400}}, color={0,0,127}));
+  connect(temAirNor.T, multiplex3.u3[1]) annotation (Line(points={{316,252},{
+          326,252},{326,283},{338,283}}, color={0,0,127}));
+  connect(temAirCor.T, multiplex3.u2[1])
+    annotation (Line(points={{314,290},{338,290}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=true, extent={{-160,-100},
             {400,500}},
         initialScale=0.1)),     Icon(coordinateSystem(
