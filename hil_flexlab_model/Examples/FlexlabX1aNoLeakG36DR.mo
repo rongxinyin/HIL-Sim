@@ -88,7 +88,8 @@ model FlexlabX1aNoLeakG36DR
     final pMaxSet=410,
     final yFanMin=yFanMin,
     final VPriSysMax_flow=VPriSysMax_flow,
-    final peaSysPop=1.2*sum({0.05*AFlo[i] for i in 1:numZon})) "AHU controller"
+    final peaSysPop=1.2*sum({0.05*AFlo[i] for i in 1:numZon}),
+    numIgnReqSupTem=0)                                         "AHU controller"
     annotation (Placement(transformation(extent={{360,418},{440,546}})));
   Modelica.Blocks.Math.Add add
     annotation (Placement(transformation(extent={{-124,446},{-144,466}})));
