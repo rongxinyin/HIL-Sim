@@ -1,5 +1,5 @@
 within hil_flexlab_model.Examples;
-model FlexlabX1aNoLeakG36Baseline
+model G36BaselineFixedTstat
   "Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
   extends BaseClasses.PartialOpenLoopX1aNoLeakage;
@@ -63,7 +63,8 @@ model FlexlabX1aNoLeakG36Baseline
     final TZonHeaOn=fill(THeaOn, numZon),
     final TZonHeaOff=fill(THeaOff, numZon),
     TZonCooOn=fill(23.3, numZon),
-    final TZonCooOff=fill(TCooOff, numZon)) "Zone setpoint temperature"
+    final TZonCooOff=fill(TCooOff, numZon),
+    ignDemLim=false)                        "Zone setpoint temperature"
     annotation (Placement(transformation(extent={{-32,322},{-12,342}})));
   Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow.Zone
     zonOutAirSet[numZon](
@@ -97,8 +98,16 @@ equation
       color={0,0,0},
       smooth=Smooth.None,
       pattern=LinePattern.Dot));
+  connect(conVAVNor.TZon, TRooAir.y1[1]) annotation (Line(
+      points={{656,42},{626,42},{626,176},{568,176},{568,177},{511,177}},
+      color={0,0,127},
+      pattern=LinePattern.Dash));
   connect(TRooAir.y2[1], conVAVCor.TZon) annotation (Line(
       points={{511,170},{766,170},{766,46},{778,46}},
+      color={0,0,127},
+      pattern=LinePattern.Dash));
+  connect(TRooAir.y3[1], conVAVSou.TZon) annotation (Line(
+      points={{511,163},{762,163},{762,42},{1018,42}},
       color={0,0,127},
       pattern=LinePattern.Dash));
   connect(TSupNor.T, conVAVNor.TDis) annotation (Line(points={{697,90},{648,90},
@@ -305,10 +314,6 @@ equation
           {770,42},{770,74},{876,74},{876,60},{912,60}}, color={0,0,127}));
   connect(conVAVSou.yDam_actual, sou.y_actual) annotation (Line(points={{1018,38},
           {1012,38},{1012,68},{1126,68},{1126,52},{1112,52}}, color={0,0,127}));
-  connect(conVAVSou.TZon, TRooAir.y1[1]) annotation (Line(points={{1018,42},{
-          764,42},{764,177},{511,177}}, color={0,0,127}));
-  connect(conVAVNor.TZon, TRooAir.y3[1]) annotation (Line(points={{656,42},{584,
-          42},{584,163},{511,163}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-320},{1400,
             640}}), graphics={Line(
@@ -394,4 +399,4 @@ This is for
       Interval=300,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
-end FlexlabX1aNoLeakG36Baseline;
+end G36BaselineFixedTstat;
