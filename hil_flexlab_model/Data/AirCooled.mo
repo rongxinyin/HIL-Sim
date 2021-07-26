@@ -23,7 +23,7 @@ package AirCooled "Performance data for Air Cooled Chillers"
           -0.0016587157},
       EIRFunPLR={0.0,1.0,0.0},
       etaMotor=1.0)
-    "Data record for chiller ElectricEIRChiller York YCAL0019EE 54.2kW/2.9COP" annotation (
+    "Min flow of chiller is 15.9 gpm, Data record for chiller ElectricEIRChiller York YCAL0019EE 54.2kW/2.9COP" annotation (
     defaultComponentName="datChi",
     defaultComponentPrefixes="parameter",
     Documentation(info=

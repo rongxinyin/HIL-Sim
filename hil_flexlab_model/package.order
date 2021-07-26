@@ -2,3 +2,5 @@ ThermalZones
 BaseClasses
 Data
 Examples
+AirCooledChiller_PrimaryLoop
+AC_Chiller_PrimaryLoop

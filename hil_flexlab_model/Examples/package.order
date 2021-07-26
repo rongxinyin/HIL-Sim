@@ -1,8 +1,6 @@
 FlexlabX1aValidation
 FlexlabX1aNoLeakage
 FlexlabX1aBaseline
-<<<<<<< HEAD
 FlexlabX1aBaseline_Chiller
-=======
 FlexlabX1aDR
->>>>>>> 6ef2750ac3d3d81c97c44c85c458279a60646b02
+ChillerModel_Exchange

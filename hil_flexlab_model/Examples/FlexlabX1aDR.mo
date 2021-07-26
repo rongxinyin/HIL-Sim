@@ -409,7 +409,8 @@ for <a href=\"https://github.com/ibpsa/modelica-ibpsa/issues/404\">#404</a>.
 </li>
 <li>
 September 24, 2015 by Michael Wetter:<br/>
-Set default temperature for medium to avoid conflicting
+Set default temperature for 
+to avoid conflicting
 start values for alias variables of the temperature
 of the building and the ambient air.
 This is for
