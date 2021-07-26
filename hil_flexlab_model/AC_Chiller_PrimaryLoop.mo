@@ -13,11 +13,16 @@ model AC_Chiller_PrimaryLoop
     "constant Real mChiEva_flow_nominal=per.mEva_flow_nominal";
     constant Real mChiCon_flow_nominal=per.mCon_flow_nominal;
 
+
+
   parameter Modelica.SIunits.Temperature TSupChi_nominal=281.15;
   parameter Modelica.SIunits.Temperature TSetSupAir=286.15;
 
 parameter Modelica.SIunits.MassFlowRate mChiEva_flow_nominal=per.mEva_flow_nominal
     "Design mass flow rate of chiller";
+parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
+    "Design mass flow rate of secondary loop";
+
 
   Modelica.Blocks.Sources.Constant TSetSupChiConst(final k=TSupChi_nominal)
     "Set point for chiller temperature"
@@ -61,7 +66,7 @@ parameter Modelica.SIunits.MassFlowRate mChiEva_flow_nominal=per.mEva_flow_nomin
 
   Buildings.Fluid.FixedResistances.Junction chw_sup(
     redeclare package Medium = MediumW,
-    m_flow_nominal={mChiEva_flow_nominal + sec_ret.m_flow,-sec_ret.m_flow,
+    m_flow_nominal={mChiEva_flow_nominal + mSec_flow_nominal,-mSec_flow_nominal,
         mChiEva_flow_nominal},
     from_dp=true,
     linearized=true,
@@ -73,7 +78,7 @@ parameter Modelica.SIunits.MassFlowRate mChiEva_flow_nominal=per.mEva_flow_nomin
         origin={308,-176})));
   Buildings.Fluid.FixedResistances.Junction chw_ret(
     redeclare package Medium = MediumW,
-    m_flow_nominal={sec_ret.m_flow,-(mChiEva_flow_nominal + sec_ret.m_flow),
+    m_flow_nominal={mSec_flow_nominal,-(mChiEva_flow_nominal + mSec_flow_nominal),
         mChiEva_flow_nominal},
     from_dp=true,
     linearized=true,
@@ -87,7 +92,6 @@ parameter Modelica.SIunits.MassFlowRate mChiEva_flow_nominal=per.mEva_flow_nomin
     redeclare package Medium = MediumW,
     use_m_flow_in=true,
     use_T_in=true,
-    m_flow=0.33,
     nPorts=1) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
@@ -99,7 +103,7 @@ parameter Modelica.SIunits.MassFlowRate mChiEva_flow_nominal=per.mEva_flow_nomin
         rotation=180,
         origin={406,-136})));
   Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium =
-        Buildings.Media.Water, m_flow_nominal=sec_ret.m_flow)
+        Buildings.Media.Water, m_flow_nominal=mSec_flow_nominal)
     annotation (Placement(transformation(extent={{350,-146},{370,-126}})));
   Modelica.Blocks.Interfaces.BooleanInput chiOn "On signal for chiller plant"
     annotation (Placement(transformation(extent={{-20,-20},{20,20}},
