@@ -399,38 +399,28 @@ model FlexlabX1A "Model of a flexlab x1a"
         c=1100,
         d=2400)}) "Construction of the slab"
     annotation (Placement(transformation(extent={{120,464},{140,484}})));
-  Modelica.Blocks.Sources.CombiTimeTable Lighting(
-    table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1;
-        24,0.05],
+  Modelica.Blocks.Sources.CombiTimeTable ligSch(
+    table=[0,0; 7,0; 7,0.5; 8,0.5; 8,0.9; 17,0.9; 17,0.5; 21,0.5; 21,0; 24,0],
     timeScale=3600,
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "internal heat gain from lights"
     annotation (Placement(transformation(extent={{246,466},{266,486}})));
-  Modelica.Blocks.Sources.CombiTimeTable Plug(
+  Modelica.Blocks.Sources.CombiTimeTable pluSch(
     table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1;
         24,0.05],
     timeScale=3600,
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "internal heat gain from plug"
     annotation (Placement(transformation(extent={{246,428},{266,448}})));
-  Modelica.Blocks.Sources.CombiTimeTable occupant(
-    table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1;
-        24,0.05],
-    timeScale=3600,
-    extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
-    "internal heat gain from occupant"
-    annotation (Placement(transformation(extent={{246,396},{266,416}})));
-  Modelica.Blocks.Math.MatrixGain ligGai(K=10*[0.4; 0.4; 0.2])
+  Modelica.Blocks.Math.MatrixGain ligGai(K=10*[0.7; 0.3; 0.0])
     "Matrix gain to split up heat gain in radiant, convective and latent gain"
     annotation (Placement(transformation(extent={{284,466},{304,486}})));
-  Modelica.Blocks.Math.MatrixGain plgGai(K=10*[0.4; 0.4; 0.2])
+  Modelica.Blocks.Math.MatrixGain pluGai(K=10*[0.5; 0.5; 0.0])
     "Matrix gain to split up heat gain in radiant, convective and latent gain"
     annotation (Placement(transformation(extent={{284,428},{304,448}})));
   Modelica.Blocks.Math.MatrixGain occGai(K=14*[0.4; 0.4; 0.2])
     "Matrix gain to split up heat gain in radiant, convective and latent gain"
     annotation (Placement(transformation(extent={{284,396},{304,416}})));
-  Modelica.Blocks.Math.Sum sumIntGai(nin=3)
-    annotation (Placement(transformation(extent={{328,428},{348,448}})));
   Modelica.Blocks.Sources.CombiTimeTable intGaiPle(
     table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1; 24,
         0.05],
@@ -472,6 +462,21 @@ model FlexlabX1A "Model of a flexlab x1a"
   Modelica.Blocks.Sources.CombiTimeTable intGaiEle(table=[0,0,0,0; 86400,0,0,0],
       tableOnFile=false) "Internal gain heat flow for the electrical room"
     annotation (Placement(transformation(extent={{82,402},{102,422}})));
+  Modelica.Blocks.Sources.CombiTimeTable occSch(
+    table=[0,0; 7,0; 7,0.5; 8,0.5; 8,1; 12,1; 12,0.5; 13,0.5; 13,1; 17,1; 17,
+        0.5; 18,0.5; 18,0.0; 24,0.0],
+    timeScale=3600,
+    extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
+    "internal heat gain from lights"
+    annotation (Placement(transformation(extent={{246,390},{266,410}})));
+  Modelica.Blocks.Math.Add3 add3_1
+    annotation (Placement(transformation(extent={{340,458},{360,478}})));
+  Modelica.Blocks.Routing.Multiplex3 multiplex3_1
+    annotation (Placement(transformation(extent={{384,436},{404,456}})));
+  Modelica.Blocks.Math.Add3 add3_2
+    annotation (Placement(transformation(extent={{340,426},{360,446}})));
+  Modelica.Blocks.Math.Add3 add3_3
+    annotation (Placement(transformation(extent={{340,392},{360,412}})));
 equation
   connect(sou.surf_conBou[2], cor.surf_conBou[3]) annotation (Line(
       points={{170,-40},{170,-54},{200,-54},{200,20},{170,20},{170,40.25}},
@@ -703,33 +708,18 @@ equation
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
-  connect(Lighting.y, ligGai.u)
+  connect(ligSch.y, ligGai.u)
     annotation (Line(points={{267,476},{282,476}}, color={0,0,127}));
-  connect(Plug.y, plgGai.u)
+  connect(pluSch.y, pluGai.u)
     annotation (Line(points={{267,438},{282,438}}, color={0,0,127}));
-  connect(occupant.y, occGai.u)
-    annotation (Line(points={{267,406},{282,406}}, color={0,0,127}));
-  connect(plgGai.y[1], sumIntGai.u[2])
-    annotation (Line(points={{305,438},{326,438}},
-                                                 color={0,0,127}));
-  connect(occGai.y[1], sumIntGai.u[1]) annotation (Line(points={{305,406},{316,
-          406},{316,436.667},{326,436.667}},color={0,0,127}));
-  connect(ligGai.y[1], sumIntGai.u[3]) annotation (Line(points={{305,476},{316,
-          476},{316,439.333},{326,439.333}},color={0,0,127}));
   connect(intGaiPle.y, gaiPle.u)
     annotation (Line(points={{-117,-52},{-102,-52}}, color={0,0,127}));
   connect(gaiPle.y, ple.qGai_flow) annotation (Line(points={{-79,-52},{324,-52},
           {324,88},{356.4,88}}, color={0,0,127}));
   connect(intGaiSou.y, gaiSou.u)
     annotation (Line(points={{-117,-14},{-102,-14}}, color={0,0,127}));
-  connect(gaiSou.y, sou.qGai_flow) annotation (Line(points={{-79,-14},{32,-14},{
-          32,-16},{142.4,-16}}, color={0,0,127}));
   connect(intGaiCor.y, gaiCor.u)
     annotation (Line(points={{-117,30},{-102,30}}, color={0,0,127}));
-  connect(gaiCor.y, cor.qGai_flow) annotation (Line(points={{-79,30},{32,30},{32,
-          64},{142.4,64}}, color={0,0,127}));
-  connect(gaiNor.y, nor.qGai_flow) annotation (Line(points={{-79,110},{32.5,110},
-          {32.5,144},{142.4,144}}, color={0,0,127}));
   connect(weaBus, clo.weaBus) annotation (Line(
       points={{210,234},{226,234},{226,350},{212,350},{212,349.9},{191.9,349.9}},
       color={255,204,51},
@@ -765,6 +755,38 @@ equation
           326,252},{326,283},{338,283}}, color={0,0,127}));
   connect(temAirCor.T, multiplex3.u2[1])
     annotation (Line(points={{314,290},{338,290}}, color={0,0,127}));
+  connect(occSch.y, occGai.u) annotation (Line(points={{267,400},{276,400},{276,
+          406},{282,406}}, color={0,0,127}));
+  connect(ligGai.y[1], add3_1.u1)
+    annotation (Line(points={{305,476},{338,476}}, color={0,0,127}));
+  connect(occGai.y[1], add3_1.u3) annotation (Line(points={{305,406},{322,406},
+          {322,460},{338,460}}, color={0,0,127}));
+  connect(pluGai.y[1], add3_1.u2) annotation (Line(points={{305,438},{322,438},
+          {322,468},{338,468}}, color={0,0,127}));
+  connect(ligGai.y[2], add3_2.u1) annotation (Line(points={{305,476},{322,476},
+          {322,444},{338,444}}, color={0,0,127}));
+  connect(pluGai.y[2], add3_2.u2) annotation (Line(points={{305,438},{322,438},
+          {322,436},{338,436}}, color={0,0,127}));
+  connect(occGai.y[2], add3_2.u3) annotation (Line(points={{305,406},{322,406},
+          {322,428},{338,428}}, color={0,0,127}));
+  connect(occGai.y[3], add3_3.u3) annotation (Line(points={{305,406},{322,406},
+          {322,394},{338,394}}, color={0,0,127}));
+  connect(ligGai.y[3], add3_3.u1) annotation (Line(points={{305,476},{322,476},
+          {322,410},{338,410}}, color={0,0,127}));
+  connect(pluGai.y[3], add3_3.u2) annotation (Line(points={{305,438},{322,438},
+          {322,402},{338,402}}, color={0,0,127}));
+  connect(add3_1.y, multiplex3_1.u1[1]) annotation (Line(points={{361,468},{
+          371.5,468},{371.5,453},{382,453}}, color={0,0,127}));
+  connect(add3_2.y, multiplex3_1.u2[1]) annotation (Line(points={{361,436},{372,
+          436},{372,446},{382,446}}, color={0,0,127}));
+  connect(add3_3.y, multiplex3_1.u3[1]) annotation (Line(points={{361,402},{361,
+          420},{382,420},{382,439}}, color={0,0,127}));
+  connect(multiplex3_1.y, nor.qGai_flow) annotation (Line(points={{405,446},{
+          432,446},{432,144},{142.4,144}}, color={0,0,127}));
+  connect(multiplex3_1.y, cor.qGai_flow) annotation (Line(points={{405,446},{
+          274,446},{274,64},{142.4,64}}, color={0,0,127}));
+  connect(multiplex3_1.y, sou.qGai_flow) annotation (Line(points={{405,446},{
+          274,446},{274,-16},{142.4,-16}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=true, extent={{-160,-100},
             {400,500}},
         initialScale=0.1)),     Icon(coordinateSystem(
