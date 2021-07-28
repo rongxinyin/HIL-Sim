@@ -399,23 +399,22 @@ model FlexlabX1A "Model of a flexlab x1a"
         c=1100,
         d=2400)}) "Construction of the slab"
     annotation (Placement(transformation(extent={{120,464},{140,484}})));
-  Modelica.Blocks.Sources.CombiTimeTable Lighting(
-    table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1;
-        24,0.05],
+  Modelica.Blocks.Sources.CombiTimeTable ligSch(
+    table=[0,0; 7,0; 7,0.5; 8,0.5; 8,0.9; 17,0.9; 17,0.5; 21,0.5; 21,0; 24,0],
     timeScale=3600,
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "internal heat gain from lights"
     annotation (Placement(transformation(extent={{246,466},{266,486}})));
-  Modelica.Blocks.Sources.CombiTimeTable Plug(
-    table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1;
-        24,0.05],
+  Modelica.Blocks.Sources.CombiTimeTable pluSch(
+    table=[0,0.4; 9,0.4; 9,0.9; 13,0.9; 13,0.8; 14,0.8; 14,0.9; 18,0.9; 18,0.5;
+        19,0.5; 19,0.4; 24,0.4],
     timeScale=3600,
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "internal heat gain from plug"
     annotation (Placement(transformation(extent={{246,428},{266,448}})));
-  Modelica.Blocks.Sources.CombiTimeTable occupant(
-    table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1;
-        24,0.05],
+  Modelica.Blocks.Sources.CombiTimeTable occSch(
+    table=[0,0; 7,0; 7,0.5; 8,0.5; 8,1; 12,1; 12,0.5; 13,0.5; 13,1; 17,1; 17,
+        0.5; 18,0.5; 18,0.0; 24,0.0],
     timeScale=3600,
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "internal heat gain from occupant"
@@ -429,8 +428,6 @@ model FlexlabX1A "Model of a flexlab x1a"
   Modelica.Blocks.Math.MatrixGain occGai(K=14*[0.4; 0.4; 0.2])
     "Matrix gain to split up heat gain in radiant, convective and latent gain"
     annotation (Placement(transformation(extent={{284,396},{304,416}})));
-  Modelica.Blocks.Math.Sum sumIntGai(nin=3)
-    annotation (Placement(transformation(extent={{328,428},{348,448}})));
   Modelica.Blocks.Sources.CombiTimeTable intGaiPle(
     table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1; 24,
         0.05],
@@ -472,6 +469,14 @@ model FlexlabX1A "Model of a flexlab x1a"
   Modelica.Blocks.Sources.CombiTimeTable intGaiEle(table=[0,0,0,0; 86400,0,0,0],
       tableOnFile=false) "Internal gain heat flow for the electrical room"
     annotation (Placement(transformation(extent={{82,402},{102,422}})));
+  Modelica.Blocks.Math.Add3 add3_1
+    annotation (Placement(transformation(extent={{332,466},{352,486}})));
+  Modelica.Blocks.Math.Add3 add3_2
+    annotation (Placement(transformation(extent={{332,428},{352,448}})));
+  Modelica.Blocks.Math.Add3 add3_3
+    annotation (Placement(transformation(extent={{332,394},{352,414}})));
+  Modelica.Blocks.Routing.Multiplex3 multiplex3_1
+    annotation (Placement(transformation(extent={{370,428},{390,448}})));
 equation
   connect(sou.surf_conBou[2], cor.surf_conBou[3]) annotation (Line(
       points={{170,-40},{170,-54},{200,-54},{200,20},{170,20},{170,40.25}},
@@ -703,33 +708,20 @@ equation
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
-  connect(Lighting.y, ligGai.u)
+  connect(ligSch.y, ligGai.u)
     annotation (Line(points={{267,476},{282,476}}, color={0,0,127}));
-  connect(Plug.y, plgGai.u)
+  connect(pluSch.y, plgGai.u)
     annotation (Line(points={{267,438},{282,438}}, color={0,0,127}));
-  connect(occupant.y, occGai.u)
+  connect(occSch.y, occGai.u)
     annotation (Line(points={{267,406},{282,406}}, color={0,0,127}));
-  connect(plgGai.y[1], sumIntGai.u[2])
-    annotation (Line(points={{305,438},{326,438}},
-                                                 color={0,0,127}));
-  connect(occGai.y[1], sumIntGai.u[1]) annotation (Line(points={{305,406},{316,
-          406},{316,436.667},{326,436.667}},color={0,0,127}));
-  connect(ligGai.y[1], sumIntGai.u[3]) annotation (Line(points={{305,476},{316,
-          476},{316,439.333},{326,439.333}},color={0,0,127}));
   connect(intGaiPle.y, gaiPle.u)
     annotation (Line(points={{-117,-52},{-102,-52}}, color={0,0,127}));
   connect(gaiPle.y, ple.qGai_flow) annotation (Line(points={{-79,-52},{324,-52},
           {324,88},{356.4,88}}, color={0,0,127}));
   connect(intGaiSou.y, gaiSou.u)
     annotation (Line(points={{-117,-14},{-102,-14}}, color={0,0,127}));
-  connect(gaiSou.y, sou.qGai_flow) annotation (Line(points={{-79,-14},{32,-14},{
-          32,-16},{142.4,-16}}, color={0,0,127}));
   connect(intGaiCor.y, gaiCor.u)
     annotation (Line(points={{-117,30},{-102,30}}, color={0,0,127}));
-  connect(gaiCor.y, cor.qGai_flow) annotation (Line(points={{-79,30},{32,30},{32,
-          64},{142.4,64}}, color={0,0,127}));
-  connect(gaiNor.y, nor.qGai_flow) annotation (Line(points={{-79,110},{32.5,110},
-          {32.5,144},{142.4,144}}, color={0,0,127}));
   connect(weaBus, clo.weaBus) annotation (Line(
       points={{210,234},{226,234},{226,350},{212,350},{212,349.9},{191.9,349.9}},
       color={255,204,51},
@@ -765,6 +757,36 @@ equation
           326,252},{326,283},{338,283}}, color={0,0,127}));
   connect(temAirCor.T, multiplex3.u2[1])
     annotation (Line(points={{314,290},{338,290}}, color={0,0,127}));
+  connect(ligGai.y[1], add3_1.u1) annotation (Line(points={{305,476},{320,476},{
+          320,484},{330,484}}, color={0,0,127}));
+  connect(plgGai.y[1], add3_1.u2) annotation (Line(points={{305,438},{320,438},{
+          320,476},{330,476}}, color={0,0,127}));
+  connect(occGai.y[1], add3_1.u3) annotation (Line(points={{305,406},{320,406},{
+          320,468},{330,468}}, color={0,0,127}));
+  connect(ligGai.y[2], add3_2.u1) annotation (Line(points={{305,476},{320,476},{
+          320,446},{330,446}}, color={0,0,127}));
+  connect(plgGai.y[2], add3_2.u2)
+    annotation (Line(points={{305,438},{330,438}}, color={0,0,127}));
+  connect(occGai.y[2], add3_2.u3) annotation (Line(points={{305,406},{320,406},{
+          320,430},{330,430}}, color={0,0,127}));
+  connect(ligGai.y[3], add3_3.u1) annotation (Line(points={{305,476},{320,476},{
+          320,412},{330,412}}, color={0,0,127}));
+  connect(plgGai.y[3], add3_3.u2) annotation (Line(points={{305,438},{320,438},{
+          320,404},{330,404}}, color={0,0,127}));
+  connect(occGai.y[3], add3_3.u3) annotation (Line(points={{305,406},{320,406},{
+          320,396},{330,396}}, color={0,0,127}));
+  connect(add3_1.y, multiplex3_1.u1[1]) annotation (Line(points={{353,476},{360,
+          476},{360,445},{368,445}}, color={0,0,127}));
+  connect(add3_2.y, multiplex3_1.u2[1])
+    annotation (Line(points={{353,438},{368,438}}, color={0,0,127}));
+  connect(add3_3.y, multiplex3_1.u3[1]) annotation (Line(points={{353,404},{360,
+          404},{360,431},{368,431}}, color={0,0,127}));
+  connect(multiplex3_1.y, nor.qGai_flow) annotation (Line(points={{391,438},{410,
+          438},{410,144},{142.4,144}}, color={0,0,127}));
+  connect(multiplex3_1.y, cor.qGai_flow) annotation (Line(points={{391,438},{
+          410,438},{410,64},{142.4,64}}, color={0,0,127}));
+  connect(multiplex3_1.y, sou.qGai_flow) annotation (Line(points={{391,438},{
+          410,438},{410,-16},{142.4,-16}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=true, extent={{-160,-100},
             {400,500}},
         initialScale=0.1)),     Icon(coordinateSystem(
