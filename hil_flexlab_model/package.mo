@@ -4,7 +4,7 @@ package hil_flexlab_model "Variable air volume flow system with terminal reheat 
 
 
 annotation (uses(                            Modelica(version="3.2.3"),
-      Buildings(version="9.0.0")),
+      Buildings(version="7.0.0")),
   version="1",
   conversion(noneFromVersion=""));
 end hil_flexlab_model;

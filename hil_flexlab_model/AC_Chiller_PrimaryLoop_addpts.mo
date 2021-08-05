@@ -1,5 +1,5 @@
 within hil_flexlab_model;
-model AC_Chiller_PrimaryLoop_Weiping
+model AC_Chiller_PrimaryLoop_addpts
   "Validated Partial model of variable air volume flow system with terminal reheat and 3 VAV zones at flexlab x1a"
 
   package MediumA = Buildings.Media.Air "Medium model for air";
@@ -46,7 +46,7 @@ parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
       Placement(transformation(
         extent={{-9,-9},{9,9}},
         rotation=90,
-        origin={309,-219})));
+        origin={309,-221})));
   Buildings.Fluid.Chillers.ElectricEIR chi(
     allowFlowReversal1=false,
     allowFlowReversal2=false,
@@ -117,7 +117,7 @@ parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
         extent={{-20,-20},{20,20}},
         rotation=270,
         origin={230,-74})));
-  Modelica.Blocks.Interfaces.RealInput mdot_chw_in annotation (Placement(
+  Modelica.Blocks.Interfaces.RealInput m_flow_sec annotation (Placement(
         transformation(
         extent={{-20,-20},{20,20}},
         rotation=270,
@@ -125,7 +125,7 @@ parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
         extent={{-20,-20},{20,20}},
         rotation=270,
         origin={162,-74})));
-  Modelica.Blocks.Interfaces.RealOutput Tout annotation (Placement(
+  Modelica.Blocks.Interfaces.RealOutput T_chw_out annotation (Placement(
         transformation(
         extent={{-20,-20},{20,20}},
         rotation=90,
@@ -156,8 +156,8 @@ parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
   Modelica.Blocks.Interfaces.RealOutput chi_P annotation (Placement(
         transformation(
         extent={{-22,-22},{22,22}},
-        rotation=270,
-        origin={136,-268}), iconTransformation(
+        rotation=180,
+        origin={80,-270}),  iconTransformation(
         extent={{-22,-22},{22,22}},
         rotation=270,
         origin={170,-342})));
@@ -167,7 +167,7 @@ parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
   Buildings.Fluid.Sensors.TemperatureTwoPort sen_retTem(redeclare package
       Medium = Buildings.Media.Water, m_flow_nominal=mChiEva_flow_nominal)
     annotation (Placement(transformation(extent={{186,-238},{206,-218}})));
-  Modelica.Blocks.Interfaces.RealOutput retTem annotation (Placement(
+  Modelica.Blocks.Interfaces.RealOutput T_pch_in annotation (Placement(
         transformation(
         extent={{-27,-27},{27,27}},
         rotation=180,
@@ -175,34 +175,36 @@ parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
         extent={{-20,-20},{20,20}},
         rotation=180,
         origin={90,-196})));
+  Modelica.Blocks.Interfaces.RealOutput m_flow_pri annotation (Placement(
+        transformation(extent={{416,-262},{454,-224}}), iconTransformation(
+          extent={{414,-230},{452,-192}})));
 equation
 
   connect(booToInt.y,pumChiWat. m_flow_in)
-    annotation (Line(points={{286.5,-259},{300,-259},{300,-219},{298.2,-219}},
+    annotation (Line(points={{286.5,-259},{300,-259},{300,-221},{298.2,-221}},
                                                   color={0,0,127}));
   connect(chi.port_b2, pumChiWat.port_a) annotation (Line(points={{240,-275.2},
-          {309,-275.2},{309,-228}},
+          {309,-275.2},{309,-230}},
                              color={0,127,255}));
   connect(TSetSupChiConst.y, chi.TSet) annotation (Line(points={{318.6,-300},{
           338,-300},{338,-277.6},{241.6,-277.6}},
                                         color={0,0,127}));
-  connect(pumChiWat.port_b, chw_sup.port_2) annotation (Line(points={{309,-210},{
-          308,-210},{308,-186}}, color={0,127,255}));
+  connect(pumChiWat.port_b, chw_sup.port_2) annotation (Line(points={{309,-212},
+          {308,-212},{308,-186}},color={0,127,255}));
   connect(chi.on, booToInt.u) annotation (Line(points={{241.6,-282.4},{257.8,-282.4},
           {257.8,-259},{275,-259}}, color={255,0,255}));
   connect(chw_sup.port_3, chw_ret.port_3)
     annotation (Line(points={{298,-176},{190,-176}}, color={0,127,255}));
   connect(chiOn, chi.on) annotation (Line(points={{258,-98},{258,-282.4},{241.6,-282.4}},
                   color={255,0,255}));
-  connect(mdot_chw_in, sec_ret.m_flow_in) annotation (Line(points={{180,-98},{180,
-          -128},{188,-128}}, color={0,0,127}));
+  connect(m_flow_sec, sec_ret.m_flow_in) annotation (Line(points={{180,-98},{
+          180,-128},{188,-128}}, color={0,0,127}));
   connect(T_chw_in, sec_ret.T_in) annotation (Line(points={{216,-98},{216,-128},{
           184,-128}}, color={0,0,127}));
   connect(senTem.port_b,bou. ports[1]) annotation (Line(points={{370,-136},{396,-136}},
                                         color={0,127,255}));
-  connect(senTem.T,Tout)
-    annotation (Line(points={{360,-125},{360,-106},{398,-106},{398,-90}},
-                                                     color={0,0,127}));
+  connect(senTem.T, T_chw_out) annotation (Line(points={{360,-125},{360,-106},{
+          398,-106},{398,-90}}, color={0,0,127}));
   connect(sec_ret.ports[1], chw_ret.port_2)
     annotation (Line(points={{180,-150},{180,-166}}, color={0,127,255}));
   connect(chw_sup.port_1, senTem.port_a) annotation (Line(points={{308,-166},{308,
@@ -213,18 +215,20 @@ equation
           -284.8},{186,-316},{146,-316}}, color={0,127,255}));
   connect(T_air_in, out_air.T_in)
     annotation (Line(points={{442,-322},{414,-322}}, color={0,0,127}));
-  connect(chi.P, chi_P) annotation (Line(points={{223.2,-287.2},{136,-287.2},{
-          136,-268}}, color={0,0,127}));
-  connect(pumChiWat.P, pum_P) annotation (Line(points={{300.9,-209.1},{431,
-          -209.1},{431,-199}}, color={0,0,127}));
+  connect(chi.P, chi_P) annotation (Line(points={{223.2,-287.2},{80,-287.2},{80,
+          -270}},     color={0,0,127}));
+  connect(pumChiWat.P, pum_P) annotation (Line(points={{300.9,-211.1},{431,
+          -211.1},{431,-199}}, color={0,0,127}));
   connect(chw_ret.port_1, sen_retTem.port_a) annotation (Line(points={{180,-186},
           {180,-228},{186,-228}}, color={0,127,255}));
   connect(sen_retTem.port_b, chi.port_a2) annotation (Line(points={{206,-228},{
           212,-228},{212,-275.2},{224,-275.2}}, color={0,127,255}));
-  connect(sen_retTem.T, retTem)
+  connect(sen_retTem.T, T_pch_in)
     annotation (Line(points={{196,-217},{77,-217}}, color={0,0,127}));
-  connect(Tout, Tout) annotation (Line(points={{398,-90},{398,-97},{398,-97},{
-          398,-90}}, color={0,0,127}));
+  connect(T_chw_out, T_chw_out) annotation (Line(points={{398,-90},{398,-97},{
+          398,-97},{398,-90}}, color={0,0,127}));
+  connect(pumChiWat.m_flow_actual, m_flow_pri) annotation (Line(points={{304.5,
+          -211.1},{361.25,-211.1},{361.25,-243},{435,-243}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{100,-340},
             {420,-60}}),        graphics={Line(points={{310,404}}, color={28,
               108,200}), Line(
@@ -449,4 +453,4 @@ This is for
           fillPattern=FillPattern.Solid,
           origin={270,-277},
           rotation=360)}));
-end AC_Chiller_PrimaryLoop_Weiping;
+end AC_Chiller_PrimaryLoop_addpts;

@@ -26,7 +26,7 @@ parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
 
   Modelica.Blocks.Sources.Constant TSetSupChiConst(final k=TSupChi_nominal)
     "Set point for chiller temperature"
-    annotation (Placement(transformation(extent={{306,-306},{318,-294}})));
+    annotation (Placement(transformation(extent={{264,-322},{276,-310}})));
   Modelica.Blocks.Math.BooleanToReal booToInt(final realTrue=
         mChiEva_flow_nominal) "Boolean to integer conversion"
     annotation (Placement(transformation(extent={{276,-264},{286,-254}})));
@@ -62,7 +62,7 @@ parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
     m1_flow_nominal=mChiCon_flow_nominal,
     per=per)
     "Air cooled chiller"
-    annotation (Placement(transformation(extent={{240,-272},{224,-288}})));
+    annotation (Placement(transformation(extent={{240,-270},{224,-286}})));
 
   Buildings.Fluid.FixedResistances.Junction chw_sup(
     redeclare package Medium = MediumW,
@@ -161,21 +161,24 @@ equation
   connect(booToInt.y,pumChiWat. m_flow_in)
     annotation (Line(points={{286.5,-259},{300,-259},{300,-219},{298.2,-219}},
                                                   color={0,0,127}));
-  connect(chi.port_b2, pumChiWat.port_a) annotation (Line(points={{240,-275.2},
-          {309,-275.2},{309,-228}},
+  connect(chi.port_b2, pumChiWat.port_a) annotation (Line(points={{240,-273.2},
+          {309,-273.2},{309,-228}},
                              color={0,127,255}));
-  connect(TSetSupChiConst.y, chi.TSet) annotation (Line(points={{318.6,-300},{
-          338,-300},{338,-277.6},{241.6,-277.6}},
+  connect(TSetSupChiConst.y, chi.TSet) annotation (Line(points={{276.6,-316},{
+          338,-316},{338,-275.6},{241.6,-275.6}},
                                         color={0,0,127}));
   connect(pumChiWat.port_b, chw_sup.port_2) annotation (Line(points={{309,-210},{
           308,-210},{308,-186}}, color={0,127,255}));
-  connect(chw_ret.port_1, chi.port_a2) annotation (Line(points={{180,-186},{180,-280},
-          {224,-280},{224,-275.2}}, color={0,127,255}));
-  connect(chi.on, booToInt.u) annotation (Line(points={{241.6,-282.4},{257.8,-282.4},
-          {257.8,-259},{275,-259}}, color={255,0,255}));
+  connect(chw_ret.port_1, chi.port_a2) annotation (Line(points={{180,-186},{180,
+          -280},{224,-280},{224,-273.2}},
+                                    color={0,127,255}));
+  connect(chi.on, booToInt.u) annotation (Line(points={{241.6,-280.4},{257.8,
+          -280.4},{257.8,-259},{275,-259}},
+                                    color={255,0,255}));
   connect(chw_sup.port_3, chw_ret.port_3)
     annotation (Line(points={{298,-176},{190,-176}}, color={0,127,255}));
-  connect(chiOn, chi.on) annotation (Line(points={{258,-98},{258,-282.4},{241.6,-282.4}},
+  connect(chiOn, chi.on) annotation (Line(points={{258,-98},{258,-280.4},{241.6,
+          -280.4}},
                   color={255,0,255}));
   connect(mdot_chw_in, sec_ret.m_flow_in) annotation (Line(points={{180,-98},{180,
           -128},{188,-128}}, color={0,0,127}));
@@ -190,10 +193,12 @@ equation
     annotation (Line(points={{180,-150},{180,-166}}, color={0,127,255}));
   connect(chw_sup.port_1, senTem.port_a) annotation (Line(points={{308,-166},{308,
           -136},{350,-136}}, color={0,127,255}));
-  connect(chi.port_a1, out_air.ports[1]) annotation (Line(points={{240,-284.8},{316,
-          -284.8},{316,-318},{392,-318}}, color={0,127,255}));
-  connect(chi.port_b1, bou1.ports[1]) annotation (Line(points={{224,-284.8},{186,
-          -284.8},{186,-316},{146,-316}}, color={0,127,255}));
+  connect(chi.port_a1, out_air.ports[1]) annotation (Line(points={{240,-282.8},
+          {316,-282.8},{316,-318},{392,-318}},
+                                          color={0,127,255}));
+  connect(chi.port_b1, bou1.ports[1]) annotation (Line(points={{224,-282.8},{
+          186,-282.8},{186,-316},{146,-316}},
+                                          color={0,127,255}));
   connect(T_air_in, out_air.T_in)
     annotation (Line(points={{442,-322},{414,-322}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{100,-340},
