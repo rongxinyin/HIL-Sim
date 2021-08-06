@@ -94,7 +94,14 @@ class Driver:
                 flexq_point_name = split_content[1]
                 point_name = point_map.get(flexq_point_name, None)
                 if point_name != None:
-                    value = float(split_content[3])
+                    if len(split_content) == 4:
+                        value = split_content[3]
+                        if value == 'T':
+                            value = 1
+                        else:
+                            value = 0
+                    else:
+                        value = float(split_content[3])
                     if point_name.endswith("lux"):
                         value = max(0, value)
                     data[point_name] = [value]
