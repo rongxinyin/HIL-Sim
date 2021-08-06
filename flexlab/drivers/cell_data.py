@@ -28,16 +28,19 @@ class Cell_Data(Driver):
                                            fl_password=self.flex_password)
 
         for section in self.cell_data_sections:
-            section_config = self.cell_data_config.get(section)
-            section_table_name = section_config.get('db_table_name', 'cellb')
-            section_cws_point_map = section_config.get('cws_point_map')
+            section_config = self.cell_data_config.get(section, None)
+            if section_config is not None:
+                section_table_name = section_config.get('db_table_name', 'cellb')
+                section_cws_point_map = section_config.get('cws_point_map')
 
-            section_df = self.filter_cws_data(cws_point_list=cws_point_list, point_map=section_cws_point_map, time_now=time_now)
+                section_df = self.filter_cws_data(cws_point_list=cws_point_list, point_map=section_cws_point_map, time_now=time_now)
 
-            if not section_df.empty:
-                self.push_to_db(section_df, section_table_name)
+                if not section_df.empty:
+                    self.push_to_db(section_df, section_table_name)
+                else:
+                    print("nothing to push to {0}".format(section_table_name))
             else:
-                print("nothing to push to {0}".format(section_table_name))
+                print("No configuration for section {0}".format(section))
 
 if __name__ == "__main__":
     obj = Cell_Data(config_file='read_data_config.yaml')
