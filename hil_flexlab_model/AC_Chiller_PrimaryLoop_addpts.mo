@@ -132,7 +132,7 @@ parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
         origin={398,-90}), iconTransformation(
         extent={{-20,-20},{20,20}},
         rotation=90,
-        origin={354,-64})));
+        origin={358,-58})));
   Buildings.Fluid.Sources.MassFlowSource_T out_air(
     redeclare package Medium = MediumA,
     use_m_flow_in=false,
@@ -163,7 +163,7 @@ parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
         origin={170,-342})));
   Modelica.Blocks.Interfaces.RealOutput pum_P annotation (Placement(
         transformation(extent={{412,-218},{450,-180}}), iconTransformation(
-          extent={{414,-230},{452,-192}})));
+          extent={{412,-212},{450,-174}})));
   Buildings.Fluid.Sensors.TemperatureTwoPort sen_retTem(redeclare package
       Medium = Buildings.Media.Water, m_flow_nominal=mChiEva_flow_nominal)
     annotation (Placement(transformation(extent={{186,-238},{206,-218}})));
@@ -174,10 +174,10 @@ parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
         origin={77,-217}), iconTransformation(
         extent={{-20,-20},{20,20}},
         rotation=180,
-        origin={90,-196})));
+        origin={86,-190})));
   Modelica.Blocks.Interfaces.RealOutput m_flow_pri annotation (Placement(
         transformation(extent={{416,-262},{454,-224}}), iconTransformation(
-          extent={{414,-230},{452,-192}})));
+          extent={{412,-262},{450,-224}})));
 equation
 
   connect(booToInt.y,pumChiWat. m_flow_in)
