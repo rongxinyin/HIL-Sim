@@ -1,10 +1,10 @@
 [Unit]
-Description=Collect sensor data from x2 boiler
+Description=Collect Flexlab data
 Wants=postgres.service
 
 [Service]
 WorkingDirectory=/home/btmdrl/HIL-Sim/flexlab/drivers
-ExecStart=/home/btmdrl/anaconda3/bin/python boiler.py
+ExecStart=/home/btmdrl/anaconda3/bin/python cell_data.py
 User=btmdrl
 
 [Install]

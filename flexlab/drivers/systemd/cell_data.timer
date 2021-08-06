@@ -1,10 +1,10 @@
 [Unit]
-Description=Run boiler data collection every minute
+Description=Run  flexlab data collection every minute
 
 [Timer]
 OnCalendar=*:0/1
 Persistent=true
-Unit=boiler.service
+Unit=cell_data.service
 
 [Install]
 WantedBy=timers.target
