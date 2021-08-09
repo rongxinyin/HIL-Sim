@@ -225,9 +225,9 @@ class DB_Interface:
         final_df = final_df.reset_index()
 
         if table is None:
-            setpoint_table = self.setpoint_table
+            table = self.setpoint_table
 
-        query = 'insert into {0} values '.format(setpoint_table) + ','.join(final_df.apply(
+        query = 'insert into {0} values '.format(table) + ','.join(final_df.apply(
             lambda x: "('{0}', '{1}', '{2}')".format(x['time'].strftime("%Y-%m-%d %H:%M:%S"), x['name'],
                                                           x['value']),
             axis=1).values) + ' on conflict (time, name) do update ' + 'SET value = excluded.value;'
