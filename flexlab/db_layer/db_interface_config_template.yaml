@@ -9,14 +9,29 @@ database:
 
 query_condition:
   x2:
-    hvac:
-      variables: [x2_boiler_sp_C, x2_hw_ret_temp_C, x2_hw_sup_temp_C]
-      agg: mean
-      table: boiler_test
     setpoints:
       variables: [x2_boiler_sp_C_command]
       agg: last
       table: setpoints_test
+  1a:
+    chiller:
+      variables: [1A-CHWFM-2, 1A-CHWRTS-2, 1A-CHWP-VFD-STAT, 1A-OAT-1]
+      agg: last
+      table: cell_hvac_1a
+    chiller_setpoints:
+      variables: [1a_chiller_primary_sp_K_command]
+        agg: last
+        table: setpoints
+
+  1b:
+    chiller:
+      variables: [1B-CHWFM-2, 1B-CHWRTS-2, 1B-CHWP-VFD-STAT, 1B-OAT-1]
+      agg: last
+      table: cell_hvac_1b
+    chiller_setpoints:
+      variables: [1b_chiller_primary_sp_K_command]
+        agg: last
+        table: setpoints
 #  ra:
 #    flexgrid:
 #      variable_agg_map:

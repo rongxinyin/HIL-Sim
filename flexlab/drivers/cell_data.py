@@ -43,5 +43,5 @@ class Cell_Data(Driver):
                 print("No configuration for section {0}".format(section))
 
 if __name__ == "__main__":
-    obj = Cell_Data(config_file='read_data_config.yaml')
+    obj = Cell_Data(config_file='flexlab/drivers/read_data_config.yaml')
     obj.write_to_db()

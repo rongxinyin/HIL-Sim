@@ -1,0 +1,11 @@
+cell: 1b
+
+fmu_file: hil_flexlab_model_AC_Chiller_PrimaryLoop_addpts.fmu
+model_update_rate: 30
+web_api_port: 5000
+
+min_setpoint: 35.6
+max_setpoint: 100
+default_setpoint: 44
+
+setpoint_table: setpoints

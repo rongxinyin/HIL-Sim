@@ -147,9 +147,14 @@ class DB_Interface:
                                        resample_minutes=resample_minutes)
         return df
 
-    def get_data_controller(self, st, et, cell='x2', resample_minutes=15):
+    def get_data_controller(self, st, et, cell='1a', resample_minutes=15):
         df = self.get_data(st=st, et=et, cell=cell, resample_minutes=resample_minutes, include_setpoints=False)
         # processed_df = self._post_process(raw_df=df, cell=cell, resample_time=resample_minutes)
+        return df
+
+    def get_latest_chiller_points(self, st, et, cell='1a', resample_minutes=15):
+        df = self._query_single_system(st=st, et=et, cell=cell, system='chiller',
+                                       resample_minutes=resample_minutes)
         return df
 
     def _post_process(self, raw_df, cell, resample_time):
@@ -196,13 +201,10 @@ class DB_Interface:
     def push_setpoints_to_db(self, cell, df):
         """
         push new setpoints to database to change FL setpoints
-        :param cell: 'x1' or 'x2'
-        :param df: dataframe with the following columns:
-                    ['x2_boiler_sp_C_command']
-                    sup_air_flow_sp: kg/s
-                    sup_air_temp_sp: C
-                    light_level_sp: 0-1
-                    battery_sp: -3300 to 3300W
+        :param cell: '1a' or '1b'
+        :param df: dataframe with one or more following columns:
+                    1a_chiller_primary_sp_K_command
+                    1b_chiller_primary_sp_K_command
         :return: True if push is successful else False
         """
 

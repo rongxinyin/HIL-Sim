@@ -7,71 +7,346 @@ database:
 
 cell_data:
   api:
-    flex_user: x2ab_all
+    flex_user: x1ab_all
     flex_password:
-    flexq_login: queryx2
-  boiler:
-    db_table_name: boiler_test
+    flexq_login: queryx1
+  cell_hvac_1a:
+    db_table_name: cell_hvac_1a
     cws_point_map:
-      2-B-ADJ-ENABLE: x2_boiler_sp_C
-      2-HWRT-1: x2_hw_ret_temp_C
-      2-HWST-1: x2_hw_sup_temp_C
+        1A-MAT-1: 1A-MAT-1
+        1A-SAT-1: 1A-SAT-1
+        1A-RAT-1: 1A-RAT-1
+        1A-AHU-CV1-CNTRL: 1A-AHU-CV1-CNTRL
+        1A-AHU-CV1-POSN: 1A-AHU-CV1-POSN
+        1A-AHU-CV2-CNTRL: 1A-AHU-CV2-CNTRL
+        1A-AHU-CV2-POSN: 1A-AHU-CV2-POSN
+        1A-AHU-HV1-CNTRL: 1A-AHU-HV1-CNTRL
+        1A-AHU-HV1-POSN: 1A-AHU-HV1-POSN
+        1A-AHU-HV2-CNTRL: 1A-AHU-HV2-CNTRL
+        1A-AHU-HV2-POSN: 1A-AHU-HV2-POSN
+        1A-AHU-VFD-ENABLE: 1A-AHU-VFD-ENABLE
+        1A-AHU-VFD-KW: 1A-AHU-VFD-KW
+        1A-AHU-VFD-SPD-COMMAND: 1A-AHU-VFD-SPD-COMMAND
+        1A-AHU-VFD-STAT: 1A-AHU-VFD-STAT
+        1A-ARAM-1: 1A-ARAM-1
+        1A-ASAM-1: 1A-ASAM-1
+        1A-CHWDPS-2: 1A-CHWDPS-2
+        1A-CHWFM-2: 1A-CHWFM-2
+        1A-CHWMV-CNTRL: 1A-CHWMV-CNTRL
+        1A-CHWMV-POSN: 1A-CHWMV-POSN
+        1A-CHWP-VFD: 1A-CHWP-VFD
+        1A-CHWP-VFD-ENABLE: 1A-CHWP-VFD-ENABLE
+        1A-CHWP-VFD-STAT: 1A-CHWP-VFD-STAT
+        1A-CHWRTS-2: 1A-CHWRTS-2
+        1A-CHWSTS-2: 1A-CHWSTS-2
+        1A-CTSP: 1A-CTSP
+        1A-EADA-1-CNTRL: 1A-EADA-1-CNTRL
+        1A-EADA-1-POSN: 1A-EADA-1-POSN
+        1A-IDBTS-1: 1A-IDBTS-1
+        1A-IDBTS-2: 1A-IDBTS-2
+        1A-OADA-1-CNTRL: 1A-OADA-1-CNTRL
+        1A-OADA-1-POSN: 1A-OADA-1-POSN
+        1A-RADA-1-CNTRL: 1A-RADA-1-CNTRL
+        1A-RADA-1-POSN: 1A-RADA-1-POSN
+        1B-OAT-1: 1A-OAT-1
+  cell_hvac_1b:
+    db_table_name: cell_hvac_1b
+    cws_point_map:
+        1B-MAT-1: 1B-MAT-1
+        1B-SAT-1: 1B-SAT-1
+        1B-RAT-1: 1B-RAT-1
+        1B-AHU-CV1-CNTRL: 1B-AHU-CV1-CNTRL
+        1B-AHU-CV1-POSN: 1B-AHU-CV1-POSN
+        1B-AHU-CV2-CNTRL: 1B-AHU-CV2-CNTRL
+        1B-AHU-CV2-POSN: 1B-AHU-CV2-POSN
+        1B-AHU-HV1-CNTRL: 1B-AHU-HV1-CNTRL
+        1B-AHU-HV1-POSN: 1B-AHU-HV1-POSN
+        1B-AHU-HV2-CNTRL: 1B-AHU-HV2-CNTRL
+        1B-AHU-HV2-POSN: 1B-AHU-HV2-POSN
+        1B-AHU-VFD-ENABLE: 1B-AHU-VFD-ENABLE
+        1B-AHU-VFD-KW: 1B-AHU-VFD-KW
+        1B-AHU-VFD-SPD-COMMAND: 1B-AHU-VFD-SPD-COMMAND
+        1B-AHU-VFD-STAT: 1B-AHU-VFD-STAT
+        1B-ARAM-1: 1B-ARAM-1
+        1B-ASAM-1: 1B-ASAM-1
+        1B-ARAM-T: 1B-ARAM-T
+        1B-CHWDPS-2: 1B-CHWDPS-2
+        1B-CHWFM-2: 1B-CHWFM-2
+        1B-CHWMV-CNTRL: 1B-CHWMV-CNTRL
+        1B-CHWMV-POSN: 1B-CHWMV-POSN
+        1B-CHWP-VFD: 1B-CHWP-VFD
+        1B-CHWP-VFD-ENABLE: 1B-CHWP-VFD-ENABLE
+        1B-CHWP-VFD-SPD-COMMAND: 1B-CHWP-VFD-SPD-COMMAND
+        1B-CHWP-VFD-STAT: 1B-CHWP-VFD-STAT
+        1B-CHWRTS-2: 1B-CHWRTS-2
+        1B-CHWSTS-2: 1B-CHWSTS-2
+        1B-CTSP: 1B-CTSP
+        1B-CoolingSP: 1B-CoolingSP
+        1B-EADA-1-CNTRL: 1B-EADA-1-CNTRL
+        1B-EADA-1-POSN: 1B-EADA-1-POSN
+        1B-FILDPS-1: 1B-FILDPS-1
+        1B-IDBTS-1: 1B-IDBTS-1
+        1B-IDBTS-2: 1B-IDBTS-2
+        1B-INSlabTS: 1B-INSlabTS
+        1B-INSlabTS-S: 1B-INSlabTS-S
+        1B-M-CV1-CMD: 1B-M-CV1-CMD
+        1B-M-CV1-POSN: 1B-M-CV1-POSN
+        1B-M-CV2-CNTRL: 1B-M-CV2-CNTRL
+        1B-M-CV2-POSN: 1B-M-CV2-POSN
+        1B-M-HV1-CMD: 1B-M-HV1-CMD
+        1B-M-HV1-POSN: 1B-M-HV1-POSN
+        1B-M-HV2-CNTRL: 1B-M-HV2-CNTRL
+        1B-M-HV2-POSN: 1B-M-HV2-POSN
+        1B-OADA-1-CNTRL: 1B-OADA-1-CNTRL
+        1B-OADA-1-POSN: 1B-OADA-1-POSN
+        1B-RADA-1-CNTRL: 1B-RADA-1-CNTRL
+        1B-RADA-1-POSN: 1B-RADA-1-POSN
+        1B-OAT-1: 1B-OAT-1
 
-emulated_battery:
-  url:
-  db_table_name:
-  point_map:
-    real_power_setpoint: real_power_setpoint
-    battery_soc: battery_soc
+  processed_cell_1a:
+    db_table_name: processed_cell_1a
+    cws_point_map:
+        1A-El-AHU: 1A-El-AHU
+        1A-El-AHU_15min: 1A-El-AHU_15min
+        1A-El-AHU_energy: 1A-El-AHU_energy
+        1A-El-CHWP: 1A-El-CHWP
+        1A-El-Exhaust Fan: 1A-El-Exhaust Fan
+        1A-El-HWP: 1A-El-HWP
+        1A-El-Light: 1A-El-Light
+        1A-El-Light_15min: 1A-El-Light_15min
+        1A-El-Light_energy: 1A-El-Light_energy
+        1A-El-Power Outlets: 1A-El-Power Outlets
+        1A-El-Power Outlets_15min: 1A-El-Power Outlets_15min
+        1A-El-Power Outlets_energy: 1A-El-Power Outlets_energy
+        1A-El-Shade: 1A-El-Shade
+        1A-RoomT: 1A-RoomT
+        1A-SlabT: 1A-SlabT
+        1A-Th-Airflow: 1A-Th-Airflow
+        1A-Th-Airflow_15min: 1A-Th-Airflow_15min
+        1A-Th-Airflow_RAT: 1A-Th-Airflow_RAT
+        1A-Th-Airflow_energy: 1A-Th-Airflow_energy
+        1A-Th-Chilled Water: 1A-Th-Chilled Water
+        1A-Th-Chilled Water_15min: 1A-Th-Chilled Water_15min
+        1A-Th-Chilled Water_energy: 1A-Th-Chilled Water_energy
+        1A-Th-Envelope: 1A-Th-Envelope
+        1A-Th-Envelope_15min: 1A-Th-Envelope_15min
+        1A-Th-Envelope_energy: 1A-Th-Envelope_energy
+        1A-Th-Hot Water: 1A-Th-Hot Water
+        1A-Th-Hot Water_15min: 1A-Th-Hot Water_15min
+        1A-Th-Hot Water_energy: 1A-Th-Hot Water_energy
+        1A-Th-TotalHVAC: 1A-Th-TotalHVAC
+        1A-Th-TotalHVAC_15min: 1A-Th-TotalHVAC_15min
+        1A-Th-TotalHVAC_energy: 1A-Th-TotalHVAC_energy
 
-#  power:
-#    db_table_name:
-#    power_meter_channels_map:
-#      ra_fan_power_W: [A8, A22, A34]
-#      ra_light_power_W: [A27, A41]
-#      ra_plugload_power_W: [A1, A3, A5, A7, A15, A17, A19, A21, A29, A33, A35]
-#      ra_chwp_power_W: [A30]
-#      ra_hwp_power_W: [A18]
-#
-#      rb_fan_power_W: [A10, A24, A36]
-#      rb_light_power_W: [B18, B25, B26, B32, B39, B40]
-#      rb_plugload_power_W: [B1, B3, B5, B7, B15, B17, B19, B21, B29, B33, B35]
-#      rb_chwp_power_W: [A4]
-#      rb_hwp_power_W: [A32]
+  processed_cell_1b:
+    db_table_name: processed_cell_1b
+    cws_point_map:
+        1B-El-AHU: 1B-El-AHU
+        1B-El-AHU_15min: 1B-El-AHU_15min
+        1B-El-AHU_energy: 1B-El-AHU_energy
+        1B-El-CHWP: 1B-El-CHWP
+        1B-El-Exhaust Fan: 1B-El-Exhaust Fan
+        1B-El-HWP: 1B-El-HWP
+        1B-El-Light: 1B-El-Light
+        1B-El-Light_15min: 1B-El-Light_15min
+        1B-El-Light_energy: 1B-El-Light_energy
+        1B-El-Power Outlets: 1B-El-Power Outlets
+        1B-El-Power Outlets_15min: 1B-El-Power Outlets_15min
+        1B-El-Power Outlets_energy: 1B-El-Power Outlets_energy
+        1B-El-Shade: 1B-El-Shade
+        1B-RoomT: 1B-RoomT
+        1B-SlabT: 1B-SlabT
+        1B-Th-Airflow: 1B-Th-Airflow
+        1B-Th-Airflow_15min: 1B-Th-Airflow_15min
+        1B-Th-Airflow_RAT: 1B-Th-Airflow_RAT
+        1B-Th-Airflow_energy: 1B-Th-Airflow_energy
+        1B-Th-Chilled Water: 1B-Th-Chilled Water
+        1B-Th-Chilled Water_15min: 1B-Th-Chilled Water_15min
+        1B-Th-Chilled Water_energy: 1B-Th-Chilled Water_energy
+        1B-Th-Envelope: 1B-Th-Envelope
+        1B-Th-Envelope_15min: 1B-Th-Envelope_15min
+        1B-Th-Envelope_energy: 1B-Th-Envelope_energy
+        1B-Th-Hot Water: 1B-Th-Hot Water
+        1B-Th-Hot Water_15min: 1B-Th-Hot Water_15min
+        1B-Th-Hot Water_energy: 1B-Th-Hot Water_energy
+        1B-Th-TotalHVAC: 1B-Th-TotalHVAC
+        1B-Th-TotalHVAC_15min: 1B-Th-TotalHVAC_15min
+        1B-Th-TotalHVAC_energy: 1B-Th-TotalHVAC_energy
 
-#    power_thermal_channels_map:
-#      ra_chw_th_load_W:
-#        RA-CHWFM-2: ra_chw_flow
-#        RA-CHWSTS-2: ra_chw_sup_temp
-#        RA-CHWRTS-2: ra_chw_ret_temp
-#      ra_hw_th_load_W:
-#        RA-HWFM-2: ra_hw_flow
-#        RA-HWSTS-2: ra_hw_sup_temp
-#        RA-HWRTS-2: ra_hw_ret_temp
-#      ra_hvac_th_load_W:
-#        hw_load: ra_chw_th_load_W
-#        chw_load: ra_chw_th_load_W
-#        ahu_load: ra_fan_power_W
-#
-#      rb_chw_th_load_W:
-#        RB-CHWFM-2: rb_chw_flow
-#        RB-CHWSTS-2: rb_chw_sup_temp
-#        RB-CHWRTS-2: rb_chw_ret_temp
-#      rb_hw_th_load_W:
-#        RB-HWFM-2: rb_hw_flow
-#        RB-HWSTS-2: rb_hw_sup_temp
-#        RB-HWRTS-2: rb_hw_ret_temp
-#      rb_hvac_th_load_W:
-#        hw_load: rb_chw_th_load_W
-#        chw_load: rb_chw_th_load_W
-#        ahu_load: rb_fan_power_W
+  cell_lighting_plug_1a:
+    db_table_name: cell_lighting_plug_1a
+    cws_point_map:
+        P1A-ActivePower20: desk3_light_power
+        P1A-ActivePower31: desk4_light_power
+        P1A-ActivePower25: desk2_light_power
+        P1A-ActivePower26: desk1_6_light_power
+        P1A-ActivePower39: desk5_light_power
+
+        ## need to change below
+        P1A-ActivePower17: P1A-ActivePower17
+        P1A-ActivePower1: P1A-ActivePower1
+        P1A-ActivePower29: P1A-ActivePower29
+        P1A-ActivePower35: P1A-ActivePower35
+        P1A-ActivePower7: P1A-ActivePower7
+        P1A-ActivePower19: P1A-ActivePower19
+
+  cell_lighting_plug_1b:
+    db_table_name: cell_lighting_plug_1b
+    cws_point_map:
+        P1B-ActivePower32: desk3_light_power
+        P1B-ActivePower40: desk1_light_power
+        P1B-ActivePower24: desk5_light_power
+        P1B-ActivePower38: desk2_light_power
+        P1B-ActivePower28: desk6_light_power
+        P1B-ActivePower18: desk4_light_power
+
+        ## need to change below
+        P1B-ActivePower35: P1B-ActivePower35
+        P1B-ActivePower7: P1B-ActivePower7
+        P1B-ActivePower19: P1B-ActivePower19
+        P1B-ActivePower17: P1B-ActivePower17
+        P1B-ActivePower29: P1B-ActivePower29
+        P1B-ActivePower1: P1B-ActivePower1
+        P1B-ActivePower33: P1B-ActivePower33
+
+  cell_vav_1a:
+    db_table_name: cell_vav_1a
+    cws_point_map:
+        P1A-ActivePower40: P1A-ActivePower40
+        P1A-ActivePower12: P1A-ActivePower12
+        P1A-ActivePower28: P1A-ActivePower28
+        1A-VAV1-DischargeAirflow: 1A-VAV1-DischargeAirflow
+        1A-VAV2-DischargeAirflow: 1A-VAV2-DischargeAirflow
+        1A-VAV3-DischargeAirflow: 1A-VAV3-DischargeAirflow
+        1A-VAV1-DischargeAirTemp: 1A-VAV1-DischargeAirTemp
+        1A-VAV3-DischargeAirTemp: 1A-VAV3-DischargeAirTemp
+        1A-VAV2-DischargeAirTemp: 1A-VAV2-DischargeAirTemp
+        1A-VAV1-Zn_Temp: 1A-VAV1-Zn_Temp
+        1A-VAV2-Zn_Temp: 1A-VAV2-Zn_Temp
+        1A-VAV3-Zn_Temp: 1A-VAV3-Zn_Temp
+        1A-VAV1-HeatOutput: 1A-VAV1-HeatOutput
+        1A-VAV3-HeatOutput: 1A-VAV3-HeatOutput
+        1A-VAV2-HeatOutput: 1A-VAV2-HeatOutput
+
+
+        1A-VAV1-OccupiedCoolingSetpt: 1A-VAV1-OccupiedCoolingSetpt
+        1A-VAV1-UnoccupiedCoolingSetpt: 1A-VAV1-UnoccupiedCoolingSetpt
+        1A-VAV1-OccupiedHeatingSetpt: 1A-VAV1-OccupiedHeatingSetpt
+        1A-VAV1-VAVActuatorPosition: 1A-VAV1-VAVActuatorPosition
+        1A-VAV1-UnoccupiedHeatingSetpt: 1A-VAV1-UnoccupiedHeatingSetpt
+
+
+        1A-VAV2-OccupiedCoolingSetpt: 1A-VAV2-OccupiedCoolingSetpt
+        1A-VAV2-UnoccupiedHeatingSetpt: 1A-VAV2-UnoccupiedHeatingSetpt
+        1A-VAV2-UnoccupiedCoolingSetpt: 1A-VAV2-UnoccupiedCoolingSetpt
+        1A-VAV2-OccupiedHeatingSetpt: 1A-VAV2-OccupiedHeatingSetpt
+        1A-VAV2-VAVActuatorPosition: 1A-VAV2-VAVActuatorPosition
+
+
+        1A-VAV3-OccupiedCoolingSetpt: 1A-VAV3-OccupiedCoolingSetpt
+        1A-VAV3-VAVActuatorPosition: 1A-VAV3-VAVActuatorPosition
+        1A-VAV3-UnoccupiedHeatingSetpt: 1A-VAV3-UnoccupiedHeatingSetpt
+        1A-VAV3-UnoccupiedCoolingSetpt: 1A-VAV3-UnoccupiedCoolingSetpt
+        1A-VAV3-OccupiedHeatingSetpt: 1A-VAV3-OccupiedHeatingSetpt
+        1A-VAV3-TR-R: 1A-VAV3-TR-R
+
+  cell_vav_1b:
+    db_table_name: cell_vav_1b
+    cws_point_map:
+        P1B-ActivePower26: P1B-ActivePower26
+        P1B-ActivePower36: P1B-ActivePower36
+        P1B-ActivePower42: P1B-ActivePower42
+        1B-VAV1-DischargeAirflow: 1B-VAV1-DischargeAirflow
+        1B-VAV2-DischargeAirflow: 1B-VAV2-DischargeAirflow
+        1B-VAV3-DischargeAirflow: 1B-VAV3-DischargeAirflow
+        1B-VAV1-DischargeAirTemp: 1B-VAV1-DischargeAirTemp
+        1B-VAV3-DischargeAirTemp: 1B-VAV3-DischargeAirTemp
+        1B-VAV2-DischargeAirTemp: 1B-VAV2-DischargeAirTemp
+        1B-VAV1-Zn_Temp: 1B-VAV1-Zn_Temp
+        1B-VAV2-Zn_Temp: 1B-VAV2-Zn_Temp
+        1B-VAV3-Zn_Temp: 1B-VAV3-Zn_Temp
+        1B-VAV1-HeatOutput: 1B-VAV1-HeatOutput
+        1B-VAV2-HeatOutput: 1B-VAV2-HeatOutput
+        1B-VAV3-HeatOutput: 1B-VAV3-HeatOutput
+
+
+        1B-VAV1-OccupiedCoolingSetpt: 1B-VAV1-OccupiedCoolingSetpt
+        1B-VAV1-UnoccupiedHeatingSetpt: 1B-VAV1-UnoccupiedHeatingSetpt
+        1B-VAV1-OccupiedHeatingSetpt: 1B-VAV1-OccupiedHeatingSetpt
+        1B-VAV1-VAVActuatorPosition: 1B-VAV1-VAVActuatorPosition
+        1B-VAV1-UnoccupiedCoolingSetpt: 1B-VAV1-UnoccupiedCoolingSetpt
+        1B-VAV2-OccupiedCoolingSetpt: 1B-VAV2-OccupiedCoolingSetpt
+        1B-VAV2-OccupiedHeatingSetpt: 1B-VAV2-OccupiedHeatingSetpt
+        1B-VAV2-UnoccupiedHeatingSetpt: 1B-VAV2-UnoccupiedHeatingSetpt
+        1B-VAV2-UnoccupiedCoolingSetpt: 1B-VAV2-UnoccupiedCoolingSetpt
+        1B-VAV2-VAVActuatorPosition: 1B-VAV2-VAVActuatorPosition
+        1B-VAV3-OccupiedHeatingSetpt: 1B-VAV3-OccupiedHeatingSetpt
+        1B-VAV3-OccupiedCoolingSetpt: 1B-VAV3-OccupiedCoolingSetpt
+        1B-VAV3-UnoccupiedCoolingSetpt: 1B-VAV3-UnoccupiedCoolingSetpt
+        1B-VAV3-UnoccupiedHeatingSetpt: 1B-VAV3-UnoccupiedHeatingSetpt
+        1B-VAV3-VAVActuatorPosition: 1B-VAV3-VAVActuatorPosition
+        1B-VAV3-TR-R: 1B-VAV3-TR-R
+
+
+  cell_thermalstation_1ab:
+    db_table_name: cell_thermalstation_1ab
+    cws_point_map:
+        1A-WindowZone-TCS1-DBT: 1A-WindowZone-TCS1-DBT
+        1A-WindowZone-TCS1-MRT: 1A-WindowZone-TCS1-MRT
+        1A-WindowZone-TCS1-RH: 1A-WindowZone-TCS1-RH
+        1B-MidZone-TCS2-DBT: 1B-MidZone-TCS2-DBT
+        1B-MidZone-TCS2-MRT: 1B-MidZone-TCS2-MRT
+        1B-MidZone-TCS2-RH: 1B-MidZone-TCS2-RH
+        1B-WindowZone-TCS3-DBT: 1B-WindowZone-TCS3-DBT
+        1B-WindowZone-TCS3-MRT: 1B-WindowZone-TCS3-MRT
+        1B-WindowZone-TCS3-RH: 1B-WindowZone-TCS3-RH
+        1A-MidZone-TCS4-DBT: 1A-MidZone-TCS4-DBT
+        1A-MidZone-TCS4-MRT: 1A-MidZone-TCS4-MRT
+        1A-MidZone-TCS4-RH: 1A-MidZone-TCS4-RH
+
+
+        1B-NorthZone-MRT: 1B-NorthZone-MRT
+        1A-NorthZone-DBT: 1A-NorthZone-DBT
+        1B-NorthZone-DBT: 1B-NorthZone-DBT
+        1A-NorthZone-MRT: 1A-NorthZone-MRT
+
+  weather_station:
+    db_table_name:
+    cws_point_map:
+        1B-OAT-1: oat_C
+
+ emulated_chiller:
+   chiller_web_host:
+   db_table_name:
+   web_api_port_1a:
+   web_api_port_1b:
+   point_map:
+     1a_m_flow_sec: 1a_m_flow_sec
+     1a_T_chw_in: 1a_T_chw_in
+     1a_chiOn: 1a_chiOn
+     1a_T_air_in: 1a_T_air_in
+     1a_T_chw_out: 1a_T_chw_out
+     1a_T_pch_in: 1a_T_pch_in
+     1a_chi_P: 1a_chi_P
+     1a_pum_P: 1a_pum_P
+     1a_m_flow_pri: 1a_m_flow_pri
+
+     1b_m_flow_sec: 1b_m_flow_sec
+     1b_T_chw_in: 1b_T_chw_in
+     1b_chiOn: 1b_chiOn
+     1b_T_air_in: 1b_T_air_in
+     1b_T_chw_out: 1b_T_chw_out
+     1b_T_pch_in: 1b_T_pch_in
+     1b_chi_P: 1b_chi_P
+     1b_pum_P: 1b_pum_P
+     1b_m_flow_pri: 1b_m_flow_pri
 
 weather:
   db_table_name: weather
   api:
     time_threshold: 60
-    flex_user: weather
-    flex_password: weather
+    flex_user:
+    flex_password:
     flexq_login: query
   cws_point_map:
     W-OAT-2: oat_C
