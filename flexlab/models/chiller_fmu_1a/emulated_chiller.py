@@ -24,6 +24,7 @@ class Emulated_Chiller:
 
         self.fmu_file = self.config.get('fmu_file')
         self.chiller = load_fmu(self.fmu_file)
+        self.setpoint_table = self.config.get('setpoint_table')
 
         self.cell = self.config.get('cell')
 
@@ -113,7 +114,7 @@ class Emulated_Chiller:
         action_dict = {variable_name: setpoint}
         action_df = pd.DataFrame.from_records(action_dict, index=[0])
 
-        self.chiller_db.push_setpoints_to_db(cell=self.cell, df=action_df)
+        self.chiller_db.push_setpoints_to_db(cell=self.cell, df=action_df, table=self.s)
 
     def get_readings(self):
         measurements = {

@@ -24,6 +24,7 @@ class Emulated_Chiller:
 
         self.fmu_file = self.config.get('fmu_file')
         self.chiller = load_fmu(self.fmu_file)
+        self.setpoint_table = self.config.get('setpoint_table')
 
         self.cell = self.config.get('cell')
 
