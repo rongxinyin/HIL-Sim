@@ -29,8 +29,8 @@ class Driver:
     def push_to_db(self, df, table_name):
         df_list = []
         for col in df.columns:
-            df2 = df[[col]]
-            if not df2.dropna().empty:
+            df2 = df[[col]].dropna()
+            if not df2.empty:
                 df2.columns = ['value']
                 df2['name'] = col
                 df_list.append(df2)
