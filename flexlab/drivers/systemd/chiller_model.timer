@@ -1,0 +1,10 @@
+[Unit]
+Description=Run chiller model collection every minute
+
+[Timer]
+OnCalendar=*:0/1
+Persistent=true
+Unit=chiller_model.service
+
+[Install]
+WantedBy=timers.target

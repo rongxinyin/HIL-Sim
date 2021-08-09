@@ -1,0 +1,11 @@
+[Unit]
+Description=Collect data from real chiller
+Wants=postgres.service
+
+[Service]
+WorkingDirectory=/home/btmdrl/HIL-Sim/flexlab/drivers
+ExecStart=/home/btmdrl/anaconda3/bin/python primary_chiller.py
+User=btmdrl
+
+[Install]
+WantedBy=multi-user.target

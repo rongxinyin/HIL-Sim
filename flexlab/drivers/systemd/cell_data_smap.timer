@@ -1,0 +1,10 @@
+[Unit]
+Description=Run  flexlab smap data collection every minute
+
+[Timer]
+OnCalendar=*:0/1
+Persistent=true
+Unit=cell_data_smap.service
+
+[Install]
+WantedBy=timers.target
