@@ -10,7 +10,7 @@ class Cell_Data(Driver):
         try:
             super(Cell_Data, self).__init__(config_file=config_file)
         except Exception as e:
-            self.logger.error("error reading config file={0} error={1}",format(config_file, str(e)))
+            self.logger.error("error reading config file={0} error={1}".format(config_file, str(e)))
 
         self.cell_data_config = self.config.get('cell_data')
         self.api_config = self.cell_data_config .get('api')
