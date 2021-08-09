@@ -20,8 +20,8 @@ query_condition:
       table: cell_hvac_1a
     chiller_setpoints:
       variables: [1a_chiller_primary_sp_K_command]
-        agg: last
-        table: setpoints
+      agg: last
+      table: setpoints
 
   1b:
     chiller:
@@ -30,8 +30,8 @@ query_condition:
       table: cell_hvac_1b
     chiller_setpoints:
       variables: [1b_chiller_primary_sp_K_command]
-        agg: last
-        table: setpoints
+      agg: last
+      table: setpoints
 #  ra:
 #    flexgrid:
 #      variable_agg_map:
