@@ -12,7 +12,7 @@ import pytz
 import pandas as pd
 
 class Emulated_Chiller:
-    def __init__(self, config_file='chiller_config.yaml'):
+    def __init__(self, config_file='flexlab/models/chiller_fmu_1a/chiller_config.yaml'):
         with open(config_file) as fp:
             self.config = yaml.safe_load(fp)
 
@@ -135,8 +135,8 @@ def main():
 
     try:
         loop = asyncio.get_event_loop()
-        battery = Emulated_Chiller()
-        threading.Thread(target=battery.run).start()
+        chiller = Emulated_Chiller()
+        threading.Thread(target=chiller.run).start()
         loop.run_forever()
 
     except KeyboardInterrupt:
