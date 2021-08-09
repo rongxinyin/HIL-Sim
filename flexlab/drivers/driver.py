@@ -36,13 +36,11 @@ class Driver:
                 df_list.append(df2)
         final_df = pd.concat(df_list, axis=0).reset_index()
 
-        print(final_df)
-
         query = 'insert into {0} values '.format(table_name) + ','.join(final_df.apply(
             lambda x: "('{0}', '{1}', {2})".format(x['time'].strftime("%Y-%m-%d %H:%M:%S"), x['name'], x['value']),
             axis=1).values) + ' on conflict (time, name) do update ' + 'SET value = excluded.value;'
         try:
-            # self.client.execute(query)
+            self.client.execute(query)
             print("pushed to table {0}".format(table_name))
         except Exception as e:
             print("error occurred while pushing to table {0}, error={1}".format(table_name, str(e)))
