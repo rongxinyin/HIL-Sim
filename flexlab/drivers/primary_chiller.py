@@ -23,7 +23,6 @@ class Primary_Chiller(Driver):
     def write_to_db(self):
         time_now = self.get_utc_time_now()
         measurements = self.chiller.get_data(unit=self.chiller.UNIT_ID)
-        print(measurements)
         df = pd.DataFrame.from_records(measurements, index=[time_now])
         df.index.name = 'time'
         self.chiller.kill_modbus()

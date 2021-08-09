@@ -12,7 +12,7 @@ import pytz
 import pandas as pd
 
 class Emulated_Chiller:
-    def __init__(self, config_file='flexlab/models/chiller_fmu_1b/chiller_config.yaml'):
+    def __init__(self, config_file='flexlab/models/chiller_fmu_1a/chiller_config.yaml'):
         with open(config_file) as fp:
             self.config = yaml.safe_load(fp)
 
@@ -30,6 +30,8 @@ class Emulated_Chiller:
         self.model_options = self.chiller.simulate_options()
         self.model_options['initialize'] = True
         self._model_update_rate = self.config.get('model_update_rate', 30)
+        self.model_options['CVode_options']['rtol'] = 1e-6
+        self.model_options['CVode_options']['atol'] = 1e-8
 
         self.chiller_db = db_interface.DB_Interface()
         self.current_time = 0
@@ -50,14 +52,14 @@ class Emulated_Chiller:
         chiller_values = self.chiller_db.get_latest_chiller_points(st = start_t, et = end_t, cell=self.cell).to_dict('records')[0]
         chiller_values_SI_units = self.convert_units(chiller_values)
 
-        set = (
+        inputs = (
                     ['m_flow_sec', 'T_chw_in', 'chiOn', 'T_air_in'],
                     np.array(
                         [[0, chiller_values_SI_units.get('m_flow_sec'), chiller_values_SI_units.get('T_chw_in'), chiller_values_SI_units.get('chiOn'), chiller_values_SI_units.get('T_air_in')],
                          [30, chiller_values_SI_units.get('m_flow_sec'), chiller_values_SI_units.get('T_chw_in'), chiller_values_SI_units.get('chiOn'), chiller_values_SI_units.get('T_air_in')]]
                     )
                 )
-        self.chiller.simulate(0, 30, set, options=self.model_options)
+        self.chiller.simulate(0, 30, inputs, options=self.model_options)
         self.model_options['initialize'] = False
         self.current_time = 30
 
@@ -72,7 +74,7 @@ class Emulated_Chiller:
             elif key.endswith('CHWP-VFD-STAT'):
                 chiller_values_SI_units['chiOn'] = int(chiller_values[key]) == 1
             elif key.endswith('OAT-1'):
-                chiller_values_SI_units['chiOn'] = (chiller_values[key] - 32.0) * 5/9.0 + 273.15
+                chiller_values_SI_units['T_air_in'] = (chiller_values[key] - 32.0) * 5/9.0 + 273.15
         return chiller_values_SI_units
 
     def schedule_tasks(self):
@@ -109,7 +111,7 @@ class Emulated_Chiller:
         variable_name = self.cell + '_chiller_primary_sp_K_command'
 
         action_dict = {variable_name: setpoint}
-        action_df = pd.DataFrame.from_dict(action_dict)
+        action_df = pd.DataFrame.from_records(action_dict, index=[0])
 
         self.chiller_db.push_setpoints_to_db(cell=self.cell, df=action_df)
 
@@ -117,7 +119,7 @@ class Emulated_Chiller:
         measurements = {
                             self.cell+'_m_flow_sec': self.chiller.get('m_flow_sec')[0],
                             self.cell+'_T_chw_in': self.chiller.get('T_chw_in')[0],
-                            self.cell+'_chiOn': self.chiller.get('chiOn')[0],
+                            self.cell+'_chiOn': bool(self.chiller.get('chiOn')[0]),
                             self.cell+'_T_air_in': self.chiller.get('T_air_in')[0],
                             self.cell+'_T_chw_out': self.chiller.get('T_chw_out')[0],
                             self.cell+'_T_pch_in': self.chiller.get('T_pch_in')[0],

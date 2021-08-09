@@ -198,13 +198,14 @@ class DB_Interface:
 
         return df
 
-    def push_setpoints_to_db(self, cell, df):
+    def push_setpoints_to_db(self, cell, df, table=None):
         """
         push new setpoints to database to change FL setpoints
         :param cell: '1a' or '1b'
         :param df: dataframe with one or more following columns:
                     1a_chiller_primary_sp_K_command
                     1b_chiller_primary_sp_K_command
+        :param table: table name, if None, use self.setpoint_table
         :return: True if push is successful else False
         """
 
@@ -223,7 +224,10 @@ class DB_Interface:
         final_df = pd.concat(df_list, axis=0)
         final_df = final_df.reset_index()
 
-        query = 'insert into {0} values '.format(self.setpoint_table) + ','.join(final_df.apply(
+        if table is None:
+            setpoint_table = self.setpoint_table
+
+        query = 'insert into {0} values '.format(setpoint_table) + ','.join(final_df.apply(
             lambda x: "('{0}', '{1}', '{2}')".format(x['time'].strftime("%Y-%m-%d %H:%M:%S"), x['name'],
                                                           x['value']),
             axis=1).values) + ' on conflict (time, name) do update ' + 'SET value = excluded.value;'
