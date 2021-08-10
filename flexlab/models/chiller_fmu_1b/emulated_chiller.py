@@ -71,11 +71,11 @@ class Emulated_Chiller:
             if key.endswith('-CHWFM-2'):
                 chiller_values_SI_units['m_flow_sec'] = chiller_values[key] * 0.000017 * 997
             elif key.endswith('CHWRTS-2'):
-                chiller_values_SI_units['T_chw_in'] = (chiller_values[key] - 32.0) * 5/9.0 + 273.15
+                chiller_values_SI_units['T_chw_in'] = chiller_values[key] + 273.15
             elif key.endswith('CHWP-VFD-STAT'):
                 chiller_values_SI_units['chiOn'] = int(chiller_values[key]) == 1
             elif key.endswith('OAT-1'):
-                chiller_values_SI_units['T_air_in'] = (chiller_values[key] - 32.0) * 5/9.0 + 273.15
+                chiller_values_SI_units['T_air_in'] = chiller_values[key] + 273.15
         return chiller_values_SI_units
 
     def schedule_tasks(self):
