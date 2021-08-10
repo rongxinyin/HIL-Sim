@@ -50,6 +50,7 @@ cell_data:
         1A-RADA-1-CNTRL: 1A-RADA-1-CNTRL
         1A-RADA-1-POSN: 1A-RADA-1-POSN
         1B-OAT-1: 1A-OAT-1
+        1A-FILDPS-1: 1A-FILDPS-1
   cell_hvac_1b:
     db_table_name: cell_hvac_1b
     cws_point_map:
@@ -103,6 +104,7 @@ cell_data:
         1B-RADA-1-CNTRL: 1B-RADA-1-CNTRL
         1B-RADA-1-POSN: 1B-RADA-1-POSN
         1B-OAT-1: 1B-OAT-1
+        1B-FILDPS-1: 1B-FILDPS-1
 
   processed_cell_1a:
     db_table_name: processed_cell_1a
@@ -185,12 +187,12 @@ cell_data:
         P1A-ActivePower39: desk5_light_power
 
         ## need to change below
-        P1A-ActivePower17: P1A-ActivePower17
-        P1A-ActivePower1: P1A-ActivePower1
-        P1A-ActivePower29: P1A-ActivePower29
-        P1A-ActivePower35: P1A-ActivePower35
-        P1A-ActivePower7: P1A-ActivePower7
-        P1A-ActivePower19: P1A-ActivePower19
+        P1A-ActivePower17: desk1_plug_power
+        P1A-ActivePower29: desk2_plug_power
+        P1A-ActivePower1: desk3_plug_power
+        P1A-ActivePower19: desk4_plug_power
+        P1A-ActivePower7: desk5_plug_power
+        P1A-ActivePower35: desk6_plug_power
 
   cell_lighting_plug_1b:
     db_table_name: cell_lighting_plug_1b
@@ -203,13 +205,12 @@ cell_data:
         P1B-ActivePower18: desk4_light_power
 
         ## need to change below
-        P1B-ActivePower35: P1B-ActivePower35
-        P1B-ActivePower7: P1B-ActivePower7
-        P1B-ActivePower19: P1B-ActivePower19
-        P1B-ActivePower17: P1B-ActivePower17
-        P1B-ActivePower29: P1B-ActivePower29
-        P1B-ActivePower1: P1B-ActivePower1
-        P1B-ActivePower33: P1B-ActivePower33
+        P1B-ActivePower35: desk1_plug_power
+        P1B-ActivePower7: desk2_plug_power
+        P1B-ActivePower33: desk3_plug_power
+        P1B-ActivePower1: desk4_plug_power
+        P1B-ActivePower29: desk5_plug_power
+        P1B-ActivePower17: desk6_plug_power
 
   cell_vav_1a:
     db_table_name: cell_vav_1a
@@ -249,6 +250,7 @@ cell_data:
         c5fa8d69-6ded-4934-a109-a981b401b417: "1A-VAV3-OccupiedHeatingSetpt"
         fab8a3c1-126c-4c74-a626-f6406f4c0379: "1A-VAV3-TR-R"
 
+
   cell_vav_1b:
     db_table_name: cell_vav_1b
     point_uuid_map:
@@ -283,29 +285,34 @@ cell_data:
         b58d3bc9-d537-4544-bcad-0cab0ea272d2: "1B-VAV3-UnoccupiedCoolingSetpt"
         fc11f915-1364-4616-b792-f83127ce30ed: "1B-VAV3-UnoccupiedHeatingSetpt"
         ca3f0f5d-0afa-4b40-a5fa-95a23d4b9c9d: "1B-VAV3-VAVActuatorPosition"
-        76aba656-030d-42b7-8c7d-ffcd1c2999ec: "1B-VAV3-TR-R"
+        76aba656-030d-42b7-8c7d-ffcd1c2999ec: "1B-TR-SAT-R"
+        981e2e1e-2e3e-47fb-b052-1e93be397536: "1B-TR-SAP-R"
 
 
   cell_thermalstation_1ab:
     db_table_name: cell_thermalstation_1ab
     point_uuid_map:
-        24ec22b7-0fda-4bb1-9567-bd0291b2507e: "1A-WindowZone-TCS1-DBT"
-        932b4bb2-4619-4cab-a866-25ca3320d483: "1A-WindowZone-TCS1-MRT"
-        05e4cead-ff9e-4563-997a-2df03233f4c3: "1A-WindowZone-TCS1-RH"
-        df1bede1-8ebf-4af9-8dc9-ce1d6f04ae7c: "1B-MidZone-TCS2-DBT"
-        0b6bb7ad-30bf-4ccf-a9e9-119dffd78e6d: "1B-MidZone-TCS2-MRT"
-        5499d9ed-194c-4e2e-bf24-328b3cfdbba7: "1B-MidZone-TCS2-RH"
-        e894073a-87fb-42fe-8c7a-d814d83036ea: "1B-WindowZone-TCS3-DBT"
-        bb6cb8dc-bc34-4447-b7b0-145808b89c1e: "1B-WindowZone-TCS3-MRT"
-        da0e1d88-3c13-4444-acbd-0d1984dfbea3: "1B-WindowZone-TCS3-RH"
-        b5466d7a-747d-4549-a592-76251e46fd55: "1A-MidZone-TCS4-DBT"
-        a0beab1a-0a41-4347-a1c1-f953d1e60717: "1A-MidZone-TCS4-MRT"
-        3d26337b-1979-41e1-8a46-5332ca0a522a: "1A-MidZone-TCS4-RH"
+        6ffa506e-0ffd-4dd1-beb1-d0390b040097: "1A-MidZone-TCS6-DBT"
+        a3ed7fb5-4a9d-40da-9f4f-0519c4ff8a7c: "1A-MidZone-TCS6-MRT"
+        756b0599-a63b-46fb-b31e-fefdfcb139dd: "1A-MidZone-TCS6-RH"
+        57b75bd4-3bb6-401c-800d-91dc3c8a5334: "1A-MidZone-TCS6-VEL"
+        ab9aefc8-9dfc-4d61-a050-6842d2b78f81: "1A-WindowZone-TCS7-DBT"
+        3686b407-637b-4637-a38f-09d83b0e7278: "1A-WindowZone-TCS7-MRT"
+        e002734b-67ea-49f1-998d-3ffe0c12444e: "1A-WindowZone-TCS7-RH"
+        b6c47076-3fbf-41ff-adf1-582c81900c79: "1A-WindowZone-TCS7-VEL"
+        eac46e4e-bcb7-5734-8826-fd7f42e6f42f: "1A-NorthZone-DBT"
+        83cbecf3-1529-5c56-8e7f-f33d2394b7ea: "1A-NorthZone-MRT"
 
-        34c9ffeb-87d5-5f3a-a606-bdab0128bc63: "1B-NorthZone-MRT"
-        83cbecf3-1529-5c56-8e7f-f33d2394b7ea: "1A-NorthZone-DBT"
+        f6731c2e-c2d1-46fa-9a03-068e7e8ddfd6: "1B-MidZone-TCS9-DBT"
+        8fd4ab04-47a8-4a86-a509-9c24e23c71a1: "1B-MidZone-TCS9-MRT"
+        285d7cae-8274-4e9e-8ca1-88b241542803: "1B-MidZone-TCS9-RH"
+        f519ddf0-3f00-4b20-bd74-62b7b89a8c1b: "1B-MidZone-TCS9-VEL"
+        3220d0cb-ef2f-4c33-a0c7-6b2a5f462c94: "1B-WindowZone-TCS10-DBT"
+        a5dfaab1-40eb-4178-b7e1-9f0adbf91297: "1B-WindowZone-TCS10-MRT"
+        8a658fdf-2ed5-449a-8d0b-5e603da84663: "1B-WindowZone-TCS10-RH"
+        40d404fb-acdf-433c-9f98-3f623ca94e4b: "1B-WindowZone-TCS10-VEL"
         64bed69f-a676-5c50-b5ad-c4f6de3c3ce5: "1B-NorthZone-DBT"
-        eac46e4e-bcb7-5734-8826-fd7f42e6f42f: "1A-NorthZone-MRT"
+        34c9ffeb-87d5-5f3a-a606-bdab0128bc63: "1B-NorthZone-MRT"
 
   weather_station:
     db_table_name:
