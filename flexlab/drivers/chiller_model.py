@@ -22,8 +22,9 @@ class Chiller_Model(Driver):
 
     def write_to_db(self):
         time_now = self.get_utc_time_now()
-        response_1a = requests.get("{}/get_data:{}".format(self.chiller_web_host, self.web_api_port_1a))
-        response_1b = requests.get("{}/get_data:{}".format(self.chiller_web_host, self.web_api_port_1b))
+        print(self.chiller_web_host)
+        response_1a = requests.get("{}:{}/get_data".format(self.chiller_web_host, self.web_api_port_1a))
+        response_1b = requests.get("{}:{}/get_data".format(self.chiller_web_host, self.web_api_port_1b))
         measurements_1a = {}
         measurements_1b = {}
 
