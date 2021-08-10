@@ -40,7 +40,7 @@ class Emulated_Chiller:
 
         self.app = Flask('emulated_chiller')
         self.app.add_url_rule('/get_data', 'get_data', self.get_readings)
-        self.web_api_port = 5000
+        self.web_api_port = self.config.get('web_api_port', 5001)
 
         self.loop = asyncio.get_event_loop()
         self.schedule_tasks()
