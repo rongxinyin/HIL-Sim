@@ -76,7 +76,6 @@ class FL_Control_Interface:
     # Periodic function that sets setpoints to devices
     def set_setpoints(self):
         latest_setpoints = self.get_latest_setpoints()
-        print(latest_setpoints)
         time_now = datetime.datetime.utcnow()
         for setpoint in latest_setpoints:
             setpoint_time = datetime.datetime.utcfromtimestamp(setpoint.get('time').astype('O')/1e9)
@@ -86,9 +85,6 @@ class FL_Control_Interface:
             if (time_now - setpoint_time).total_seconds() >= self.time_threshold:
                 # if the setpoint was generated more than a hour ago, revert to default setpoint
                 new_value = self.default_setpoints[variable]
-            elif time_now < setpoint_time:
-                # if the setpoint has been generated for a future time, revert to default setpoint
-                new_value = self.default_setpoints
 
             cell = variable[:2]
 
@@ -185,17 +181,8 @@ if __name__ == "__main__":
     elif args.reset_cellb:
         print("resetting cell b")
     else:
-        prev_minute = -1
-        while True:
-            time_now = datetime.datetime.utcnow()
-            if prev_minute != time_now.minute:
-                try:
-                    print("getting latest setpoints")
-                    controller.set_setpoints()
-                    prev_minute = time_now.minute
-                    print("\n")
-                except Exception as e:
-                    print("Error occurred while setting setpoints. Error={0}".format(e))
-            elif time_now.second%30 == 0:
-                print("current time = "+datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")+" UTC")
-                time.sleep(1)
+        try:
+            print("getting latest setpoints")
+            controller.set_setpoints()
+        except Exception as e:
+            print("Error occurred while setting setpoints. Error={0}".format(e))
