@@ -137,7 +137,8 @@ class FL_Control_Interface:
         value_in_F = int((value - 273.15) * 9.0/5 + 32)
         try:
             if self.primary_chiller is not None:
-                if int(self.primary_chiller.read_holding_register(register_name='temperature_setpoint1')) != value_in_F:
+                unit_id = self.primary_chiller_config.get('UNIT_ID')
+                if int(self.primary_chiller.read_holding_register(register_name='temperature_setpoint1', unit=unit_id)) != value_in_F:
                     print("setting temperature_setpoint1 for primary chiller to {}F".format(value_in_F))
                     self.primary_chiller.write_register('temperature_setpoint1', value_in_F)
                 else:
