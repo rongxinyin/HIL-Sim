@@ -4,7 +4,7 @@ model ChillerModel_Exchange
   extends Modelica.Icons.Example;
 
 
- hil_flexlab_model.AC_Chiller_PrimaryLoop cpl    annotation (Placement(transformation(extent={{6,-28},
+ hil_flexlab_model.AC_Chiller_PrimaryLoop_addpts cpl    annotation (Placement(transformation(extent={{6,-28},
             {40,-2}})));
 
   Modelica.Blocks.Sources.Constant m_in(k=0.15)
@@ -41,7 +41,7 @@ equation
                                color={0,0,127}));
   connect(On_signal.y, greaterThreshold.u) annotation (Line(points={{-71,78},{
           -60,78},{-60,82},{-50,82}}, color={0,0,127}));
-  connect(pulse.y, cpl.mdot_chw_in) annotation (Line(points={{-69,-16},{-28,-16},
+  connect(pulse.y, cpl.m_flow_sec) annotation (Line(points={{-69,-16},{-28,-16},
           {-28,-3.3},{12.5875,-3.3}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(extent={{-100,-100},{100,100}})), Icon(
         coordinateSystem(extent={{-100,-100},{100,100}})),
