@@ -10,7 +10,7 @@ package AirCooled "Performance data for Air Cooled Chillers"
       PLRMinUnl=0.10,
       PLRMax=1.15,
       mEva_flow_nominal=1000*0.0023,
-      mCon_flow_nominal=1.293*5.11,
+     mCon_flow_nominal=1.293*7.622,
       TEvaLvg_nominal=273.15 + 6.67,
       TConEnt_nominal=273.15 + 35,
       TEvaLvgMin=273.15 + 4.44,
