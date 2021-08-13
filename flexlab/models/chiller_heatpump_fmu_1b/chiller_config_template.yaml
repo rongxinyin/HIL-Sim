@@ -1,6 +1,6 @@
 cell: 1b
 
-fmu_file: flexlab/models/chiller_heatpump_fmu_1a/hil_flexlab_model_AC_AWHP_PrimaryLoop_addpts.fmu
+fmu_file: flexlab/models/chiller_heatpump_fmu_1b/hil_flexlab_model_AC_AWHP_PrimaryLoop_addpts.fmu
 model_update_rate: 30
 web_api_port: 5003
 

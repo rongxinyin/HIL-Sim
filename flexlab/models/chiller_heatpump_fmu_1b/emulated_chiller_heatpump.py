@@ -12,7 +12,7 @@ import pytz
 import pandas as pd
 
 class Emulated_Chiller_Heatpump:
-    def __init__(self, config_file='flexlab/models/chiller_fmu_1a/chiller_config.yaml'):
+    def __init__(self, config_file='flexlab/models/chiller_heatpump_fmu_1b/chiller_config.yaml'):
         with open(config_file) as fp:
             self.config = yaml.safe_load(fp)
 
