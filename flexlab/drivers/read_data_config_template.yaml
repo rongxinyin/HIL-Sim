@@ -250,6 +250,12 @@ cell_data:
         c5fa8d69-6ded-4934-a109-a981b401b417: "1A-VAV3-OccupiedHeatingSetpt"
         fab8a3c1-126c-4c74-a626-f6406f4c0379: "1A-VAV3-TR-R"
 
+        770da78a-ab51-5241-b79b-ffecc9f0586e: "1A-VAV1-ElecReheat"
+        64a9bc13-ebe6-54cc-802f-3991fae78565: "1A-VAV2-ElecReheat"
+        f516a761-9b1e-5d05-bafe-ceaa800694b6: "1A-VAV3-ElecReheat"
+
+
+
 
   cell_vav_1b:
     db_table_name: cell_vav_1b
@@ -287,6 +293,10 @@ cell_data:
         ca3f0f5d-0afa-4b40-a5fa-95a23d4b9c9d: "1B-VAV3-VAVActuatorPosition"
         76aba656-030d-42b7-8c7d-ffcd1c2999ec: "1B-TR-SAT-R"
         981e2e1e-2e3e-47fb-b052-1e93be397536: "1B-TR-SAP-R"
+
+        75d614f9-7e98-583d-ae23-361df1d95926: "1B-VAV3-ElecReheat"
+        3f3a5b58-7a99-5122-92e9-3285bb5d608d: "1B-VAV2-ElecReheat"
+        092a9057-b86c-5edb-b54d-778dfa6534d1: "1B-VAV1-ElecReheat"
 
 
   cell_thermalstation_1ab:
