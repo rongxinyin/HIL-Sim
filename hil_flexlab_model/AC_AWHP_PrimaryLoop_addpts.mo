@@ -1,38 +1,32 @@
 within hil_flexlab_model;
-model AC_Chiller_PrimaryLoop_addpts
+model AC_AWHP_PrimaryLoop_addpts
   "Validated Partial model of variable air volume flow system with terminal reheat and 3 VAV zones at flexlab x1a"
 
   package MediumA = Buildings.Media.Air "Medium model for air";
   package MediumW = Buildings.Media.Water "Medium model for water";
-   parameter
-    hil_flexlab_model.Data.AirCooled.ElectricEIRChiller_York_YCAL0019EE_54_2kW_2_9COP_None
-    per     "Chiller performance data"
-    annotation (Placement(transformation(extent={{216,-320},{232,-304}})));
+    constant Modelica.SIunits.MassFlowRate m_flow=0.4
+    "Nominal mass flow rate";
 
-    constant Real QCoo_flow_nominal=per.QEva_flow_nominal
-    "constant Real mChiEva_flow_nominal=per.mEva_flow_nominal";
-    constant Real mChiCon_flow_nominal=per.mCon_flow_nominal;
 
   parameter Modelica.SIunits.Temperature TSupChi_nominal=281.15;
   parameter Modelica.SIunits.Temperature TSetSupAir=286.15;
 
-parameter Modelica.SIunits.MassFlowRate mChiEva_flow_nominal=per.mEva_flow_nominal
-    "Design mass flow rate of chiller";
+
 parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
     "Design mass flow rate of secondary loop";
 
   Modelica.Blocks.Sources.Constant TSetSupChiConst(final k=TSupChi_nominal)
     "Set point for chiller temperature"
-    annotation (Placement(transformation(extent={{306,-306},{318,-294}})));
+    annotation (Placement(transformation(extent={{130,-258},{142,-246}})));
   Modelica.Blocks.Math.BooleanToReal booToInt(final realTrue=
-        mChiEva_flow_nominal) "Boolean to integer conversion"
-    annotation (Placement(transformation(extent={{276,-264},{286,-254}})));
+        m_flow) "Boolean to integer conversion"
+    annotation (Placement(transformation(extent={{256,-202},{266,-192}})));
   Buildings.Fluid.Movers.FlowControlled_m_flow pumChiWat(
     use_inputFilter=false,
     allowFlowReversal=false,
     redeclare package Medium = MediumW,
     energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
-    m_flow_nominal=mChiEva_flow_nominal,
+    m_flow_nominal=m_flow,
     addPowerToMedium=false,
     per(
       hydraulicEfficiency(eta={1}),
@@ -47,24 +41,11 @@ parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
         extent={{-9,-9},{9,9}},
         rotation=90,
         origin={309,-221})));
-  Buildings.Fluid.Chillers.ElectricEIR chi(
-    allowFlowReversal1=false,
-    allowFlowReversal2=false,
-    redeclare package Medium1 = MediumA,
-    redeclare package Medium2 = MediumW,
-    m2_flow_nominal=mChiEva_flow_nominal,
-    show_T=true,
-    dp1_nominal=0,
-     dp2_nominal=12E3,
-    m1_flow_nominal=mChiCon_flow_nominal,
-    per=per)
-    "Air cooled chiller"
-    annotation (Placement(transformation(extent={{240,-272},{224,-288}})));
 
   Buildings.Fluid.FixedResistances.Junction chw_sup(
     redeclare package Medium = MediumW,
-    m_flow_nominal={mChiEva_flow_nominal + mSec_flow_nominal,-mSec_flow_nominal,
-        mChiEva_flow_nominal},
+    m_flow_nominal={m_flow + mSec_flow_nominal,-mSec_flow_nominal,
+        m_flow},
     from_dp=true,
     linearized=true,
     energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
@@ -75,8 +56,8 @@ parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
         origin={308,-176})));
   Buildings.Fluid.FixedResistances.Junction chw_ret(
     redeclare package Medium = MediumW,
-    m_flow_nominal={mSec_flow_nominal,-(mChiEva_flow_nominal + mSec_flow_nominal),
-        mChiEva_flow_nominal},
+    m_flow_nominal={mSec_flow_nominal,-(m_flow + mSec_flow_nominal),
+        m_flow},
     from_dp=true,
     linearized=true,
     energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
@@ -133,15 +114,6 @@ parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
         extent={{-20,-20},{20,20}},
         rotation=90,
         origin={358,-58})));
-  Buildings.Fluid.Sources.MassFlowSource_T out_air(
-    redeclare package Medium = MediumA,
-    use_m_flow_in=false,
-    m_flow=mChiCon_flow_nominal,
-    use_T_in=true,
-    nPorts=1) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=180,
-        origin={402,-318})));
   Modelica.Blocks.Interfaces.RealInput T_air_in annotation (Placement(
         transformation(
         extent={{-20,-20},{20,20}},
@@ -150,9 +122,6 @@ parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
         extent={{-20,-20},{20,20}},
         rotation=180,
         origin={410,-316})));
-  Buildings.Fluid.Sources.Boundary_pT bou1(redeclare package Medium = MediumA,
-      nPorts=1)
-    annotation (Placement(transformation(extent={{126,-324},{146,-304}})));
   Modelica.Blocks.Interfaces.RealOutput chi_P annotation (Placement(
         transformation(
         extent={{-22,-22},{22,22}},
@@ -165,7 +134,7 @@ parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
         transformation(extent={{412,-218},{450,-180}}), iconTransformation(
           extent={{412,-212},{450,-174}})));
   Buildings.Fluid.Sensors.TemperatureTwoPort sen_retTem(redeclare package
-      Medium = Buildings.Media.Water, m_flow_nominal=mChiEva_flow_nominal)
+      Medium = Buildings.Media.Water, m_flow_nominal=m_flow)
     annotation (Placement(transformation(extent={{186,-238},{206,-218}})));
   Modelica.Blocks.Interfaces.RealOutput T_pch_in annotation (Placement(
         transformation(
@@ -178,25 +147,32 @@ parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
   Modelica.Blocks.Interfaces.RealOutput m_flow_pri annotation (Placement(
         transformation(extent={{416,-262},{454,-224}}), iconTransformation(
           extent={{412,-262},{450,-224}})));
+   hil_flexlab_model.HeatPumps.BlackBox_Generic_TSetpoint AirWaterHP(
+    tauHeatLoss=3600,
+    QNom=10590,
+    redeclare package Medium = IDEAS.Media.Water,
+    m_flow_nominal=m_flow,
+    modulation_min=16,
+    modulation_start=25)
+                        annotation (
+      Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={228,-240})));
+  Buildings.HeatTransfer.Sources.PrescribedTemperature prescribedTemperature
+    annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={376,-292})));
 equation
 
   connect(booToInt.y,pumChiWat. m_flow_in)
-    annotation (Line(points={{286.5,-259},{300,-259},{300,-221},{298.2,-221}},
+    annotation (Line(points={{266.5,-197},{300,-197},{300,-221},{298.2,-221}},
                                                   color={0,0,127}));
-  connect(chi.port_b2, pumChiWat.port_a) annotation (Line(points={{240,-275.2},
-          {309,-275.2},{309,-230}},
-                             color={0,127,255}));
-  connect(TSetSupChiConst.y, chi.TSet) annotation (Line(points={{318.6,-300},{
-          338,-300},{338,-277.6},{241.6,-277.6}},
-                                        color={0,0,127}));
   connect(pumChiWat.port_b, chw_sup.port_2) annotation (Line(points={{309,-212},
           {308,-212},{308,-186}},color={0,127,255}));
-  connect(chi.on, booToInt.u) annotation (Line(points={{241.6,-282.4},{257.8,-282.4},
-          {257.8,-259},{275,-259}}, color={255,0,255}));
   connect(chw_sup.port_3, chw_ret.port_3)
     annotation (Line(points={{298,-176},{190,-176}}, color={0,127,255}));
-  connect(chiOn, chi.on) annotation (Line(points={{258,-98},{258,-282.4},{241.6,-282.4}},
-                  color={255,0,255}));
   connect(m_flow_sec, sec_ret.m_flow_in) annotation (Line(points={{180,-98},{
           180,-128},{188,-128}}, color={0,0,127}));
   connect(T_chw_in, sec_ret.T_in) annotation (Line(points={{216,-98},{216,-128},{
@@ -209,27 +185,34 @@ equation
     annotation (Line(points={{180,-150},{180,-166}}, color={0,127,255}));
   connect(chw_sup.port_1, senTem.port_a) annotation (Line(points={{308,-166},{308,
           -136},{350,-136}}, color={0,127,255}));
-  connect(chi.port_a1, out_air.ports[1]) annotation (Line(points={{240,-284.8},{316,
-          -284.8},{316,-318},{392,-318}}, color={0,127,255}));
-  connect(chi.port_b1, bou1.ports[1]) annotation (Line(points={{224,-284.8},{
-          186,-284.8},{186,-314},{146,-314}},
-                                          color={0,127,255}));
-  connect(T_air_in, out_air.T_in)
-    annotation (Line(points={{442,-322},{414,-322}}, color={0,0,127}));
-  connect(chi.P, chi_P) annotation (Line(points={{223.2,-287.2},{80,-287.2},{80,
-          -270}},     color={0,0,127}));
   connect(pumChiWat.P, pum_P) annotation (Line(points={{300.9,-211.1},{431,
           -211.1},{431,-199}}, color={0,0,127}));
   connect(chw_ret.port_1, sen_retTem.port_a) annotation (Line(points={{180,-186},
           {180,-228},{186,-228}}, color={0,127,255}));
-  connect(sen_retTem.port_b, chi.port_a2) annotation (Line(points={{206,-228},{
-          212,-228},{212,-275.2},{224,-275.2}}, color={0,127,255}));
   connect(sen_retTem.T, T_pch_in)
     annotation (Line(points={{196,-217},{77,-217}}, color={0,0,127}));
   connect(T_chw_out, T_chw_out) annotation (Line(points={{398,-90},{398,-97},{
           398,-97},{398,-90}}, color={0,0,127}));
   connect(pumChiWat.m_flow_actual, m_flow_pri) annotation (Line(points={{304.5,
           -211.1},{361.25,-211.1},{361.25,-243},{435,-243}}, color={0,0,127}));
+  connect(AirWaterHP.PEl, chi_P) annotation (Line(points={{238,-246},{328,-246},
+          {328,-270},{80,-270}}, color={0,0,127}));
+  connect(chiOn, AirWaterHP.HP_On) annotation (Line(points={{258,-98},{240,-98},
+          {240,-258.4},{220.4,-258.4}}, color={255,0,255}));
+  connect(booToInt.u, AirWaterHP.HP_On) annotation (Line(points={{255,-197},{
+          255,-209.5},{220.4,-209.5},{220.4,-258.4}}, color={255,0,255}));
+  connect(TSetSupChiConst.y, AirWaterHP.TSet) annotation (Line(points={{142.6,
+          -252},{188,-252},{188,-246},{216,-246}}, color={0,0,127}));
+  connect(T_air_in, AirWaterHP.TSource) annotation (Line(points={{442,-322},{
+          230,-322},{230,-258.6},{228.8,-258.6}}, color={0,0,127}));
+  connect(AirWaterHP.port_b, pumChiWat.port_a)
+    annotation (Line(points={{222,-230},{309,-230}}, color={0,127,255}));
+  connect(AirWaterHP.port_a, sen_retTem.port_b) annotation (Line(points={{234,
+          -230},{220,-230},{220,-228},{206,-228}}, color={0,127,255}));
+  connect(T_air_in, prescribedTemperature.T) annotation (Line(points={{442,-322},
+          {418,-322},{418,-292},{388,-292}}, color={0,0,127}));
+  connect(prescribedTemperature.port, AirWaterHP.heatPort) annotation (Line(
+        points={{366,-292},{304,-292},{304,-240},{238,-240}}, color={191,0,0}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{100,-340},
             {420,-60}}),        graphics={Line(points={{310,404}}, color={28,
               108,200}), Line(
@@ -454,4 +437,4 @@ This is for
           fillPattern=FillPattern.Solid,
           origin={270,-277},
           rotation=360)}));
-end AC_Chiller_PrimaryLoop_addpts;
+end AC_AWHP_PrimaryLoop_addpts;
