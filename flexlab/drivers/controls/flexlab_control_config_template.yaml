@@ -8,25 +8,43 @@ database:
 
 control:
   variable_names: [
-    x2_boiler_sp_C_command
+    1a_chiller_primary_sp_K_command
   ]
-  query_time_minutes: 16
+  query_time_minutes: 5
   revert_to_default_time_threshold_seconds: 3600
   default_values:
-    x2_boiler_sp_C_command: 45
+    1a_chiller_primary_sp_K_command: 279.82
+  min_values:
+    1a_chiller_primary_sp_K_command: 275.15 # 2c
+  max_values:
+    1a_chiller_primary_sp_K_command: 293.15 # 20c
 
-plant:
+primary_chiller:
   control_flag:
-    x1: False
-    x2: False
+    1a: False
+    1b: False
 
-flexlab:
-  control_flag: {}
-#    ra: False
-#    rb: False
-  api:
-    flex_user:
-    flex_password:
-    flexq_login:
-  cws_point_map:
-    x2_boiler_sp_C_command: 2-B-ADJ-ENABLE
+  UNIT_ID: 0
+  modbus_type: tcp
+  ip:
+  port:
+  enable_logging: True
+
+  byte_order: big
+  word_order: little
+
+  OFFSET_REGISTERS: 1
+
+  discrete_registers: {}
+
+  coil_registers: {}
+  input_registers: {}
+
+  holding_registers:
+    temperature_setpoint1: [1, 16int]
+    temperature_high_alarm: [3, 16int]
+    temperature_low_alarm: [4, 16int]
+    process_status: [9, 16int]
+
+    zone1_temp: [17, 8int]
+    zone1_status: [23, 16int]]
