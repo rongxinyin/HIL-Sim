@@ -138,7 +138,7 @@ def main():
 
     try:
         loop = asyncio.get_event_loop()
-        chiller = Emulated_Chiller()
+        chiller = Emulated_Chiller_Heatpump()
         threading.Thread(target=chiller.run).start()
         loop.run_forever()
 
