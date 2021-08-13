@@ -368,6 +368,32 @@ emulated_chiller:
     1b_pum_P: 1b_pum_P
     1b_m_flow_pri: 1b_m_flow_pri
 
+emulated_chiller_heatpump:
+  chiller_web_host:
+  db_table_name: emulated_chiller_heatpump
+  web_api_port_1a:
+  web_api_port_1b:
+  point_map:
+    1a_m_flow_sec: 1a_m_flow_sec
+    1a_T_chw_in: 1a_T_chw_in
+    1a_chiOn: 1a_chiOn
+    1a_T_air_in: 1a_T_air_in
+    1a_T_chw_out: 1a_T_chw_out
+    1a_T_pch_in: 1a_T_pch_in
+    1a_chi_P: 1a_chi_P
+    1a_pum_P: 1a_pum_P
+    1a_m_flow_pri: 1a_m_flow_pri
+
+    1b_m_flow_sec: 1b_m_flow_sec
+    1b_T_chw_in: 1b_T_chw_in
+    1b_chiOn: 1b_chiOn
+    1b_T_air_in: 1b_T_air_in
+    1b_T_chw_out: 1b_T_chw_out
+    1b_T_pch_in: 1b_T_pch_in
+    1b_chi_P: 1b_chi_P
+    1b_pum_P: 1b_pum_P
+    1b_m_flow_pri: 1b_m_flow_pri
+
 primary_chiller:
   UNIT_ID: 0
   modbus_type: tcp

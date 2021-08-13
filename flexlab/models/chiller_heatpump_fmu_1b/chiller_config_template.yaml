@@ -1,0 +1,12 @@
+cell: 1b
+
+fmu_file: flexlab/models/chiller_heatpump_fmu_1a/hil_flexlab_model_AC_AWHP_PrimaryLoop_addpts.fmu
+model_update_rate: 30
+web_api_port: 5003
+
+min_setpoint: 35.6
+max_setpoint: 100
+default_setpoint: 44
+
+setpoint_table: setpoints_test
+
