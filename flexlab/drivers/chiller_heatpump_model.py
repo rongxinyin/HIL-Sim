@@ -9,7 +9,7 @@ class Chiller_Heatpump_Model(Driver):
         self.logger = logging.getLogger(__name__)
 
         try:
-            super(Chiller_Model, self).__init__(config_file=config_file)
+            super(Chiller_Heatpump_Model, self).__init__(config_file=config_file)
         except Exception as e:
             self.logger.error("error reading config file={0} error={1}".format(config_file, str(e)))
 
