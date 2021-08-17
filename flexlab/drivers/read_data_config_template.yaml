@@ -51,6 +51,7 @@ cell_data:
         1A-RADA-1-POSN: 1A-RADA-1-POSN
         1B-OAT-1: 1A-OAT-1
         1A-FILDPS-1: 1A-FILDPS-1
+
   cell_hvac_1b:
     db_table_name: cell_hvac_1b
     cws_point_map:
@@ -254,6 +255,11 @@ cell_data:
         64a9bc13-ebe6-54cc-802f-3991fae78565: "1A-VAV2-ElecReheat"
         f516a761-9b1e-5d05-bafe-ceaa800694b6: "1A-VAV3-ElecReheat"
 
+        ff8712db-a22d-41e5-bcae-e543434d7ef1: "1A-SAT-PV"
+        1bbc3754-538b-4f1b-a466-8365b4ff9f25: "1A-SAT-SP"
+        eae8c188-611d-4082-b994-40ca67360fdc: "1A-SAP-SP"
+        ff5899e7-9bab-4514-a3ca-35d7cad8b14c: "1A-SAP-PV"
+
 
 
 
@@ -297,6 +303,11 @@ cell_data:
         75d614f9-7e98-583d-ae23-361df1d95926: "1B-VAV3-ElecReheat"
         3f3a5b58-7a99-5122-92e9-3285bb5d608d: "1B-VAV2-ElecReheat"
         092a9057-b86c-5edb-b54d-778dfa6534d1: "1B-VAV1-ElecReheat"
+
+        525b9f48-4d91-4c2a-bc7e-49ce080fd95e: "1B-SAT-PV"
+        d0670138-fc1e-4ef1-bdfe-c130adb97c0a: "1B-SAT-SP"
+        34393c41-821e-4fd4-97eb-8e86ea384979: "1B-SAP-PV"
+        6aafb216-fefd-4024-bc7c-ec95eebf3cb5: "1B-SAP-SP"
 
 
   cell_thermalstation_1ab:
