@@ -126,7 +126,9 @@ class Emulated_Chiller_Heatpump:
                             self.cell+'_T_pch_in': self.chiller.get('T_pch_in')[0],
                             self.cell+'_chi_P': self.chiller.get('chi_P')[0],
                             self.cell+'_pum_P': self.chiller.get('pum_P')[0],
-                            self.cell+'_m_flow_pri': self.chiller.get('m_flow_pri')[0]
+                            self.cell+'_m_flow_pri': self.chiller.get('m_flow_pri')[0],
+                            self.cell+'_chi_spd': self.chiller.get('chi_spd')[0],
+                            self.cell+'_chi_COP': self.chiller.get('chi_COP')[0]
                         }
         print(measurements)
         return jsonify(measurements)

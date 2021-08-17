@@ -383,6 +383,8 @@ emulated_chiller_heatpump:
     1a_chi_P: 1a_chi_P
     1a_pum_P: 1a_pum_P
     1a_m_flow_pri: 1a_m_flow_pri
+    1a_chi_spd: 1a_chi_spd
+    1a_chi_COP: 1a_chi_COP
 
     1b_m_flow_sec: 1b_m_flow_sec
     1b_T_chw_in: 1b_T_chw_in
@@ -393,6 +395,8 @@ emulated_chiller_heatpump:
     1b_chi_P: 1b_chi_P
     1b_pum_P: 1b_pum_P
     1b_m_flow_pri: 1b_m_flow_pri
+    1b_chi_spd: 1b_chi_spd
+    1b_chi_COP: 1b_chi_COP
 
 primary_chiller:
   UNIT_ID: 0
