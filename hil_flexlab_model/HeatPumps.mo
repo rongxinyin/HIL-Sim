@@ -32,6 +32,8 @@ package HeatPumps "Contains heat pump models"
     parameter Real modulation_start=40
       "Min modulation percentage required for starting the heat pump";
     Real COP "Instanteanous COP";
+    Real HP_cop "COP output";
+    Real HP_mod "speed output";
 
     Real modulation(max=100) = IDEAS.Utilities.Math.Functions.smoothMax(0, energyPump.modulation, 1)
       "Current modulation percentage - an output of the heatpump model below";
@@ -61,9 +63,28 @@ package HeatPumps "Contains heat pump models"
           extent={{-20,-20},{20,20}},
           rotation=0,
           origin={-184,76})));
+    Modelica.Blocks.Interfaces.RealOutput Mod "Modulation level or speed"
+      annotation (Placement(transformation(extent={{-94,68},{-114,88}}),
+          iconTransformation(
+          extent={{-10,-10},{10,10}},
+          rotation=-90,
+          origin={-30,-100})));
+    Modelica.Blocks.Interfaces.RealOutput COP_HP "COP output"
+      annotation (Placement(transformation(extent={{-94,84},{-114,104}}),
+          iconTransformation(
+          extent={{-10,-10},{10,10}},
+          rotation=-90,
+          origin={-90,-100})));
   equation
     PEl = energyPump.PEl;
     COP =if noEvent(PEl > 0) then vol.heatPort.Q_flow/PEl else 0;
+    HP_mod= energyPump.modulation;
+    HP_cop= COP;
+    COP_HP=HP_cop;
+    Mod=HP_mod;
+
+
+
 
     connect(heatFlowSensor.port_b, vol.heatPort) annotation (Line(
         points={{-6,11},{16,11},{16,-20},{10,-20}},
@@ -77,10 +98,11 @@ package HeatPumps "Contains heat pump models"
             -16},{-56,-16},{-56,-49},{40,-49}}, color={0,0,127}));
     connect(energyPump.loadPort, heatFlowSensor.port_a) annotation (Line(points={{
             -40,-6},{-36,-6},{-36,11},{-32,11}}, color={191,0,0}));
-    connect(energyPump.on, HP_On) annotation (Line(points={{-60.2,1.4},{-60.2,
-            14.7},{-106,14.7},{-106,28}}, color={255,0,255}));
     connect(TSource, energyPump.TSourceHX) annotation (Line(points={{-106,-40},
             {-84,-40},{-84,-11.4},{-60.4,-11.4}}, color={0,0,127}));
+    connect(energyPump.on, HP_On) annotation (Line(points={{-60.2,1.4},{-77.1,1.4},
+            {-77.1,28},{-106,28}}, color={255,0,255}));
+
       annotation (Placement(transformation(extent={{-82,66},{-62,86}})),
       Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,
               100}})),
@@ -1240,6 +1262,10 @@ Cleaned up implementation for
         startTime=13000)
         "Temperature of the water returning to the HP"
         annotation (Placement(transformation(extent={{-100,-64},{-74,-38}})));
+      Modelica.Blocks.Logical.GreaterThreshold greaterThreshold(threshold=0.5)
+        annotation (Placement(transformation(extent={{-116,68},{-96,88}})));
+      Modelica.Blocks.Sources.Constant On_signal(k=1)
+        annotation (Placement(transformation(extent={{-166,64},{-146,84}})));
     equation
 
       connect(AirWaterHP.heatPort, fixedTemperature.port) annotation (Line(
@@ -1266,6 +1292,10 @@ Cleaned up implementation for
               28},{24,-2},{52,-2}}, color={0,127,255}));
       connect(Temp_ReturnWater.y, TReturn.T) annotation (Line(points={{-72.7,-51},{-67.35,
               -51},{-67.35,-50},{-62,-50}}, color={0,0,127}));
+      connect(On_signal.y, greaterThreshold.u) annotation (Line(points={{-145,
+              74},{-132.5,74},{-132.5,78},{-118,78}}, color={0,0,127}));
+      connect(greaterThreshold.y, AirWaterHP.HP_On) annotation (Line(points={{
+              -95,78},{-88,78},{-88,33.6},{-81.56,33.6}}, color={255,0,255}));
       annotation (
         Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,
                 100}})),

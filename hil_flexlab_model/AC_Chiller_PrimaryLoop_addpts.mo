@@ -181,7 +181,7 @@ parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
 equation
 
   connect(booToInt.y,pumChiWat. m_flow_in)
-    annotation (Line(points={{286.5,-259},{300,-259},{300,-221},{298.2,-221}},
+    annotation (Line(points={{286.5,-259},{290,-259},{290,-221},{298.2,-221}},
                                                   color={0,0,127}));
   connect(chi.port_b2, pumChiWat.port_a) annotation (Line(points={{240,-275.2},
           {309,-275.2},{309,-230}},
@@ -218,8 +218,6 @@ equation
     annotation (Line(points={{442,-322},{414,-322}}, color={0,0,127}));
   connect(chi.P, chi_P) annotation (Line(points={{223.2,-287.2},{80,-287.2},{80,
           -270}},     color={0,0,127}));
-  connect(pumChiWat.P, pum_P) annotation (Line(points={{300.9,-211.1},{431,
-          -211.1},{431,-199}}, color={0,0,127}));
   connect(chw_ret.port_1, sen_retTem.port_a) annotation (Line(points={{180,-186},
           {180,-228},{186,-228}}, color={0,127,255}));
   connect(sen_retTem.port_b, chi.port_a2) annotation (Line(points={{206,-228},{
@@ -230,6 +228,8 @@ equation
           398,-97},{398,-90}}, color={0,0,127}));
   connect(pumChiWat.m_flow_actual, m_flow_pri) annotation (Line(points={{304.5,
           -211.1},{361.25,-211.1},{361.25,-243},{435,-243}}, color={0,0,127}));
+  connect(pumChiWat.P, pum_P) annotation (Line(points={{300.9,-211.1},{301.45,
+          -211.1},{301.45,-199},{431,-199}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{100,-340},
             {420,-60}}),        graphics={Line(points={{310,404}}, color={28,
               108,200}), Line(
