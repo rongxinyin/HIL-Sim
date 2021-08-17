@@ -336,7 +336,7 @@ cell_data:
         34c9ffeb-87d5-5f3a-a606-bdab0128bc63: "1B-NorthZone-MRT"
 
   weather_station:
-    db_table_name:
+    db_table_name: weather_station
     cws_point_map:
         1B-OAT-1: oat_C
 
