@@ -337,8 +337,20 @@ cell_data:
 
   weather_station:
     db_table_name: weather_station
-    cws_point_map:
-        1B-OAT-1: oat_C
+    point_uuid_map:
+        74581e16-e0d3-5978-9cde-291d871eb84a: "WindDir"
+        06fbbb96-352d-50c7-892a-18e8e4660a6a: "WindSpd"
+        16bc302e-5e5b-5648-85e6-74c7f058285d: "OAT2"
+        d2b8263c-6c2d-59e1-8318-ccc720696f66: "OAT3"
+        e535575d-7d0b-5af1-8e6f-1a8005c57f31: "RH"
+        ab2d6214-be21-46d5-9ded-e9bdcdc3fbbe: "DHI"
+        951d45f8-d026-4bfc-b40c-65118ad06e98: "GHI"
+        78911b05-8a52-4e7e-8d50-07165372ae4f: "DNITemp"
+        720b8a03-6cfb-47b4-a023-1fc7043cbb1d: "DNI"
+        e5a2a073-ef96-477c-b29a-fe5113588324: "GHITemp"
+        c0a04203-4950-5682-bbaa-8588ce1ddd58: "3-OAT_North"
+        5dd914c3-bab4-5e80-b3d3-7352832b28df: "3-OAT_South"
+        c0c72625-4046-5c41-a653-d28a4c72246c: "oat_C"
 
 weather:
   db_table_name: weather
