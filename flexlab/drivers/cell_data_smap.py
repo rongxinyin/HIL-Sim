@@ -20,7 +20,7 @@ class Cell_Data_Smap(Driver):
         self.smap_url = self.api_config.get('smap_url')
 
         self.cell_data_sections = ['processed_cell_1a', 'processed_cell_1b', 'cell_vav_1a', 'cell_vav_1b',
-                                   'cell_thermalstation_1ab']
+                                   'cell_thermalstation_1ab', 'weather_station']
 
     def write_to_db(self):
         time_now = datetime.datetime.now(pytz.timezone("US/Pacific")) - datetime.timedelta(minutes=10)
