@@ -93,6 +93,9 @@ class Emulated_Chiller_Heatpump:
             chiller_values = self.chiller_db.get_latest_chiller_points(st=start_t, et=end_t, cell=self.cell).to_dict('records')[0]
             chiller_values_SI_units = self.convert_units(chiller_values)
 
+            if chiller_values_SI_units.get('m_flow_sec') < 0:
+                chiller_values_SI_units['m_flow_sec'] = 0
+
             inputs = (
                 ['m_flow_sec', 'T_chw_in', 'chiOn', 'T_air_in'],
                 np.array(
@@ -103,7 +106,9 @@ class Emulated_Chiller_Heatpump:
             self.chiller.simulate(start, end, inputs, options=self.model_options)
 
             latest_chiller_setpoint = self.chiller.get('T_chw_out')[0]
-            self.push_setpoint_to_db(latest_chiller_setpoint)
+
+            if chiller_values_SI_units['m_flow_sec'] >= 0.005:
+                self.push_setpoint_to_db(latest_chiller_setpoint)
 
             self.current_time = self.current_time + self._model_update_rate
             await asyncio.sleep(self._model_update_rate)
