@@ -175,8 +175,8 @@ partial model PartialOpenLoopX1aV1
     m_flow_nominal=m_flow_nominal,
     allowFlowReversal=allowFlowReversal)
     annotation (Placement(transformation(extent={{330,-50},{350,-30}})));
-  Buildings.Fluid.Sensors.RelativePressure dpDisSupFan(redeclare package Medium
-      = MediumA) "Supply fan static discharge pressure" annotation (Placement(
+  Buildings.Fluid.Sensors.RelativePressure dpDisSupFan(redeclare package Medium =
+        MediumA) "Supply fan static discharge pressure" annotation (Placement(
         transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
@@ -339,7 +339,7 @@ partial model PartialOpenLoopX1aV1
     "Splitter for room supply into Middle and South Zone"
     annotation (Placement(transformation(extent={{824,-30},{844,-50}})));
   Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(filNam=
-        Modelica.Utilities.Files.loadResource("Resources/weatherdata/US_Berkeley_2020_New.mos"))
+        Modelica.Utilities.Files.loadResource("Resources/weatherdata/US_Berkeley_2021_0822.mos"))
     annotation (Placement(transformation(extent={{-360,170},{-340,190}})));
   Buildings.BoundaryConditions.WeatherData.Bus weaBus "Weather Data Bus"
     annotation (Placement(transformation(extent={{-330,170},{-310,190}}),
@@ -576,7 +576,7 @@ equation
       thickness=0.5,
       smooth=Smooth.None));
   connect(weaBus, flo.weaBus) annotation (Line(
-      points={{-320,180},{-320,513},{952.571,513}},
+      points={{-320,180},{-320,527.62},{952.571,527.62}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));

@@ -304,7 +304,7 @@ partial model PartialOpenLoopX1aNoLeakage
     "Splitter for room supply into Middle and South Zone"
     annotation (Placement(transformation(extent={{824,-30},{844,-50}})));
   Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(filNam=
-        Modelica.Utilities.Files.loadResource("Resources/weatherdata/US_Berkeley_2020_New.mos"))
+        Modelica.Utilities.Files.loadResource("Resources/weatherdata/US_Berkeley_2021_0822.mos"))
     annotation (Placement(transformation(extent={{-360,170},{-340,190}})));
   Buildings.BoundaryConditions.WeatherData.Bus weaBus "Weather Data Bus"
     annotation (Placement(transformation(extent={{-330,170},{-310,190}}),
