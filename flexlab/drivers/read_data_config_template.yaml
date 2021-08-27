@@ -249,7 +249,8 @@ cell_data:
         76d717de-e427-438b-a844-e25d856b14fa: "1A-VAV3-UnoccupiedHeatingSetpt"
         71e86285-e880-42ec-8cc7-5a61958443e3: "1A-VAV3-UnoccupiedCoolingSetpt"
         c5fa8d69-6ded-4934-a109-a981b401b417: "1A-VAV3-OccupiedHeatingSetpt"
-        fab8a3c1-126c-4c74-a626-f6406f4c0379: "1A-VAV3-TR-R"
+        fab8a3c1-126c-4c74-a626-f6406f4c0379: "1A-TR-SAT-R"
+        880cd089-f800-4f9b-871d-d54609a29f44: "1A-TR-SAP-R"
 
         770da78a-ab51-5241-b79b-ffecc9f0586e: "1A-VAV1-ElecReheat"
         64a9bc13-ebe6-54cc-802f-3991fae78565: "1A-VAV2-ElecReheat"
