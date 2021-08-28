@@ -261,9 +261,6 @@ cell_data:
         eae8c188-611d-4082-b994-40ca67360fdc: "1A-SAP-SP"
         ff5899e7-9bab-4514-a3ca-35d7cad8b14c: "1A-SAP-PV"
 
-
-
-
   cell_vav_1b:
     db_table_name: cell_vav_1b
     point_uuid_map:
