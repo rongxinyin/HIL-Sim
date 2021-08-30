@@ -1,5 +1,5 @@
 within hil_flexlab_model.ThermalZones;
-model FlexlabX1A "Model of a flexlab x1a"
+model FlexlabX1A0830 "Model of a flexlab x1a"
   replaceable package Medium = Modelica.Media.Interfaces.PartialMedium
     "Medium model for air" annotation (choicesAllMatching=true);
 
@@ -56,7 +56,7 @@ model FlexlabX1A "Model of a flexlab x1a"
          A = {3.05*2.74, 6.49*2.74, 6.49*3.05},
          til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling},
          azi = {Buildings.Types.Azimuth.E, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.S}),
-    mSenFac=1,
+    mSenFac=10,
     nPorts=5,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
@@ -119,7 +119,7 @@ model FlexlabX1A "Model of a flexlab x1a"
          A = {3.23*2.74, 1.26*2.74, 2.39*1.22, 2.55*2.74-2.39*1.22, 6.49*2.74, 6.49*3.23},
          til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Ceiling},
          azi = {Buildings.Types.Azimuth.E, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.S}),
-    mSenFac=1,
+    mSenFac=10,
     nPorts=5,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
@@ -151,6 +151,7 @@ model FlexlabX1A "Model of a flexlab x1a"
          A = {3.05*2.74, 6.49*2.74, 6.49*2.74, 6.49*3.05},
          til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Ceiling},
          azi = {Buildings.Types.Azimuth.E, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.S}),
+    mSenFac=10,
     nPorts=10,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
@@ -223,7 +224,6 @@ model FlexlabX1A "Model of a flexlab x1a"
     final sampleModel=sampleModel) "Model of the electrical room"
     annotation (Placement(transformation(extent={{154,372},{194,412}})));
 
-
   Modelica.Fluid.Vessels.BaseClasses.VesselFluidPorts_b portsSou[2](
       redeclare package Medium = Medium) "Fluid inlets and outlets"
     annotation (Placement(transformation(extent={{70,-42},{110,-26}})));
@@ -236,7 +236,7 @@ model FlexlabX1A "Model of a flexlab x1a"
   Modelica.Fluid.Vessels.BaseClasses.VesselFluidPorts_b portsCor[2](
       redeclare package Medium = Medium) "Fluid inlets and outlets"
     annotation (Placement(transformation(extent={{70,38},{110,54}})));
-  Modelica.Blocks.Sources.Constant uSha(k=1)
+  Modelica.Blocks.Sources.Constant uSha(k=0.5)
     "Control signal for the shading device"
     annotation (Placement(transformation(extent={{-80,170},{-60,190}})));
   Modelica.Blocks.Routing.Replicator replicator(nout=1)
@@ -245,7 +245,7 @@ model FlexlabX1A "Model of a flexlab x1a"
     annotation (Placement(transformation(extent={{200,224},{220,244}})));
   Buildings.Examples.VAVReheat.ThermalZones.RoomLeakage leaSou(
     redeclare package Medium = Medium,
-    VRoo=6.49*3.05*3.6576,
+    VRoo=6.49*3.05*3.6576/5,
     s=6.49/3.05,
     azi=Buildings.Types.Azimuth.S,
     final use_windPressure=true)
@@ -413,14 +413,7 @@ model FlexlabX1A "Model of a flexlab x1a"
   Modelica.Blocks.Math.MatrixGain occGai(K=14*[0.4; 0.4; 0.2])
     "Matrix gain to split up heat gain in radiant, convective and latent gain"
     annotation (Placement(transformation(extent={{284,396},{304,416}})));
-  Modelica.Blocks.Sources.CombiTimeTable intGaiPle(
-    table=[0,0.05; 8,0.05; 9,0.9; 12,0.9; 12,0.8; 13,0.8; 13,1; 17,1; 19,0.1; 24,
-        0.05],
-    timeScale=3600,
-    extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
-    "Fraction of internal heat gain"
-    annotation (Placement(transformation(extent={{-138,-62},{-118,-42}})));
-  Modelica.Blocks.Math.MatrixGain gaiPle(K=0*[0.4; 0.4; 0.2])
+  Modelica.Blocks.Math.MatrixGain gaiPle(K=5*[0.5; 0.5; 0.0])
     "Matrix gain to split up heat gain in radiant, convective and latent gain"
     annotation (Placement(transformation(extent={{-100,-62},{-80,-42}})));
 
@@ -442,6 +435,12 @@ model FlexlabX1A "Model of a flexlab x1a"
     annotation (Placement(transformation(extent={{332,394},{352,414}})));
   Modelica.Blocks.Routing.Multiplex3 multiplex3_1
     annotation (Placement(transformation(extent={{370,428},{390,448}})));
+  Modelica.Blocks.Sources.CombiTimeTable ligSchPle(
+    table=[0,0; 7,0; 7,0.5; 8,0.5; 8,0.9; 17,0.9; 17,0.5; 21,0.5; 21,0; 24,0],
+    timeScale=3600,
+    extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
+    "internal heat gain from lights"
+    annotation (Placement(transformation(extent={{-138,-62},{-118,-42}})));
 equation
   connect(sou.surf_conBou[2], cor.surf_conBou[3]) annotation (Line(
       points={{170,-40},{170,-54},{200,-54},{200,20},{170,20},{170,40.25}},
@@ -674,8 +673,6 @@ equation
     annotation (Line(points={{267,438},{282,438}}, color={0,0,127}));
   connect(occSch.y, occGai.u)
     annotation (Line(points={{267,406},{282,406}}, color={0,0,127}));
-  connect(intGaiPle.y, gaiPle.u)
-    annotation (Line(points={{-117,-52},{-102,-52}}, color={0,0,127}));
   connect(gaiPle.y, ple.qGai_flow) annotation (Line(points={{-79,-52},{324,-52},
           {324,88},{356.4,88}}, color={0,0,127}));
   connect(weaBus, clo.weaBus) annotation (Line(
@@ -743,6 +740,8 @@ equation
           410,438},{410,64},{142.4,64}}, color={0,0,127}));
   connect(multiplex3_1.y, sou.qGai_flow) annotation (Line(points={{391,438},{
           410,438},{410,-16},{142.4,-16}}, color={0,0,127}));
+  connect(ligSchPle.y, gaiPle.u)
+    annotation (Line(points={{-117,-52},{-102,-52}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=true, extent={{-160,-100},
             {400,500}},
         initialScale=0.1)),     Icon(coordinateSystem(
@@ -856,4 +855,4 @@ to be parameters does not imply that the whole record has the variability of a p
       StopTime=19612800,
       Interval=300,
       __Dymola_Algorithm="Dassl"));
-end FlexlabX1A;
+end FlexlabX1A0830;
