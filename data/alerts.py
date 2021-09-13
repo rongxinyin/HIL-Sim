@@ -30,7 +30,7 @@ if __name__ == "__main__":
     tz_local = pytz.timezone("US/Pacific")
     tz_utc = pytz.timezone("UTC")
 
-    db = DB_Interface(config_file='db_interface_config_template_metrics.yaml')
+    db = DB_Interface(config_file='db_interface_config_alerts.yaml')
 
     et_utc = tz_utc.localize(datetime.datetime.utcnow())
     et_local = et_utc.astimezone(tz_local)
