@@ -78,8 +78,12 @@ class DB_Interface:
         query = query + query_condition
         df = self._query_database(query)
         resample = '{0}T'.format(resample_minutes)
-        df = df.resample(resample, label='right', closed='right').agg(variable_agg_map)
-        return df
+        if not df.empty:
+            df = df.resample(resample, label='right', closed='right').agg(variable_agg_map)
+            return df
+        else:
+            return pd.DataFrame()
+
 
     def _format_execute_query_result(self, result):
         output = result.fetchall()
@@ -127,7 +131,8 @@ class DB_Interface:
 
             df = self._query_single_system(st=st, et=et, cell=cell, system=system,
                                            resample_minutes=resample_minutes)
-            df_list.append(df)
+            if not df.empty:
+                df_list.append(df)
 
         final_df = pd.concat(df_list, axis=1)
         return final_df
