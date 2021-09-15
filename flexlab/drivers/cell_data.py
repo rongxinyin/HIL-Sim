@@ -18,7 +18,7 @@ class Cell_Data(Driver):
         self.flex_password = self.api_config.get('flex_password')
         self.flexq_login = self.api_config.get('flexq_login')
 
-        self.cell_data_sections = ['cell_hvac_1a', 'cell_hvac_1b', 'cell_lighting_plug_1a', 'cell_lighting_plug_1b']
+        self.cell_data_sections = ['cell_hvac_1a', 'cell_hvac_1b', 'cell_lighting_plug_1a', 'cell_lighting_plug_1b', 'pcm_data']
 
     def write_to_db(self):
         time_now = self.get_utc_time_now()

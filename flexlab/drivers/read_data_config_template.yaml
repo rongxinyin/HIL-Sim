@@ -350,6 +350,41 @@ cell_data:
         5dd914c3-bab4-5e80-b3d3-7352832b28df: "3-OAT_South"
         c0c72625-4046-5c41-a653-d28a4c72246c: "oat_C"
 
+  pcm_data:
+    db_table_name: pcm_data
+    cws_point_map:
+      X1B-tms_n_217_47_C20: 1b_desk3_door_right_ceiling
+      X1B-tms_nww_10_83_C49: 1b_desk3_door_right_plenum
+      X1B-tms_e_24_34_C18: 1b_desk4_door_left_ceiling
+      X1B-tms_nee_3_83_C17: 1b_desk4_door_left_plenum
+
+      X1B-TMR_118: 1b_desk1_window_right_ceiling
+      X1B-TMR_119: 1b_desk1_window_right_plenum
+      X1B-tms_s_58_17_C108: 1b_desk6_window_left_ceiling
+      X1B-tms_s_116_17_C107: 1b_desk6_window_left_plenum
+      X1B-TMR_265: 1b_window_middle_ceiling
+      X1B-TMR_267: 1b_window_middle_plenum
+
+      X1B-tms_w_98_35_C58: 1b_desk2_core_right_ceiling
+      X1B-tms_w_98_83_C59: 1b_desk2_core_right_plenum
+      X1B-tms_e_193_35_C34: 1b_desk5_core_left_ceiling
+      X1B-tms_e_193_83_C35: 1b_desk5_core_left_plenum
+
+      X1B-TMR_269: 1b_strat_core_middle
+      X1B-TMR_270: 1b_strat_core_top
+
+      X1B-TMR_271: 1b_strat_window_bottom
+      X1B-TMR_266: 1b_strat_window_middle
+      X1B-TMR_268: 1b_strat_window_top
+
+      X1B-TMR_23: 1b_strat_door_bottom
+      X1B-TMR_24: 1b_strat_door_middle
+      X1B-TMR_25: 1b_strat_door_top
+
+      X1A-TMR_257: 1a_strat_window_bottom
+      X1A-TMR_254: 1a_strat_window_middle
+      X1A-TMR_255: 1a_strat_window_top
+
 weather:
   db_table_name: weather
   api:
