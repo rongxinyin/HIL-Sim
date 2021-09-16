@@ -8,181 +8,112 @@ database:
   setpoint_table:
 
 query_condition:
-  x2:
-    setpoints:
-      variables: [x2_boiler_sp_C_command]
-      agg: last
-      table: setpoints_test
-  1a:
-    chiller:
-      variables: [1A-CHWFM-2, 1A-CHWRTS-2, 1A-CHWP-VFD-STAT, 1A-OAT-1]
-      agg: last
-      table: cell_hvac_1a
-    chiller_setpoints:
-      variables: [1a_chiller_primary_sp_K_command]
-      agg: last
-      table: setpoints
+    1a:
+        plugload:
+            variables: [desk1_plug_power, desk2_plug_power, desk3_plug_power, desk4_plug_power, desk5_plug_power, desk6_plug_power,
+             desk3_light_power, desk4_light_power, desk2_light_power, desk1_6_light_power, desk5_light_power]
+            agg: mean
+            table: cell_lighting_plug_1a
 
-  1b:
-    chiller:
-      variables: [1B-CHWFM-2, 1B-CHWRTS-2, 1B-CHWP-VFD-STAT, 1B-OAT-1]
-      agg: last
-      table: cell_hvac_1b
-    chiller_setpoints:
-      variables: [1b_chiller_primary_sp_K_command]
-      agg: last
-      table: setpoints
-#  ra:
-#    flexgrid:
-#      variable_agg_map:
-#        ra_battery_rate_W: last
-#        ra_battery_soc_percentage: last
-#        pv_generation_W: mean
-#        pv_generation_scaled_W: mean
-#      table: flexgrid
-#    power:
-#      variables: [ra_plugload_power_W, ra_light_power_W, ra_fan_power_W, ra_hwp_power_W, ra_chwp_power_W, ra_hw_th_load_W, ra_chw_th_load_W]
-#      agg: mean
-#      table: power
-#    hvac:
-#      variables: [ra_sup_air_flow_sp_kgs, ra_sup_air_flow_sp_cmh, ra_sup_air_flow_kgs, ra_sup_air_flow_cmh, ra_sup_air_temp_C, ra_zone_air_temp1_C, ra_zone_air_temp2_C, ra_zone_temp_hsp_C, ra_zone_temp_csp_C]
-#      agg: last
-#      table: cella
-#    lights:
-#      variables: [ra_level1, ra_level2, ra_level3, ra_level4, ra_level5, ra_level6, ra_ambient1, ra_ambient2, ra_ambient3, ra_ambient4, ra_ambient5, ra_ambient6]
-#      agg: last
-#      table: lights
-#    licor:
-#      variables: [ra_licor_desk1_1_lux, ra_licor_desk1_2_lux, ra_licor_desk2_1_lux, ra_licor_desk2_2_lux, ra_licor_desk3_1_lux, ra_licor_desk3_2_lux, ra_licor_desk4_1_lux, ra_licor_desk4_2_lux, ra_licor_desk5_1_lux, ra_licor_desk5_2_lux, ra_licor_desk6_1_lux, ra_licor_desk6_2_lux]
-#      agg: last
-#      table: cella
-#    weather:
-#      variables: [diffused_irradiance_Wm2, global_irradiance_Wm2, oat_C, rh_percentage]
-#      agg: last
-#      table: weather
-#    setpoints:
-#      variables: [ra_sup_air_flow_sp_cmh_command, ra_battery_sp_command, ra_light_level_sp_command, ra_sup_air_flow_sp_kgs_command, ra_zone_temp_hsp_command, ra_zone_temp_csp_command]
-#      agg: last
-#      table: setpoints
-#
-#  rb:
-#    flexgrid:
-#      variable_agg_map:
-#        rb_battery_rate_W: last
-#        rb_battery_rate2_W: last
-#        rb_battery_soc_percentage: last
-#        pv_generation_W: mean
-#        pv_generation_scaled_W: mean
-#      table: flexgrid
-#    power:
-#      variables: [rb_plugload_power_W, rb_light_power_W, rb_fan_power_W, rb_hwp_power_W, rb_chwp_power_W, rb_hw_th_load_W, rb_chw_th_load_W]
-#      agg: mean
-#      table: power
-#    hvac:
-#      variables: [rb_sup_air_flow_sp_kgs, rb_sup_air_flow_sp_cmh, rb_sup_air_flow_kgs, rb_sup_air_flow_cmh, rb_sup_air_temp_C, rb_sup_air_temp_sp_C, rb_zone_air_temp1_C, rb_zone_air_temp2_C]
-#      agg: last
-#      table: cellb
-#    lights:
-#      variables: [rb_level1, rb_level2, rb_level3, rb_level4, rb_level5, rb_level6, rb_ambient1, rb_ambient2, rb_ambient3, rb_ambient4, rb_ambient5, rb_ambient6]
-#      agg: last
-#      table: lights
-#    licor:
-#      variables: [rb_licor_desk1_1_lux, rb_licor_desk1_2_lux, rb_licor_desk2_1_lux, rb_licor_desk2_2_lux, rb_licor_desk3_1_lux, rb_licor_desk3_2_lux, rb_licor_desk4_1_lux, rb_licor_desk4_2_lux, rb_licor_desk5_1_lux, rb_licor_desk5_2_lux, rb_licor_desk6_1_lux, rb_licor_desk6_2_lux]
-#      agg: last
-#      table: cellb
-#    weather:
-#      variables: [diffused_irradiance_Wm2, global_irradiance_Wm2, oat_C, rh_percentage]
-#      agg: last
-#      table: weather
-#    setpoints:
-#      variables: [rb_sup_air_temp_sp_command, rb_sup_air_flow_sp_cmh_command, rb_battery_sp_command, rb_light_level_sp_command, rb_sup_air_flow_sp_kgs_command]
-#      agg: last
-#      table: setpoints
 
-post_process: {}
-#  ra:
-#    OutTemp:
-#      variables: [oat_C]
-#      agg: mean
-#    OutRH:
-#      variables: [rh_percentage]
-#      agg: mean
-#    OutSI:
-#      variables: [diffused_irradiance_Wm2]
-#      agg: mean
-#    ZoneTotalIlluA:
-#      variables: [ra_ambient1, ra_ambient2, ra_ambient3, ra_ambient4, ra_ambient5, ra_ambient6]
-#      agg: mean
-#    ZoneTempA:
-#      variables: [ra_zone_air_temp1_C, ra_zone_air_temp2_C]
-#      agg: mean
-#    SOC:
-#      variables: [ra_battery_soc_percentage]
-#      agg: mean
-#      divideby: 100
-#    PV:
-#      variables: [pv_generation_scaled_W]
-#      agg: mean
-#    ra_hw_el_load_W:
-#      variables: [ra_hw_th_load_W]
-#      agg: mean
-#      divideby: 0.95
-#    ra_chw_el_load_W:
-#      variables: [ra_chw_th_load_W]
-#      agg: mean
-#      divideby: -3
-#    net_power:
-#      requires: [ra_hw_el_load_W, ra_chw_el_load_W]
-#      variables: [ra_plugload_power_W, ra_light_power_W, ra_fan_power_W, ra_chwp_power_W, ra_hwp_power_W, ra_hw_el_load_W, ra_chw_el_load_W]
-#      agg: sum
-#      divideby: 1000
-#    net_energy:
-#      requires: [net_power]
-#      variables: [net_power]
-#      divideby: 4 # 15/60
-#
-#  rb:
-#    OutTemp:
-#      variables: [oat_C]
-#      agg: mean
-#    OutRH:
-#      variables: [rh_percentage]
-#      agg: mean
-#    OutSI:
-#      variables: [diffused_irradiance_Wm2]
-#      agg: mean
-#    ZoneTotalIlluB:
-#      #variables: [rb_licor_desk1_1_lux, rb_licor_desk1_2_lux, rb_licor_desk2_1_lux, rb_licor_desk2_2_lux, rb_licor_desk3_1_lux, rb_licor_desk3_2_lux, rb_licor_desk4_1_lux, rb_licor_desk4_2_lux, rb_licor_desk5_1_lux, rb_licor_desk5_2_lux, rb_licor_desk6_1_lux, rb_licor_desk6_2_lux]
-#      variables: [rb_licor_desk3_1_lux, rb_licor_desk3_2_lux, rb_licor_desk4_1_lux, rb_licor_desk4_2_lux]
-#      agg: mean
-#    ZoneTempB:
-#      variables: [rb_zone_air_temp1_C, rb_zone_air_temp2_C]
-#      agg: mean
-#    SOC:
-#      variables: [rb_battery_soc_percentage]
-#      agg: mean
-#      divideby: 100
-#    PV:
-#      variables: [pv_generation_scaled_W]
-#      agg: mean
-#    rb_hw_el_load_W:
-#      variables: [rb_hw_th_load_W]
-#      agg: mean
-#      divideby: 0.95
-#    rb_chw_el_load_W:
-#      variables: [rb_chw_th_load_W]
-#      agg: mean
-#      divideby: -3
-#    negative_PV_W:
-#      variables: [PV]
-#      agg: mean
-#      divideby: -1
-#    net_power:
-#      requires: [rb_hw_el_load_W, rb_chw_el_load_W, negative_PV_W]
-#      variables: [rb_plugload_power_W, rb_light_power_W, rb_fan_power_W, rb_chwp_power_W, rb_hwp_power_W, rb_hw_el_load_W, rb_chw_el_load_W, rb_battery_rate_W, negative_PV_W]
-#      agg: sum
-#      divideby: 1000
-#    net_energy:
-#      requires: [net_power]
-#      variables: [net_power]
-#      divideby: 4 # 15/60
+        temp:
+            variables: [1A-VAV1-Zn_Temp, 1A-VAV2-Zn_Temp, 1A-VAV3-Zn_Temp]
+            agg: last
+            table: cell_vav_1a
+
+        temp_sp:
+            variables: [1A-VAV1-OccupiedCoolingSetpt, 1A-VAV1-UnoccupiedCoolingSetpt, 1A-VAV1-OccupiedHeatingSetpt,
+             1A-VAV1-UnoccupiedHeatingSetpt, 1A-VAV2-OccupiedCoolingSetpt, 1A-VAV2-UnoccupiedHeatingSetpt, 1A-VAV2-UnoccupiedCoolingSetpt,
+             1A-VAV2-OccupiedHeatingSetpt, 1A-VAV3-OccupiedCoolingSetpt, 1A-VAV3-UnoccupiedHeatingSetpt, 1A-VAV3-UnoccupiedCoolingSetpt,
+             1A-VAV3-OccupiedHeatingSetpt]
+            agg: last
+            table: cell_vav_1a
+
+        demand:
+            variables: [1A-El-AHU, 1A-El-CHWP, 1A-El-HWP, 1A-El-Exhaust Fan, 1A-Th-Chilled Water]
+            agg: mean
+            table: processed_cell_1a
+
+        weather:
+            variables: [1B-OAT-1]
+            agg: last
+            table: cell_hvac_1b
+
+        weather_1:
+            variables: [1A-MidZone-TCS6-DBT, 1A-NorthZone-DBT, 1A-WindowZone-TCS7-DBT]
+            agg: last
+            table: cell_thermalstation_1ab
+
+        discharge_air_temp:
+            variables: [1A-VAV1-DischargeAirTemp, 1A-VAV2-DischargeAirTemp, 1A-VAV3-DischargeAirTemp, 1A-VAV1-DischargeAirflow,
+            1A-VAV2-DischargeAirflow, 1A-VAV3-DischargeAirflow]
+            agg: last
+            table: cell_vav_1a
+
+        airflow:
+            variables: [1A-ASAM-1, 1A-ARAM-1, 1A-SAT-1, 1A-OADA-1-POSN, 1A-RADA-1-POSN]
+            agg: mean
+            table: cell_hvac_1a
+
+        strat_tree:
+            variables: [1a_strat_window_bottom, 1a_strat_window_middle, 1a_strat_window_top]
+            agg: mean
+            table: pcm_data
+
+    1b:
+        plugload:
+            variables: [desk3_light_power, desk1_light_power, desk5_light_power, desk2_light_power, desk6_light_power, desk4_light_power,
+             desk1_plug_power, desk2_plug_power, desk3_plug_power, desk4_plug_power, desk5_plug_power, desk6_plug_power]
+            agg: mean
+            table: cell_lighting_plug_1b
+
+
+        temp:
+            variables: [1B-VAV1-Zn_Temp, 1B-VAV2-Zn_Temp, 1B-VAV3-Zn_Temp]
+            agg: last
+            table: cell_vav_1b
+
+        temp_sp:
+            variables: [1B-VAV1-OccupiedCoolingSetpt, 1B-VAV1-UnoccupiedCoolingSetpt, 1B-VAV1-OccupiedHeatingSetpt,
+             1B-VAV1-UnoccupiedHeatingSetpt, 1B-VAV2-OccupiedCoolingSetpt, 1B-VAV2-UnoccupiedHeatingSetpt, 1B-VAV2-UnoccupiedCoolingSetpt,
+             1B-VAV2-OccupiedHeatingSetpt, 1B-VAV3-OccupiedCoolingSetpt, 1B-VAV3-UnoccupiedHeatingSetpt, 1B-VAV3-UnoccupiedCoolingSetpt,
+             1B-VAV3-OccupiedHeatingSetpt]
+            agg: last
+            table: cell_vav_1b
+
+        demand:
+            variables: [1B-El-AHU, 1B-El-CHWP, 1B-El-Exhaust Fan, 1B-El-HWP,1B-Th-Chilled Water]
+            agg: mean
+            table: processed_cell_1b
+
+
+        weather:
+            variables: [1B-OAT-1]
+            agg: last
+            table: cell_hvac_1b
+
+        weather_1:
+            variables: [1B-MidZone-TCS9-DBT, 1B-NorthZone-DBT, 1B-WindowZone-TCS10-DBT]
+            agg: last
+            table: cell_thermalstation_1ab
+
+        discharge_air_temp:
+            variables: [1B-VAV1-DischargeAirTemp, 1B-VAV2-DischargeAirTemp, 1B-VAV3-DischargeAirTemp, 1B-VAV1-DischargeAirflow,
+            1B-VAV2-DischargeAirflow, 1B-VAV3-DischargeAirflow]
+            agg: last
+            table: cell_vav_1b
+
+        airflow:
+            variables: [1B-ASAM-1, 1B-ARAM-1, 1B-SAT-1, 1B-OADA-1-POSN, 1B-RADA-1-POSN]
+            agg: mean
+            table: cell_hvac_1b
+
+        strat_tree:
+            variables: [1b_strat_window_bottom, 1b_strat_window_middle, 1b_strat_window_top, 1b_strat_core_middle, 1b_strat_core_top, 1b_strat_door_bottom, 1b_strat_door_middle, 1b_strat_door_top]
+            agg: mean
+            table: pcm_data
+
+        pcm:
+            variables: [1b_desk3_door_right_ceiling, 1b_desk3_door_right_plenum, 1b_desk4_door_left_ceiling, 1b_desk4_door_left_plenum, 1b_desk1_window_right_ceiling, 1b_desk1_window_right_plenum, 1b_desk6_window_left_ceiling, 1b_desk6_window_left_plenum, 1b_window_middle_ceiling, 1b_window_middle_plenum, 1b_desk2_core_right_ceiling, 1b_desk2_core_right_plenum, 1b_desk5_core_left_ceiling, 1b_desk5_core_left_plenum]
+            agg: mean
+            table: pcm_data
