@@ -113,7 +113,7 @@ class DB_Interface:
         return filtered_columns
 
 
-    def get_data(self, st, et, cell, resample_minutes=15, include_setpoints=False):
+    def get_data(self, st, et, cell, sys=None, resample_minutes=15, include_setpoints=False):
         """
         get data for a whole cell for FL
         :param st: datetime.datetime local time
@@ -123,6 +123,11 @@ class DB_Interface:
         :param include_setpoints: flag to specify if generated setpoints should be queried or not
         :return: dataframe with each column a separate variable with a DatetimeIndex in local time
         """
+
+        if sys is not None:
+            df = self._query_single_system(st=st, et=et, cell=cell, system=sys,
+                                           resample_minutes=resample_minutes)
+            return df
 
         df_list = []
         for system in self.config.get('query_condition').get(cell):
