@@ -60,8 +60,6 @@ class Cell_Data(Driver):
                         else:
                             print("missing T_ceiling and/or T_plenum for {}".format(zone))
 
-                        print(section_df[[soc_col, zone+"_ceiling", zone+"_plenum"]])
-
                 if not section_df.empty:
                     self.push_to_db(section_df, section_table_name)
                 else:
