@@ -444,8 +444,8 @@ This is for
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/Guideline36.mos"
         "Simulate and plot"),
     experiment(
-      StartTime=19180800,
-      StopTime=19612800,
+      StartTime=19270800,
+      StopTime=20221200,
       Interval=300,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
