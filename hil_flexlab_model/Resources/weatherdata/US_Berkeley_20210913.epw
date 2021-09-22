@@ -1,3 +1,11 @@
+LOCATION,Oakland Metropolitan Arpt,CA,USA,TMY3,724930,37.72,-122.22,-8.0,2.0
+DESIGN CONDITIONS,1,Climate Design Data 2009 ASHRAE Handbook,,Heating,1,2.9,4.2,-6,2.3,10.7,-2.5,3.1,10.7,11.4,11.9,10.1,12.1,2.2,50,Cooling,8,7.4,27.7,18.3,25.4,17.8,23.5,17.3,19.8,25.5,18.8,24,18,22.5,4.9,290,17.6,12.7,21.6,16.8,12,20.7,16.2,11.5,19.9,56.5,25.4,53.3,23.8,50.8,22.4,2102,Extremes,10.3,8.7,8.1,25.6,0.8,33.2,1.8,2.2,-0.4,34.8,-1.5,36.1,-2.5,37.4,-3.8,39
+TYPICAL/EXTREME PERIODS,6,Summer - Week Nearest Max Temperature For Period,Extreme,8/ 5,8/11,Summer - Week Nearest Average Temperature For Period,Typical,9/ 2,9/ 8,Winter - Week Nearest Min Temperature For Period,Extreme,2/19,2/25,Winter - Week Nearest Average Temperature For Period,Typical,1/ 1,1/ 7,Autumn - Week Nearest Average Temperature For Period,Typical,11/19,11/25,Spring - Week Nearest Average Temperature For Period,Typical,5/13,5/19
+GROUND TEMPERATURES,3,.5,,,,11.23,12.57,14.11,15.26,16.87,17.21,16.66,15.35,13.64,12.06,10.94,10.64,2,,,,11.63,12.40,13.46,14.34,15.78,16.34,16.23,15.49,14.32,13.07,12.02,11.50,4,,,,12.26,12.60,13.23,13.81,14.89,15.45,15.58,15.27,14.57,13.73,12.91,12.39
+HOLIDAYS/DAYLIGHT SAVINGS,No,0,0,0
+COMMENTS 1,Custom/User Format -- WMO#724930; NREL TMY Data Set (2008); Period of Record 1973-2005 (Generally)
+COMMENTS 2, -- Ground temps produced with a standard soil diffusivity of 2.3225760E-03 {m**2/day}
+DATA PERIODS,1,1,Data,Sunday, 1/ 1,12/31
 1999,1,1,1,0,?9?9?9?9E0?9?9?9?9?9?9?9?9?9?9?9?9?9?9?9*9*9?9*9*9,9.0,7.0,87,102000,0,0,305,0,0,0,0,0,0,0,0,0.0,4,4,24.1,77777,9,999999999,129,0.112,0,88,0.16,999.0,99.0
 1999,1,1,2,0,?9?9?9?9E0?9?9?9?9?9?9?9?9?9?9?9?9?9?9?9*9*9?9*9*9,10.0,7.0,82,102000,0,0,309,0,0,0,0,0,0,0,130,2.6,4,4,24.1,7500,9,999999999,129,0.112,0,88,0.16,999.0,99.0
 1999,1,1,3,0,?9?9?9?9E0?9?9?9?9?9?9?9?9?9?9?9?9?9?9?9*9*9?9*9*9,10.0,7.0,82,102100,0,0,309,0,0,0,0,0,0,0,140,2.6,4,4,24.1,77777,9,999999999,129,0.112,0,88,0.16,999.0,99.0
