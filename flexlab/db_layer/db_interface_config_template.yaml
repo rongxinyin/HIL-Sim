@@ -1,9 +1,9 @@
 database:
-  host: lbnl-btm-drl.lbl.gov
-  port: 9003
-  username: hil_flexlab
-  password: h!l2021da+a$tore
-  database: hil
+  host: 
+  port: 
+  username: 
+  password: 
+  database: 
 
   setpoint_table:
 
