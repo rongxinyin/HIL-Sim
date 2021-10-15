@@ -1,0 +1,16 @@
+Variable Name,NMBE,CV(RMSE)
+VAV North Discharge Airflow Rate (cfm),-8.6,37.8
+VAV Core Discharge Airflow Rate (cfm),-0.9,15.5
+VAV South Discharge Airflow Rate (cfm),0.7,24.4
+VAV North Discharge Air Temp (degF),-4.1,8.7
+VAV Core Discharge Air temp (degF),-0.8,3.8
+VAV South Discharge Air temp (degF),-0.3,8.6
+VAV North Zone Air temp (degF),0,1.4
+VAV Core Zone Air temp (degF),-1.4,1.8
+VAV South Zone Air temp (degF),-1.1,2.7
+AHU SAT (deg F),-0.008,2.5
+Fan Supply Airflow Rate(cfm),-16.5,25
+Fan Power (W),14.1,15.5
+OA Damper (position),0.5,16.2
+RA Damper (position),15.1,45.6
+Chiller Cooling Load (W),3.8,21.7
