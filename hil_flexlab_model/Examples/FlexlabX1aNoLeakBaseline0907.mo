@@ -113,9 +113,9 @@ model FlexlabX1aNoLeakBaseline0907 "adjust the overnight cooling issue"
     final yFanMin=yFanMin,
     final VPriSysMax_flow=VPriSysMax_flow,
     final peaSysPop=2*sum({0.05*AFlo[i] for i in 1:numZon}),
-    TSupSetMin=285.15,
-    TSupSetMax=291.15,
-    TSupSetDes=286.15,
+    TSupSetMin=284.55,
+    TSupSetMax=284.55,
+    TSupSetDes=284.55,
     TOutMin=289.15,
     numIgnReqSupTem=0,
     triAmoSupTem=0.1,
@@ -444,9 +444,9 @@ This is for
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/Guideline36.mos"
         "Simulate and plot"),
     experiment(
-      StartTime=19270800,
-      StopTime=20221200,
-      Interval=300,
+      StartTime=20048428.8,
+      StopTime=21603628.8,
+      Interval=299.999808,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end FlexlabX1aNoLeakBaseline0907;

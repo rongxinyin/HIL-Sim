@@ -2,7 +2,7 @@ within hil_flexlab_model.Examples;
 model FlexlabX1aNoLeakBaseline
   "Variable air volume flow system with terminal reheat - flexlab baseline, no leakage"
   extends Modelica.Icons.Example;
-  extends BaseClasses.PartialOpenLoopX1aV1(
+  extends BaseClasses.PartialOpenLoopX1aNoLeakage0830(
     heaCoi(show_T=true),
     cooCoi(show_T=true),
     dpRetDuc1(dp_nominal=10),
@@ -286,22 +286,24 @@ equation
                                      color={255,0,255}));
   connect(or2.y, swiHeaCoi.u2) annotation (Line(points={{22,-170},{40,-170},{40,
           -190},{40,-190},{40,-210},{58,-210}}, color={255,0,255}));
-  connect(cor.y_actual, pSetDuc.u[2]) annotation (Line(points={{866,60},{884,60},
+  connect(cor.y_actual, pSetDuc.u[2]) annotation (Line(points={{912,60},{884,60},
           {884,74},{140,74},{140,-6},{158,-6}},     color={0,0,127}));
   connect(sou.y_actual, pSetDuc.u[3]) annotation (Line(points={{1112,52},{1128,
           52},{1128,74},{140,74},{140,-4.66667},{158,-4.66667}},
                                                     color={0,0,127}));
-  connect(nor.y_actual, pSetDuc.u[1]) annotation (Line(points={{738,56},{758,56},
+  connect(nor.y_actual, pSetDuc.u[1]) annotation (Line(points={{740,54},{758,54},
           {758,74},{140,74},{140,-7.33333},{158,-7.33333}},
                                                          color={0,0,127}));
-  connect(conVAVNor.yDam, nor.yVAV) annotation (Line(points={{661,44.8},{675.5,44.8},
-          {675.5,48},{692,48}}, color={0,0,127}));
+  connect(conVAVNor.yDam, nor.yVAV) annotation (Line(points={{661,44.8},{675.5,
+          44.8},{675.5,46},{694,46}},
+                                color={0,0,127}));
   connect(conVAVNor.yVal, nor.yVal) annotation (Line(points={{661,35},{675.5,35},
-          {675.5,32},{692,32}}, color={0,0,127}));
-  connect(conVAVCor.yDam, cor.yVAV) annotation (Line(points={{803,46.8},{811.5,46.8},
-          {811.5,52},{820,52}}, color={0,0,127}));
+          {675.5,30},{694,30}}, color={0,0,127}));
+  connect(conVAVCor.yDam, cor.yVAV) annotation (Line(points={{803,46.8},{811.5,
+          46.8},{811.5,52},{866,52}},
+                                color={0,0,127}));
   connect(conVAVCor.yVal, cor.yVal) annotation (Line(points={{803,37},{812.5,37},
-          {812.5,36},{820,36}}, color={0,0,127}));
+          {812.5,36},{866,36}}, color={0,0,127}));
   connect(add1.y, conVAVCor.TRooCooSet) annotation (Line(points={{763,-172},{
           752,-172},{752,42},{780,42}},
                                     color={0,0,127}));
@@ -423,8 +425,8 @@ This is for
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/ASHRAE2006.mos"
         "Simulate and plot"),
     experiment(
-      StartTime=18571200,
-      StopTime=19009200,
-      Interval=300,
+      StartTime=20044800,
+      StopTime=21600000,
+      Interval=299.999808,
       __Dymola_Algorithm="Dassl"));
 end FlexlabX1aNoLeakBaseline;
