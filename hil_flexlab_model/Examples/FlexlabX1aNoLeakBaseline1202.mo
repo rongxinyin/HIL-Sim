@@ -1,5 +1,5 @@
 within hil_flexlab_model.Examples;
-model FlexlabX1aNoLeakBaseline1124
+model FlexlabX1aNoLeakBaseline1202
   "Variable air volume flow system with terminal reheat - flexlab baseline, no leakage"
   extends Modelica.Icons.Example;
   extends BaseClasses.PartialOpenLoopX1aNoLeakage0830(occSch(
@@ -23,12 +23,6 @@ model FlexlabX1aNoLeakBaseline1124
   Buildings.Examples.VAVReheat.Controls.ControlBus controlBus
     annotation (Placement(transformation(extent={{-250,-352},{-230,-332}})));
 
-  Buildings.Examples.VAVReheat.Controls.Economizer conEco(
-    dT=1,
-    VOut_flow_min=0.3*m_flow_nominal/1.2,
-    Ti=600,
-    k=0.1) "Controller for economizer"
-    annotation (Placement(transformation(extent={{-80,140},{-60,160}})));
   Buildings.Examples.VAVReheat.Controls.RoomTemperatureSetpoint TSetRoo(
     final THeaOn=THeaOn,
     final THeaOff=THeaOff,
@@ -123,7 +117,7 @@ model FlexlabX1aNoLeakBaseline1124
   Buildings.Controls.OBC.CDL.Logical.Switch swiCooCoi1
     "Switch to switch off cooling coil"
     annotation (Placement(transformation(extent={{-214,-292},{-194,-272}})));
-  BaseClasses.Eco_Enable enaDis(use_enthalpy=false)
+  BaseClasses.Eco_Enable enaDis(use_enthalpy=false, delTOutHis=0.5)
     annotation (Placement(transformation(extent={{232,200},{316,284}})));
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant ecoHigCut(k=273.15 +
         18) "economizer high cut off temp"
@@ -133,13 +127,13 @@ model FlexlabX1aNoLeakBaseline1124
     annotation (Placement(transformation(extent={{102,224},{122,244}})));
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant ecoOutMin1(k=0.3)
     "economizer min OA damper position"
-    annotation (Placement(transformation(extent={{126,186},{146,206}})));
+    annotation (Placement(transformation(extent={{108,186},{128,206}})));
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant ecoOutMin2(k=0)
     "economizer min RA damper position"
-    annotation (Placement(transformation(extent={{176,104},{196,124}})));
+    annotation (Placement(transformation(extent={{120,112},{140,132}})));
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant ecoRetMax1(k=0.70)
     "economizer max RA damper position"
-    annotation (Placement(transformation(extent={{152,142},{172,162}})));
+    annotation (Placement(transformation(extent={{120,150},{140,170}})));
 equation
   connect(TSupSetHea.y, heaCoiCon.u_s) annotation (Line(
       points={{-211,-160},{-190,-160},{-190,-202},{-176,-202}},
@@ -174,22 +168,6 @@ equation
       textString="%second",
       index=1,
       extent={{6,3},{6,3}}));
-  connect(TRet.T, conEco.TRet) annotation (Line(
-      points={{100,151},{100,172},{-92,172},{-92,157.333},{-81.3333,157.333}},
-      color={0,0,127},
-      smooth=Smooth.None,
-      pattern=LinePattern.Dash));
-  connect(TMix.T, conEco.TMix) annotation (Line(
-      points={{40,-29},{40,168},{-90,168},{-90,153.333},{-81.3333,153.333}},
-      color={0,0,127},
-      smooth=Smooth.None,
-      pattern=LinePattern.Dash));
-  connect(conEco.TSupHeaSet, TSupSetHea.y) annotation (Line(
-      points={{-81.3333,145.333},{-156,145.333},{-156,-120},{-140,-120},{-140,
-          -160},{-211,-160}},
-      color={0,0,127},
-      smooth=Smooth.None,
-      pattern=LinePattern.Dash));
   connect(TSetRoo.controlBus, controlBus) annotation (Line(
       points={{-308,-342},{-240,-342}},
       color={255,204,51},
@@ -206,12 +184,6 @@ equation
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
-  connect(TSetCoo.TSet, conEco.TSupCooSet) annotation (Line(
-      points={{-209,-202},{-194,-202},{-194,-114},{-244,-114},{-244,141.333},{
-          -81.3333,141.333}},
-      color={0,0,127},
-      smooth=Smooth.None,
-      pattern=LinePattern.Dash));
   connect(TSupSetHea.y, TSetCoo.TSetHea) annotation (Line(
       points={{-211,-160},{-140,-160},{-140,-202},{-232,-202}},
       color={0,0,0},
@@ -222,11 +194,6 @@ equation
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
-  connect(conEco.VOut_flow, VOut1.V_flow) annotation (Line(
-      points={{-81.3333,149.333},{-90,149.333},{-90,80},{-61,80},{-61,-20.9}},
-      color={0,0,127},
-      smooth=Smooth.None,
-      pattern=LinePattern.Dash));
 
   connect(conVAVSou.TRoo, TRooAir.y1[1]) annotation (Line(
       points={{993,23},{984,23},{984,176},{708,176},{708,177},{511,177}},
@@ -266,10 +233,6 @@ equation
       textString="%second",
       index=1,
       extent={{6,3},{6,3}}));
-  connect(conEco.controlBus, controlBus) annotation (Line(
-      points={{-76,150.667},{-76,120},{-240,120},{-240,-342}},
-      color={255,204,51},
-      thickness=0.5));
   connect(modeSelector.yFan, conFanSup.uFan) annotation (Line(points={{-179.545,
           -310},{260,-310},{260,-30},{226,-30},{226,6},{238,6}}, color={255,0,
           255}));
@@ -361,20 +324,20 @@ equation
           246},{-46,275.6},{223.6,275.6}}, color={0,0,127}));
   connect(modeSelector.yFan, enaDis.uSupFan) annotation (Line(points={{-179.545,
           -310},{-179.545,-29},{223.6,-29},{223.6,250.4}}, color={255,0,255}));
-  connect(ecoOutMin1.y, enaDis.uOutDamPosMin) annotation (Line(points={{148,196},
-          {188,196},{188,225.2},{223.6,225.2}}, color={0,0,127}));
-  connect(ecoOutMax.y, enaDis.uOutDamPosMax) annotation (Line(points={{124,234},
-          {178,234},{178,233.6},{223.6,233.6}}, color={0,0,127}));
-  connect(ecoRetMax1.y, enaDis.uRetDamPosMax) annotation (Line(points={{174,152},
-          {200,152},{200,208.4},{223.6,208.4}}, color={0,0,127}));
-  connect(ecoOutMin2.y, enaDis.uRetDamPosMin) annotation (Line(points={{198,114},
-          {214,114},{214,200},{223.6,200}}, color={0,0,127}));
   connect(eco.yRet, enaDis.yRetDamPosMin) annotation (Line(points={{-16.8,-34},
           {153.6,-34},{153.6,216.8},{324.4,216.8}}, color={0,0,127}));
   connect(enaDis.yOutDamPosMax, eco.yOut) annotation (Line(points={{324.4,267.2},
           {158.2,267.2},{158.2,-34},{-10,-34}}, color={0,0,127}));
   connect(eco.yExh, enaDis.yOutDamPosMax) annotation (Line(points={{-3,-34},{
           160.5,-34},{160.5,267.2},{324.4,267.2}}, color={0,0,127}));
+  connect(ecoOutMax.y, enaDis.uOutDamPosMin) annotation (Line(points={{124,234},
+          {182,234},{182,225.2},{223.6,225.2}}, color={0,0,127}));
+  connect(ecoOutMin1.y, enaDis.uOutDamPosMax) annotation (Line(points={{130,196},
+          {190,196},{190,233.6},{223.6,233.6}}, color={0,0,127}));
+  connect(ecoOutMin2.y, enaDis.uRetDamPosMax) annotation (Line(points={{142,122},
+          {216,122},{216,208.4},{223.6,208.4}}, color={0,0,127}));
+  connect(ecoRetMax1.y, enaDis.uRetDamPosMin) annotation (Line(points={{142,160},
+          {206,160},{206,200},{223.6,200}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-400},{1440,
             580}})),
@@ -479,4 +442,4 @@ This is for
       StopTime=21600000,
       Interval=299.999808,
       __Dymola_Algorithm="Dassl"));
-end FlexlabX1aNoLeakBaseline1124;
+end FlexlabX1aNoLeakBaseline1202;
