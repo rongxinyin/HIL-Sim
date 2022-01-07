@@ -321,8 +321,8 @@ equation
           -441,-282},{-441,-240},{-176,-240}}, color={0,0,127}));
   connect(enaDis.TOut, TOut.y) annotation (Line(points={{223.6,284},{-117.2,284},
           {-117.2,180},{-279,180}}, color={0,0,127}));
-  connect(ecoHigCut.y, enaDis.TOutCut) annotation (Line(points={{-198,246},{-46,
-          246},{-46,275.6},{223.6,275.6}}, color={0,0,127}));
+  connect(ecoHigCut.y, enaDis.TOutCut) annotation (Line(points={{-198,246},{-84,
+          246},{-84,275.6},{223.6,275.6}}, color={0,0,127}));
   connect(modeSelector.yFan, enaDis.uSupFan) annotation (Line(points={{-179.545,
           -310},{-179.545,-29},{223.6,-29},{223.6,250.4}}, color={255,0,255}));
   connect(eco.yRet, enaDis.yRetDamPosMin) annotation (Line(points={{-16.8,-34},
