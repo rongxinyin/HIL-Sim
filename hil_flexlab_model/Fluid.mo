@@ -280,7 +280,7 @@ package Fluid "Package with models for fluid flow systems"
         Modelica.Blocks.Sources.Ramp TsuSourceRamp(
           duration=500,
           startTime=500,
-          height=25,
+          height=10,
           offset=278)
           "Ramp signal for the temperature input of the source side's ideal mass flow source"
           annotation (Placement(transformation(extent={{-94,-90},{-74,-70}})));
@@ -288,8 +288,8 @@ package Fluid "Package with models for fluid flow systems"
           annotation (Placement(transformation(extent={{10,-10},{-10,10}},
               rotation=-90,
               origin={2,-76})));
-        hil_flexlab_model.Fluid.HeatPumps.HeatPump
-                                        heatPump(
+        hil_flexlab_model.Fluid.HeatPump.HeatPump heatPump(
+          Q_useNominal=6535,
           refIneFre_constant=1,
           useBusConnectorOnly=true,
           CEva=100,
@@ -496,7 +496,10 @@ package Fluid "Package with models for fluid flow systems"
             horizontalAlignment=TextAlignment.Right));
         annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
                   -100},{100,100}})),
-          experiment(Tolerance=1e-6, StopTime=3600),
+          experiment(
+            StopTime=1500,
+            __Dymola_NumberOfIntervals=250,
+            Tolerance=1e-06),
       __Dymola_Commands(file="modelica://AixLib/Resources/Scripts/Dymola/Fluid/HeatPumps/Examples/HeatPump.mos"
               "Simulate and plot"),
           Documentation(info="<html><h4>
