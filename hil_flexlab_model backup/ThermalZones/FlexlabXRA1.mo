@@ -83,8 +83,7 @@ model FlexlabXRA1 "Model of a flexlab xra"
         "degC") "Room air temperatures" annotation (Placement(transformation(
            extent={{402,184},{422,204}}), iconTransformation(extent={{402,184},{
             422,204}})));
-   Buildings.Fluid.Sensors.RelativePressure senRelPre(redeclare package Medium
-      =                                                                          Medium)
+   Buildings.Fluid.Sensors.RelativePressure senRelPre(redeclare package Medium = Medium)
      "Building pressure measurement"
      annotation (Placement(transformation(extent={{100,98},{80,118}})));
    Buildings.Fluid.Sources.Outside out(nPorts=1, redeclare package Medium = Medium)

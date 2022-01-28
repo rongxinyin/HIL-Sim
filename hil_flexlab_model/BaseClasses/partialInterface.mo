@@ -51,7 +51,7 @@ partial model partialInterface "Interface for examples"
   replaceable hil_flexlab_model.Data.PSP_4B_Med casDat(minOAFlo=15/2118.88*casDat.occ_density*1.2*
         roo.roo.AFlo) "Case study data"
     annotation (Placement(transformation(extent={{-180,82},{-160,102}})));
-  hil_flexlab_model.Controls.RTU con(
+  hil_flexlab_model.BaseClasses.Controls.RTU con(
     mAir_flow_nominal=casDat.mAir_flow_nominal,
     mAir_flow_minOA=casDat.minOAFlo,
     mAir_flow_hea=casDat.mAir_flow_nominal,

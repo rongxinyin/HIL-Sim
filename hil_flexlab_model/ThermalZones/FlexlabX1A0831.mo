@@ -454,7 +454,7 @@ equation
       color={191,0,0},
       smooth=Smooth.None));
   connect(ple.surf_conBou[4], nor.surf_conBou[6]) annotation (Line(
-      points={{384,64.1667},{384,24},{220,24},{220,100},{170,100},{170,120.833}},
+      points={{384,64.1667},{384,24},{218,24},{218,100},{170,100},{170,120.833}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(nor.surf_conBou[5], cor.surf_conBou[2]) annotation (Line(

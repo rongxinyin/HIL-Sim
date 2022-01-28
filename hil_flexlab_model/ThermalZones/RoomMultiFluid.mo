@@ -349,15 +349,15 @@ model RoomMultiFluid
   Modelica.Fluid.Interfaces.FluidPorts_b ports[nPorts](redeclare package Medium =
         Buildings.Media.Air) "Fluid ports"
     annotation (Placement(transformation(extent={{-210,-66},{-190,14}})));
-  hil_flexlab_model.BaseClasses.InternalLoad lig(
+  hil_flexlab_model.ThermalZones.InternalLoad lig(
     radFraction=0.37,
     latPower_nominal=0,
     senPower_nominal=15.07) annotation (Placement(transformation(extent={{-280,16},{-260,36}})));
-  hil_flexlab_model.BaseClasses.InternalLoad equ(
+  hil_flexlab_model.ThermalZones.InternalLoad equ(
     latPower_nominal=0,
     senPower_nominal=15,
     radFraction=0.5) annotation (Placement(transformation(extent={{-280,88},{-260,108}})));
-  hil_flexlab_model.BaseClasses.OccupancyLoad occ1(
+  hil_flexlab_model.ThermalZones.OccupancyLoad occ1(
     radFraction=0.6,
     occ_density=occ_density,
     senPower=74,

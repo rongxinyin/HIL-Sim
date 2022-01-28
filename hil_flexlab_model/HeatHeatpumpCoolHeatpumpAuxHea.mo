@@ -1,7 +1,7 @@
 within hil_flexlab_model;
 model HeatHeatpumpCoolHeatpumpAuxHea
   "Air supply unit model with heatpump heating and cooling and auxiliary electric heater for heating"
-  extends hil_flexlab_model.BaseClasses.partialAirUnit;
+  extends RTUPCM.HVAC.RTUs.BaseClasses.partialAirUnit;
   parameter Modelica.SIunits.DimensionlessRatio COP_heating = 3.5 "Coefficient of performance in heating";
   parameter Modelica.SIunits.DimensionlessRatio COP_cooling = 3.5 "Coefficient of performance in cooling";
   Buildings.Fluid.HeatExchangers.HeaterCooler_u heaCoi(
@@ -53,7 +53,7 @@ model HeatHeatpumpCoolHeatpumpAuxHea
   Modelica.Blocks.Math.Add add
     annotation (Placement(transformation(extent={{120,90},{140,110}})));
   Modelica.Blocks.Sources.RealExpression copCoo(y=
-        hil_flexlab_model.BaseClasses.Functions.COP_ASHP(abs(senTSup.T -
+        RTUPCM.HVAC.Plants.BaseClasses.Functions.COP_ASHP(abs(senTSup.T -
         TDryBul.y)))
     annotation (Placement(transformation(extent={{120,118},{140,138}})));
   Modelica.Blocks.Math.Gain cooCor(k=-1)
@@ -64,10 +64,11 @@ model HeatHeatpumpCoolHeatpumpAuxHea
   Modelica.Blocks.Math.Gain TDryBul(k=1)
     annotation (Placement(transformation(extent={{20,150},{40,170}})));
   Modelica.Blocks.Sources.RealExpression copHea(y=
-        hil_flexlab_model.BaseClasses.Functions.COP_ASHP(abs(senTSup.T -
+        RTUPCM.HVAC.Plants.BaseClasses.Functions.COP_ASHP(abs(senTSup.T -
         TDryBul.y)))
     annotation (Placement(transformation(extent={{40,118},{60,138}})));
-  hil_flexlab_model.BaseClasses.COP_ASHP_AuxHeat powHeaPum(QHeaPum_flow_nominal=QCoo_flow_nominal)
+  RTUPCM.HVAC.Plants.BaseClasses.COP_ASHP_AuxHeat powHeaPum(
+      QHeaPum_flow_nominal=QCoo_flow_nominal)
     "Power consumption calculation for heat pump heating"
     annotation (Placement(transformation(extent={{90,110},{110,130}})));
 equation

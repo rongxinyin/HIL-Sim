@@ -2,22 +2,10 @@ within hil_flexlab_model.Examples;
 model XRA_Baseline_AE_126
   "Variable air volume flow system with terminal reheat - flexlab baseline, no leakage"
   extends Modelica.Icons.Example;
+    extends hil_flexlab_model.BaseClasses.partialInterface_noPV(totPowHVAC(nu=1),
+      roo(nPorts=4));
 
-  Modelica.Blocks.Sources.CombiTimeTable heaSetDR(
-    table=[0,273.15 + 15.6; 5,273.15 + 15.6; 5,273.15 + 17.8; 6,273.15 + 17.8; 6,
-        273.15 + 19.4; 7,273.15 + 19.4; 7,273.15 + 21.1; 22,273.15 + 21.1; 22,273.15
-         + 15.6; 24,273.15 + 15.6],
-    extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic,
-    timeScale=3600) "heating schedule for demand response"
-    annotation (Placement(transformation(extent={{-220,-74},{-200,-54}})));
-  Modelica.Blocks.Sources.CombiTimeTable cooSetDR(
-    table=[0,273.15 + 26.7; 5,273.15 + 26.7; 5,273.15 + 25.6; 6,273.15 + 25.6; 6,
-        273.15 + 25; 7,273.15 + 25; 7,273.15 + 23.3; 22,273.15 + 23.3; 22,273.15
-         + 26.7; 24,273.15 + 26.7],
-    extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic,
-    timeScale=3600) "cooling schedule for demand response"
-    annotation (Placement(transformation(extent={{-218,-134},{-198,-114}})));
-hil_flexlab_model.HeatHeatpumpCoolHeatpumpAuxHea rtu(
+  hil_flexlab_model.HeatHeatpumpCoolHeatpumpAuxHea_noIEC rtu(
     mAir_flow_nominal=casDat.mAir_flow_nominal,
     mAir_flow_minOA=casDat.minOAFlo,
     QHea_flow_nominal=casDat.QHea_flow_nominal,
@@ -27,97 +15,55 @@ hil_flexlab_model.HeatHeatpumpCoolHeatpumpAuxHea rtu(
     motorEfficiency=casDat.motorEfficiency,
     COP_heating=casDat.COP_heating,
     COP_cooling=casDat.COP_cooling) "Unit supplying conditioned air to space"
-    annotation (Placement(transformation(extent={{252,-206},{428,26}})));
-  Controls.RTU rTU(
-    mAir_flow_nominal=0.7728,
-    mAir_flow_minOA=15/2118.88*0.25*1.2*99,
-    mAir_flow_hea=0.7728,
-    mAir_flow_coo=0.7728)
-    annotation (Placement(transformation(extent={{-30,-226},{78,-12}})));
-   Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(filNam=casDat.weaDatImport)
-    annotation (Placement(transformation(extent={{-274,394},{-254,414}})));
+    annotation (Placement(transformation(extent={{-44,-22},{-12,28}})));
 
-  replaceable hil_flexlab_model.Data.PSP_4B_Med
-                          casDat(weaDatImport=
-        ModelicaServices.ExternalReferences.loadResource("modelica://hil_flexlab_model/Resources/weatherdata/USA_NM_Albuquerque.Intl.AP.723650_TMY3.mos"))
-    "Case study data"
-    annotation (Placement(transformation(extent={{-180,82},{-160,102}})));
 
-  Buildings.BoundaryConditions.WeatherData.Bus
-                                     weaBus "Weather data bus"
-    annotation (Placement(transformation(extent={{-194,280},{-174,300}})));
-  ThermalZones.FlexlabXRA1 flexlabXRA
-    annotation (Placement(transformation(extent={{736,-334},{1376,352}})));
+
 equation
 
-  connect(rTU.yFan, rtu.uFan) annotation (Line(
-        points={{83.4,-22.7},{167.15,-22.7},{167.15,14.4},{243.2,14.4}},
-        color={0,0,127}));
-  connect(rTU.yHea, rtu.uHea) annotation (Line(
-        points={{83.4,-61.6091},{179.15,-61.6091},{179.15,-20.4},{243.2,-20.4}},
-        color={0,0,127}));
-  connect(rTU.yCoo, rtu.uCoo) annotation (Line(
-        points={{83.4,-90.7909},{164.15,-90.7909},{164.15,-55.2},{243.2,-55.2}},
-        color={0,0,127}));
-  connect(rTU.yOutAirFra, rtu.uEco) annotation (Line(
-        points={{83.4,-129.7},{166.15,-129.7},{166.15,-90},{243.2,-90}},
-        color={0,0,127}));
-  connect(rtu.TMixAir, rTU.TMix) annotation (Line(
-        points={{432.4,-159.6},{488,-159.6},{488,-378},{224,-378},{224,-197.791},
-          {-40.8,-197.791}},
-                      color={0,0,127}));
-  connect(rTU.TSup, rtu.TSup) annotation (Line(
-        points={{-40.8,-226.973},{498.6,-226.973},{498.6,-171.2},{432.4,-171.2}},
-        color={0,0,127}));
-  connect(rTU.TRet, rtu.phiRetAir) annotation (Line(
-        points={{-40.8,-168.609},{-82,-168.609},{-82,-168},{-124,-168},{-124,
-          -342},{476,-342},{476,-206},{432.4,-206}},
-                                               color={0,0,127}));
-  connect(heaSetDR.y[1], rTU.TSetRooHea) annotation (Line(points={{-199,-64},{
-          -120,-64},{-120,-51.8818},{-40.8,-51.8818}},
-                                                  color={0,0,127}));
-  connect(rTU.TSetRooCoo, cooSetDR.y[1]) annotation (Line(points={{-40.8,
-          -81.0636},{-119.4,-81.0636},{-119.4,-124},{-197,-124}},
-                                                        color={0,0,127}));
-  connect(weaDat.weaBus, weaBus) annotation (Line(
-      points={{-254,404},{-76,404},{-76,290},{-184,290}},
-      color={255,204,51},
-      thickness=0.5), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}},
-      horizontalAlignment=TextAlignment.Left));
-  connect(weaBus, rtu.weaBus) annotation (Line(
-      points={{-184,290},{126,290},{126,13.24},{269.6,13.24}},
-      color={255,204,51},
-      thickness=0.5), Text(
-      string="%first",
-      index=-1,
-      extent={{-6,3},{-6,3}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(weaBus.TDryBul, rTU.TEco) annotation (Line(
-      points={{-184,290},{-106,290},{-106,-138.455},{-40.8,-138.455}},
-      color={255,204,51},
-      thickness=0.5), Text(
-      string="%first",
-      index=-1,
-      extent={{-6,3},{-6,3}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(flexlabXRA.TRooAir, rTU.TRoo) annotation (Line(points={{1389.71,2.14},
-          {1396,2.14},{1396,366},{-90,366},{-90,-110.245},{-40.8,-110.245}},
-        color={0,0,127}));
-  connect(rtu.supplyAir, flexlabXRA.portsCell[1]) annotation (Line(points={{428,
-          -43.6},{722,-43.6},{722,-123.627},{731.429,-123.627}}, color={0,127,
-          255}));
-  connect(rtu.returnAir, flexlabXRA.portsCell[1]) annotation (Line(points={{428,-90},
-          {430,-90},{430,-123.627},{731.429,-123.627}},      color={0,127,255}));
-  connect(flexlabXRA.weaBus, weaDat.weaBus) annotation (Line(
-      points={{1158.86,47.8733},{445.43,47.8733},{445.43,404},{-254,404}},
+  connect(con.yFan, rtu.uFan) annotation (Line(points={{-59,14.2},{-50.5,14.2},
+          {-50.5,25.5},{-45.6,25.5}}, color={0,0,127}));
+  connect(con.yHea, rtu.uHea) annotation (Line(points={{-59,7.65455},{-50.5,
+          7.65455},{-50.5,18},{-45.6,18}}, color={0,0,127}));
+  connect(con.yCoo, rtu.uCoo) annotation (Line(points={{-59,2.74545},{-59,
+          -7.62728},{-45.6,-7.62728},{-45.6,10.5}}, color={0,0,127}));
+  connect(rtu.supplyAir, roo.ports[3]) annotation (Line(points={{-12,13},{14,13},
+          {14,-4.6},{26,-4.6}}, color={0,127,255}));
+  connect(rtu.returnAir, roo.ports[4]) annotation (Line(points={{-12,3},{12,3},
+          {12,-4.6},{26,-4.6}}, color={0,127,255}));
+  connect(weaDat.weaBus, inf.weaBus) annotation (Line(
+      points={{-100,90},{2,90},{2,-41},{99,-41}},
       color={255,204,51},
       thickness=0.5));
+  connect(weaDat.weaBus, rtu.weaBus) annotation (Line(
+      points={{-100,90},{-68,90},{-68,25.25},{-40.8,25.25}},
+      color={255,204,51},
+      thickness=0.5));
+  connect(rtu.TRet, con.TRet) annotation (Line(points={{-11.2,-19.5},{-92,-19.5},
+          {-92,-10.3455},{-82,-10.3455}},          color={0,0,127}));
+  connect(con.TSup, rtu.TSup) annotation (Line(points={{-82,-20.1636},{-86,
+          -20.1636},{-86,-20},{-90,-20},{-90,-34},{-4,-34},{-4,-14.5},{-11.2,
+          -14.5}},                              color={0,0,127}));
+  connect(rtu.TMixAir, con.TMix) annotation (Line(points={{-11.2,-12},{2,-12},{
+          2,-46},{-94,-46},{-94,-15.2545},{-82,-15.2545}},
+                                                 color={0,0,127}));
+  connect(weaBus.TDryBul, con.TEco) annotation (Line(
+      points={{-88,90},{-86,90},{-86,-5.27273},{-82,-5.27273}},
+      color={255,204,51},
+      thickness=0.5), Text(
+      string="%first",
+      index=-1,
+      extent={{-6,3},{-6,3}},
+      horizontalAlignment=TextAlignment.Right));
+  connect(rtu.PFan, totPowHVAC.u[1]) annotation (Line(points={{-11.2,25.5},{-11.2,
+          -29.55},{80,-29.55},{80,100}},     color={0,0,127}));
+  connect(totPowHVAC.u[1], rtu.PFan) annotation (Line(points={{80,100},{40,100},
+          {40,25.5},{-11.2,25.5}}, color={0,0,127}));
+  connect(con.yOutAirFra, rtu.uEco) annotation (Line(points={{-59,-3.8},{-52.5,-3.8},
+          {-52.5,3},{-45.6,3}}, color={0,0,127}));
   annotation (
-    Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-400},{1440,
-            580}})),
+    Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-100,-100},{120,
+            100}})),
     Documentation(info="<html>
 <p>
 This model consist of an HVAC system, a building envelope model and a model
@@ -215,8 +161,9 @@ This is for
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/ASHRAE2006.mos"
         "Simulate and plot"),
     experiment(
-      StartTime=5356800,
-      StopTime=8035200,
-      Interval=299.999808,
-      __Dymola_Algorithm="Dassl"));
+      StopTime=31536000,
+      Interval=180,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"),
+    Icon(coordinateSystem(extent={{-100,-100},{120,100}})));
 end XRA_Baseline_AE_126;

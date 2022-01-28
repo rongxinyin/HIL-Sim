@@ -1,6 +1,6 @@
 within hil_flexlab_model.ThermalZones;
 model FlexlabXRA "Model of a flexlab xra"
-  replaceable package Medium = Modelica.Media.Interfaces.PartialMedium
+  replaceable package Medium = Buildings.Media.Air
     "Medium model for air" annotation (choicesAllMatching=true);
 
   parameter Boolean use_windPressure=true
@@ -83,7 +83,8 @@ model FlexlabXRA "Model of a flexlab xra"
        "degC") "Room air temperatures" annotation (Placement(transformation(
           extent={{380,156},{400,176}}), iconTransformation(extent={{380,156},{
             400,176}})));
-  Buildings.Fluid.Sensors.RelativePressure senRelPre(redeclare package Medium = Medium)
+  Buildings.Fluid.Sensors.RelativePressure senRelPre(redeclare package Medium
+      =                                                                         Medium)
     "Building pressure measurement"
     annotation (Placement(transformation(extent={{100,98},{80,118}})));
   Buildings.Fluid.Sources.Outside out(nPorts=1, redeclare package Medium = Medium)
@@ -220,37 +221,23 @@ model FlexlabXRA "Model of a flexlab xra"
     annotation (Placement(transformation(extent={{-42,250},{-22,270}})));
   Modelica.Blocks.Routing.Multiplex3 multiplex3_1
     annotation (Placement(transformation(extent={{-4,284},{16,304}})));
-  XRA.TestCell testCell(nPorts=5)
+  XRA.TestCell testCell(redeclare package Medium = Medium,
+                        nPorts=4)
     annotation (Placement(transformation(extent={{108,160},{148,200}})));
-  Modelica.Blocks.Sources.CombiTimeTable airConClo(
-    tableOnFile=true,
-    tableName="airCon",
-    fileName=Modelica.Utilities.Files.loadResource(
-        "modelica://Buildings/Resources/Data/ThermalZones/Detailed/FLEXLAB/Rooms/Examples/X3AWithRadiantFloor.txt"),
-    columns=2:5)
-    "Inlet air conditions for the connected closet (y[1] = m_flow, y[4] = T)"
-    annotation (Placement(transformation(extent={{-10,-10},{10,10}},
-        origin={72,330})));
 
-  Buildings.Fluid.Sources.MassFlowSource_T airInClo(
-    use_m_flow_in=true,
-    use_T_in=true,
-    redeclare package Medium = Air,
-    nPorts=1) "Inlet air conditions (from AHU) for the closet"
-    annotation (Placement(transformation(extent={{10,-10},{-10,10}},
-        rotation=180,
-        origin={124,334})));
-  Buildings.Fluid.Sources.Boundary_pT airOutClo(redeclare package Medium = Air,
-      nPorts=2)                               "Air outlet from the closet"
-    annotation (Placement(transformation(extent={{-10,-10},{10,10}},
-        origin={124,298})));
   Modelica.Fluid.Vessels.BaseClasses.VesselFluidPorts_b portsCell[2](redeclare
       package Medium = Medium) "Fluid inlets and outlets"
     annotation (Placement(transformation(extent={{38,146},{78,162}})));
-  XRA.Closet closet(nPorts=2)
+  XRA.Closet closet(redeclare package Medium = Medium)
     annotation (Placement(transformation(extent={{176,362},{216,402}})));
-  XRA.Electrical electrical
+  XRA.Electrical electrical(redeclare package Medium = Medium)
     annotation (Placement(transformation(extent={{244,444},{284,484}})));
+  Modelica.Blocks.Sources.Constant const(k=0)   annotation (Placement(
+        transformation(extent={{318,262},{338,282}})));
+  Modelica.Blocks.Logical.Greater greater annotation (Placement(
+        transformation(extent={{358,270},{378,290}})));
+  Modelica.Blocks.Interfaces.BooleanOutput occ "Occupied signal"
+    annotation (Placement(transformation(extent={{398,270},{418,290}})));
 equation
   connect(uSha.y, replicator.u) annotation (Line(
       points={{25,254},{40,254}},
@@ -334,22 +321,15 @@ equation
           {86,294},{86,188},{106.4,188}},  color={0,0,127}));
   connect(temAirCellA.port, testCell.heaPorAir) annotation (Line(points={{268,180},
           {127,180}},                          color={191,0,0}));
-  connect(testCell.surf_conBou, ple.surf_conBou) annotation (Line(points={{134,164},
-          {178,164},{178,-24},{134,-24},{134,-10}},
+  connect(testCell.surf_conBou[5], ple.surf_conBou[6]) annotation (Line(points={{134,164},
+          {178,164},{178,-24},{134,-24},{134,-9.16667}},
                                               color={191,0,0}));
   connect(leaCell.port_b, testCell.ports[3]) annotation (Line(points={{32,170},{
-          72,170},{72,170},{113,170}}, color={0,127,255}));
-  connect(temAirCellA.T, TRooAir[1]) annotation (Line(points={{288,180},{350,
-          180},{350,166},{390,166}}, color={0,0,127}));
-  connect(airConClo.y[4], airInClo.T_in)
-    annotation (Line(points={{83,330},{112,330}}, color={0,0,127}));
-  connect(airConClo.y[2], airInClo.m_flow_in) annotation (Line(points={{83,330},
-          {98,330},{98,326},{112,326}}, color={0,0,127}));
-  connect(testCell.ports[1], portsCell[1]) annotation (Line(points={{113,166.8},
-          {87.5,166.8},{87.5,154},{48,154}},
-                                     color={0,127,255}));
-  connect(testCell.ports[2], portsCell[2]) annotation (Line(points={{113,168.4},
-          {82,168.4},{82,154},{68,154}},color={0,127,255}));
+          72,170},{72,171},{113,171}}, color={0,127,255}));
+  connect(testCell.ports[1], portsCell[1]) annotation (Line(points={{113,167},{87.5,
+          167},{87.5,154},{48,154}}, color={0,127,255}));
+  connect(testCell.ports[2], portsCell[2]) annotation (Line(points={{113,169},{82,
+          169},{82,154},{68,154}},      color={0,127,255}));
   connect(replicator.y, testCell.uSha) annotation (Line(points={{63,254},{76,254},
           {76,198},{106.4,198}}, color={0,0,127}));
   connect(weaBus, closet.weaBus) annotation (Line(
@@ -363,14 +343,14 @@ equation
 
   connect(intGaiClo.y, closet.qGai_flow)
     annotation (Line(points={{111,390},{174.4,390}}, color={0,0,127}));
-  connect(airOutClo.ports[1], closet.ports[1]) annotation (Line(points={{134,300},
-          {168,300},{168,370},{181,370}}, color={0,127,255}));
-  connect(airOutClo.ports[2], closet.ports[2]) annotation (Line(points={{134,296},
-          {160,296},{160,374},{181,374}}, color={0,127,255}));
   connect(intGaiEle.y, electrical.qGai_flow)
     annotation (Line(points={{183,472},{242.4,472}}, color={0,0,127}));
-  connect(electrical.surf_conBou[1], closet.surf_conBou[2]) annotation (Line(
-        points={{270,448},{270,322},{202,322},{202,366}}, color={191,0,0}));
+   connect(electrical.surf_surBou[2], closet.surf_conBou[1]) annotation (Line(points={{260.2,
+          450},{176,450},{176,366},{202,366}},
+                                        color={191,0,0}));
+  connect(closet.surf_surBou[2], testCell.surf_conBou[3]) annotation (Line(points={{192.2,
+          368},{134,368},{134,164}},
+                          color={191,0,0}));
   connect(weaBus, electrical.weaBus) annotation (Line(
       points={{210,234},{316,234},{316,482},{281.9,482},{281.9,481.9}},
       color={255,204,51},
@@ -379,6 +359,25 @@ equation
       index=-1,
       extent={{-3,-6},{-3,-6}},
       horizontalAlignment=TextAlignment.Right));
+  connect(TRooAir, temAirCellA.T) annotation (Line(points={{390,166},{338,166},{
+          338,180},{288,180}}, color={0,0,127}));
+  connect(testCell.weaBus, weaBus) annotation (Line(
+      points={{145.9,197.9},{177.95,197.9},{177.95,234},{210,234}},
+      color={255,204,51},
+      thickness=0.5), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(senRelPre.port_a, testCell.ports[4]) annotation (Line(points={{100,108},
+          {106,108},{106,173},{113,173}}, color={0,127,255}));
+
+  connect(greater.y,occ)
+    annotation (Line(points={{379,280},{408,280}}, color={255,0,255}));
+  connect(greater.u1, occSch.y[1]) annotation (Line(points={{356,280},{122,280},
+          {122,262},{-107,262}}, color={0,0,127}));
+  connect(const.y, greater.u2)
+    annotation (Line(points={{339,272},{356,272}}, color={0,0,127}));
                            annotation (choicesAllMatching=true,
               Diagram(coordinateSystem(preserveAspectRatio=true, extent={{-160,-100},
             {400,500}},
