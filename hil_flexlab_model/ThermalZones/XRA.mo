@@ -636,10 +636,6 @@ extends Modelica.Icons.Package;
       R20Wal
       annotation (Placement(transformation(extent={{410,-216},{430,-196}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.GlazingSystems.ASHRAE901Gla
-      glaSys
-      annotation (Placement(transformation(extent={{436,-192},{456,-172}})));
-    replaceable parameter
       Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionWall
       parCon
       annotation (Placement(transformation(extent={{436,-216},{456,-196}})));
@@ -660,6 +656,10 @@ extends Modelica.Icons.Package;
       Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorInsulated
       extDoo "Construction of an exterior door"
       annotation (Placement(transformation(extent={{410,-72},{430,-52}})));
+    parameter
+      Data.Constructions.GlazingSystems.SingleClear3
+      glaSys(haveInteriorShade=false)
+      annotation (Placement(transformation(extent={{346,-152},{366,-132}})));
     annotation(Documentation(info="<html>
   <p>
   This is a model for test cell 3A in the LBNL User Facility. This model is intended to represent

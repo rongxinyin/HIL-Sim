@@ -5,7 +5,7 @@ model FlexlabXra_Envelope_Test
   extends BaseClasses.PartialOpenLoopXRa(
     heaCoi(show_T=true),
     cooCoi(show_T=true),
-    dpRetDuc1(dp_nominal=10));
+    dpRetDuc(dp_nominal=10));
 
   Modelica.Blocks.Sources.Constant TSupSetHea(y(
       final quantity="ThermodynamicTemperature",
