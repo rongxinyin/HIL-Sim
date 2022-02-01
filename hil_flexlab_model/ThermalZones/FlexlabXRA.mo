@@ -185,13 +185,13 @@ model FlexlabXRA "Model of a flexlab xra"
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "internal heat gain from occupant"
     annotation (Placement(transformation(extent={{-128,252},{-108,272}})));
-  Modelica.Blocks.Math.MatrixGain ligGai(K=10*[0.5; 0.5; 0.0])
+  Modelica.Blocks.Math.MatrixGain ligGai(K=6*[0.5; 0.5; 0.0])
     "Matrix gain to split up heat gain in radiant, convective and latent gain"
     annotation (Placement(transformation(extent={{-90,322},{-70,342}})));
-  Modelica.Blocks.Math.MatrixGain plgGai(K=10*[0.5; 0.5; 0.0])
+  Modelica.Blocks.Math.MatrixGain plgGai(K=7*[0.5; 0.5; 0.0])
     "Matrix gain to split up heat gain in radiant, convective and latent gain"
     annotation (Placement(transformation(extent={{-90,284},{-70,304}})));
-  Modelica.Blocks.Math.MatrixGain occGai(K=14*[0.4; 0.4; 0.2])
+  Modelica.Blocks.Math.MatrixGain occGai(K=10*[0.4; 0.4; 0.2])
     "Matrix gain to split up heat gain in radiant, convective and latent gain"
     annotation (Placement(transformation(extent={{-90,252},{-70,272}})));
   Modelica.Blocks.Sources.CombiTimeTable intGaiPle(
