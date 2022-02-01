@@ -6,9 +6,9 @@ record PSP_4B_Med "Portable (SW facing) Classroom in Albuquerque, New Mexico"
       TSetSupAirCoo = 12.8 + 273.15,
       TSetSupAirHea = 50 + 273.15);
   extends hil_flexlab_model.Data.BaseClasses.DELO(
-      QCoo_flow_nominal = 7141*2,
-      QHea_flow_nominal = 6372,
-      mAir_flow_nominal = 0.7728,
+      QCoo_flow_nominal = 6506,
+      QHea_flow_nominal = 6535,
+      mAir_flow_nominal = 0.3304,
       LTes_nominal = 19.9*3600000,
       CTes_nominal = 59.6*3600000);
   extends hil_flexlab_model.Data.BaseClasses.BATT(

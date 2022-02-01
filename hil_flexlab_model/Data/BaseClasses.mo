@@ -6,8 +6,8 @@ package BaseClasses
     parameter Modelica.SIunits.DimensionlessRatio occ_density = 25/100 "Occupant density in ppl/m^2" annotation(Dialog(group="Building Type"));
     parameter Modelica.SIunits.MassFlowRate minOAFlo = 15/2118.88*occ_density*1.2*AFlo "Minimum outside air flowrate" annotation(Dialog(group="Building Type"));
     parameter Modelica.SIunits.DimensionlessRatio ACH_infiltration = 0.49 "Infiltration ACH" annotation(Dialog(group="Building Type"));
-    parameter Modelica.SIunits.DimensionlessRatio COP_cooling = 3.23 "Heat pump coefficient of performance for cooling" annotation(Dialog(group="System Specifications"));
-    parameter Modelica.SIunits.DimensionlessRatio COP_heating = 4.23 "Heat pump coefficient of performance for heating" annotation(Dialog(group="System Specifications"));
+    parameter Modelica.SIunits.DimensionlessRatio COP_cooling = 2.96 "Heat pump coefficient of performance for cooling" annotation(Dialog(group="System Specifications"));
+    parameter Modelica.SIunits.DimensionlessRatio COP_heating = 3.17 "Heat pump coefficient of performance for heating" annotation(Dialog(group="System Specifications"));
     parameter Modelica.SIunits.DimensionlessRatio effGas = 0.8 "Baseline gas heating efficiency" annotation(Dialog(group="System Specifications"));
     parameter Modelica.SIunits.PressureDifference dp_nominal(displayUnit="Pa") = 622 "Supply fan design pressure rise" annotation(Dialog(group="System Specifications"));
     parameter Modelica.SIunits.DimensionlessRatio hydraulicEfficiency = 0.65 "Supply fan hydraulic efficiency" annotation(Dialog(group="System Specifications"));

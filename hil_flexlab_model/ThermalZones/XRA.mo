@@ -658,7 +658,7 @@ extends Modelica.Icons.Package;
       annotation (Placement(transformation(extent={{410,-72},{430,-52}})));
     parameter
       Data.Constructions.GlazingSystems.SingleClear3
-      glaSys(haveInteriorShade=false)
+      glaSys(haveInteriorShade=true)
       annotation (Placement(transformation(extent={{346,-152},{366,-132}})));
     annotation(Documentation(info="<html>
   <p>

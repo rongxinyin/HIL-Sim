@@ -1,8 +1,7 @@
 within hil_flexlab_model;
-model HeatHeatpumpCoolHeatpumpAuxHea
+model HeatHeatpumpCoolHeatpumpAuxHea_noIEC_2stage
   "Air supply unit model with heatpump heating and cooling and auxiliary electric heater for heating"
-  extends  hil_flexlab_model.BaseClasses.partialAirUnit;
-
+  extends hil_flexlab_model.BaseClasses.partialAirUnit;
   parameter Modelica.SIunits.DimensionlessRatio COP_heating = 3.5 "Coefficient of performance in heating";
   parameter Modelica.SIunits.DimensionlessRatio COP_cooling = 3.5 "Coefficient of performance in cooling";
   Buildings.Fluid.HeatExchangers.HeaterCooler_u heaCoi(
@@ -11,12 +10,11 @@ model HeatHeatpumpCoolHeatpumpAuxHea
     dp_nominal=0,
     Q_flow_nominal=QHea_flow_nominal) "Heating coil"
     annotation (Placement(transformation(extent={{30,30},{50,50}})));
-  Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.VariableSpeed
+  Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.MultiStage
                                                 cooCoil(
     datCoi=datCoi,
     redeclare package Medium = MediumA,
-    dp_nominal=0,
-    minSpeRat=0)                       "Cooling coil"
+    dp_nominal=0)                       "Cooling coil"
     annotation (Placement(transformation(extent={{70,30},{90,50}})));
   Modelica.Blocks.Interfaces.RealOutput PHea
     "Heating thermal power consumption"
@@ -25,10 +23,30 @@ model HeatHeatpumpCoolHeatpumpAuxHea
     "Cooling electrical power consumption"
     annotation (Placement(transformation(extent={{200,90},{220,110}})));
   Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.DXCoil datCoi(
-    nSta=1,
+    nSta=2,
     minSpeRat=0,
     sta={
-        Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.Stage(
+    Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.Stage(
+        spe=0.66,
+        nomVal=
+        Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.NominalValues(
+           Q_flow_nominal=-QCoo_flow_nominal*0.66,
+          COP_nominal=COP_cooling,
+          SHR_nominal=0.7,
+          m_flow_nominal=mAir_flow_nominal),
+        perCur=
+          Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.PerformanceCurve(
+          capFunT={1,0,0,0,0,0},
+          capFunFF={1,0,0,0},
+          EIRFunT={1,0,0,0,0,0},
+          EIRFunFF={1,0,0,0},
+          TConInMin=273.15 + 0,
+          TConInMax=273.15 + 50,
+          TEvaInMin=273.15 + 0,
+          TEvaInMax=273.15 + 50,
+          ffMin=0,
+          ffMax=10)),
+          Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.Stage(
         spe=1,
         nomVal=
           Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.NominalValues(
@@ -54,7 +72,7 @@ model HeatHeatpumpCoolHeatpumpAuxHea
   Modelica.Blocks.Math.Add add
     annotation (Placement(transformation(extent={{120,90},{140,110}})));
   Modelica.Blocks.Sources.RealExpression copCoo(y=
-        RTUPCM.HVAC.Plants.BaseClasses.Functions.COP_ASHP(abs(senTSup.T -
+        hil_flexlab_model.BaseClasses.Functions.COP_ASHP(abs(senTSup.T -
         TDryBul.y)))
     annotation (Placement(transformation(extent={{120,118},{140,138}})));
   Modelica.Blocks.Math.Gain cooCor(k=-1)
@@ -65,13 +83,14 @@ model HeatHeatpumpCoolHeatpumpAuxHea
   Modelica.Blocks.Math.Gain TDryBul(k=1)
     annotation (Placement(transformation(extent={{20,150},{40,170}})));
   Modelica.Blocks.Sources.RealExpression copHea(y=
-        RTUPCM.HVAC.Plants.BaseClasses.Functions.COP_ASHP(abs(senTSup.T -
+        hil_flexlab_model.BaseClasses.Functions.COP_ASHP(abs(senTSup.T -
         TDryBul.y)))
     annotation (Placement(transformation(extent={{40,118},{60,138}})));
-  RTUPCM.HVAC.Plants.BaseClasses.COP_ASHP_AuxHeat powHeaPum(
-      QHeaPum_flow_nominal=QCoo_flow_nominal)
+  hil_flexlab_model.BaseClasses.COP_ASHP_AuxHeat powHeaPum(QHeaPum_flow_nominal=QCoo_flow_nominal)
     "Power consumption calculation for heat pump heating"
     annotation (Placement(transformation(extent={{90,110},{110,130}})));
+  Modelica.Blocks.Interfaces.IntegerInput n_Sta
+    annotation (Placement(transformation(extent={{-240,-100},{-200,-60}})));
 equation
   connect(uHea, heaCoi.u) annotation (Line(points={{-220,80},{24,80},{24,46},{
           28,46}},
@@ -80,8 +99,6 @@ equation
     annotation (Line(points={{50,40},{70,40}}, color={0,127,255}));
   connect(heaCoi.port_a, totalRes.port_b)
     annotation (Line(points={{30,40},{20,40}}, color={0,127,255}));
-  connect(uCoo, cooCoil.speRat) annotation (Line(points={{-220,20},{-160,20},{
-          -160,90},{64,90},{64,48},{69,48}}, color={0,0,127}));
   connect(weaBus.TDryBul, cooCoil.TConIn) annotation (Line(
       points={{-180,170},{-180,100},{62,100},{62,43},{69,43}},
       color={255,204,51},
@@ -122,6 +139,8 @@ equation
           80,128},{80,68},{51,68},{51,46}}, color={0,0,127}));
   connect(powHeaPum.PEle, PHea) annotation (Line(points={{111,130},{116,130},{
           116,120},{210,120}}, color={0,0,127}));
+  connect(cooCoil.stage, n_Sta) annotation (Line(points={{69,48},{-66.5,48},{-66.5,
+          -80},{-220,-80}}, color={255,127,0}));
   annotation (Icon(graphics={
         Line(points={{198,100},{112,100},{112,44}}, color={0,0,127}),
         Line(points={{198,120},{46,120},{46,46}},   color={0,0,127}),
@@ -134,4 +153,4 @@ equation
       StopTime=19958400,
       Interval=60,
       Tolerance=1e-06));
-end HeatHeatpumpCoolHeatpumpAuxHea;
+end HeatHeatpumpCoolHeatpumpAuxHea_noIEC_2stage;
