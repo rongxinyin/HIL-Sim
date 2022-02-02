@@ -35,16 +35,20 @@ model XRA_Baseline_AE_131
     annotation (Placement(transformation(extent={{-194,280},{-174,300}})));
   ThermalZones.FlexlabXRA flexlabXRA(lat=weaDat.lat)
     annotation (Placement(transformation(extent={{736,-334},{1376,352}})));
-  Modelica.Blocks.Sources.CombiTimeTable TSetRooHea(table=[0,16 + 273.15; 8*
-        3600,16 + 273.15; 9*3600,21 + 273.15; 22*3600,21 + 273.15; 23*3600,16
-         + 273.15; 24*3600,16 + 273.15], extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
+  Modelica.Blocks.Sources.CombiTimeTable TSetRooHea(table=[0*3600,15.6 + 273.15;
+        5*3600,15.6 + 273.15; 5*3600,17.8 + 273.15; 6*3600,17.8 + 273.15; 6*
+        3600,19.4 + 273.15; 7*3600,19.4 + 273.15; 7*3600,21.1 + 273.15; 22*3600,
+        21.1 + 273.15; 22*3600,15.6 + 273.15; 24*3600,15.6 + 273.15],
+                                         extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "Heating setpoint for room temperature"
-    annotation (Placement(transformation(extent={{-212,-114},{-192,-94}})));
-  Modelica.Blocks.Sources.CombiTimeTable TSetRooCoo(table=[0,27 + 273.15; 8*
-        3600,27 + 273.15; 9*3600,24 + 273.15; 22*3600,24 + 273.15; 23*3600,27
-         + 273.15; 24*3600,27 + 273.15], extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
+    annotation (Placement(transformation(extent={{-312,-82},{-242,-12}})));
+  Modelica.Blocks.Sources.CombiTimeTable TSetRooCoo(table=[0*3600,273.15 + 26.7;
+        5*3600,273.15 + 26.7; 5*3600,273.15 + 25.6; 6*3600,273.15 + 25.6; 6*
+        3600,273.15 + 25; 7*3600,273.15 + 25; 7*3600,273.15 + 23.3; 22*3600,
+        273.15 + 23.3; 22*3600,273.15 + 26.7; 24*3600,273.15 + 26.7],
+                                         extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "Cooling setpoint for room temperature"
-    annotation (Placement(transformation(extent={{-212,-144},{-192,-124}})));
+    annotation (Placement(transformation(extent={{-306,-186},{-234,-114}})));
   Modelica.Blocks.Logical.TriggeredTrapezoid triggeredTrapezoid(rising=300)
     annotation (Placement(transformation(extent={{-78,-310},{-52,-284}})));
   Modelica.Blocks.Logical.Greater greater
@@ -161,10 +165,11 @@ equation
       points={{1158.86,47.8733},{445.43,47.8733},{445.43,404},{-254,404}},
       color={255,204,51},
       thickness=0.5));
-  connect(TSetRooHea.y[1], rTU.TSetRooHea) annotation (Line(points={{-191,-104},
-          {-117.5,-104},{-117.5,-45.8818},{-38.8,-45.8818}}, color={0,0,127}));
-  connect(TSetRooCoo.y[1], rTU.TSetRooCoo) annotation (Line(points={{-191,-134},
-          {-114,-134},{-114,-75.0636},{-38.8,-75.0636}}, color={0,0,127}));
+  connect(TSetRooHea.y[1], rTU.TSetRooHea) annotation (Line(points={{-238.5,-47},
+          {-117.5,-47},{-117.5,-45.8818},{-38.8,-45.8818}},  color={0,0,127}));
+  connect(TSetRooCoo.y[1], rTU.TSetRooCoo) annotation (Line(points={{-230.4,
+          -150},{-114,-150},{-114,-75.0636},{-38.8,-75.0636}},
+                                                         color={0,0,127}));
   connect(flexlabXRA.portsCell[2], rtu.returnAir) annotation (Line(points={{996.571,
           -43.5933},{702.572,-43.5933},{702.572,-92},{430,-92}},         color=
           {0,127,255}));

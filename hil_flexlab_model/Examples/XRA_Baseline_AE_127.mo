@@ -35,14 +35,18 @@ model XRA_Baseline_AE_127
     annotation (Placement(transformation(extent={{-194,280},{-174,300}})));
   ThermalZones.FlexlabXRA flexlabXRA(lat=weaDat.lat)
     annotation (Placement(transformation(extent={{736,-334},{1376,352}})));
-  Modelica.Blocks.Sources.CombiTimeTable TSetRooHea(table=[0,16 + 273.15; 8*
-        3600,16 + 273.15; 9*3600,21 + 273.15; 22*3600,21 + 273.15; 23*3600,16
-         + 273.15; 24*3600,16 + 273.15], extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
+  Modelica.Blocks.Sources.CombiTimeTable TSetRooHea(table=[3600*0,273.15 + 15.6;
+        3600*5,273.15 + 15.6; 3600*5,273.15 + 17.8; 3600*6,273.15 + 17.8; 3600*
+        6,273.15 + 19.4; 3600*7,273.15 + 19.4; 3600*7,273.15 + 21.1; 3600*22,
+        273.15 + 21.1; 3600*22,273.15 + 15.6; 3600*24,273.15 + 15.6],
+                                         extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "Heating setpoint for room temperature"
-    annotation (Placement(transformation(extent={{-212,-114},{-192,-94}})));
-  Modelica.Blocks.Sources.CombiTimeTable TSetRooCoo(table=[0,27 + 273.15; 8*
-        3600,27 + 273.15; 9*3600,24 + 273.15; 22*3600,24 + 273.15; 23*3600,27
-         + 273.15; 24*3600,27 + 273.15], extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
+    annotation (Placement(transformation(extent={{-214,-114},{-194,-94}})));
+  Modelica.Blocks.Sources.CombiTimeTable TSetRooCoo(table=[3600*0,273.15 + 26.7;
+        3600*5,273.15 + 26.7; 3600*5,273.15 + 25.6; 3600*6,273.15 + 25.6; 3600*
+        6,273.15 + 25; 3600*7,273.15 + 25; 3600*7,273.15 + 23.3; 3600*22,273.15
+         + 23.3; 3600*22,273.15 + 26.7; 3600*24,273.15 + 26.7],
+                                         extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "Cooling setpoint for room temperature"
     annotation (Placement(transformation(extent={{-212,-144},{-192,-124}})));
 equation
@@ -102,7 +106,7 @@ equation
       points={{1158.86,47.8733},{445.43,47.8733},{445.43,404},{-254,404}},
       color={255,204,51},
       thickness=0.5));
-  connect(TSetRooHea.y[1], rTU.TSetRooHea) annotation (Line(points={{-191,-104},
+  connect(TSetRooHea.y[1], rTU.TSetRooHea) annotation (Line(points={{-193,-104},
           {-117.5,-104},{-117.5,-45.8818},{-38.8,-45.8818}}, color={0,0,127}));
   connect(TSetRooCoo.y[1], rTU.TSetRooCoo) annotation (Line(points={{-191,-134},
           {-114,-134},{-114,-75.0636},{-38.8,-75.0636}}, color={0,0,127}));
