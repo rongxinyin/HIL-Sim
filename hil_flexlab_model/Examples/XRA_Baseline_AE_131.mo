@@ -220,13 +220,14 @@ equation
   connect(const5.y, switch3.u3) annotation (Line(points={{423.3,-347},{484.65,
           -347},{484.65,-334},{588,-334}}, color={0,0,127}));
   connect(rTU.yHea, greater1.u1) annotation (Line(points={{85.4,-55.6091},{
-          240.7,-55.6091},{240.7,-304},{394,-304}}, color={0,0,127}));
+          126.7,-55.6091},{126.7,-304},{394,-304}}, color={0,0,127}));
   connect(rTU.yHea, realToBoolean1.u) annotation (Line(points={{85.4,-55.6091},
-          {230.7,-55.6091},{230.7,-256},{380,-256}}, color={0,0,127}));
+          {100,-55.6091},{100,-76},{110,-76},{110,-256},{380,-256}},
+                                                     color={0,0,127}));
   connect(const6.y, switch3.u1) annotation (Line(points={{555.3,-387},{555.3,
           -352.5},{588,-352.5},{588,-318}}, color={0,0,127}));
-  connect(switch4.y, rtu.uHea) annotation (Line(points={{587,-256},{412,-256},{
-          412,-22.4},{245.2,-22.4}}, color={0,0,127}));
+  connect(switch4.y, rtu.uHea) annotation (Line(points={{587,-256},{118,-256},{
+          118,-22.4},{245.2,-22.4}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-400},{1440,
             580}})),

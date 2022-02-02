@@ -2855,7 +2855,7 @@ First implementation.
       annotation (Placement(transformation(extent={{70,188},{90,208}})));
     Modelica.Blocks.Sources.Constant off(k=0) "Off signal"
       annotation (Placement(transformation(extent={{-60,188},{-40,208}})));
-    FanMode fanMod "Fan mode determination"
+    FanMode_noCool FanMod_noCool "Fan mode determination"
       annotation (Placement(transformation(extent={{40,158},{60,178}})));
     Modelica.Blocks.Sources.Constant offHea(k=0) "Off signal"
       annotation (Placement(transformation(extent={{40,88},{60,108}})));
@@ -3067,6 +3067,43 @@ First implementation.
           fillPattern=FillPattern.Solid)}),                        Diagram(
           coordinateSystem(preserveAspectRatio=false, extent={{-100,-220},{100,220}})));
   end RTU_noCool;
+
+  model FanMode_noCool "Fan mode selector"
+    extends Modelica.Blocks.Icons.Block;
+    Modelica.Blocks.Interfaces.BooleanInput ven "Ventilation"
+      annotation (Placement(transformation(extent={{-140,60},{-100,100}})));
+    Modelica.Blocks.Interfaces.BooleanInput hea "Heating"
+      annotation (Placement(transformation(extent={{-140,-20},{-100,20}})));
+    Modelica.Blocks.Math.BooleanToReal booIntVen(realTrue=2, realFalse=1)
+      "Boolean to integer conversion for ventilation"
+      annotation (Placement(transformation(extent={{-80,70},{-60,90}})));
+    Modelica.Blocks.Interfaces.IntegerOutput y1
+                                      "Connector of Integer output signal"
+      annotation (Placement(transformation(extent={{100,-10},{120,10}})));
+    Modelica.Blocks.Math.BooleanToReal booIntHea(realTrue=3, realFalse=1)
+      "Boolean to integer conversion for heating"
+      annotation (Placement(transformation(extent={{-80,-10},{-60,10}})));
+    Modelica.Blocks.Math.MinMax minMax(nu=2)
+      annotation (Placement(transformation(extent={{-8,-10},{12,10}})));
+    Modelica.Blocks.Math.RealToInteger reaInt "Convert real number to integer"
+      annotation (Placement(transformation(extent={{40,-10},{60,10}})));
+  equation
+    connect(ven, booIntVen.u)
+      annotation (Line(points={{-120,80},{-82,80}}, color={255,0,255}));
+    connect(hea, booIntHea.u)
+      annotation (Line(points={{-120,0},{-82,0}}, color={255,0,255}));
+    connect(booIntVen.y, minMax.u[1]) annotation (Line(points={{-59,80},{-40,80},
+            {-40,3.5},{-8,3.5}},         color={0,0,127}));
+    connect(booIntHea.y, minMax.u[2]) annotation (Line(points={{-59,0},{-34,0},
+            {-34,-3.5},{-8,-3.5}},
+                            color={0,0,127}));
+    connect(minMax.yMax, reaInt.u)
+      annotation (Line(points={{13,6},{30,6},{30,0},{38,0}}, color={0,0,127}));
+    connect(reaInt.y, y1)
+      annotation (Line(points={{61,0},{110,0}}, color={255,127,0}));
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+          coordinateSystem(preserveAspectRatio=false)));
+  end FanMode_noCool;
   annotation (Icon(graphics={
       Rectangle(
         origin={0.0,35.1488},
