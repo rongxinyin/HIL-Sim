@@ -295,15 +295,16 @@ package Fluid "Package with models for fluid flow systems"
           use_conCap=false,
           redeclare package Medium_con = Medium_sin,
           redeclare package Medium_eva = Medium_sou,
-          use_refIne=false,
-          use_rev=false,
+          use_refIne=true,
+          use_rev=true,
+          TCon_start=290.15,
+          TEva_start=281.15,
           redeclare model PerDataMainHP =
-              AixLib.DataBase.HeatPump.PerformanceData.LookUpTable2D (dataTable
-                =hil_flexlab_model.Fluid.HeatPump.PerformanceData.RongxinSampleHP()),
-
+              AixLib.DataBase.HeatPump.PerformanceData.LookUpTable2D (dataTable=
+                 hil_flexlab_model.Fluid.HeatPump.PerformanceData.RongxinSampleHP()),
           redeclare model PerDataRevHP =
-              AixLib.DataBase.Chiller.PerformanceData.LookUpTable2D (smoothness
-                =Modelica.Blocks.Types.Smoothness.LinearSegments, dataTable=
+              AixLib.DataBase.Chiller.PerformanceData.LookUpTable2D (smoothness=
+                 Modelica.Blocks.Types.Smoothness.LinearSegments, dataTable=
                   AixLib.DataBase.Chiller.EN14511.Vitocal200AWO201()),
           VEva=0.04,
           use_evaCap=false,
@@ -311,15 +312,15 @@ package Fluid "Package with models for fluid flow systems"
           energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
           mFlow_conNominal=0.5,
           mFlow_evaNominal=0.5,
-          use_autoCalc=true,
+          use_autoCalc=false,
           TAmbEva_nominal=273.15,
-          TAmbCon_nominal=288.15,
-          TCon_start=303.15) annotation (Placement(transformation(
+          TAmbCon_nominal=288.15)
+                             annotation (Placement(transformation(
               extent={{-24,-29},{24,29}},
               rotation=270,
               origin={2,-21})));
 
-        Modelica.Blocks.Sources.BooleanStep     booleanStep(startTime=1800,
+        Modelica.Blocks.Sources.BooleanStep     booleanStep(startTime=12000,
             startValue=true)
           annotation (Placement(transformation(extent={{-6,-6},{6,6}},
               rotation=270,
