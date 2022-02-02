@@ -258,11 +258,11 @@ package Fluid "Package with models for fluid flow systems"
       model HeatPump "Example for the reversible heat pump model."
        extends Modelica.Icons.Example;
 
-        replaceable package Medium_sin = AixLib.Media.Water
+        replaceable package Medium_sin = Buildings.Media.Water
           constrainedby Modelica.Media.Interfaces.PartialMedium annotation (choicesAllMatching=true);
-        replaceable package Medium_sou = AixLib.Media.Water
+        replaceable package Medium_sou = Buildings.Media.Water
           constrainedby Modelica.Media.Interfaces.PartialMedium annotation (choicesAllMatching=true);
-        AixLib.Fluid.Sources.MassFlowSource_T                sourceSideMassFlowSource(
+        Buildings.Fluid.Sources.MassFlowSource_T             sourceSideMassFlowSource(
           use_T_in=true,
           m_flow=1,
           nPorts=1,
@@ -270,24 +270,17 @@ package Fluid "Package with models for fluid flow systems"
           T=275.15) "Ideal mass flow source at the inlet of the source side"
                     annotation (Placement(transformation(extent={{-54,-80},{-34,-60}})));
 
-        AixLib.Fluid.Sources.Boundary_pT                  sourceSideFixedBoundary(
+        Buildings.Fluid.Sources.Boundary_pT               sourceSideFixedBoundary(
                                                                                nPorts=
              1, redeclare package Medium = Medium_sou)
                 "Fixed boundary at the outlet of the source side"
                 annotation (Placement(transformation(extent={{-11,11},{11,-11}},
               rotation=0,
               origin={-81,3})));
-        Modelica.Blocks.Sources.Ramp TsuSourceRamp(
-          duration=500,
-          startTime=500,
-          height=10,
-          offset=278)
-          "Ramp signal for the temperature input of the source side's ideal mass flow source"
-          annotation (Placement(transformation(extent={{-94,-90},{-74,-70}})));
         Modelica.Blocks.Sources.Constant T_amb_internal(k=291.15)
           annotation (Placement(transformation(extent={{10,-10},{-10,10}},
               rotation=-90,
-              origin={2,-76})));
+              origin={0,-64})));
         hil_flexlab_model.Fluid.HeatPump.HeatPump heatPump(
           Q_useNominal=6535,
           refIneFre_constant=1,
@@ -330,9 +323,10 @@ package Fluid "Package with models for fluid flow systems"
             startValue=true)
           annotation (Placement(transformation(extent={{-6,-6},{6,6}},
               rotation=270,
-              origin={-4,84})));
+              origin={16,78})));
 
-        AixLib.Fluid.Sensors.TemperatureTwoPort senTAct(
+        Buildings.Fluid.Sensors.TemperatureTwoPort
+                                                senTAct(
           final m_flow_nominal=heatPump.m1_flow_nominal,
           final tau=1,
           final initType=Modelica.Blocks.Types.Init.InitialState,
@@ -355,55 +349,25 @@ package Fluid "Package with models for fluid flow systems"
           annotation (Placement(transformation(extent={{5,-5},{-5,5}},
               rotation=90,
               origin={7,29})));
-        Modelica.Blocks.Sources.Sine sine(
-          freqHz=1/3600,
-          amplitude=3000,
-          offset=3000)
-          annotation (Placement(transformation(extent={{76,26},{84,34}})));
-        AixLib.Fluid.Movers.SpeedControlled_Nrpm
-                                          pumSou(
-          redeclare final AixLib.Fluid.Movers.Data.Pumps.Wilo.Stratos25slash1to8 per,
-          final allowFlowReversal=true,
-          final addPowerToMedium=false,
-          redeclare final package Medium = Medium_sin,
-          energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial)
-          "Fan or pump at source side of HP" annotation (Placement(transformation(
-              extent={{10,-10},{-10,10}},
-              rotation=0,
-              origin={50,12})));
 
-        AixLib.Fluid.MixingVolumes.MixingVolume Room(
+        Buildings.Fluid.MixingVolumes.MixingVolume
+                                                Room(
           nPorts=2,
           final use_C_flow=false,
           final m_flow_nominal=heatPump.m1_flow_nominal,
           final V=5,
           final allowFlowReversal=true,
-          redeclare package Medium = Medium_sin,
-          energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial)
+          redeclare package Medium = Medium_sin)
           "Volume of Condenser" annotation (Placement(transformation(
               extent={{-10,-10},{10,10}},
               rotation=270,
               origin={86,-20})));
 
-        Modelica.Blocks.Sources.Constant nIn(k=100) annotation (Placement(
-              transformation(
-              extent={{4,-4},{-4,4}},
-              rotation=90,
-              origin={50,34})));
-        Modelica.Thermal.HeatTransfer.Sources.PrescribedHeatFlow heatFlowRateCon
-          "Heat flow rate of the condenser" annotation (Placement(transformation(
-              extent={{-6,6},{6,-6}},
-              rotation=270,
-              origin={86,6})));
-        Modelica.Blocks.Math.Gain gain(k=-1) annotation (Placement(transformation(
-              extent={{-4,-4},{4,4}},
-              rotation=270,
-              origin={92,20})));
         Modelica.Blocks.Logical.Not not2 "Negate output of hysteresis"
           annotation (Placement(transformation(extent={{-5,-5},{5,5}},
               origin={45,63},
               rotation=180)));
-        AixLib.Fluid.Sources.Boundary_pT   sinkSideFixedBoundary(      nPorts=1,
+        Buildings.Fluid.Sources.Boundary_pT sinkSideFixedBoundary(     nPorts=1,
             redeclare package Medium = Medium_sin)
           "Fixed boundary at the outlet of the sink side" annotation (Placement(
               transformation(
