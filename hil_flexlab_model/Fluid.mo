@@ -258,9 +258,9 @@ package Fluid "Package with models for fluid flow systems"
       model HeatPump "Example for the reversible heat pump model."
        extends Modelica.Icons.Example;
 
-        replaceable package Medium_sin = Buildings.Media.Water
+        replaceable package Medium_sin = Buildings.Media.Air
           constrainedby Modelica.Media.Interfaces.PartialMedium annotation (choicesAllMatching=true);
-        replaceable package Medium_sou = Buildings.Media.Water
+        replaceable package Medium_sou = Buildings.Media.Air
           constrainedby Modelica.Media.Interfaces.PartialMedium annotation (choicesAllMatching=true);
         Buildings.Fluid.Sources.MassFlowSource_T             sourceSideMassFlowSource(
           use_T_in=true,
@@ -411,7 +411,7 @@ package Fluid "Package with models for fluid flow systems"
         Buildings.Controls.OBC.UnitConversions.From_cfm from_cfm
           annotation (Placement(transformation(extent={{-70,60},{-50,80}})));
         Buildings.Fluid.Sensors.DensityTwoPort senDen(redeclare package Medium =
-              Buildings.Media.Water, m_flow_nominal=0.2)
+              Buildings.Media.Air,   m_flow_nominal=0.2)
           annotation (Placement(transformation(extent={{48,-10},{68,10}})));
         Modelica.Blocks.Math.Product m3s_kgs
           annotation (Placement(transformation(extent={{-34,54},{-14,74}})));
