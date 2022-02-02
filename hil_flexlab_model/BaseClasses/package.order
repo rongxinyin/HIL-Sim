@@ -14,3 +14,4 @@ Functions
 Controls
 COP_ASHP_AuxHeat
 partialInterface_noPV
+partialAirUnit_noCool
