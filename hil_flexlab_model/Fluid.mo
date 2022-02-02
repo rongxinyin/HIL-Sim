@@ -283,7 +283,7 @@ package Fluid "Package with models for fluid flow systems"
               origin={0,-64})));
         hil_flexlab_model.Fluid.HeatPump.HeatPump heatPump(
           Q_useNominal=6535,
-          refIneFre_constant=1,
+          refIneFre_constant=0.001,
           useBusConnectorOnly=true,
           CEva=100,
           GEvaOut=5,
