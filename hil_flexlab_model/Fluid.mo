@@ -342,8 +342,8 @@ package Fluid "Package with models for fluid flow systems"
               origin={54,-64})));
         Modelica.Blocks.Logical.Hysteresis hysHeating(
           pre_y_start=true,
-          uLow=273.15 + 30,
-          uHigh=273.15 + 35)
+          uLow=273.15 + 31.5,
+          uHigh=273.15 + 32.5)
           annotation (Placement(transformation(extent={{66,58},{56,68}})));
         Modelica.Blocks.Math.BooleanToReal booleanToReal
           annotation (Placement(transformation(extent={{5,-5},{-5,5}},
