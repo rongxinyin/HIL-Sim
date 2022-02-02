@@ -388,39 +388,72 @@ package Fluid "Package with models for fluid flow systems"
           uHigh=273.15 + 19)
           annotation (Placement(transformation(extent={{58,40},{48,50}})));
         AixLib.Controls.Interfaces.VapourCompressionMachineControlBus sigBus1
-          annotation (Placement(transformation(extent={{-34,22},{-4,56}}),
-              iconTransformation(extent={{-22,30},{-4,56}})));
+          annotation (Placement(transformation(extent={{-36,16},{-6,50}}),
+              iconTransformation(extent={{-24,24},{-6,50}})));
+        Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(
+          tableOnFile=true,
+          tableName="NoName",
+          fileName=ModelicaServices.ExternalReferences.loadResource("modelica://HIL-Sim/data/RTUHPdata/2021-03-06_HP_Filtered.csv"),
+          columns=1:13,
+          timeScale=60) annotation (Placement(transformation(extent={{-140,60},{-120,80}})));
+
+        Modelica.Thermal.HeatTransfer.Fahrenheit.ToKelvin roomTemptoKelvin
+          annotation (Placement(transformation(extent={{54,94},{74,114}})));
+        Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature roomTemp
+          annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=270,
+              origin={130,30})));
+        Modelica.Thermal.HeatTransfer.Sources.PrescribedTemperature returnTemp
+          annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=-90,
+              origin={96,30})));
+        Modelica.Thermal.HeatTransfer.Fahrenheit.ToKelvin returnTemptoKelvin
+          annotation (Placement(transformation(extent={{54,78},{74,98}})));
+        Modelica.Thermal.HeatTransfer.Fahrenheit.ToKelvin outsideTemptoKelvin
+          annotation (Placement(transformation(extent={{-90,-76},{-70,-56}})));
+        Buildings.Controls.OBC.UnitConversions.From_cfm from_cfm
+          annotation (Placement(transformation(extent={{-70,60},{-50,80}})));
+        Buildings.Fluid.Sensors.DensityTwoPort senDen(redeclare package Medium =
+              Buildings.Media.Water, m_flow_nominal=0.2)
+          annotation (Placement(transformation(extent={{48,-10},{68,10}})));
+        Modelica.Blocks.Math.Product m3s_kgs
+          annotation (Placement(transformation(extent={{-34,54},{-14,74}})));
+        Modelica.Blocks.Interfaces.RealOutput supplyTempMea
+          "Measured supply air temperature"
+          annotation (Placement(transformation(extent={{100,-94},{120,-74}})));
+        Modelica.Thermal.HeatTransfer.Fahrenheit.ToKelvin supplyTemptoKelvin
+          annotation (Placement(transformation(extent={{-90,-94},{-70,-74}})));
+        Modelica.Blocks.Interfaces.RealOutput powerTotMea "Measured power"
+          annotation (Placement(transformation(extent={{100,-110},{120,-90}})));
+        Buildings.Fluid.Movers.FlowControlled_m_flow fanSup(
+          m_flow_nominal=0.2,
+          addPowerToMedium=false,
+          nominalValuesDefineDefaultPressureCurve=true,
+          dp_nominal=600,
+          per(use_powerCharacteristic=false),
+          energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
+          use_inputFilter=true,
+          redeclare package Medium = Medium_sin)
+                                              "Supply fan"
+          annotation (Placement(transformation(extent={{44,10},{24,30}})));
       equation
 
         connect(sourceSideMassFlowSource.ports[1], heatPump.port_a2) annotation (Line(
               points={{-34,-70},{-24,-70},{-24,-45},{-12.5,-45}}, color={0,127,255}));
-        connect(nIn.y, pumSou.Nrpm)
-          annotation (Line(points={{50,29.6},{50,24}}, color={0,0,127}));
-        connect(Room.heatPort, heatFlowRateCon.port)
-          annotation (Line(points={{86,-10},{86,0}},        color={191,0,0}));
-        connect(sine.y, gain.u) annotation (Line(points={{84.4,30},{92,30},{92,24.8}},
-                            color={0,0,127}));
-        connect(heatFlowRateCon.Q_flow, gain.y) annotation (Line(points={{86,12},{86,
-                14},{92,14},{92,15.6}},   color={0,0,127}));
         connect(heatPump.port_b2, sourceSideFixedBoundary.ports[1]) annotation (Line(
               points={{-12.5,3},{-70,3}},                   color={0,127,255}));
         connect(heatPump.port_b1, senTAct.port_a) annotation (Line(points={{16.5,-45},
                 {30,-45},{30,-64},{44,-64}}, color={0,127,255}));
-        connect(Room.ports[1], pumSou.port_a) annotation (Line(points={{76,-18},{76,4},
-                {60,4},{60,12}}, color={0,127,255}));
-        connect(pumSou.port_b, heatPump.port_a1) annotation (Line(points={{40,12},{28,
-                12},{28,3},{16.5,3}}, color={0,127,255}));
         connect(senTAct.T, hysHeating.u) annotation (Line(points={{54,-53},{54,-54},{
                 54,-54},{54,-54},{54,-8},{70,-8},{70,63},{67,63}}, color={0,0,127}));
         connect(hysHeating.y, not2.u)
           annotation (Line(points={{55.5,63},{51,63}}, color={255,0,255}));
         connect(senTAct.port_b, sinkSideFixedBoundary.ports[1]) annotation (Line(
               points={{64,-64},{72,-64},{72,-64},{78,-64}}, color={0,127,255}));
-        connect(senTAct.port_b, Room.ports[2]) annotation (Line(points={{64,-64},{66,
-                -64},{66,-22},{76,-22}}, color={0,127,255}));
-        connect(TsuSourceRamp.y, sourceSideMassFlowSource.T_in) annotation (Line(
-              points={{-73,-80},{-66,-80},{-66,-66},{-56,-66}}, color={0,0,127},
-              smooth=Smooth.None));
+        connect(senTAct.port_b, Room.ports[1]) annotation (Line(points={{64,-64},{66,-64},
+                {66,-18},{76,-18}},      color={0,127,255}));
         connect(logicalSwitch.u1, not2.y) annotation (Line(points={{25,57},{36,57},{
                 36,63},{39.5,63}}, color={255,0,255}));
         connect(hysCooling.y, logicalSwitch.u3) annotation (Line(points={{47.5,45},{
@@ -428,41 +461,77 @@ package Fluid "Package with models for fluid flow systems"
         connect(senTAct.T, hysCooling.u) annotation (Line(points={{54,-53},{54,-54},{
                 54,-54},{54,-54},{54,-54},{54,-54},{54,-8},{70,-8},{70,45},{59,45}},
               color={0,0,127}));
-        connect(booleanStep.y, logicalSwitch.u2) annotation (Line(points={{-4,77.4},{
-                -4,66},{32,66},{32,53},{25,53}}, color={255,0,255}));
+        connect(booleanStep.y, logicalSwitch.u2) annotation (Line(points={{16,71.4},{16,
+                66},{32,66},{32,53},{25,53}},    color={255,0,255}));
         connect(logicalSwitch.y, booleanToReal.u)
           annotation (Line(points={{13.5,53},{7,53},{7,35}}, color={255,0,255}));
-        connect(booleanStep.y, sigBus1.modeSet) annotation (Line(points={{-4,77.4},{-10,
-                77.4},{-10,39.085},{-18.925,39.085}}, color={255,0,255}), Text(
+        connect(booleanStep.y, sigBus1.modeSet) annotation (Line(points={{16,71.4},{-10,
+                71.4},{-10,33.085},{-20.925,33.085}}, color={255,0,255}), Text(
             string="%second",
             index=1,
             extent={{-6,3},{-6,3}},
             horizontalAlignment=TextAlignment.Right));
-        connect(iceFac.y, sigBus1.iceFacMea) annotation (Line(points={{-57.2,38},{-34,
-                38},{-34,39.085},{-18.925,39.085}}, color={0,0,127}), Text(
+        connect(iceFac.y, sigBus1.iceFacMea) annotation (Line(points={{-55.2,38},{-34,
+                38},{-34,33.085},{-20.925,33.085}}, color={0,0,127}), Text(
             string="%second",
             index=1,
             extent={{6,3},{6,3}},
             horizontalAlignment=TextAlignment.Left));
-        connect(booleanToReal.y, sigBus1.nSet) annotation (Line(points={{7,23.5},{-18.925,
-                23.5},{-18.925,39.085}}, color={0,0,127}), Text(
+        connect(booleanToReal.y, sigBus1.nSet) annotation (Line(points={{7,23.5},{-20.925,
+                23.5},{-20.925,33.085}}, color={0,0,127}), Text(
             string="%second",
             index=1,
             extent={{-6,3},{-6,3}},
             horizontalAlignment=TextAlignment.Right));
         connect(sigBus1, heatPump.sigBus) annotation (Line(
-            points={{-19,39},{-19,16},{-10,16},{-10,2.76},{-7.425,2.76}},
+            points={{-21,33},{-21,16},{-10,16},{-10,2.76},{-7.425,2.76}},
             color={255,204,51},
             thickness=0.5), Text(
             string="%first",
             index=-1,
             extent={{-6,3},{-6,3}},
             horizontalAlignment=TextAlignment.Right));
+        connect(roomTemp.port, Room.heatPort) annotation (Line(points={{130,20},{130,0},
+                {86,0},{86,-10}}, color={191,0,0}));
+        connect(roomTemptoKelvin.Kelvin, roomTemp.T)
+          annotation (Line(points={{75,104},{130,104},{130,42}}, color={0,0,127}));
+        connect(combiTimeTable.y[5], roomTemptoKelvin.Fahrenheit) annotation (Line(
+              points={{-119,70},{-80,70},{-80,104},{52,104}}, color={0,0,127}));
+        connect(returnTemptoKelvin.Kelvin, returnTemp.T)
+          annotation (Line(points={{75,88},{96,88},{96,42}}, color={0,0,127}));
+        connect(combiTimeTable.y[6], returnTemptoKelvin.Fahrenheit) annotation (Line(
+              points={{-119,70},{-80,70},{-80,88},{52,88}}, color={0,0,127}));
+        connect(outsideTemptoKelvin.Kelvin, sourceSideMassFlowSource.T_in)
+          annotation (Line(points={{-69,-66},{-56,-66}}, color={0,0,127}));
+        connect(combiTimeTable.y[8], outsideTemptoKelvin.Fahrenheit) annotation (Line(
+              points={{-119,70},{-106,70},{-106,-66},{-92,-66}}, color={0,0,127}));
+        connect(combiTimeTable.y[9], from_cfm.u)
+          annotation (Line(points={{-119,70},{-72,70}}, color={0,0,127}));
+        connect(Room.ports[2], senDen.port_b) annotation (Line(points={{76,-22},{72,-22},
+                {72,0},{68,0}}, color={0,127,255}));
+        connect(from_cfm.y, m3s_kgs.u1)
+          annotation (Line(points={{-48,70},{-36,70}}, color={0,0,127}));
+        connect(senDen.d, m3s_kgs.u2) annotation (Line(points={{58,11},{-44,11},{-44,58},
+                {-36,58}}, color={0,0,127}));
+        connect(supplyTemptoKelvin.Kelvin, supplyTempMea)
+          annotation (Line(points={{-69,-84},{110,-84}}, color={0,0,127}));
+        connect(combiTimeTable.y[7], supplyTemptoKelvin.Fahrenheit) annotation (Line(
+              points={{-119,70},{-106,70},{-106,-84},{-92,-84}}, color={0,0,127}));
+        connect(senDen.port_a, fanSup.port_a) annotation (Line(points={{48,0},{46,0},{
+                46,20},{44,20}}, color={0,127,255}));
+        connect(heatPump.port_a1, fanSup.port_b)
+          annotation (Line(points={{16.5,3},{16.5,20},{24,20}}, color={0,127,255}));
+        connect(returnTemp.port, fanSup.heatPort)
+          annotation (Line(points={{96,20},{96,13.2},{34,13.2}}, color={191,0,0}));
+        connect(m3s_kgs.y, fanSup.m_flow_in) annotation (Line(points={{-13,64},{-2,64},
+                {-2,44},{34,44},{34,32}}, color={0,0,127}));
+        connect(combiTimeTable.y[13], powerTotMea) annotation (Line(points={{
+                -119,70},{-106,70},{-106,-100},{110,-100}}, color={0,0,127}));
         annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
                   -100},{100,100}})),
           experiment(
-            StopTime=1500,
-            __Dymola_NumberOfIntervals=250,
+            StopTime=7500,
+            __Dymola_NumberOfIntervals=125,
             Tolerance=1e-06),
       __Dymola_Commands(file="modelica://AixLib/Resources/Scripts/Dymola/Fluid/HeatPumps/Examples/HeatPump.mos"
               "Simulate and plot"),
