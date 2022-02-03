@@ -320,8 +320,7 @@ package Fluid "Package with models for fluid flow systems"
               rotation=270,
               origin={2,-21})));
 
-        Modelica.Blocks.Sources.BooleanStep     booleanStep(startTime=12000,
-            startValue=true)
+        Modelica.Blocks.Sources.BooleanConstant booleanConstant
           annotation (Placement(transformation(extent={{-6,-6},{6,6}},
               rotation=270,
               origin={16,78})));
@@ -465,12 +464,13 @@ package Fluid "Package with models for fluid flow systems"
         connect(senTAct.T, hysCooling.u) annotation (Line(points={{54,-53},{54,-54},{
                 54,-54},{54,-54},{54,-54},{54,-54},{54,-8},{70,-8},{70,45},{59,45}},
               color={0,0,127}));
-        connect(booleanStep.y, logicalSwitch.u2) annotation (Line(points={{16,71.4},{16,
-                66},{32,66},{32,53},{25,53}},    color={255,0,255}));
+        connect(booleanConstant.y, logicalSwitch.u2) annotation (Line(points={{
+                16,71.4},{16,66},{32,66},{32,53},{25,53}}, color={255,0,255}));
         connect(logicalSwitch.y, booleanToReal.u)
           annotation (Line(points={{13.5,53},{7,53},{7,35}}, color={255,0,255}));
-        connect(booleanStep.y, sigBus1.modeSet) annotation (Line(points={{16,71.4},{-10,
-                71.4},{-10,33.085},{-20.925,33.085}}, color={255,0,255}), Text(
+        connect(booleanConstant.y, sigBus1.modeSet) annotation (Line(points={{
+                16,71.4},{-10,71.4},{-10,33.085},{-20.925,33.085}}, color={255,
+                0,255}), Text(
             string="%second",
             index=1,
             extent={{-6,3},{-6,3}},
