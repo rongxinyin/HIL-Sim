@@ -1,4 +1,4 @@
-within hil_flexlab_model;
+﻿within hil_flexlab_model;
 package Fluid "Package with models for fluid flow systems"
   package HeatPump "Package with model for heat pump"
     model HeatPump
@@ -296,7 +296,7 @@ package Fluid "Package with models for fluid flow systems"
           redeclare package Medium_con = Medium_sin,
           redeclare package Medium_eva = Medium_sou,
           use_refIne=true,
-          use_rev=true,
+          use_rev=false,
           TCon_start=290.15,
           TEva_start=281.15,
           redeclare model PerDataMainHP =
