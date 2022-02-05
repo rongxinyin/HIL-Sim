@@ -1,4 +1,4 @@
-﻿within hil_flexlab_model;
+within hil_flexlab_model;
 package Fluid "Package with models for fluid flow systems"
   package HeatPump "Package with model for heat pump"
     model HeatPump
@@ -574,6 +574,291 @@ package Fluid "Package with models for fluid flow systems"
 </html>"),__Dymola_Commands(file="Modelica://AixLib/Resources/Scripts/Dymola/Fluid/HeatPumps/Examples/HeatPump.mos" "Simulate and plot"),
           Icon(coordinateSystem(extent={{-100,-100},{100,80}})));
       end HeatPump;
+
+      model HeatPumpInRTU
+        "Example for the reversible heat pump model with ports to connect to other RTU components"
+       extends Modelica.Icons.Example;
+
+        replaceable package Medium_sin = Buildings.Media.Air
+          constrainedby Modelica.Media.Interfaces.PartialMedium annotation (choicesAllMatching=true);
+        replaceable package Medium_sou = Buildings.Media.Air
+          constrainedby Modelica.Media.Interfaces.PartialMedium annotation (choicesAllMatching=true);
+        Buildings.Fluid.Sources.MassFlowSource_T             sourceSideMassFlowSource(
+          use_T_in=true,
+          m_flow=1,
+          nPorts=1,
+          redeclare package Medium = Medium_sou,
+          T=275.15) "Ideal mass flow source at the inlet of the source side"
+                    annotation (Placement(transformation(extent={{-62,-74},{-42,
+                  -54}})));
+
+        Buildings.Fluid.Sources.Boundary_pT               sourceSideFixedBoundary(
+                                                                               nPorts=
+             1, redeclare package Medium = Medium_sou)
+                "Fixed boundary at the outlet of the source side"
+                annotation (Placement(transformation(extent={{-11,11},{11,-11}},
+              rotation=0,
+              origin={-53,-31})));
+        hil_flexlab_model.Fluid.HeatPump.HeatPump heatPump(
+          Q_useNominal=6535,
+          refIneFre_constant=0.001,
+          nthOrder=3,
+          useBusConnectorOnly=true,
+          CEva=100,
+          GEvaOut=5,
+          CCon=100,
+          GConOut=5,
+          dpEva_nominal=0,
+          dpCon_nominal=0,
+          VCon=0.4,
+          use_conCap=false,
+          redeclare package Medium_con = Medium_sin,
+          redeclare package Medium_eva = Medium_sou,
+          use_refIne=true,
+          use_rev=false,
+          TCon_start=290.15,
+          TEva_start=281.15,
+          redeclare model PerDataMainHP =
+              AixLib.DataBase.HeatPump.PerformanceData.LookUpTable2D (dataTable=
+                 hil_flexlab_model.Fluid.HeatPump.PerformanceData.RongxinSampleHP()),
+          redeclare model PerDataRevHP =
+              AixLib.DataBase.Chiller.PerformanceData.LookUpTable2D (smoothness=
+                 Modelica.Blocks.Types.Smoothness.LinearSegments, dataTable=
+                  AixLib.DataBase.Chiller.EN14511.Vitocal200AWO201()),
+          VEva=0.04,
+          use_evaCap=false,
+          scalingFactor=1,
+          energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
+          mFlow_conNominal=0.5,
+          mFlow_evaNominal=0.5,
+          use_autoCalc=false,
+          TAmbEva_nominal=273.15,
+          TAmbCon_nominal=288.15)
+                             annotation (Placement(transformation(
+              extent={{-24,-29},{24,29}},
+              rotation=0,
+              origin={2,-15})));
+
+        Modelica.Blocks.Sources.BooleanConstant booleanConstant
+          annotation (Placement(transformation(extent={{-6,-6},{6,6}},
+              rotation=0,
+              origin={-52,64})));
+
+        Buildings.Fluid.Sensors.TemperatureTwoPort
+                                                senTAct(
+          final m_flow_nominal=heatPump.m1_flow_nominal,
+          final tau=1,
+          final initType=Modelica.Blocks.Types.Init.InitialState,
+          final tauHeaTra=1200,
+          final allowFlowReversal=heatPump.allowFlowReversalCon,
+          final transferHeat=false,
+          redeclare final package Medium = Medium_sin,
+          final T_start=303.15,
+          final TAmb=291.15) "Temperature at sink inlet" annotation (Placement(
+              transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=0,
+              origin={60,0})));
+
+        Modelica.Blocks.Sources.Constant iceFac(final k=1)
+          "Fixed value for icing factor. 1 means no icing/frosting (full heat transfer in heat exchanger)"
+                                                                                                           annotation (Placement(
+              transformation(
+              extent={{8,8},{-8,-8}},
+              rotation=180,
+              origin={-60,20})));
+        AixLib.Controls.Interfaces.VapourCompressionMachineControlBus sigBus1
+          annotation (Placement(transformation(extent={{-36,16},{-6,50}}),
+              iconTransformation(extent={{-24,24},{-6,50}})));
+        Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(
+          tableOnFile=true,
+          tableName="tab1",
+          fileName=ModelicaServices.ExternalReferences.loadResource(
+              "modelica://hil_flexlab_model/Data/2021-03-09_HP_Filtered.txt"),
+          columns=6:14,
+          timeScale=60) annotation (Placement(transformation(extent={{-156,-92},
+                  {-136,-72}})));
+
+        Modelica.Blocks.Interfaces.RealOutput P(quantity="Power", unit="W")
+          "Electrical power consumed by the unit"
+          annotation (Placement(transformation(extent={{100,70},{120,90}})));
+        Modelica.Blocks.Interfaces.RealInput TEvaIn(unit="K", displayUnit=
+              "degC") "Outside air dry bulb temperature"
+          annotation (Placement(transformation(extent={{-120,-90},{-100,-70}})));
+        Modelica.Blocks.Interfaces.RealInput sta "Heating stage" annotation (
+            Placement(transformation(extent={{-120,70},{-100,90}}),
+              iconTransformation(extent={{-120,70},{-100,90}})));
+        Modelica.Blocks.Math.Gain gain(k=0.5)
+          annotation (Placement(transformation(extent={{-90,36},{-70,56}})));
+        Buildings.Fluid.Sources.Boundary_pT sinkSideFixedInlet(nPorts=1,
+            redeclare package Medium = Medium_sin)
+          "Fixed boundary at the inlet of the sink side" annotation (Placement(
+              transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=0,
+              origin={-152,0})));
+        Buildings.Fluid.Movers.FlowControlled_m_flow fanSup(
+          m_flow_nominal=0.2,
+          addPowerToMedium=false,
+          nominalValuesDefineDefaultPressureCurve=true,
+          dp_nominal=600,
+          per(use_powerCharacteristic=false),
+          energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
+          use_inputFilter=true,
+          redeclare package Medium = Medium_sin)
+                                              "Supply fan"
+          annotation (Placement(transformation(extent={{-134,10},{-114,-10}})));
+        Buildings.Controls.OBC.UnitConversions.From_cfm from_cfm annotation (
+            Placement(transformation(extent={{-152,-62},{-132,-42}})));
+        Modelica.Blocks.Sources.Constant den(final k=1.23)
+          "Fixed density of air" annotation (Placement(transformation(
+              extent={{8,8},{-8,-8}},
+              rotation=180,
+              origin={-144,-24})));
+        Modelica.Blocks.Math.Product m3s_kgs annotation (Placement(
+              transformation(extent={{-120,-50},{-100,-30}})));
+        Modelica.Blocks.Sources.Pulse    staTest(
+          amplitude=1,
+          width=60,
+          period=300,
+          nperiod=10,
+          offset=1,
+          startTime=0) "Pulse stage setpoint between 1 and 2"                                              annotation (Placement(
+              transformation(
+              extent={{8,8},{-8,-8}},
+              rotation=180,
+              origin={-132,60})));
+        Buildings.Fluid.Sources.Boundary_pT sinkSideFixedOutlet(redeclare
+            package Medium = Medium_sin, nPorts=1)
+          "Fixed boundary at the outlet of the sink side" annotation (Placement(
+              transformation(
+              extent={{10,-10},{-10,10}},
+              rotation=0,
+              origin={130,0})));
+        Modelica.Thermal.HeatTransfer.Fahrenheit.ToKelvin outsideTemptoKelvin
+          annotation (Placement(transformation(extent={{-96,-70},{-76,-50}})));
+        Modelica.Blocks.Interfaces.RealOutput TSup(quantity=
+              "ThermodynamicTemperature", unit="K")
+          "Electrical power consumed by the unit"
+          annotation (Placement(transformation(extent={{100,50},{120,70}})));
+        Modelica.Fluid.Interfaces.FluidPort_a port_a(redeclare package Medium
+            = Medium_sin)
+          annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
+        Modelica.Fluid.Interfaces.FluidPort_b port_b(redeclare package Medium
+            = Medium_sin)
+          annotation (Placement(transformation(extent={{90,-10},{110,10}})));
+      equation
+
+        connect(sourceSideMassFlowSource.ports[1], heatPump.port_a2) annotation (Line(
+              points={{-42,-64},{26,-64},{26,-29.5}},             color={0,127,255}));
+        connect(heatPump.port_b2, sourceSideFixedBoundary.ports[1]) annotation (Line(
+              points={{-22,-29.5},{-22,-30},{-42,-30},{-42,-31}},
+                                                            color={0,127,255}));
+        connect(heatPump.port_b1, senTAct.port_a) annotation (Line(points={{26,-0.5},
+                {30,-0.5},{30,0},{50,0}},    color={0,127,255}));
+        connect(booleanConstant.y, sigBus1.modeSet) annotation (Line(points={{-45.4,
+                64},{-22,64},{-22,33.085},{-20.925,33.085}},        color={255,
+                0,255}), Text(
+            string="%second",
+            index=1,
+            extent={{-6,3},{-6,3}},
+            horizontalAlignment=TextAlignment.Right));
+        connect(iceFac.y, sigBus1.iceFacMea) annotation (Line(points={{-51.2,20},
+                {-24,20},{-24,32},{-22,32},{-22,33.085},{-20.925,33.085}},
+                                                    color={0,0,127}), Text(
+            string="%second",
+            index=1,
+            extent={{6,3},{6,3}},
+            horizontalAlignment=TextAlignment.Left));
+        connect(sigBus1, heatPump.sigBus) annotation (Line(
+            points={{-21,33},{-21,16},{-30,16},{-30,-24.425},{-21.76,-24.425}},
+            color={255,204,51},
+            thickness=0.5), Text(
+            string="%first",
+            index=-1,
+            extent={{-6,3},{-6,3}},
+            horizontalAlignment=TextAlignment.Right));
+        connect(sigBus1.PelMea, P) annotation (Line(
+            points={{-20.925,33.085},{-4,33.085},{-4,80},{110,80}},
+            color={255,204,51},
+            thickness=0.5), Text(
+            string="%first",
+            index=-1,
+            extent={{-6,3},{-6,3}},
+            horizontalAlignment=TextAlignment.Right));
+        connect(gain.y, sigBus1.nSet) annotation (Line(points={{-69,46},{-46,46},
+                {-46,33.085},{-20.925,33.085}}, color={0,0,127}), Text(
+            string="%second",
+            index=1,
+            extent={{6,3},{6,3}},
+            horizontalAlignment=TextAlignment.Left));
+        connect(sinkSideFixedInlet.ports[1], fanSup.port_a)
+          annotation (Line(points={{-142,0},{-134,0}}, color={0,127,255}));
+        connect(m3s_kgs.y, fanSup.m_flow_in) annotation (Line(points={{-99,-40},
+                {-88,-40},{-88,-20},{-124,-20},{-124,-12}}, color={0,0,127}));
+        connect(from_cfm.y, m3s_kgs.u2) annotation (Line(points={{-130,-52},{
+                -128,-52},{-128,-46},{-122,-46}}, color={0,0,127}));
+        connect(m3s_kgs.u1, den.y) annotation (Line(points={{-122,-34},{-128,
+                -34},{-128,-24},{-135.2,-24}}, color={0,0,127}));
+        connect(staTest.y, gain.u) annotation (Line(points={{-123.2,60},{-108,
+                60},{-108,46},{-92,46}}, color={0,0,127}));
+        connect(outsideTemptoKelvin.Kelvin, sourceSideMassFlowSource.T_in)
+          annotation (Line(points={{-75,-60},{-64,-60}}, color={0,0,127}));
+        connect(combiTimeTable.y[4], outsideTemptoKelvin.Fahrenheit)
+          annotation (Line(points={{-135,-82},{-120,-82},{-120,-60},{-98,-60}},
+              color={0,0,127}));
+        connect(from_cfm.u, combiTimeTable.y[5]) annotation (Line(points={{-154,
+                -52},{-164,-52},{-164,-100},{-120,-100},{-120,-82},{-135,-82}},
+              color={0,0,127}));
+        connect(senTAct.T, TSup) annotation (Line(points={{60,11},{60,60},{110,
+                60}}, color={0,0,127}));
+        connect(fanSup.port_b, port_a)
+          annotation (Line(points={{-114,0},{-100,0}}, color={0,127,255}));
+        connect(port_a, heatPump.port_a1) annotation (Line(points={{-100,0},{
+                -62,0},{-62,-0.5},{-22,-0.5}}, color={0,127,255}));
+        connect(senTAct.port_b, port_b)
+          annotation (Line(points={{70,0},{100,0}}, color={0,127,255}));
+        connect(port_b, sinkSideFixedOutlet.ports[1])
+          annotation (Line(points={{100,0},{120,0}}, color={0,127,255}));
+        annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
+                  -100},{100,100}})),
+          experiment(
+            StopTime=10800,
+            Interval=60,
+            Tolerance=1e-06),
+      __Dymola_Commands(file="modelica://AixLib/Resources/Scripts/Dymola/Fluid/HeatPumps/Examples/HeatPump.mos"
+              "Simulate and plot"),
+          Documentation(info="<html><h4>
+  <span style=\"color: #008000\">Overview</span>
+</h4>
+<p>
+  Simple test set-up for the HeatPumpDetailed model. The heat pump is
+  turned on and off while the source temperature increases linearly.
+  Outputs are the electric power consumption of the heat pump and the
+  supply temperature.
+</p>
+<p>
+  Besides using the default simple table data, the user should also
+  test tabulated data from <a href=
+  \"modelica://AixLib.DataBase.HeatPump\">AixLib.DataBase.HeatPump</a> or
+  polynomial functions.
+</p>
+</html>",   revisions="<html><ul>
+  <li>
+    <i>May 22, 2019</i> by Julian Matthes:<br/>
+    Rebuild due to the introducion of the thermal machine partial model
+    (see issue <a href=
+    \"https://github.com/RWTH-EBC/AixLib/issues/715\">#715</a>)
+  </li>
+  <li>
+    <i>November 26, 2018&#160;</i> by Fabian Wüllhorst:<br/>
+    First implementation (see issue <a href=
+    \"https://github.com/RWTH-EBC/AixLib/issues/577\">#577</a>)
+  </li>
+</ul>
+</html>"),__Dymola_Commands(file="Modelica://AixLib/Resources/Scripts/Dymola/Fluid/HeatPumps/Examples/HeatPump.mos" "Simulate and plot"),
+          Icon(coordinateSystem(extent={{-100,-100},{100,80}})));
+      end HeatPumpInRTU;
     end Examples;
 
     package PerformanceData
