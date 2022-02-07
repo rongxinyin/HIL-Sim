@@ -3,7 +3,7 @@ model XRA_Baseline_AE_131
   "Variable air volume flow system with terminal reheat - flexlab baseline, no leakage"
   extends Modelica.Icons.Example;
 
-  hil_flexlab_model.HeatHeatpumpCoolHeatpumpAuxHea_noIEC_2stage rtu(
+  hil_flexlab_model.Fluid.HeatHeatpumpCoolHeatpumpAuxHea_noIEC_2stage rtu(
     mAir_flow_nominal=casDat.mAir_flow_nominal,
     mAir_flow_minOA=casDat.minOAFlo,
     QHea_flow_nominal=casDat.QHea_flow_nominal,
@@ -33,7 +33,7 @@ model XRA_Baseline_AE_131
   Buildings.BoundaryConditions.WeatherData.Bus
                                      weaBus "Weather data bus"
     annotation (Placement(transformation(extent={{-194,280},{-174,300}})));
-  ThermalZones.FlexlabXRA flexlabXRA(lat=weaDat.lat)
+  hil_flexlab_model.ThermalZones.FlexlabXRaNorth flexlabXRA(lat=weaDat.lat)
     annotation (Placement(transformation(extent={{736,-334},{1376,352}})));
   Modelica.Blocks.Sources.CombiTimeTable TSetRooHea(table=[0*3600,15.6 + 273.15;
         5*3600,15.6 + 273.15; 5*3600,17.8 + 273.15; 6*3600,17.8 + 273.15; 6*

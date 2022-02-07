@@ -5,7 +5,7 @@ model XRA_Baseline_AE_126
     extends hil_flexlab_model.BaseClasses.partialInterface_noPV(totPowHVAC(nu=1),
       roo(nPorts=4));
 
-  hil_flexlab_model.HeatHeatpumpCoolHeatpumpAuxHea_noIEC rtu(
+  hil_flexlab_model.Fluid.HeatHeatpumpCoolHeatpumpAuxHea_noIEC rtu(
     mAir_flow_nominal=casDat.mAir_flow_nominal,
     mAir_flow_minOA=casDat.minOAFlo,
     QHea_flow_nominal=casDat.QHea_flow_nominal,

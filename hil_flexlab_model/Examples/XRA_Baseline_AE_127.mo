@@ -3,7 +3,7 @@ model XRA_Baseline_AE_127
   "Variable air volume flow system with terminal reheat - flexlab baseline, no leakage"
   extends Modelica.Icons.Example;
 
-  hil_flexlab_model.HeatHeatpumpCoolHeatpumpAuxHea_noIEC rtu(
+  hil_flexlab_model.Fluid.HeatHeatpumpCoolHeatpumpAuxHea_noIEC rtu(
     mAir_flow_nominal=casDat.mAir_flow_nominal,
     mAir_flow_minOA=casDat.minOAFlo,
     QHea_flow_nominal=casDat.QHea_flow_nominal,
