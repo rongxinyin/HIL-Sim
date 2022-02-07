@@ -1,0 +1,12 @@
+[Unit]
+Description=Collect data from real chiller
+Wants=postgres.service
+
+[Service]
+WorkingDirectory=/home/chiller/HIL-Sim/flexlab/drivers
+Environment=PYTHONPATH=/home/chiller/HIL-Sim:$PYTHONPATH
+ExecStart=/usr/bin/python3 primary_chiller.py
+User=chiller
+
+[Install]
+WantedBy=multi-user.target

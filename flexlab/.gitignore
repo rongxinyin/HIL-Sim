@@ -2,3 +2,4 @@
 !drivers/controls/flexlab_control_config_template.yaml
 !db_layer/db_interface_config_template.yaml
 !testing/battery_fmu/battery_config_template.yaml
+!*/*/*_template.yaml

@@ -1,0 +1,12 @@
+[Unit]
+Description=Generate alerts for missing data
+Wants=postgres.service
+
+[Service]
+WorkingDirectory=/home/btmdrl/HIL-Sim/data
+Environment=PYTHONPATH=/home/chiller/HIL-Sim:$PYTHONPATH
+ExecStart=/home/btmdrl/anaconda3/bin/python alerts.py
+User=btmdrl
+
+[Install]
+WantedBy=multi-user.target

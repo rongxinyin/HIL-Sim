@@ -10,7 +10,7 @@ class Weather(Driver):
         try:
             super(Weather, self).__init__(config_file=config_file)
         except Exception as e:
-            self.logger.error("error reading config file={0} error={1}",format(config_file, str(e)))
+            self.logger.error("error reading config file={0} error={1}".format(config_file, str(e)))
 
         self.weather_config = self.config.get('weather')
         self.api_config = self.weather_config .get('api')

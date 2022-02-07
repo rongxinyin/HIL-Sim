@@ -7,74 +7,476 @@ database:
 
 cell_data:
   api:
-    flex_user: x2ab_all
+    flex_user: x1ab_all
     flex_password:
-    flexq_login: queryx2
-  boiler:
-    db_table_name: boiler_test
+    flexq_login: queryx1
+    smap_url:
+  cell_hvac_1a:
+    db_table_name: cell_hvac_1a
     cws_point_map:
-      2-B-ADJ-ENABLE: x2_boiler_sp_C
-      2-HWRT-1: x2_hw_ret_temp_C
-      2-HWST-1: x2_hw_sup_temp_C
+        1A-MAT-1: 1A-MAT-1
+        1A-SAT-1: 1A-SAT-1
+        1A-RAT-1: 1A-RAT-1
+        1A-AHU-CV1-CNTRL: 1A-AHU-CV1-CNTRL
+        1A-AHU-CV1-POSN: 1A-AHU-CV1-POSN
+        1A-AHU-CV2-CNTRL: 1A-AHU-CV2-CNTRL
+        1A-AHU-CV2-POSN: 1A-AHU-CV2-POSN
+        1A-AHU-HV1-CNTRL: 1A-AHU-HV1-CNTRL
+        1A-AHU-HV1-POSN: 1A-AHU-HV1-POSN
+        1A-AHU-HV2-CNTRL: 1A-AHU-HV2-CNTRL
+        1A-AHU-HV2-POSN: 1A-AHU-HV2-POSN
+        1A-AHU-VFD-ENABLE: 1A-AHU-VFD-ENABLE
+        1A-AHU-VFD-KW: 1A-AHU-VFD-KW
+        1A-AHU-VFD-SPD-COMMAND: 1A-AHU-VFD-SPD-COMMAND
+        1A-AHU-VFD-STAT: 1A-AHU-VFD-STAT
+        1A-ARAM-1: 1A-ARAM-1
+        1A-ASAM-1: 1A-ASAM-1
+        1A-CHWDPS-2: 1A-CHWDPS-2
+        1A-CHWFM-2: 1A-CHWFM-2
+        1A-CHWMV-CNTRL: 1A-CHWMV-CNTRL
+        1A-CHWMV-POSN: 1A-CHWMV-POSN
+        1A-CHWP-VFD: 1A-CHWP-VFD
+        1A-CHWP-VFD-ENABLE: 1A-CHWP-VFD-ENABLE
+        1A-CHWP-VFD-STAT: 1A-CHWP-VFD-STAT
+        1A-CHWRTS-2: 1A-CHWRTS-2
+        1A-CHWSTS-2: 1A-CHWSTS-2
+        1A-CTSP: 1A-CTSP
+        1A-EADA-1-CNTRL: 1A-EADA-1-CNTRL
+        1A-EADA-1-POSN: 1A-EADA-1-POSN
+        1A-IDBTS-1: 1A-IDBTS-1
+        1A-IDBTS-2: 1A-IDBTS-2
+        1A-OADA-1-CNTRL: 1A-OADA-1-CNTRL
+        1A-OADA-1-POSN: 1A-OADA-1-POSN
+        1A-RADA-1-CNTRL: 1A-RADA-1-CNTRL
+        1A-RADA-1-POSN: 1A-RADA-1-POSN
+        1B-OAT-1: 1A-OAT-1
+        1A-FILDPS-1: 1A-FILDPS-1
 
-emulated_battery:
-  url:
-  db_table_name:
-  point_map:
-    real_power_setpoint: real_power_setpoint
-    battery_soc: battery_soc
+  cell_hvac_1b:
+    db_table_name: cell_hvac_1b
+    cws_point_map:
+        1B-MAT-1: 1B-MAT-1
+        1B-SAT-1: 1B-SAT-1
+        1B-RAT-1: 1B-RAT-1
+        1B-AHU-CV1-CNTRL: 1B-AHU-CV1-CNTRL
+        1B-AHU-CV1-POSN: 1B-AHU-CV1-POSN
+        1B-AHU-CV2-CNTRL: 1B-AHU-CV2-CNTRL
+        1B-AHU-CV2-POSN: 1B-AHU-CV2-POSN
+        1B-AHU-HV1-CNTRL: 1B-AHU-HV1-CNTRL
+        1B-AHU-HV1-POSN: 1B-AHU-HV1-POSN
+        1B-AHU-HV2-CNTRL: 1B-AHU-HV2-CNTRL
+        1B-AHU-HV2-POSN: 1B-AHU-HV2-POSN
+        1B-AHU-VFD-ENABLE: 1B-AHU-VFD-ENABLE
+        1B-AHU-VFD-KW: 1B-AHU-VFD-KW
+        1B-AHU-VFD-SPD-COMMAND: 1B-AHU-VFD-SPD-COMMAND
+        1B-AHU-VFD-STAT: 1B-AHU-VFD-STAT
+        1B-ARAM-1: 1B-ARAM-1
+        1B-ASAM-1: 1B-ASAM-1
+        1B-ARAM-T: 1B-ARAM-T
+        1B-CHWDPS-2: 1B-CHWDPS-2
+        1B-CHWFM-2: 1B-CHWFM-2
+        1B-CHWMV-CNTRL: 1B-CHWMV-CNTRL
+        1B-CHWMV-POSN: 1B-CHWMV-POSN
+        1B-CHWP-VFD: 1B-CHWP-VFD
+        1B-CHWP-VFD-ENABLE: 1B-CHWP-VFD-ENABLE
+        1B-CHWP-VFD-SPD-COMMAND: 1B-CHWP-VFD-SPD-COMMAND
+        1B-CHWP-VFD-STAT: 1B-CHWP-VFD-STAT
+        1B-CHWRTS-2: 1B-CHWRTS-2
+        1B-CHWSTS-2: 1B-CHWSTS-2
+        1B-CTSP: 1B-CTSP
+        1B-CoolingSP: 1B-CoolingSP
+        1B-EADA-1-CNTRL: 1B-EADA-1-CNTRL
+        1B-EADA-1-POSN: 1B-EADA-1-POSN
+        1B-FILDPS-1: 1B-FILDPS-1
+        1B-IDBTS-1: 1B-IDBTS-1
+        1B-IDBTS-2: 1B-IDBTS-2
+        1B-INSlabTS: 1B-INSlabTS
+        1B-INSlabTS-S: 1B-INSlabTS-S
+        1B-M-CV1-CMD: 1B-M-CV1-CMD
+        1B-M-CV1-POSN: 1B-M-CV1-POSN
+        1B-M-CV2-CNTRL: 1B-M-CV2-CNTRL
+        1B-M-CV2-POSN: 1B-M-CV2-POSN
+        1B-M-HV1-CMD: 1B-M-HV1-CMD
+        1B-M-HV1-POSN: 1B-M-HV1-POSN
+        1B-M-HV2-CNTRL: 1B-M-HV2-CNTRL
+        1B-M-HV2-POSN: 1B-M-HV2-POSN
+        1B-OADA-1-CNTRL: 1B-OADA-1-CNTRL
+        1B-OADA-1-POSN: 1B-OADA-1-POSN
+        1B-RADA-1-CNTRL: 1B-RADA-1-CNTRL
+        1B-RADA-1-POSN: 1B-RADA-1-POSN
+        1B-OAT-1: 1B-OAT-1
+        1B-FILDPS-1: 1B-FILDPS-1
 
-#  power:
-#    db_table_name:
-#    power_meter_channels_map:
-#      ra_fan_power_W: [A8, A22, A34]
-#      ra_light_power_W: [A27, A41]
-#      ra_plugload_power_W: [A1, A3, A5, A7, A15, A17, A19, A21, A29, A33, A35]
-#      ra_chwp_power_W: [A30]
-#      ra_hwp_power_W: [A18]
-#
-#      rb_fan_power_W: [A10, A24, A36]
-#      rb_light_power_W: [B18, B25, B26, B32, B39, B40]
-#      rb_plugload_power_W: [B1, B3, B5, B7, B15, B17, B19, B21, B29, B33, B35]
-#      rb_chwp_power_W: [A4]
-#      rb_hwp_power_W: [A32]
+  processed_cell_1a:
+    db_table_name: processed_cell_1a
+    point_uuid_map:
+        4817a088-b3c0-4f55-bc0b-6b38391f3503: "1A-El-AHU"
+        710eb2ae-656d-11e6-8b77-86f30ca893d3: "1A-El-AHU_15min"
+        7f772876-656d-11e6-8b77-86f30ca893d3: "1A-El-AHU_energy"
+        ef1ecfb6-de46-442c-8336-48d44743281a: "1A-El-CHWP"
+        ecc1db71-594d-4e40-9500-78b2eabed921: "1A-El-Exhaust Fan"
+        44b899ea-7ed0-48f3-ac1a-2248585ddb38: "1A-El-HWP"
+        3a70061d-aab2-4ed8-a234-c42f79a6923c: "1A-El-Light"
+        710ebf92-656d-11e6-8b77-86f30ca893d3: "1A-El-Light_15min"
+        7f772fc4-656d-11e6-8b77-86f30ca893d3: "1A-El-Light_energy"
+        74c4e368-cb22-40ce-8504-36c598f0f109: "1A-El-Power Outlets"
+        710ebcea-656d-11e6-8b77-86f30ca893d3: "1A-El-Power Outlets_15min"
+        7f772e66-656d-11e6-8b77-86f30ca893d3: "1A-El-Power Outlets_energy"
+        11d83f60-7d35-4c6e-94d8-e93be523069c: "1A-El-Shade"
+        fd036051-155e-486a-9b7b-5da9d2f1409d: "1A-RoomT"
+        b234cce7-0849-413d-913a-4f5a3d81b4af: "1A-SlabT"
+        920c8859-45b9-476f-9adc-2ede5519b32f: "1A-Th-Airflow"
+        954b56e2-231c-41da-ad14-5e0eb8b5086b: "1A-Th-Airflow_15min"
+        0b543c9f-ad95-4977-bb32-e3f7ff5be6c7: "1A-Th-Airflow_RAT"
+        fc6a16dd-410d-4d41-a2d2-16dc61adc4f1: "1A-Th-Airflow_energy"
+        05b7f249-ecda-451c-a404-89913d207d9a: "1A-Th-Chilled Water"
+        710ead18-656d-11e6-8b77-86f30ca893d3: "1A-Th-Chilled Water_15min"
+        7f772312-656d-11e6-8b77-86f30ca893d3: "1A-Th-Chilled Water_energy"
+        67edcd66-83e8-4149-b4b7-7c83adef74d4: "1A-Th-Envelope"
+        aed1f02c-89dd-4549-934e-d3041d4800a4: "1A-Th-Envelope_15min"
+        e4fab407-8d54-4b9b-b172-9bf4e35908cd: "1A-Th-Envelope_energy"
+        5b2d8062-05c5-4623-b000-49ff4d37484f: "1A-Th-Hot Water"
+        710eb06a-656d-11e6-8b77-86f30ca893d3: "1A-Th-Hot Water_15min"
+        7f77259c-656d-11e6-8b77-86f30ca893d3: "1A-Th-Hot Water_energy"
+        89b773de-43db-4004-a30f-e5ea43e06b68: "1A-Th-TotalHVAC"
+        f3caa7f9-104a-4406-b2f6-52964c1f42c7: "1A-Th-TotalHVAC_15min"
+        859295c1-1c0c-447d-828f-bac6194c249b: "1A-Th-TotalHVAC_energy"
 
-#    power_thermal_channels_map:
-#      ra_chw_th_load_W:
-#        RA-CHWFM-2: ra_chw_flow
-#        RA-CHWSTS-2: ra_chw_sup_temp
-#        RA-CHWRTS-2: ra_chw_ret_temp
-#      ra_hw_th_load_W:
-#        RA-HWFM-2: ra_hw_flow
-#        RA-HWSTS-2: ra_hw_sup_temp
-#        RA-HWRTS-2: ra_hw_ret_temp
-#      ra_hvac_th_load_W:
-#        hw_load: ra_chw_th_load_W
-#        chw_load: ra_chw_th_load_W
-#        ahu_load: ra_fan_power_W
-#
-#      rb_chw_th_load_W:
-#        RB-CHWFM-2: rb_chw_flow
-#        RB-CHWSTS-2: rb_chw_sup_temp
-#        RB-CHWRTS-2: rb_chw_ret_temp
-#      rb_hw_th_load_W:
-#        RB-HWFM-2: rb_hw_flow
-#        RB-HWSTS-2: rb_hw_sup_temp
-#        RB-HWRTS-2: rb_hw_ret_temp
-#      rb_hvac_th_load_W:
-#        hw_load: rb_chw_th_load_W
-#        chw_load: rb_chw_th_load_W
-#        ahu_load: rb_fan_power_W
+
+  processed_cell_1b:
+    db_table_name: processed_cell_1b
+    point_uuid_map:
+        989d7574-8915-4a50-83fc-f7734d54eb1b: "1B-El-AHU"
+        710ebbbe-656d-11e6-8b77-86f30ca893d3: "1B-El-AHU_15min"
+        7f772cea-656d-11e6-8b77-86f30ca893d3: "1B-El-AHU_energy"
+        90041ff7-d592-4d01-9ae9-d39dbdbbe3ca: "1B-El-CHWP"
+        3c7f727e-5e33-4696-bbdf-6ea1110a749e: "1B-El-Exhaust Fan"
+        89e5bded-f85f-413a-8fc1-782488f5b140: "1B-El-HWP"
+        61b7436b-7e6b-4aea-8938-2a4da1efd083: "1B-El-Light"
+        710ec348-656d-11e6-8b77-86f30ca893d3: "1B-El-Light_15min"
+        7f773212-656d-11e6-8b77-86f30ca893d3: "1B-El-Light_energy"
+        14d065c5-b54d-4746-900c-d55e76fa9765: "1B-El-Power Outlets"
+        710ec0be-656d-11e6-8b77-86f30ca893d3: "1B-El-Power Outlets_15min"
+        7f773136-656d-11e6-8b77-86f30ca893d3: "1B-El-Power Outlets_energy"
+        c3c9bc42-035d-465e-b7eb-205a408440c7: "1B-El-Shade"
+        0570ad84-576c-41d3-b53c-007865f92d45: "1B-RoomT"
+        8ab9a73a-8e60-48d0-940f-1ffcc2a86140: "1B-SlabT"
+        6ce81caf-0530-4a3d-a025-47d5025c1607: "1B-Th-Airflow"
+        db4c8aae-946f-411a-92da-b174a8de095c: "1B-Th-Airflow_15min"
+        d33374eb-b8ec-488d-a5af-10039c4ecf1e: "1B-Th-Airflow_RAT"
+        302764e2-8289-488b-9502-aac3c2f0c086: "1B-Th-Airflow_energy"
+        6f73838d-d59e-46e8-89d6-765dcd0f5d5a: "1B-Th-Chilled Water"
+        710eb70e-656d-11e6-8b77-86f30ca893d3: "1B-Th-Chilled Water_15min"
+        7f772a38-656d-11e6-8b77-86f30ca893d3: "1B-Th-Chilled Water_energy"
+        89531588-e2d4-4c99-9680-d2531416350a: "1B-Th-Envelope"
+        8c0ba747-1c3b-4f8e-ad43-afb5d6c4a778: "1B-Th-Envelope_15min"
+        65848c41-49b4-4a76-8781-3a8a34acbbd0: "1B-Th-Envelope_energy"
+        6af65b49-0ef3-4007-88e3-b6fe9530fcd1: "1B-Th-Hot Water"
+        710eba60-656d-11e6-8b77-86f30ca893d3: "1B-Th-Hot Water_15min"
+        7f772b32-656d-11e6-8b77-86f30ca893d3: "1B-Th-Hot Water_energy"
+        64d6e364-668c-4f1a-8c62-8045b03ee132: "1B-Th-TotalHVAC"
+        e2c9ef2f-4416-4377-8470-9edf605f0ddd: "1B-Th-TotalHVAC_15min"
+        0421b286-7606-4569-9390-f7410eca34a6: "1B-Th-TotalHVAC_energy"
+
+  cell_lighting_plug_1a:
+    db_table_name: cell_lighting_plug_1a
+    cws_point_map:
+        P1A-ActivePower20: desk3_light_power
+        P1A-ActivePower31: desk4_light_power
+        P1A-ActivePower25: desk2_light_power
+        P1A-ActivePower26: desk1_6_light_power
+        P1A-ActivePower39: desk5_light_power
+
+        ## need to change below
+        P1A-ActivePower17: desk1_plug_power
+        P1A-ActivePower29: desk2_plug_power
+        P1A-ActivePower1: desk3_plug_power
+        P1A-ActivePower19: desk4_plug_power
+        P1A-ActivePower7: desk5_plug_power
+        P1A-ActivePower35: desk6_plug_power
+
+  cell_lighting_plug_1b:
+    db_table_name: cell_lighting_plug_1b
+    cws_point_map:
+        P1B-ActivePower32: desk3_light_power
+        P1B-ActivePower40: desk1_light_power
+        P1B-ActivePower24: desk5_light_power
+        P1B-ActivePower38: desk2_light_power
+        P1B-ActivePower28: desk6_light_power
+        P1B-ActivePower18: desk4_light_power
+
+        ## need to change below
+        P1B-ActivePower35: desk1_plug_power
+        P1B-ActivePower7: desk2_plug_power
+        P1B-ActivePower33: desk3_plug_power
+        P1B-ActivePower1: desk4_plug_power
+        P1B-ActivePower29: desk5_plug_power
+        P1B-ActivePower17: desk6_plug_power
+
+  cell_vav_1a:
+    db_table_name: cell_vav_1a
+    point_uuid_map:
+        ec784e99-7200-57ac-91fb-16dd825e2e6b: "P1A-ActivePower40"
+        770da78a-ab51-5241-b79b-ffecc9f0586e: "P1A-ActivePower12"
+        64a9bc13-ebe6-54cc-802f-3991fae78565: "P1A-ActivePower28"
+        bec06588-acd0-420d-843d-e424531de2be: "1A-VAV1-DischargeAirflow"
+        6ccaca1f-34fb-481e-a333-5c66c6f50e91: "1A-VAV2-DischargeAirflow"
+        545b11d9-b3f5-4716-85fd-4c000cbe761c: "1A-VAV3-DischargeAirflow"
+        18c62f2a-4b50-4d84-bfd2-2d4936a9fa70: "1A-VAV1-DischargeAirTemp"
+        605ddb29-439a-4b48-a840-e6a77c325676: "1A-VAV3-DischargeAirTemp"
+        479c54d5-22d5-4b58-ac44-5a2fdfe0b57d: "1A-VAV2-DischargeAirTemp"
+        78debb75-d632-43ad-9756-993bc45da095: "1A-VAV1-Zn_Temp"
+        a1a2635f-d067-4d00-a89d-8080a49c6a1d: "1A-VAV2-Zn_Temp"
+        eb13f77a-4b37-4fd8-8f77-6c2daa1fb08b: "1A-VAV3-Zn_Temp"
+        f1b72300-ee2e-4fd9-b898-43cbed87873c: "1A-VAV1-HeatOutput"
+        265ffc81-1379-4467-8e22-fa3cd3018496: "1A-VAV3-HeatOutput"
+        538df274-9032-4dc3-a340-ea57aceaef6f: "1A-VAV2-HeatOutput"
+
+        638c32f3-505c-436e-bdb9-1fa32becb5cf: "1A-VAV1-OccupiedCoolingSetpt"
+        49defb32-73b5-4f3e-a7fc-7fade7c7b1b0: "1A-VAV1-UnoccupiedCoolingSetpt"
+        a6e31696-82aa-42ec-b2fe-4622ede8eaf4: "1A-VAV1-OccupiedHeatingSetpt"
+        28802dfb-2993-40f3-bd1e-b73eea523df1: "1A-VAV1-VAVActuatorPosition"
+        c9837214-661e-4d31-b8ed-df685bd3837d: "1A-VAV1-UnoccupiedHeatingSetpt"
+
+        af7e310c-6de4-4086-aef4-e552892765ea: "1A-VAV2-OccupiedCoolingSetpt"
+        c7e1d71f-f5da-4ab3-bb5f-c64d83e56036: "1A-VAV2-UnoccupiedHeatingSetpt"
+        e777c036-ef9d-48d0-ab1a-8a778a74b269: "1A-VAV2-UnoccupiedCoolingSetpt"
+        8310268e-ed6b-411f-82bb-14c5bbb78c99: "1A-VAV2-OccupiedHeatingSetpt"
+        82862578-b7d2-4adf-9149-5b26904645ed: "1A-VAV2-VAVActuatorPosition"
+
+        708d84a5-2392-4fbe-9f96-be1c5d620e54: "1A-VAV3-OccupiedCoolingSetpt"
+        e209e1d2-d0ab-4e25-befa-ab1876fc3038: "1A-VAV3-VAVActuatorPosition"
+        76d717de-e427-438b-a844-e25d856b14fa: "1A-VAV3-UnoccupiedHeatingSetpt"
+        71e86285-e880-42ec-8cc7-5a61958443e3: "1A-VAV3-UnoccupiedCoolingSetpt"
+        c5fa8d69-6ded-4934-a109-a981b401b417: "1A-VAV3-OccupiedHeatingSetpt"
+        fab8a3c1-126c-4c74-a626-f6406f4c0379: "1A-TR-SAT-R"
+        880cd089-f800-4f9b-871d-d54609a29f44: "1A-TR-SAP-R"
+
+        770da78a-ab51-5241-b79b-ffecc9f0586e: "1A-VAV1-ElecReheat"
+        64a9bc13-ebe6-54cc-802f-3991fae78565: "1A-VAV2-ElecReheat"
+        f516a761-9b1e-5d05-bafe-ceaa800694b6: "1A-VAV3-ElecReheat"
+
+        ff8712db-a22d-41e5-bcae-e543434d7ef1: "1A-SAT-PV"
+        1bbc3754-538b-4f1b-a466-8365b4ff9f25: "1A-SAT-SP"
+        eae8c188-611d-4082-b994-40ca67360fdc: "1A-SAP-SP"
+        ff5899e7-9bab-4514-a3ca-35d7cad8b14c: "1A-SAP-PV"
+
+  cell_vav_1b:
+    db_table_name: cell_vav_1b
+    point_uuid_map:
+        4e415369-34ef-5485-b897-9db22f65f57e: "P1B-ActivePower26"
+        8d062bed-fd33-5143-9272-b0a8860929c7: "P1B-ActivePower36"
+        3f3a5b58-7a99-5122-92e9-3285bb5d608d: "P1B-ActivePower42"
+        dd2dd999-c293-452e-9d34-3cca50c9182b: "1B-VAV1-DischargeAirflow"
+        59cefffd-db13-42aa-9545-a5c36a92921d: "1B-VAV2-DischargeAirflow"
+        15c97a99-c8ce-4759-87a0-805aff27776c: "1B-VAV3-DischargeAirflow"
+        314397b3-d3dd-4ea8-b26b-3e1ab6a36758: "1B-VAV1-DischargeAirTemp"
+        6b5afccb-5912-42ec-ba29-d88e6a736c10: "1B-VAV3-DischargeAirTemp"
+        440ff965-8bb9-42b9-a26b-4ff432af5763: "1B-VAV2-DischargeAirTemp"
+        e872239d-232b-4d94-863a-128950001de9: "1B-VAV1-Zn_Temp"
+        c1102d81-2063-4f4f-be38-21f5a889c03b: "1B-VAV2-Zn_Temp"
+        cfd8d363-72f5-46b8-bb0b-fc82ba994a77: "1B-VAV3-Zn_Temp"
+        3abd0523-acea-40c8-ad70-abefcfe006ad: "1B-VAV1-HeatOutput"
+        0fd59d46-1331-4737-a2a7-0839aa25e3fb: "1B-VAV2-HeatOutput"
+        102b6db5-1f2f-4b43-8ac4-f0f1f1167708: "1B-VAV3-HeatOutput"
+
+        540e45c9-1ec6-4960-8ada-c38560db62a2: "1B-VAV1-OccupiedCoolingSetpt"
+        4904a6a4-c4ea-47ef-8dd2-c50638021f36: "1B-VAV1-UnoccupiedHeatingSetpt"
+        93af9873-b487-4fff-a6bb-538d139dcf0e: "1B-VAV1-OccupiedHeatingSetpt"
+        2ad24b64-4f8b-42fc-b272-0cceeb2c6fa3: "1B-VAV1-VAVActuatorPosition"
+        0e1a52e8-c5f3-44da-8f5d-2284aa379bbf: "1B-VAV1-UnoccupiedCoolingSetpt"
+        4434f80c-242d-4da0-9f3c-d32fe232ca64: "1B-VAV2-OccupiedCoolingSetpt"
+        82637ed5-3ef0-4664-a23d-2c65b4afe1b0: "1B-VAV2-OccupiedHeatingSetpt"
+        d5041c00-47d8-4253-b79f-1f45d4f8772c: "1B-VAV2-UnoccupiedHeatingSetpt"
+        64bf8e65-7325-49c1-a147-2ac89bdcf08c: "1B-VAV2-UnoccupiedCoolingSetpt"
+        6f108663-69c6-49e5-88f7-bd1416346cdd: "1B-VAV2-VAVActuatorPosition"
+        233ba72f-a9e9-46b4-a5d7-a2139a10eb02: "1B-VAV3-OccupiedHeatingSetpt"
+        b2eda4c7-e094-47dc-bbf8-c035322c7dfa: "1B-VAV3-OccupiedCoolingSetpt"
+        b58d3bc9-d537-4544-bcad-0cab0ea272d2: "1B-VAV3-UnoccupiedCoolingSetpt"
+        fc11f915-1364-4616-b792-f83127ce30ed: "1B-VAV3-UnoccupiedHeatingSetpt"
+        ca3f0f5d-0afa-4b40-a5fa-95a23d4b9c9d: "1B-VAV3-VAVActuatorPosition"
+        76aba656-030d-42b7-8c7d-ffcd1c2999ec: "1B-TR-SAT-R"
+        981e2e1e-2e3e-47fb-b052-1e93be397536: "1B-TR-SAP-R"
+
+        75d614f9-7e98-583d-ae23-361df1d95926: "1B-VAV3-ElecReheat"
+        3f3a5b58-7a99-5122-92e9-3285bb5d608d: "1B-VAV2-ElecReheat"
+        092a9057-b86c-5edb-b54d-778dfa6534d1: "1B-VAV1-ElecReheat"
+
+        525b9f48-4d91-4c2a-bc7e-49ce080fd95e: "1B-SAT-PV"
+        d0670138-fc1e-4ef1-bdfe-c130adb97c0a: "1B-SAT-SP"
+        34393c41-821e-4fd4-97eb-8e86ea384979: "1B-SAP-PV"
+        6aafb216-fefd-4024-bc7c-ec95eebf3cb5: "1B-SAP-SP"
+
+
+  cell_thermalstation_1ab:
+    db_table_name: cell_thermalstation_1ab
+    point_uuid_map:
+        6ffa506e-0ffd-4dd1-beb1-d0390b040097: "1A-MidZone-TCS6-DBT"
+        a3ed7fb5-4a9d-40da-9f4f-0519c4ff8a7c: "1A-MidZone-TCS6-MRT"
+        756b0599-a63b-46fb-b31e-fefdfcb139dd: "1A-MidZone-TCS6-RH"
+        57b75bd4-3bb6-401c-800d-91dc3c8a5334: "1A-MidZone-TCS6-VEL"
+        ab9aefc8-9dfc-4d61-a050-6842d2b78f81: "1A-WindowZone-TCS7-DBT"
+        3686b407-637b-4637-a38f-09d83b0e7278: "1A-WindowZone-TCS7-MRT"
+        e002734b-67ea-49f1-998d-3ffe0c12444e: "1A-WindowZone-TCS7-RH"
+        b6c47076-3fbf-41ff-adf1-582c81900c79: "1A-WindowZone-TCS7-VEL"
+        eac46e4e-bcb7-5734-8826-fd7f42e6f42f: "1A-NorthZone-DBT"
+        83cbecf3-1529-5c56-8e7f-f33d2394b7ea: "1A-NorthZone-MRT"
+
+        f6731c2e-c2d1-46fa-9a03-068e7e8ddfd6: "1B-MidZone-TCS9-DBT"
+        8fd4ab04-47a8-4a86-a509-9c24e23c71a1: "1B-MidZone-TCS9-MRT"
+        285d7cae-8274-4e9e-8ca1-88b241542803: "1B-MidZone-TCS9-RH"
+        f519ddf0-3f00-4b20-bd74-62b7b89a8c1b: "1B-MidZone-TCS9-VEL"
+        3220d0cb-ef2f-4c33-a0c7-6b2a5f462c94: "1B-WindowZone-TCS10-DBT"
+        a5dfaab1-40eb-4178-b7e1-9f0adbf91297: "1B-WindowZone-TCS10-MRT"
+        8a658fdf-2ed5-449a-8d0b-5e603da84663: "1B-WindowZone-TCS10-RH"
+        40d404fb-acdf-433c-9f98-3f623ca94e4b: "1B-WindowZone-TCS10-VEL"
+        64bed69f-a676-5c50-b5ad-c4f6de3c3ce5: "1B-NorthZone-DBT"
+        34c9ffeb-87d5-5f3a-a606-bdab0128bc63: "1B-NorthZone-MRT"
+
+  weather_station:
+    db_table_name: weather_station
+    point_uuid_map:
+        74581e16-e0d3-5978-9cde-291d871eb84a: "WindDir"
+        06fbbb96-352d-50c7-892a-18e8e4660a6a: "WindSpd"
+        16bc302e-5e5b-5648-85e6-74c7f058285d: "OAT2"
+        d2b8263c-6c2d-59e1-8318-ccc720696f66: "OAT3"
+        e535575d-7d0b-5af1-8e6f-1a8005c57f31: "RH"
+        ab2d6214-be21-46d5-9ded-e9bdcdc3fbbe: "DHI"
+        951d45f8-d026-4bfc-b40c-65118ad06e98: "GHI"
+        78911b05-8a52-4e7e-8d50-07165372ae4f: "DNITemp"
+        720b8a03-6cfb-47b4-a023-1fc7043cbb1d: "DNI"
+        e5a2a073-ef96-477c-b29a-fe5113588324: "GHITemp"
+        c0a04203-4950-5682-bbaa-8588ce1ddd58: "3-OAT_North"
+        5dd914c3-bab4-5e80-b3d3-7352832b28df: "3-OAT_South"
+        c0c72625-4046-5c41-a653-d28a4c72246c: "oat_C"
+
+  pcm_data:
+    db_table_name: pcm_data
+    cws_point_map:
+      X1B-tms_n_217_47_C20: 1b_desk3_door_right_ceiling
+      X1B-tms_nww_10_83_C49: 1b_desk3_door_right_plenum
+      X1B-tms_e_24_34_C18: 1b_desk4_door_left_ceiling
+      X1B-tms_nee_3_83_C17: 1b_desk4_door_left_plenum
+
+      X1B-TMR_118: 1b_desk1_window_right_ceiling
+      X1B-TMR_119: 1b_desk1_window_right_plenum
+      X1B-tms_s_58_17_C108: 1b_desk6_window_left_ceiling
+      X1B-tms_s_116_17_C107: 1b_desk6_window_left_plenum
+      X1B-TMR_265: 1b_window_middle_ceiling
+      X1B-TMR_267: 1b_window_middle_plenum
+
+      X1B-tms_w_98_35_C58: 1b_desk2_core_right_ceiling
+      X1B-tms_w_98_83_C59: 1b_desk2_core_right_plenum
+      X1B-tms_e_193_35_C34: 1b_desk5_core_left_ceiling
+      X1B-tms_e_193_83_C35: 1b_desk5_core_left_plenum
+
+      X1B-TMR_269: 1b_strat_core_middle
+      X1B-TMR_270: 1b_strat_core_top
+
+      X1B-TMR_271: 1b_strat_window_bottom
+      X1B-TMR_266: 1b_strat_window_middle
+      X1B-TMR_268: 1b_strat_window_top
+
+      X1B-TMR_23: 1b_strat_door_bottom
+      X1B-TMR_24: 1b_strat_door_middle
+      X1B-TMR_25: 1b_strat_door_top
+
+      X1A-TMR_257: 1a_strat_window_bottom
+      X1A-TMR_254: 1a_strat_window_middle
+      X1A-TMR_255: 1a_strat_window_top
 
 weather:
   db_table_name: weather
   api:
     time_threshold: 60
-    flex_user: weather
-    flex_password: weather
+    flex_user:
+    flex_password:
     flexq_login: query
   cws_point_map:
     W-OAT-2: oat_C
     W-RH-3_c7: rh_percentage
     W-SP-GLOB-IRRAD: global_irradiance_Wm2
     W-SP-DIFF-IRRAD: diffused_irradiance_Wm2
+
+emulated_chiller:
+  chiller_web_host:
+  db_table_name: emulated_chiller
+  web_api_port_1a:
+  web_api_port_1b:
+  point_map:
+    1a_m_flow_sec: 1a_m_flow_sec
+    1a_T_chw_in: 1a_T_chw_in
+    1a_chiOn: 1a_chiOn
+    1a_T_air_in: 1a_T_air_in
+    1a_T_chw_out: 1a_T_chw_out
+    1a_T_pch_in: 1a_T_pch_in
+    1a_chi_P: 1a_chi_P
+    1a_pum_P: 1a_pum_P
+    1a_m_flow_pri: 1a_m_flow_pri
+
+    1b_m_flow_sec: 1b_m_flow_sec
+    1b_T_chw_in: 1b_T_chw_in
+    1b_chiOn: 1b_chiOn
+    1b_T_air_in: 1b_T_air_in
+    1b_T_chw_out: 1b_T_chw_out
+    1b_T_pch_in: 1b_T_pch_in
+    1b_chi_P: 1b_chi_P
+    1b_pum_P: 1b_pum_P
+    1b_m_flow_pri: 1b_m_flow_pri
+
+emulated_chiller_heatpump:
+  chiller_web_host:
+  db_table_name: emulated_chiller_heatpump
+  web_api_port_1a:
+  web_api_port_1b:
+  point_map:
+    1a_m_flow_sec: 1a_m_flow_sec
+    1a_T_chw_in: 1a_T_chw_in
+    1a_chiOn: 1a_chiOn
+    1a_T_air_in: 1a_T_air_in
+    1a_T_chw_out: 1a_T_chw_out
+    1a_T_pch_in: 1a_T_pch_in
+    1a_chi_P: 1a_chi_P
+    1a_pum_P: 1a_pum_P
+    1a_m_flow_pri: 1a_m_flow_pri
+    1a_chi_spd: 1a_chi_spd
+    1a_chi_COP: 1a_chi_COP
+
+    1b_m_flow_sec: 1b_m_flow_sec
+    1b_T_chw_in: 1b_T_chw_in
+    1b_chiOn: 1b_chiOn
+    1b_T_air_in: 1b_T_air_in
+    1b_T_chw_out: 1b_T_chw_out
+    1b_T_pch_in: 1b_T_pch_in
+    1b_chi_P: 1b_chi_P
+    1b_pum_P: 1b_pum_P
+    1b_m_flow_pri: 1b_m_flow_pri
+    1b_chi_spd: 1b_chi_spd
+    1b_chi_COP: 1b_chi_COP
+
+primary_chiller:
+  UNIT_ID: 0
+  modbus_type: tcp
+  db_table_name: primary_chiller
+  ip:
+  port:
+  enable_logging: True
+
+  byte_order: big
+  word_order: little
+
+  OFFSET_REGISTERS: 1
+
+  discrete_registers: {}
+
+  coil_registers: {}
+  input_registers: {}
+
+  holding_registers:
+    temperature_setpoint1: [1, 16int]
+    temperature_high_alarm: [3, 16int]
+    temperature_low_alarm: [4, 16int]
+    process_status: [9, 16int]
+
+    zone1_temp: [17, 8int]
+    zone1_status: [23, 16int]

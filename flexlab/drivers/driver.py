@@ -29,10 +29,11 @@ class Driver:
     def push_to_db(self, df, table_name):
         df_list = []
         for col in df.columns:
-            df2 = df[[col]]
-            df2.columns = ['value']
-            df2['name'] = col
-            df_list.append(df2)
+            df2 = df[[col]].dropna()
+            if not df2.empty:
+                df2.columns = ['value']
+                df2['name'] = col
+                df_list.append(df2)
         final_df = pd.concat(df_list, axis=0).reset_index()
 
         query = 'insert into {0} values '.format(table_name) + ','.join(final_df.apply(
@@ -94,7 +95,14 @@ class Driver:
                 flexq_point_name = split_content[1]
                 point_name = point_map.get(flexq_point_name, None)
                 if point_name != None:
-                    value = float(split_content[3])
+                    if len(split_content) == 4:
+                        value = split_content[3]
+                        if value == 'T':
+                            value = 1
+                        else:
+                            value = 0
+                    else:
+                        value = float(split_content[3])
                     if point_name.endswith("lux"):
                         value = max(0, value)
                     data[point_name] = [value]

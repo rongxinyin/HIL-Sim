@@ -1,0 +1,11 @@
+[Unit]
+Description=Collect data from the chiller FMUs
+Wants=postgres.service
+
+[Service]
+WorkingDirectory=/home/btmdrl/HIL-Sim/flexlab/drivers
+ExecStart=/home/btmdrl/anaconda3/bin/python chiller_model.py
+User=btmdrl
+
+[Install]
+WantedBy=multi-user.target

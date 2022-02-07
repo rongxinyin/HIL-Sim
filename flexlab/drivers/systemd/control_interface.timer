@@ -1,0 +1,12 @@
+[Unit]
+Description=Run primary chiller data collection every minute
+
+[Timer]
+OnActiveSec=0
+OnUnitActiveSec=30
+AccuracySec=500msec
+Persistent=true
+Unit=control_interface.service
+
+[Install]
+WantedBy=timers.target

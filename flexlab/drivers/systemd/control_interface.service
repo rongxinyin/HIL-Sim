@@ -1,0 +1,12 @@
+[Unit]
+Description=Control setpoints of real chiller
+Wants=postgres.service
+
+[Service]
+WorkingDirectory=/home/chiller/HIL-Sim
+Environment=PYTHONPATH=/home/chiller/HIL-Sim:$PYTHONPATH
+ExecStart=/usr/bin/python3 flexlab/drivers/controls/control_interface.py
+User=chiller
+
+[Install]
+WantedBy=multi-user.target

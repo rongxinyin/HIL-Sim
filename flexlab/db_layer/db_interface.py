@@ -78,8 +78,12 @@ class DB_Interface:
         query = query + query_condition
         df = self._query_database(query)
         resample = '{0}T'.format(resample_minutes)
-        df = df.resample(resample, label='right', closed='right').agg(variable_agg_map)
-        return df
+        if not df.empty:
+            df = df.resample(resample, label='right', closed='right').agg(variable_agg_map)
+            return df
+        else:
+            return pd.DataFrame()
+
 
     def _format_execute_query_result(self, result):
         output = result.fetchall()
@@ -109,7 +113,7 @@ class DB_Interface:
         return filtered_columns
 
 
-    def get_data(self, st, et, cell, resample_minutes=15, include_setpoints=False):
+    def get_data(self, st, et, cell, sys=None, resample_minutes=15, include_setpoints=False):
         """
         get data for a whole cell for FL
         :param st: datetime.datetime local time
@@ -120,6 +124,11 @@ class DB_Interface:
         :return: dataframe with each column a separate variable with a DatetimeIndex in local time
         """
 
+        if sys is not None:
+            df = self._query_single_system(st=st, et=et, cell=cell, system=sys,
+                                           resample_minutes=resample_minutes)
+            return df
+
         df_list = []
         for system in self.config.get('query_condition').get(cell):
             if system == 'setpoints' and not include_setpoints:
@@ -127,7 +136,8 @@ class DB_Interface:
 
             df = self._query_single_system(st=st, et=et, cell=cell, system=system,
                                            resample_minutes=resample_minutes)
-            df_list.append(df)
+            if not df.empty:
+                df_list.append(df)
 
         final_df = pd.concat(df_list, axis=1)
         return final_df
@@ -147,9 +157,14 @@ class DB_Interface:
                                        resample_minutes=resample_minutes)
         return df
 
-    def get_data_controller(self, st, et, cell='x2', resample_minutes=15):
+    def get_data_controller(self, st, et, cell='1a', resample_minutes=15):
         df = self.get_data(st=st, et=et, cell=cell, resample_minutes=resample_minutes, include_setpoints=False)
         # processed_df = self._post_process(raw_df=df, cell=cell, resample_time=resample_minutes)
+        return df
+
+    def get_latest_chiller_points(self, st, et, cell='1a', resample_minutes=15):
+        df = self._query_single_system(st=st, et=et, cell=cell, system='chiller',
+                                       resample_minutes=resample_minutes)
         return df
 
     def _post_process(self, raw_df, cell, resample_time):
@@ -193,16 +208,14 @@ class DB_Interface:
 
         return df
 
-    def push_setpoints_to_db(self, cell, df):
+    def push_setpoints_to_db(self, cell, df, table=None):
         """
         push new setpoints to database to change FL setpoints
-        :param cell: 'x1' or 'x2'
-        :param df: dataframe with the following columns:
-                    ['x2_boiler_sp_C_command']
-                    sup_air_flow_sp: kg/s
-                    sup_air_temp_sp: C
-                    light_level_sp: 0-1
-                    battery_sp: -3300 to 3300W
+        :param cell: '1a' or '1b'
+        :param df: dataframe with one or more following columns:
+                    1a_chiller_primary_sp_K_command
+                    1b_chiller_primary_sp_K_command
+        :param table: table name, if None, use self.setpoint_table
         :return: True if push is successful else False
         """
 
@@ -221,7 +234,10 @@ class DB_Interface:
         final_df = pd.concat(df_list, axis=0)
         final_df = final_df.reset_index()
 
-        query = 'insert into {0} values '.format(self.setpoint_table) + ','.join(final_df.apply(
+        if table is None:
+            table = self.setpoint_table
+
+        query = 'insert into {0} values '.format(table) + ','.join(final_df.apply(
             lambda x: "('{0}', '{1}', '{2}')".format(x['time'].strftime("%Y-%m-%d %H:%M:%S"), x['name'],
                                                           x['value']),
             axis=1).values) + ' on conflict (time, name) do update ' + 'SET value = excluded.value;'

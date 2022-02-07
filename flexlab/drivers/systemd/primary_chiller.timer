@@ -1,0 +1,10 @@
+[Unit]
+Description=Run primary chiller data collection every minute
+
+[Timer]
+OnCalendar=*:0/1
+Persistent=true
+Unit=primary_chiller.service
+
+[Install]
+WantedBy=timers.target

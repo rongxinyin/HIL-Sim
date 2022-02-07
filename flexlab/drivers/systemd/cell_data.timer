@@ -1,0 +1,10 @@
+[Unit]
+Description=Run  flexlab data collection every minute
+
+[Timer]
+OnCalendar=*:0/1
+Persistent=true
+Unit=cell_data.service
+
+[Install]
+WantedBy=timers.target

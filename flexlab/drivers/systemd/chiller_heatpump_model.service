@@ -1,0 +1,12 @@
+[Unit]
+Description=Collect data from the heatpump chiller FMUs
+Wants=postgres.service
+
+[Service]
+Environment=PYTHONPATH=$PYTHONPATH:/home/btmdrl/HIL-Sim
+WorkingDirectory=/home/btmdrl/HIL-Sim/flexlab/drivers
+ExecStart=/home/btmdrl/anaconda3/bin/python chiller_heatpump_model.py
+User=btmdrl
+
+[Install]
+WantedBy=multi-user.target
