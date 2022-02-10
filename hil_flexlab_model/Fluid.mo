@@ -1,4 +1,4 @@
-within hil_flexlab_model;
+﻿within hil_flexlab_model;
 package Fluid "HP models are stored here"
   model HeatHeatpumpCoolHeatpumpAuxHea_noIEC
     "Air supply unit model with heatpump heating and cooling and auxiliary electric heater for heating"
@@ -1177,8 +1177,7 @@ package Fluid "HP models are stored here"
               origin={60,0})));
 
         Modelica.Blocks.Sources.Constant iceFac(final k=1)
-          "Fixed value for icing factor. 1 means no icing/frosting (full heat transfer in heat exchanger)"
-                                                                                                           annotation (Placement(
+          "Fixed value for icing factor. 1 means no icing/frosting (full heat transfer in heat exchanger)" annotation (Placement(
               transformation(
               extent={{8,8},{-8,-8}},
               rotation=180,
@@ -1257,11 +1256,11 @@ package Fluid "HP models are stored here"
               "ThermodynamicTemperature", unit="K")
           "Electrical power consumed by the unit"
           annotation (Placement(transformation(extent={{100,50},{120,70}})));
-        Modelica.Fluid.Interfaces.FluidPort_a port_a(redeclare package Medium
-            = Medium_sin)
+        Modelica.Fluid.Interfaces.FluidPort_a port_a(redeclare package Medium =
+              Medium_sin)
           annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
-        Modelica.Fluid.Interfaces.FluidPort_b port_b(redeclare package Medium
-            = Medium_sin)
+        Modelica.Fluid.Interfaces.FluidPort_b port_b(redeclare package Medium =
+              Medium_sin)
           annotation (Placement(transformation(extent={{90,-10},{110,10}})));
       equation
 

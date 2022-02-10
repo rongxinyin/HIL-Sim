@@ -19,7 +19,7 @@ model XRA_Baseline_AE_131
     mAir_flow_minOA=casDat.minOAFlo,
     mAir_flow_hea=casDat.mAir_flow_nominal,
     mAir_flow_coo=casDat.mAir_flow_nominal)
-    annotation (Placement(transformation(extent={{-28,-220},{80,-6}})));
+    annotation (Placement(transformation(extent={{-32,-220},{76,-6}})));
    Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(filNam=casDat.weaDatImport)
     annotation (Placement(transformation(extent={{-274,394},{-254,414}})));
 
@@ -82,7 +82,7 @@ model XRA_Baseline_AE_131
         rotation=180,
         origin={93,-265})));
   Modelica.Blocks.Math.RealToBoolean realToBoolean1(threshold=0.001)
-    annotation (Placement(transformation(extent={{382,-266},{402,-246}})));
+    annotation (Placement(transformation(extent={{350,-286},{370,-266}})));
   Modelica.Blocks.Logical.Greater greater1
     annotation (Placement(transformation(extent={{396,-314},{416,-294}})));
   Modelica.Blocks.Sources.Constant const4(k=0.66)
@@ -114,23 +114,23 @@ model XRA_Baseline_AE_131
 equation
 
   connect(rTU.yFan, rtu.uFan) annotation (Line(
-        points={{85.4,-16.7},{167.15,-16.7},{167.15,12.4},{245.2,12.4}},
+        points={{81.4,-16.7},{167.15,-16.7},{167.15,12.4},{245.2,12.4}},
         color={0,0,127}));
   connect(rTU.yCoo, rtu.uCoo) annotation (Line(
-        points={{85.4,-84.7909},{164.15,-84.7909},{164.15,-57.2},{245.2,-57.2}},
+        points={{81.4,-84.7909},{164.15,-84.7909},{164.15,-57.2},{245.2,-57.2}},
         color={0,0,127}));
   connect(rTU.yOutAirFra, rtu.uEco) annotation (Line(
-        points={{85.4,-123.7},{166.15,-123.7},{166.15,-92},{245.2,-92}},
+        points={{81.4,-123.7},{166.15,-123.7},{166.15,-92},{245.2,-92}},
         color={0,0,127}));
   connect(rtu.TMixAir, rTU.TMix) annotation (Line(
         points={{434.4,-161.6},{488,-161.6},{488,-378},{224,-378},{224,-191.791},
-          {-38.8,-191.791}},
+          {-42.8,-191.791}},
                       color={0,0,127}));
   connect(rTU.TSup, rtu.TSup) annotation (Line(
-        points={{-38.8,-220.973},{498.6,-220.973},{498.6,-173.2},{434.4,-173.2}},
+        points={{-42.8,-220.973},{498.6,-220.973},{498.6,-173.2},{434.4,-173.2}},
         color={0,0,127}));
   connect(rTU.TRet, rtu.phiRetAir) annotation (Line(
-        points={{-38.8,-162.609},{-78,-162.609},{-78,-228},{-120,-228},{-120,
+        points={{-42.8,-162.609},{-78,-162.609},{-78,-228},{-120,-228},{-120,
           -402},{480,-402},{480,-208},{434.4,-208}},
                                                color={0,0,127}));
   connect(weaDat.weaBus, weaBus) annotation (Line(
@@ -150,7 +150,7 @@ equation
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(weaBus.TDryBul, rTU.TEco) annotation (Line(
-      points={{-184,290},{-106,290},{-106,-132.455},{-38.8,-132.455}},
+      points={{-184,290},{-106,290},{-106,-132.455},{-42.8,-132.455}},
       color={255,204,51},
       thickness=0.5), Text(
       string="%first",
@@ -158,7 +158,7 @@ equation
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(flexlabXRA.TRooAir, rTU.TRoo) annotation (Line(points={{1364.57,
-          -29.8733},{1396,-29.8733},{1396,366},{-90,366},{-90,-104.245},{-38.8,
+          -29.8733},{1396,-29.8733},{1396,366},{-90,366},{-90,-104.245},{-42.8,
           -104.245}},
         color={0,0,127}));
   connect(flexlabXRA.weaBus, weaDat.weaBus) annotation (Line(
@@ -166,9 +166,9 @@ equation
       color={255,204,51},
       thickness=0.5));
   connect(TSetRooHea.y[1], rTU.TSetRooHea) annotation (Line(points={{-238.5,-47},
-          {-117.5,-47},{-117.5,-45.8818},{-38.8,-45.8818}},  color={0,0,127}));
+          {-117.5,-47},{-117.5,-45.8818},{-42.8,-45.8818}},  color={0,0,127}));
   connect(TSetRooCoo.y[1], rTU.TSetRooCoo) annotation (Line(points={{-230.4,
-          -150},{-114,-150},{-114,-75.0636},{-38.8,-75.0636}},
+          -150},{-114,-150},{-114,-75.0636},{-42.8,-75.0636}},
                                                          color={0,0,127}));
   connect(flexlabXRA.portsCell[2], rtu.returnAir) annotation (Line(points={{996.571,
           -43.5933},{702.572,-43.5933},{702.572,-92},{430,-92}},         color=
@@ -177,7 +177,7 @@ equation
           -43.5933},{705.572,-43.5933},{705.572,-45.6},{430,-45.6}},
         color={0,127,255}));
   connect(flexlabXRA.occ, rTU.occSta) annotation (Line(points={{1385.14,100.467},
-          {665.57,100.467},{665.57,-16.7},{-38.8,-16.7}}, color={255,0,255}));
+          {665.57,100.467},{665.57,-16.7},{-42.8,-16.7}}, color={255,0,255}));
   connect(const.y, greater.u2) annotation (Line(points={{-50.7,-363},{104.65,
           -363},{104.65,-340},{-16,-340}},
                                     color={0,0,127}));
@@ -187,8 +187,8 @@ equation
           {71.3,-385}},            color={0,0,127}));
   connect(switch1.u1, const1.y) annotation (Line(points={{118,-324},{156,-324},
           {156,-309},{115.3,-309}},color={0,0,127}));
-  connect(rTU.cooSta, triggeredTrapezoid.u) annotation (Line(points={{85.4,
-          -172.336},{85.4,-249.168},{-80.6,-249.168},{-80.6,-297}},
+  connect(rTU.cooSta, triggeredTrapezoid.u) annotation (Line(points={{81.4,
+          -172.336},{81.4,-249.168},{-80.6,-249.168},{-80.6,-297}},
                                                           color={255,0,255}));
   connect(triggeredTrapezoid.y, greater.u1) annotation (Line(points={{-50.7,
           -297},{70,-297},{70,-332},{-16,-332}},
@@ -210,7 +210,8 @@ equation
   connect(const4.y, greater1.u2) annotation (Line(points={{347.3,-349},{373.65,
           -349},{373.65,-312},{394,-312}}, color={0,0,127}));
   connect(realToBoolean1.y, switch4.u2)
-    annotation (Line(points={{403,-256},{564,-256}}, color={255,0,255}));
+    annotation (Line(points={{371,-276},{484,-276},{484,-256},{564,-256}},
+                                                     color={255,0,255}));
   connect(const7.y, switch4.u3) annotation (Line(points={{465.3,-281},{500.65,
           -281},{500.65,-264},{564,-264}}, color={0,0,127}));
   connect(greater1.y, switch3.u2) annotation (Line(points={{417,-304},{482,-304},
@@ -219,10 +220,10 @@ equation
           {636,-248},{564,-248}}, color={0,0,127}));
   connect(const5.y, switch3.u3) annotation (Line(points={{423.3,-347},{484.65,
           -347},{484.65,-334},{588,-334}}, color={0,0,127}));
-  connect(rTU.yHea, greater1.u1) annotation (Line(points={{85.4,-55.6091},{
+  connect(rTU.yHea, greater1.u1) annotation (Line(points={{81.4,-55.6091},{
           126.7,-55.6091},{126.7,-304},{394,-304}}, color={0,0,127}));
-  connect(rTU.yHea, realToBoolean1.u) annotation (Line(points={{85.4,-55.6091},
-          {100,-55.6091},{100,-76},{110,-76},{110,-256},{380,-256}},
+  connect(rTU.yHea, realToBoolean1.u) annotation (Line(points={{81.4,-55.6091},
+          {100,-55.6091},{100,-76},{110,-76},{110,-276},{348,-276}},
                                                      color={0,0,127}));
   connect(const6.y, switch3.u1) annotation (Line(points={{555.3,-387},{555.3,
           -352.5},{588,-352.5},{588,-318}}, color={0,0,127}));
