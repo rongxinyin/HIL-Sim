@@ -3569,8 +3569,12 @@ First implementation.
       annotation (Placement(transformation(extent={{-70,-32},{-50,-12}})));
     Modelica.Blocks.Logical.Switch UppLimSwi "Switch for turning heating on/off"
       annotation (Placement(transformation(extent={{40,174},{60,194}})));
-    Modelica.Blocks.Logical.Not Not
+    Modelica.Blocks.Logical.Not NotLim
       annotation (Placement(transformation(extent={{10,174},{22,186}})));
+    Modelica.Blocks.Logical.Not NotTim annotation (Placement(transformation(
+          extent={{-6,-6},{6,6}},
+          rotation=90,
+          origin={32,-2})));
   equation
     connect(conHea.y, swiHea.u1) annotation (Line(points={{-37,140},{-24,140},{-24,
             104},{2,104}},  color={0,0,127}));
@@ -3603,21 +3607,25 @@ First implementation.
             {66,134},{34,134},{34,64},{4,64},{4,12},{-40,12},{-40,-15},{-29.8,-15}},
           color={0,0,127}));
     connect(cycle_Timer.u_Sta, LessEqual.y)
-      annotation (Line(points={{4.2,-15},{-9.1,-15}}, color={255,0,255}));
-    connect(offHea.y, swiTim.u3) annotation (Line(points={{-29,44},{14,44},{14,12},
-            {38,12}}, color={0,0,127}));
-    connect(UppLimSwi.y, swiTim.u1) annotation (Line(points={{61,184},{66,184},{66,
-            134},{34,134},{34,26},{36,26},{36,28},{38,28}}, color={0,0,127}));
-    connect(cycle_Timer.y_Sta, swiTim.u2) annotation (Line(points={{25.26,-15},{30,
-            -15},{30,20},{38,20}}, color={255,0,255}));
-    connect(swiTim.y, heatStage.uHea) annotation (Line(points={{61,20},{64,20},{64,
-            110},{68,110}}, color={0,0,127}));
-    connect(heatStage.y_Sta, heaSta) annotation (Line(points={{92,110},{118,110}},
+      annotation (Line(points={{-1.8,-15},{-9.1,-15}},color={255,0,255}));
+    connect(offHea.y, swiTim.u3) annotation (Line(points={{-29,44},{14,44},{14,
+            10},{42,10}},
+                      color={0,0,127}));
+    connect(UppLimSwi.y, swiTim.u1) annotation (Line(points={{61,184},{66,184},
+            {66,134},{34,134},{34,26},{42,26}},             color={0,0,127}));
+    connect(swiTim.y, heatStage.uHea) annotation (Line(points={{65,18},{68,18},
+            {68,110},{72,110}},
+                            color={0,0,127}));
+    connect(heatStage.y_Sta, heaSta) annotation (Line(points={{96,110},{118,110}},
                                  color={0,0,127}));
-    connect(UppLimSwi.u2, Not.y) annotation (Line(points={{38,184},{26,184},{26,180},
-            {22.6,180}}, color={255,0,255}));
-    connect(onOffConSupHeatSetPoi.y, Not.u) annotation (Line(points={{-9,-82},{-6,
-            -82},{-6,180},{8.8,180}}, color={255,0,255}));
+    connect(UppLimSwi.u2, NotLim.y) annotation (Line(points={{38,184},{26,184},
+            {26,180},{22.6,180}}, color={255,0,255}));
+    connect(onOffConSupHeatSetPoi.y, NotLim.u) annotation (Line(points={{-9,-82},
+            {-6,-82},{-6,180},{8.8,180}}, color={255,0,255}));
+    connect(cycle_Timer.y_Sta, NotTim.u) annotation (Line(points={{19.26,-15},{
+            32,-15},{32,-9.2}}, color={255,0,255}));
+    connect(NotTim.y, swiTim.u2)
+      annotation (Line(points={{32,4.6},{32,18},{42,18}}, color={255,0,255}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-220},
               {100,220}}),       graphics={
                                   Rectangle(
