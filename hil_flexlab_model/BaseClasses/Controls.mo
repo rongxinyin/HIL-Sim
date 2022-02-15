@@ -3548,18 +3548,18 @@ First implementation.
     Modelica.Blocks.Interfaces.RealInput TSup(final unit="K", displayUnit="degC")
       "Supply air temperature"
       annotation (Placement(transformation(extent={{-140,-60},{-100,-20}})));
-    Modelica.Blocks.Logical.OnOffController onOffConSupHeatSetPoi(bandwidth=
-          1.94) "Enable freeze protection"
+    Modelica.Blocks.Logical.OnOffController onOffConSupHeatSetPoi(bandwidth=0.5)
+                "Enable freeze protection"
       annotation (Placement(transformation(extent={{-30,-92},{-10,-72}})));
     Modelica.Blocks.Sources.Constant UpperLimSup(k=273.15 + 32.2)
       "Setpoint temperature for freeze protection"
       annotation (Placement(transformation(extent={{-70,-76},{-50,-56}})));
     HeatStage heatStage
-      annotation (Placement(transformation(extent={{70,100},{90,120}})));
+      annotation (Placement(transformation(extent={{74,100},{94,120}})));
     Cycle_Timer cycle_Timer
-      annotation (Placement(transformation(extent={{6,-24},{24,-6}})));
+      annotation (Placement(transformation(extent={{0,-24},{18,-6}})));
     Modelica.Blocks.Logical.Switch swiTim "Switch for turning heating on/off"
-      annotation (Placement(transformation(extent={{40,10},{60,30}})));
+      annotation (Placement(transformation(extent={{44,8},{64,28}})));
     Modelica.Blocks.Logical.OnOffController onOffConHea(bandwidth=1)
       "Enable heating"
       annotation (Placement(transformation(extent={{-84,86},{-64,106}})));
