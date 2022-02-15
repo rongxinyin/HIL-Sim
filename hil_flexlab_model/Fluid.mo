@@ -1,4 +1,4 @@
-﻿within hil_flexlab_model;
+within hil_flexlab_model;
 package Fluid "HP models are stored here"
   model HeatHeatpumpCoolHeatpumpAuxHea_noIEC
     "Air supply unit model with heatpump heating and cooling and auxiliary electric heater for heating"
@@ -1616,7 +1616,7 @@ defined as parameters.
               origin={-53,-29})));
        HeatPump heaPum(
           Q_useNominal=6535,
-          refIneFre_constant=0.001,
+          refIneFre_constant=0.0015,
           nthOrder=3,
           useBusConnectorOnly=true,
           CEva=100,
@@ -1634,19 +1634,19 @@ defined as parameters.
           TCon_start=290.15,
           TEva_start=281.15,
           redeclare model PerDataMainHP =
-              AixLib.DataBase.HeatPump.PerformanceData.LookUpTable2D (dataTable
-                =hil_flexlab_model.Fluid.HeatPumps.Data.RongxinSampleHP()),
+              AixLib.DataBase.HeatPump.PerformanceData.LookUpTable2D (dataTable=
+                 hil_flexlab_model.Fluid.HeatPumps.Data.RongxinSampleHP()),
           redeclare model PerDataRevHP =
-              AixLib.DataBase.Chiller.PerformanceData.LookUpTable2D (smoothness
-                =Modelica.Blocks.Types.Smoothness.LinearSegments, dataTable=
+              AixLib.DataBase.Chiller.PerformanceData.LookUpTable2D (smoothness=
+                 Modelica.Blocks.Types.Smoothness.LinearSegments, dataTable=
                   AixLib.DataBase.Chiller.EN14511.Vitocal200AWO201()),
           VEva=0.04,
           use_evaCap=false,
-          scalingFactor=1,
+          scalingFactor=1.75,
           energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
           mFlow_conNominal=0.5,
           mFlow_evaNominal=0.5,
-          use_autoCalc=false,
+          use_autoCalc=true,
           TAmbEva_nominal=273.15,
           TAmbCon_nominal=288.15) annotation (Placement(transformation(
               extent={{-23,-28},{23,28}},
