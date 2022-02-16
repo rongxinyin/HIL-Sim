@@ -1,4 +1,4 @@
-within hil_flexlab_model;
+﻿within hil_flexlab_model;
 package Fluid "HP models are stored here"
   model HeatHeatpumpCoolHeatpumpAuxHea_noIEC
     "Air supply unit model with heatpump heating and cooling and auxiliary electric heater for heating"
@@ -1060,7 +1060,7 @@ defined as parameters.
         Modelica.Blocks.Interfaces.RealOutput staMea "Measured stage"
           annotation (Placement(transformation(extent={{100,60},{120,80}}),
               iconTransformation(extent={{100,60},{120,80}})));
-        Modelica.Blocks.Sources.Constant TSetPoi(final k=25 + 273.15)
+        Modelica.Blocks.Sources.Constant TSetPoi(final k=22 + 273.15)
           "Fixed supply air temperature setpoint" annotation (Placement(
               transformation(
               extent={{7,7},{-7,-7}},
@@ -1123,7 +1123,7 @@ defined as parameters.
         connect(aachen_HP_2stage_FMU.y_PEleHP, powTotMod) annotation (Line(
               points={{22,13.6},{60,13.6},{60,20},{110,20}}, color={0,0,127}));
         connect(aachen_HP_2stage_FMU.y_HeaCal, heaCalMod) annotation (Line(
-              points={{22,-8.8},{60,-8.8},{60,-20},{110,-20}}, color={255,0,255}));
+              points={{22,-8},{60,-8},{60,-20},{110,-20}},     color={255,0,255}));
         connect(combiTimeTable.y[1], rooTemptoKelvin.Fahrenheit) annotation (
             Line(points={{-99,0},{-94,0},{-94,-48},{-77.6,-48}}, color={0,0,127}));
         connect(rooTemptoKelvin.Kelvin, aachen_HP_2stage_FMU.u_TRoo)
@@ -1146,7 +1146,7 @@ defined as parameters.
         annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
                   -100},{100,100}})),
           experiment(
-            StopTime=6900,
+            StopTime=7500,
             Interval=1,
             Tolerance=1e-06),
       __Dymola_Commands(file="modelica://AixLib/Resources/Scripts/Dymola/Fluid/HeatPumps/Examples/HeatPump.mos"
@@ -1940,8 +1940,6 @@ defined as parameters.
     replaceable package Medium_sou = Buildings.Media.Air;
     replaceable package Medium_sin = Buildings.Media.Air;
 
-    parameter Modelica.SIunits.Temperature TMix = 15+273.15 "Mixed air temperature";
-
     HeatPumps.BaseClasses.RTUHP rtuHP
       annotation (Placement(transformation(extent={{0,28},{32,60}})));
     Buildings.Fluid.Sources.MassFlowSource_T supFan(
@@ -1962,8 +1960,9 @@ defined as parameters.
       annotation (Placement(transformation(extent={{100,32},{120,52}})));
     Modelica.Blocks.Interfaces.RealOutput y_PEleHP(final unit="W")
       annotation (Placement(transformation(extent={{100,58},{120,78}})));
-    BaseClasses.Controls.RTU_control_FMU rtuConFMU
-      annotation (Placement(transformation(extent={{0,-80},{20,-36}})));
+    BaseClasses.Controls.RTU_control_FMU_Delay
+                                         rtuConFMU
+      annotation (Placement(transformation(extent={{0,-72},{28,-44}})));
     Modelica.Blocks.Interfaces.RealInput u_TDryBul(final unit="K", displayUnit="degC")
       "Zone temperature measurement" annotation (Placement(transformation(extent={
               {-20,-20},{20,20}}, origin={-120,-32}), iconTransformation(extent={{
@@ -1981,14 +1980,7 @@ defined as parameters.
               {-20,-20},{20,20}}, origin={-120,0}), iconTransformation(extent={{-140,
               20},{-100,60}})));
     Modelica.Blocks.Interfaces.BooleanOutput y_HeaCal
-      annotation (Placement(transformation(extent={{100,-54},{120,-34}})));
-    Modelica.Blocks.Logical.Hysteresis hysHeaCal(
-      pre_y_start=false,
-      uLow = TMix - 0.5,
-      uHigh = TMix + 0.5) annotation (Placement(transformation(
-          extent={{12,-12},{-12,12}},
-          rotation=180,
-          origin={72,-44})));
+      annotation (Placement(transformation(extent={{100,-50},{120,-30}})));
   equation
     connect(supFan.ports[1], rtuHP.port_a) annotation (Line(points={{-60,8},{-16,8},
             {-16,44},{0,44}}, color={0,127,255}));
@@ -1996,27 +1988,28 @@ defined as parameters.
             {-90,16},{-82,16}}, color={0,0,127}));
     connect(rtuHP.port_b, roo.ports[1]) annotation (Line(points={{32,44},{52,44},{
             52,21},{68,21}}, color={0,127,255}));
-    connect(rtuHP.TSup, y_TSup) annotation (Line(points={{33.6,53.6},{48,53.6},{48,
-            54},{64,54},{64,42},{110,42}}, color={0,0,127}));
+    connect(rtuHP.TSup, y_TSup) annotation (Line(points={{33.6,53.6},{64,53.6},
+            {64,42},{110,42}},             color={0,0,127}));
     connect(rtuHP.PEle, y_PEleHP) annotation (Line(points={{33.6,56.8},{64,56.8},{
             64,68},{110,68}}, color={0,0,127}));
-    connect(rtuConFMU.heaSta, rtuHP.sta) annotation (Line(points={{21.8,-47},{30,-47},
-            {30,10},{-10,10},{-10,56},{-1.6,56},{-1.6,56.8}}, color={0,0,127}));
+    connect(rtuConFMU.heaSta, rtuHP.sta) annotation (Line(points={{30.52,
+            -52.9091},{36,-52.9091},{36,10},{-10,10},{-10,56},{-1.6,56},{-1.6,
+            56.8}},                                           color={0,0,127}));
     connect(u_TDryBul, rtuHP.TEvaIn) annotation (Line(points={{-120,-32},{-40,-32},
             {-40,31.2},{-1.6,31.2}}, color={0,0,127}));
     connect(supFan.T_in, u_TMix) annotation (Line(points={{-82,12},{-90,12},{-90,0},
             {-120,0}}, color={0,0,127}));
-    connect(u_TRooSetPoi, rtuConFMU.TSetRooHea) annotation (Line(points={{-120,-60},
-            {-90,-60},{-90,-44},{-2,-44}}, color={0,0,127}));
-    connect(u_TRoo, rtuConFMU.TRoo) annotation (Line(points={{-120,-90},{-38,-90},
-            {-38,-56},{-2,-56}}, color={0,0,127}));
-    connect(rtuConFMU.TSup, rtuHP.TSup) annotation (Line(points={{-2,-62},{-20,-62},
-            {-20,-86},{48,-86},{48,54},{34,54},{34,53.6},{33.6,53.6}}, color={0,0,
+    connect(u_TRoo, rtuConFMU.TRoo) annotation (Line(points={{-120,-90},{-38,
+            -90},{-38,-64.3636},{-2.8,-64.3636}},
+                                 color={0,0,127}));
+    connect(rtuConFMU.TSup, rtuHP.TSup) annotation (Line(points={{-2.8,-72},{
+            -22,-72},{-22,-90},{42,-90},{42,54},{34,54},{34,53.6},{33.6,53.6}},
+                                                                       color={0,0,
             127}));
-    connect(hysHeaCal.y, y_HeaCal)
-      annotation (Line(points={{85.2,-44},{110,-44}}, color={255,0,255}));
-    connect(hysHeaCal.u, rtuHP.TSup) annotation (Line(points={{57.6,-44},{48,-44},
-            {48,54},{33.6,54},{33.6,53.6}}, color={0,0,127}));
+    connect(u_TRooSetPoi, rtuConFMU.TSetRooHea) annotation (Line(points={{-120,
+            -60},{-50,-60},{-50,-49.0909},{-2.8,-49.0909}}, color={0,0,127}));
+    connect(rtuConFMU.heaCal, y_HeaCal) annotation (Line(points={{30.52,
+            -59.5273},{65.17,-59.5273},{65.17,-40},{110,-40}}, color={255,0,255}));
     annotation (                              experiment(
         StartTime=19872000,
         StopTime=19958400,
