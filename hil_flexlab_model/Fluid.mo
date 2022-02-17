@@ -1013,7 +1013,7 @@ defined as parameters.
 
         Buildings.Controls.OBC.UnitConversions.From_cfm from_cfm annotation (
             Placement(transformation(extent={{-84,30},{-68,46}})));
-        Modelica.Blocks.Sources.Constant den(final k=1.23)
+        Modelica.Blocks.Sources.Constant den(final k=1.189)
           "Fixed density of air" annotation (Placement(transformation(
               extent={{8,8},{-8,-8}},
               rotation=180,
@@ -1037,8 +1037,8 @@ defined as parameters.
           tableOnFile=true,
           tableName="tab1",
           fileName=ModelicaServices.ExternalReferences.loadResource(
-              "modelica://hil_flexlab_model/Data/2022-02-08_HP_Filtered.txt"),
-          columns=6:18,
+              "modelica://hil_flexlab_model/Data/2022-02-17_HP_Filtered.txt"),
+          columns=6:17,
           smoothness=Modelica.Blocks.Types.Smoothness.MonotoneContinuousDerivative1,
           timeScale=60)
           annotation (Placement(transformation(extent={{-120,-10},{-100,10}})));
@@ -1060,12 +1060,6 @@ defined as parameters.
         Modelica.Blocks.Interfaces.RealOutput staMea "Measured stage"
           annotation (Placement(transformation(extent={{100,60},{120,80}}),
               iconTransformation(extent={{100,60},{120,80}})));
-        Modelica.Blocks.Sources.Constant TSetPoi(final k=22 + 273.15)
-          "Fixed supply air temperature setpoint" annotation (Placement(
-              transformation(
-              extent={{7,7},{-7,-7}},
-              rotation=180,
-              origin={-73,-25})));
         Modelica.Thermal.HeatTransfer.Fahrenheit.ToKelvin outsideTemptoKelvin
           annotation (Placement(transformation(extent={{-84,-8},{-68,8}})));
         Modelica.Blocks.Interfaces.RealOutput powTotMod "Modeled power"
@@ -1084,6 +1078,8 @@ defined as parameters.
           annotation (Placement(transformation(extent={{-84,12},{-68,28}})));
         Modelica.Thermal.HeatTransfer.Celsius.FromKelvin supplyTempModtoCelsius
           annotation (Placement(transformation(extent={{72,-8},{88,8}})));
+        Modelica.Thermal.HeatTransfer.Fahrenheit.ToKelvin setpointTemptoKelvin
+          annotation (Placement(transformation(extent={{-76,-34},{-60,-18}})));
       equation
 
         connect(from_cfm.y, m3s_kgs.u2) annotation (Line(points={{-66.4,38},{
@@ -1107,9 +1103,6 @@ defined as parameters.
                 {-94,0},{-94,93.6},{-83.2,93.6}}, color={0,0,127}));
         connect(combiTimeTable.y[11], sta.u1) annotation (Line(points={{-99,0},
                 {-94,0},{-94,86.4},{-83.2,86.4}}, color={0,0,127}));
-        connect(TSetPoi.y, aachen_HP_2stage_FMU.u_TRooSetPoi) annotation (Line(
-              points={{-65.3,-25},{-48.65,-25},{-48.65,-8},{-24,-8}}, color={0,
-                0,127}));
         connect(combiTimeTable.y[4], outsideTemptoKelvin.Fahrenheit)
           annotation (Line(points={{-99,0},{-85.6,0}}, color={0,0,127}));
         connect(outsideTemptoKelvin.Kelvin, aachen_HP_2stage_FMU.u_TDryBul)
@@ -1143,11 +1136,17 @@ defined as parameters.
           annotation (Line(points={{88.8,0},{110,0}}, color={0,0,127}));
         connect(sta.y, staMea) annotation (Line(points={{-69.4,90},{16,90},{16,
                 70},{110,70}}, color={0,0,127}));
+        connect(combiTimeTable.y[12], setpointTemptoKelvin.Fahrenheit)
+          annotation (Line(points={{-99,0},{-94,0},{-94,-26},{-77.6,-26}},
+              color={0,0,127}));
+        connect(setpointTemptoKelvin.Kelvin, aachen_HP_2stage_FMU.u_TRooSetPoi)
+          annotation (Line(points={{-59.2,-26},{-50,-26},{-50,-8},{-24,-8}},
+              color={0,0,127}));
         annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
                   -100},{100,100}})),
           experiment(
-            StopTime=7500,
-            Interval=1,
+            StopTime=75000,
+            Interval=60,
             Tolerance=1e-06),
       __Dymola_Commands(file="modelica://AixLib/Resources/Scripts/Dymola/Fluid/HeatPumps/Examples/HeatPump.mos"
               "Simulate and plot"),
@@ -1613,7 +1612,7 @@ defined as parameters.
               origin={-53,-29})));
        HeatPump heaPum(
           Q_useNominal=6535,
-          refIneFre_constant=0.0015,
+          refIneFre_constant=0.001,
           nthOrder=3,
           useBusConnectorOnly=true,
           CEva=100,
@@ -1639,7 +1638,7 @@ defined as parameters.
                   AixLib.DataBase.Chiller.EN14511.Vitocal200AWO201()),
           VEva=0.04,
           use_evaCap=false,
-          scalingFactor=1.75,
+          scalingFactor=1,
           energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
           mFlow_conNominal=0.5,
           mFlow_evaNominal=0.5,

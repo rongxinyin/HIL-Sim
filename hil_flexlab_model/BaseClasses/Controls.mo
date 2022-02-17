@@ -3746,7 +3746,7 @@ First implementation.
     Modelica.Blocks.Logical.OnOffController onOffConSupHeatSetPoi(bandwidth=0.5)
                 "Enable freeze protection"
       annotation (Placement(transformation(extent={{-30,-4},{-10,16}})));
-    Modelica.Blocks.Sources.Constant UpperLimSup(k=273.15 + 32.2)
+    Modelica.Blocks.Sources.Constant UpperLimSup(k=273.15 + 32.22)
       "Setpoint temperature for freeze protection"
       annotation (Placement(transformation(extent={{-80,20},{-60,40}})));
     HeatStage heatStage
