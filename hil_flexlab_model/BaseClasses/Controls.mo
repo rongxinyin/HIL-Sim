@@ -3631,6 +3631,12 @@ First implementation.
   end RTU_control_FMU;
 
   model HeatStage
+
+    parameter Real uLowSta1 = uLowSta1 "PI lower bound to activate stage 1";
+    parameter Real uUppSta1 = uUppSta1 "PI upper bound to activate stage 1";
+    parameter Real uLowSta2 = uLowSta2 "PI lower bound to activate stage 2";
+    parameter Real uUppSta2 = uUppSta2 "PI upper bound to activate stage 2";
+
     Modelica.Blocks.Math.RealToBoolean realToBoolean1(threshold=0.001)
       annotation (Placement(transformation(extent={{-8,30},{12,50}})));
     Modelica.Blocks.Math.Add         add         annotation (Placement(
@@ -3647,15 +3653,15 @@ First implementation.
           origin={36,20})));
     Modelica.Blocks.Logical.Hysteresis hys_Sta1(
       pre_y_start=true,
-      uLow=0.05,
-      uHigh=0.15) annotation (Placement(transformation(
+      uLow=uLowSta1,
+      uHigh=uUppSta1) annotation (Placement(transformation(
           extent={{12,-12},{-12,12}},
           rotation=180,
           origin={-38,1.77636e-15})));
     Modelica.Blocks.Logical.Hysteresis hysSta2(
       pre_y_start=true,
-      uLow=0.35,
-      uHigh=0.45) annotation (Placement(transformation(
+      uLow=uLowSta2,
+      uHigh=uUppSta2) annotation (Placement(transformation(
           extent={{12,-12},{-12,12}},
           rotation=180,
           origin={-38,-40})));
@@ -3707,6 +3713,14 @@ First implementation.
 
   model RTU_control_FMU_Delay "Implements common control for RTU system"
 
+    parameter Real k_hea=k_hea "Proportional gain of heating controller";
+    parameter Modelica.SIunits.Time Ti_hea=Ti_hea "Integral time constant of heating controller";
+    parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = maxSAT "max supply air temperature";
+    parameter Real uLowSta1 = uLowSta1 "PI lower bound to activate stage 1";
+    parameter Real uUppSta1 = uUppSta1 "PI upper bound to activate stage 1";
+    parameter Real uLowSta2 = uLowSta2 "PI lower bound to activate stage 2";
+    parameter Real uUppSta2 = uUppSta2 "PI upper bound to activate stage 2";
+
     Modelica.Blocks.Interfaces.RealInput TSetRooHea(final unit="K", displayUnit=
           "degC")
       "Zone heating setpoint temperature" annotation (Placement(transformation(
@@ -3737,8 +3751,6 @@ First implementation.
       annotation (Placement(transformation(extent={{4,126},{24,146}})));
     Modelica.Blocks.Sources.Constant offHea(k=0) "Off signal"
       annotation (Placement(transformation(extent={{-48,40},{-28,60}})));
-    parameter Real k_hea=0.1 "Proportional gain of heating controller";
-    parameter Modelica.SIunits.Time Ti_hea=240 "Integral time constant of heating controller";
 
     Modelica.Blocks.Interfaces.RealInput TSup(final unit="K", displayUnit="degC")
       "Supply air temperature"
@@ -3746,10 +3758,14 @@ First implementation.
     Modelica.Blocks.Logical.OnOffController onOffConSupHeatSetPoi(bandwidth=0.5)
                 "Enable freeze protection"
       annotation (Placement(transformation(extent={{-30,-4},{-10,16}})));
-    Modelica.Blocks.Sources.Constant UpperLimSup(k=273.15 + 32.22)
+    Modelica.Blocks.Sources.Constant UpperLimSup(k=maxSAT)
       "Setpoint temperature for freeze protection"
       annotation (Placement(transformation(extent={{-80,20},{-60,40}})));
-    HeatStage heatStage
+    HeatStage heatStage(
+      uLowSta1=uLowSta1,
+      uUppSta1=uUppSta1,
+      uLowSta2=uLowSta2,
+      uUppSta2=uUppSta2)
       annotation (Placement(transformation(extent={{74,140},{94,160}})));
     Modelica.Blocks.Logical.Switch swiTim "Switch for turning heating on/off"
       annotation (Placement(transformation(extent={{44,48},{64,68}})));
@@ -3833,7 +3849,6 @@ First implementation.
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid)}),                        Diagram(
           coordinateSystem(preserveAspectRatio=false, extent={{-100,0},{100,220}})),
-
       experiment(
         StopTime=2200,
         Interval=1,
