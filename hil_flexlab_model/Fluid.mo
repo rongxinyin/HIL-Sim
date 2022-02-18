@@ -1011,6 +1011,15 @@ defined as parameters.
       model TesFMU "Example for the heat pump and controls FMU"
        extends Modelica.Icons.Example;
 
+        parameter Real k_hea=0.1 "Proportional gain of heating controller";
+        parameter Modelica.SIunits.Time Ti_hea=220 "Integral time constant of heating controller";
+        parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 32.22 + 273.15 "max supply air temperature";
+        parameter Real uLowSta1 = 0.05 "PI lower bound to activate stage 1";
+        parameter Real uUppSta1 = 0.15 "PI upper bound to activate stage 1";
+        parameter Real uLowSta2 = 0.35 "PI lower bound to activate stage 2";
+        parameter Real uUppSta2 = 0.45 "PI upper bound to activate stage 2";
+        parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
+
         Buildings.Controls.OBC.UnitConversions.From_cfm from_cfm annotation (
             Placement(transformation(extent={{-84,30},{-68,46}})));
         Modelica.Blocks.Sources.Constant den(final k=1.189)
@@ -1022,9 +1031,18 @@ defined as parameters.
               transformation(extent={{-10,-10},{10,10}},
               rotation=0,
               origin={-46,44})));
-        Aachen_HP_2stage_FMU aachen_HP_2stage_FMU
+        Aachen_HP_2stage_FMU aachen_HP_2stage_FMU(
+          refIneFre=refIneFre,
+          k_hea=k_hea,
+          Ti_hea=Ti_hea,
+          maxSAT=maxSAT,
+          uLowSta1=uLowSta1,
+          uUppSta1=uUppSta1,
+          uLowSta2=uLowSta2,
+          uUppSta2=uUppSta2)
           annotation (Placement(transformation(extent={{-20,-20},{20,20}})));
-        Modelica.Blocks.Math.Add sumTem annotation (Placement(transformation(
+        Modelica.Blocks.Math.Add sumTem(k1=1.65, k2=0.35)
+                                        annotation (Placement(transformation(
               extent={{-6,-6},{6,6}},
               rotation=0,
               origin={-50,16})));
@@ -1036,12 +1054,12 @@ defined as parameters.
         Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(
           tableOnFile=true,
           tableName="tab1",
-          fileName=ModelicaServices.ExternalReferences.loadResource(
-              "modelica://hil_flexlab_model/Data/2022-02-17_HP_Filtered.txt"),
+          fileName=ModelicaServices.ExternalReferences.loadResource("modelica://hil_flexlab_model/Data/2022-02-17_HP_Filtered.txt"),
           columns=6:17,
           smoothness=Modelica.Blocks.Types.Smoothness.MonotoneContinuousDerivative1,
           timeScale=60)
           annotation (Placement(transformation(extent={{-120,-10},{-100,10}})));
+
         Modelica.Blocks.Interfaces.RealOutput supTemMea
           "Measured supply air temperature" annotation (Placement(
               transformation(extent={{100,-80},{120,-60}}), iconTransformation(
@@ -1136,12 +1154,11 @@ defined as parameters.
           annotation (Line(points={{88.8,0},{110,0}}, color={0,0,127}));
         connect(sta.y, staMea) annotation (Line(points={{-69.4,90},{16,90},{16,
                 70},{110,70}}, color={0,0,127}));
-        connect(combiTimeTable.y[12], setpointTemptoKelvin.Fahrenheit)
-          annotation (Line(points={{-99,0},{-94,0},{-94,-26},{-77.6,-26}},
-              color={0,0,127}));
+        connect(combiTimeTable.y[12], setpointTemptoKelvin.Fahrenheit) annotation (
+            Line(points={{-99,0},{-94,0},{-94,-26},{-77.6,-26}}, color={0,0,127}));
         connect(setpointTemptoKelvin.Kelvin, aachen_HP_2stage_FMU.u_TRooSetPoi)
-          annotation (Line(points={{-59.2,-26},{-50,-26},{-50,-8},{-24,-8}},
-              color={0,0,127}));
+          annotation (Line(points={{-59.2,-26},{-50,-26},{-50,-8},{-24,-8}}, color={0,
+                0,127}));
         annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
                   -100},{100,100}})),
           experiment(
@@ -1591,17 +1608,15 @@ defined as parameters.
 
       model RTUHP "Model for RTU HP"
 
-       replaceable package Medium_sin = Buildings.Media.Air
-         constrainedby Modelica.Media.Interfaces.PartialMedium annotation (choicesAllMatching=true);
-       replaceable package Medium_sou = Buildings.Media.Air
-         constrainedby Modelica.Media.Interfaces.PartialMedium annotation (choicesAllMatching=true);
+       replaceable package Medium_sou = Buildings.Media.Air;
+       replaceable package Medium_sin = Buildings.Media.Air;
+       parameter Real refIneFre = refIneFre "refrigerant inertia parameter";
 
        Buildings.Fluid.Sources.MassFlowSource_T inSou(
           use_T_in=true,
           m_flow=1,
           nPorts=1,
-          redeclare package Medium = Medium_sou,
-          T=275.15) "Ideal mass flow source at the inlet of the source side"
+          redeclare package Medium = Medium_sou) "Ideal mass flow source at the inlet of the source side"
           annotation (Placement(transformation(extent={{-62,-74},{-42,-54}})));
        Buildings.Fluid.Sources.Boundary_pT outSou(nPorts=1, redeclare package
             Medium = Medium_sou)
@@ -1612,7 +1627,7 @@ defined as parameters.
               origin={-53,-29})));
        HeatPump heaPum(
           Q_useNominal=6535,
-          refIneFre_constant=0.001,
+          refIneFre_constant= refIneFre,
           nthOrder=3,
           useBusConnectorOnly=true,
           CEva=100,
@@ -1683,14 +1698,15 @@ defined as parameters.
        Modelica.Blocks.Interfaces.RealOutput PEle(quantity="Power", unit="W")
           "Electrical power consumed by the unit"
           annotation (Placement(transformation(extent={{100,70},{120,90}})));
-       Modelica.Blocks.Interfaces.RealInput TEvaIn(unit="K", displayUnit="degC")
+       Modelica.Blocks.Interfaces.RealInput TEvaIn(quantity=
+              "ThermodynamicTemperature", unit="K", displayUnit="degC")
           "Outside air dry bulb temperature" annotation (Placement(
               transformation(extent={{-120,-90},{-100,-70}})));
        Modelica.Blocks.Interfaces.RealInput sta "Heating stage" annotation (
             Placement(transformation(extent={{-120,70},{-100,90}}),
               iconTransformation(extent={{-120,70},{-100,90}})));
        Modelica.Blocks.Interfaces.RealOutput TSup(quantity=
-              "ThermodynamicTemperature", unit="K")
+              "ThermodynamicTemperature", unit="K", displayUnit="degC")
           "Electrical power consumed by the unit"
           annotation (Placement(transformation(extent={{100,50},{120,70}})));
        Modelica.Fluid.Interfaces.FluidPort_a port_a(redeclare package Medium =
@@ -1938,15 +1954,25 @@ defined as parameters.
 
     replaceable package Medium_sou = Buildings.Media.Air;
     replaceable package Medium_sin = Buildings.Media.Air;
+    parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
+    parameter Real k_hea=0.1 "Proportional gain of heating controller";
+    parameter Modelica.SIunits.Time Ti_hea=220 "Integral time constant of heating controller";
+    parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 32.22 + 273.15 "max supply air temperature";
+    parameter Real uLowSta1 = 0.05 "PI lower bound to activate stage 1";
+    parameter Real uUppSta1 = 0.15 "PI upper bound to activate stage 1";
+    parameter Real uLowSta2 = 0.35 "PI lower bound to activate stage 2";
+    parameter Real uUppSta2 = 0.45 "PI upper bound to activate stage 2";
 
-    HeatPumps.BaseClasses.RTUHP rtuHP
-      annotation (Placement(transformation(extent={{0,28},{32,60}})));
+    HeatPumps.BaseClasses.RTUHP rtuHP(
+      redeclare package Medium_sin = Medium_sin,
+      redeclare package Medium_sou = Medium_sou,
+      refIneFre=refIneFre) annotation (Placement(transformation(extent={{0,28},{32,60}})));
     Buildings.Fluid.Sources.MassFlowSource_T supFan(
       redeclare package Medium = Medium_sou,
       use_m_flow_in=true,
       use_T_in=true,
       nPorts=1) annotation (Placement(transformation(extent={{-80,-2},{-60,18}})));
-    Modelica.Blocks.Interfaces.RealInput u_m_flow(final unit="kg/s") annotation (
+    Modelica.Blocks.Interfaces.RealInput u_m_flow(unit="kg/s") annotation (
         Placement(transformation(extent={{-140,60},{-100,100}}),
           iconTransformation(extent={{-140,60},{-100,100}})));
     Buildings.Fluid.Sources.Boundary_pT roo(nPorts=1, redeclare package Medium =
@@ -1955,26 +1981,32 @@ defined as parameters.
           extent={{-11,11},{11,-11}},
           rotation=180,
           origin={79,21})));
-    Modelica.Blocks.Interfaces.RealOutput y_TSup(final unit="K", displayUnit="degC")
+    Modelica.Blocks.Interfaces.RealOutput y_TSup(unit="K", displayUnit="degC")
       annotation (Placement(transformation(extent={{100,32},{120,52}})));
-    Modelica.Blocks.Interfaces.RealOutput y_PEleHP(final unit="W")
+    Modelica.Blocks.Interfaces.RealOutput y_PEleHP(unit="W")
       annotation (Placement(transformation(extent={{100,58},{120,78}})));
-    BaseClasses.Controls.RTU_control_FMU_Delay
-                                         rtuConFMU
+    BaseClasses.Controls.RTU_control_FMU_Delay rtuConFMU(
+      k_hea=k_hea,
+      Ti_hea=Ti_hea,
+      uLowSta1=uLowSta1,
+      uUppSta1=uUppSta1,
+      uLowSta2=uLowSta2,
+      uUppSta2=uUppSta2,
+      maxSAT = maxSAT)
       annotation (Placement(transformation(extent={{0,-72},{28,-44}})));
-    Modelica.Blocks.Interfaces.RealInput u_TDryBul(final unit="K", displayUnit="degC")
+    Modelica.Blocks.Interfaces.RealInput u_TDryBul(unit="K", displayUnit="degC")
       "Zone temperature measurement" annotation (Placement(transformation(extent={
               {-20,-20},{20,20}}, origin={-120,-32}), iconTransformation(extent={{
               -140,-20},{-100,20}})));
-    Modelica.Blocks.Interfaces.RealInput u_TRoo(final unit="K", displayUnit="degC")
+    Modelica.Blocks.Interfaces.RealInput u_TRoo(unit="K", displayUnit="degC")
       "Zone temperature measurement" annotation (Placement(transformation(extent={
               {-20,-20},{20,20}}, origin={-120,-90}), iconTransformation(extent={{
               -140,-100},{-100,-60}})));
-    Modelica.Blocks.Interfaces.RealInput u_TRooSetPoi(final unit="K", displayUnit=
+    Modelica.Blocks.Interfaces.RealInput u_TRooSetPoi(unit="K", displayUnit=
          "degC") "Zone temperature measurement" annotation (Placement(
           transformation(extent={{-20,-20},{20,20}}, origin={-120,-60}),
           iconTransformation(extent={{-140,-60},{-100,-20}})));
-    Modelica.Blocks.Interfaces.RealInput u_TMix(final unit="K", displayUnit="degC")
+    Modelica.Blocks.Interfaces.RealInput u_TMix(unit="K", displayUnit="degC")
       "Zone temperature measurement" annotation (Placement(transformation(extent={
               {-20,-20},{20,20}}, origin={-120,0}), iconTransformation(extent={{-140,
               20},{-100,60}})));
