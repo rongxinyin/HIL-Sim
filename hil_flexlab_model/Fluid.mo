@@ -1011,19 +1011,23 @@ defined as parameters.
       model TesFMU "Example for the heat pump and controls FMU"
        extends Modelica.Icons.Example;
 
-        parameter Real k_hea=0.1 "Proportional gain of heating controller";
-        parameter Modelica.SIunits.Time Ti_hea=220 "Integral time constant of heating controller";
-        parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 32.22 + 273.15 "max supply air temperature";
+        parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
+        parameter Real k_hea=0.18 "Proportional gain of heating controller";
+        parameter Modelica.SIunits.Time Ti_hea=2400 "Integral time constant of heating controller";
+        parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 310 "max supply air temperature";
         parameter Real uLowSta1 = 0.05 "PI lower bound to activate stage 1";
         parameter Real uUppSta1 = 0.15 "PI upper bound to activate stage 1";
         parameter Real uLowSta2 = 0.35 "PI lower bound to activate stage 2";
         parameter Real uUppSta2 = 0.45 "PI upper bound to activate stage 2";
-        parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
+        parameter Real kSta1 = 0.05 "PI center line to activate stage 1";
+        parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
+        parameter Real banSta1 = 0.01 "PI band to activate stage 1";
+        parameter Real banSta2 = 0.01 "PI band to activate stage 2";
 
         Buildings.Controls.OBC.UnitConversions.From_cfm from_cfm annotation (
             Placement(transformation(extent={{-84,30},{-68,46}})));
-        Modelica.Blocks.Sources.Constant den(final k=1.189)
-          "Fixed density of air" annotation (Placement(transformation(
+        Modelica.Blocks.Sources.Constant den(final k=1.189) "Fixed density of air"
+                                 annotation (Placement(transformation(
               extent={{8,8},{-8,-8}},
               rotation=180,
               origin={-76,66})));
@@ -1039,7 +1043,11 @@ defined as parameters.
           uLowSta1=uLowSta1,
           uUppSta1=uUppSta1,
           uLowSta2=uLowSta2,
-          uUppSta2=uUppSta2)
+          uUppSta2=uUppSta2,
+          kSta1=kSta1,
+          kSta2=kSta2,
+          banSta1=banSta1,
+          banSta2=banSta2)
           annotation (Placement(transformation(extent={{-20,-20},{20,20}})));
         Modelica.Blocks.Math.Add sumTem(k1=1.65, k2=0.35)
                                         annotation (Placement(transformation(
@@ -1054,8 +1062,8 @@ defined as parameters.
         Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(
           tableOnFile=true,
           tableName="tab1",
-          fileName=ModelicaServices.ExternalReferences.loadResource("modelica://hil_flexlab_model/Data/2022-02-17_HP_Filtered.txt"),
-          columns=6:17,
+          fileName=ModelicaServices.ExternalReferences.loadResource("modelica://hil_flexlab_model/Data/2022-02-18_HP_Filtered.txt"),
+          columns=6:20,
           smoothness=Modelica.Blocks.Types.Smoothness.MonotoneContinuousDerivative1,
           timeScale=60)
           annotation (Placement(transformation(extent={{-120,-10},{-100,10}})));
@@ -1103,13 +1111,11 @@ defined as parameters.
               extent={{8,8},{-8,-8}},
               rotation=180,
               origin={-40,66})));
-        Modelica.Blocks.Math.Add dTMea(k2=-1) annotation (Placement(
-              transformation(
+        Modelica.Blocks.Math.Add dTMea(k2=-1) annotation (Placement(transformation(
               extent={{6,-6},{-6,6}},
               rotation=180,
               origin={48,-30})));
-        Modelica.Blocks.Math.Add dTMod(k2=-1) annotation (Placement(
-              transformation(
+        Modelica.Blocks.Math.Add dTMod(k2=-1) annotation (Placement(transformation(
               extent={{6,-6},{-6,6}},
               rotation=180,
               origin={48,30})));
@@ -1123,22 +1129,28 @@ defined as parameters.
         Modelica.Blocks.Interfaces.RealOutput qdotMea "Measured thermal power"
           annotation (Placement(transformation(extent={{100,-54},{120,-34}}),
               iconTransformation(extent={{100,10},{120,30}})));
-        Modelica.Blocks.Math.Product mcpdTMod annotation (Placement(
-              transformation(
+        Modelica.Blocks.Math.Product mcpdTMod annotation (Placement(transformation(
               extent={{-6,-6},{6,6}},
               rotation=0,
               origin={82,44})));
-        Modelica.Blocks.Math.Product mcpdTMea annotation (Placement(
-              transformation(
+        Modelica.Blocks.Math.Product mcpdTMea annotation (Placement(transformation(
               extent={{-6,-6},{6,6}},
               rotation=0,
               origin={84,-44})));
+        Modelica.Blocks.Interfaces.RealOutput PIHeaDemMea
+          "Measured PI heating demand" annotation (Placement(transformation(extent={{100,
+                  110},{120,90}}), iconTransformation(extent={{100,60},{120,80}})));
+        Modelica.Blocks.Math.Gain gaiPIHeaDem(k=0.01) annotation (Placement(
+              transformation(
+              extent={{-4,4},{4,-4}},
+              rotation=0,
+              origin={88,100})));
       equation
 
-        connect(from_cfm.y, m3s_kgs.u2) annotation (Line(points={{-66.4,38},{
-                -62,38},{-62,40.4},{-57.2,40.4}}, color={0,0,127}));
-        connect(m3s_kgs.u1, den.y) annotation (Line(points={{-57.2,47.6},{-64,
-                47.6},{-64,66},{-67.2,66}},    color={0,0,127}));
+        connect(from_cfm.y, m3s_kgs.u2) annotation (Line(points={{-66.4,38},{-62,38},{
+                -62,40.4},{-57.2,40.4}},          color={0,0,127}));
+        connect(m3s_kgs.u1, den.y) annotation (Line(points={{-57.2,47.6},{-64,47.6},{-64,
+                66},{-67.2,66}},               color={0,0,127}));
         connect(m3s_kgs.y, aachen_HP_2stage_FMU.u_m_flow) annotation (Line(
               points={{-43.4,44},{-32,44},{-32,16},{-24,16}},
                                                             color={0,0,127}));
@@ -1195,35 +1207,39 @@ defined as parameters.
         connect(setpointTemptoKelvin.Kelvin, aachen_HP_2stage_FMU.u_TRooSetPoi)
           annotation (Line(points={{-59.2,-26},{-50,-26},{-50,-8},{-24,-8}}, color={0,
                 0,127}));
-        connect(m3s_kgs.y, mcp.u2) annotation (Line(points={{-43.4,44},{-32,44},
-                {-32,52.4},{40.8,52.4}}, color={0,0,127}));
-        connect(cp.y, mcp.u1) annotation (Line(points={{-31.2,66},{10,66},{10,
-                60},{40,60},{40,59.6},{40.8,59.6}}, color={0,0,127}));
-        connect(aachen_HP_2stage_FMU.u_TMix, dTMea.u2) annotation (Line(points=
-                {{-24,8},{-30,8},{-30,-26.4},{40.8,-26.4}}, color={0,0,127}));
-        connect(aachen_HP_2stage_FMU.y_TSup, dTMod.u1) annotation (Line(points=
-                {{22,8.4},{32,8.4},{32,26.4},{40.8,26.4}}, color={0,0,127}));
-        connect(aachen_HP_2stage_FMU.u_TMix, dTMod.u2) annotation (Line(points=
-                {{-24,8},{-30,8},{-30,33.6},{40.8,33.6}}, color={0,0,127}));
-        connect(supplyTemptoKelvin.Kelvin, dTMea.u1) annotation (Line(points={{
-                -59.2,-80},{-10,-80},{-10,-33.6},{40.8,-33.6}}, color={0,0,127}));
+        connect(m3s_kgs.y, mcp.u2) annotation (Line(points={{-43.4,44},{-32,44},{-32,52.4},
+                {40.8,52.4}}, color={0,0,127}));
+        connect(cp.y, mcp.u1) annotation (Line(points={{-31.2,66},{10,66},{10,60},{40,
+                60},{40,59.6},{40.8,59.6}}, color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.u_TMix, dTMea.u2) annotation (Line(points={{-24,8},
+                {-30,8},{-30,-26.4},{40.8,-26.4}}, color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.y_TSup, dTMod.u1) annotation (Line(points={{22,8.4},
+                {32,8.4},{32,26.4},{40.8,26.4}}, color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.u_TMix, dTMod.u2) annotation (Line(points={{-24,8},
+                {-30,8},{-30,33.6},{40.8,33.6}}, color={0,0,127}));
+        connect(supplyTemptoKelvin.Kelvin, dTMea.u1) annotation (Line(points={{-59.2,-80},
+                {-10,-80},{-10,-33.6},{40.8,-33.6}}, color={0,0,127}));
         connect(mcpdTMea.y, qdotMea)
           annotation (Line(points={{90.6,-44},{110,-44}}, color={0,0,127}));
         connect(mcpdTMod.y, qdotMod)
           annotation (Line(points={{88.6,44},{110,44}}, color={0,0,127}));
-        connect(dTMod.y, mcpdTMod.u2) annotation (Line(points={{54.6,30},{60,30},
-                {60,40.4},{74.8,40.4}}, color={0,0,127}));
-        connect(dTMea.y, mcpdTMea.u1) annotation (Line(points={{54.6,-30},{60,
-                -30},{60,-40},{76,-40},{76,-40.4},{76.8,-40.4}}, color={0,0,127}));
-        connect(mcp.y, mcpdTMod.u1) annotation (Line(points={{54.6,56},{64,56},
-                {64,48},{74,48},{74,47.6},{74.8,47.6}}, color={0,0,127}));
-        connect(mcp.y, mcpdTMea.u2) annotation (Line(points={{54.6,56},{64,56},
-                {64,-47.6},{76.8,-47.6}}, color={0,0,127}));
+        connect(dTMod.y, mcpdTMod.u2) annotation (Line(points={{54.6,30},{60,30},{60,40.4},
+                {74.8,40.4}}, color={0,0,127}));
+        connect(dTMea.y, mcpdTMea.u1) annotation (Line(points={{54.6,-30},{60,-30},{60,
+                -40},{76,-40},{76,-40.4},{76.8,-40.4}}, color={0,0,127}));
+        connect(mcp.y, mcpdTMod.u1) annotation (Line(points={{54.6,56},{64,56},{64,48},
+                {74,48},{74,47.6},{74.8,47.6}}, color={0,0,127}));
+        connect(mcp.y, mcpdTMea.u2) annotation (Line(points={{54.6,56},{64,56},{64,-47.6},
+                {76.8,-47.6}}, color={0,0,127}));
+        connect(PIHeaDemMea, gaiPIHeaDem.y)
+          annotation (Line(points={{110,100},{92.4,100}}, color={0,0,127}));
+        connect(combiTimeTable.y[15], gaiPIHeaDem.u) annotation (Line(points={{-99,0},
+                {-94,0},{-94,100},{83.2,100}}, color={0,0,127}));
         annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
                   -100},{100,100}})),
           experiment(
-            StopTime=75000,
-            Interval=60,
+            StopTime=42000,
+            Interval=1,
             Tolerance=1e-06),
       __Dymola_Commands(file="modelica://AixLib/Resources/Scripts/Dymola/Fluid/HeatPumps/Examples/HeatPump.mos"
               "Simulate and plot"),
@@ -1713,7 +1729,7 @@ defined as parameters.
                   AixLib.DataBase.Chiller.EN14511.Vitocal200AWO201()),
           VEva=0.04,
           use_evaCap=false,
-          scalingFactor=1,
+          scalingFactor=1.35,
           energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
           mFlow_conNominal=0.5,
           mFlow_evaNominal=0.5,
@@ -2014,14 +2030,18 @@ defined as parameters.
 
     replaceable package Medium_sou = Buildings.Media.Air;
     replaceable package Medium_sin = Buildings.Media.Air;
-    parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
-    parameter Real k_hea=0.1 "Proportional gain of heating controller";
-    parameter Modelica.SIunits.Time Ti_hea=220 "Integral time constant of heating controller";
-    parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 32.22 + 273.15 "max supply air temperature";
+    parameter Real refIneFre = 0.015 "refrigerant inertia parameter";
+    parameter Real k_hea=0.18 "Proportional gain of heating controller";
+    parameter Modelica.SIunits.Time Ti_hea=2400 "Integral time constant of heating controller";
+    parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 310 "max supply air temperature";
     parameter Real uLowSta1 = 0.05 "PI lower bound to activate stage 1";
     parameter Real uUppSta1 = 0.15 "PI upper bound to activate stage 1";
     parameter Real uLowSta2 = 0.35 "PI lower bound to activate stage 2";
     parameter Real uUppSta2 = 0.45 "PI upper bound to activate stage 2";
+    parameter Real kSta1 = 0.05 "PI center line to activate stage 1";
+    parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
+    parameter Real banSta1 = 0.01 "PI band to activate stage 1";
+    parameter Real banSta2 = 0.01 "PI band to activate stage 2";
 
     HeatPumps.BaseClasses.RTUHP rtuHP(
       redeclare package Medium_sin = Medium_sin,
@@ -2052,7 +2072,11 @@ defined as parameters.
       uUppSta1=uUppSta1,
       uLowSta2=uLowSta2,
       uUppSta2=uUppSta2,
-      maxSAT = maxSAT)
+      maxSAT = maxSAT,
+      kSta1=kSta1,
+      kSta2=kSta2,
+      banSta1=banSta1,
+      banSta2=banSta2)
       annotation (Placement(transformation(extent={{0,-72},{28,-44}})));
     Modelica.Blocks.Interfaces.RealInput u_TDryBul(unit="K", displayUnit="degC")
       "Zone temperature measurement" annotation (Placement(transformation(extent={
