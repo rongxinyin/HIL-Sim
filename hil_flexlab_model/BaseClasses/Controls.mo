@@ -3636,6 +3636,10 @@ First implementation.
     parameter Real uUppSta1 = uUppSta1 "PI upper bound to activate stage 1";
     parameter Real uLowSta2 = uLowSta2 "PI lower bound to activate stage 2";
     parameter Real uUppSta2 = uUppSta2 "PI upper bound to activate stage 2";
+    parameter Real kSta1 = kSta1 "PI center line to activate stage 1";
+    parameter Real kSta2 = kSta2 "PI center line to activate stage 2";
+    parameter Real banSta1 = banSta1 "PI band to activate stage 1";
+    parameter Real banSta2 = banSta2 "PI band to activate stage 2";
 
     Modelica.Blocks.Math.RealToBoolean realToBoolean1(threshold=0.001)
       annotation (Placement(transformation(extent={{-8,30},{12,50}})));
@@ -3651,31 +3655,40 @@ First implementation.
           extent={{8,-8},{-8,8}},
           rotation=180,
           origin={36,20})));
-    Modelica.Blocks.Logical.Hysteresis hys_Sta1(
-      pre_y_start=true,
-      uLow=uLowSta1,
-      uHigh=uUppSta1) annotation (Placement(transformation(
-          extent={{12,-12},{-12,12}},
-          rotation=180,
-          origin={-38,1.77636e-15})));
-    Modelica.Blocks.Logical.Hysteresis hysSta2(
-      pre_y_start=true,
-      uLow=uLowSta2,
-      uHigh=uUppSta2) annotation (Placement(transformation(
-          extent={{12,-12},{-12,12}},
-          rotation=180,
-          origin={-38,-40})));
     Modelica.Blocks.Interfaces.RealInput uHea "Zone temperature measurement"
     annotation (Placement(
           transformation(
           extent={{-20,-20},{20,20}},
           origin={-120,0})));
     Modelica.Blocks.Math.BooleanToReal booleanToReal
-      annotation (Placement(transformation(extent={{-8,-10},{12,10}})));
+      annotation (Placement(transformation(extent={{-2,-10},{18,10}})));
     Modelica.Blocks.Math.BooleanToReal booleanToReal1
-      annotation (Placement(transformation(extent={{-8,-50},{12,-30}})));
+      annotation (Placement(transformation(extent={{-2,-50},{18,-30}})));
     Modelica.Blocks.Interfaces.RealOutput y_Sta "Zone temperature measurement"
       annotation (Placement(transformation(extent={{-20,-20},{20,20}}, origin={120,0})));
+    Modelica.Blocks.Sources.Constant const1(k=kSta1)
+                                                 annotation (Placement(
+          transformation(
+          extent={{8,-8},{-8,8}},
+          rotation=180,
+          origin={-68,20})));
+    Modelica.Blocks.Logical.OnOffController onOffSta1(bandwidth=banSta1)
+      "Enable stage 1 heating"
+      annotation (Placement(transformation(extent={{-46,-10},{-26,10}})));
+
+    Modelica.Blocks.Sources.Constant const2(k=kSta2)
+                                                 annotation (Placement(
+          transformation(
+          extent={{8,-8},{-8,8}},
+          rotation=180,
+          origin={-68,-20})));
+    Modelica.Blocks.Logical.OnOffController onOffSta2(bandwidth=banSta2)
+      "Enable stage 2 heating"
+      annotation (Placement(transformation(extent={{-46,-50},{-26,-30}})));
+    Modelica.Blocks.MathBoolean.Not    not1
+      annotation (Placement(transformation(extent={{-18,-4},{-10,4}})));
+    Modelica.Blocks.MathBoolean.Not    not2
+      annotation (Placement(transformation(extent={{-18,-44},{-10,-36}})));
   equation
     connect(realToBoolean1.y,switch4. u2)
       annotation (Line(points={{13,40},{62,40}},       color={255,0,255}));
@@ -3683,25 +3696,30 @@ First implementation.
             50,32},{62,32}},                 color={0,0,127}));
     connect(uHea, realToBoolean1.u) annotation (Line(points={{-120,0},{-84,0},{
             -84,40},{-10,40}}, color={0,0,127}));
-    connect(uHea, hys_Sta1.u) annotation (Line(points={{-120,0},{-82,0},{-82,
-            3.77476e-15},{-52.4,3.77476e-15}},
-                         color={0,0,127}));
-    connect(uHea, hysSta2.u) annotation (Line(points={{-120,0},{-84,0},{-84,-40},
-            {-52.4,-40}}, color={0,0,127}));
-    connect(hysSta2.y, booleanToReal1.u) annotation (Line(points={{-24.8,-40},{
-            -10,-40}},                        color={255,0,255}));
-    connect(hys_Sta1.y, booleanToReal.u) annotation (Line(points={{-24.8,
-            4.44089e-16},{-10,4.44089e-16},{-10,0}},
-                                color={255,0,255}));
-    connect(booleanToReal.y, add.u2) annotation (Line(points={{13,0},{20,0},{20,
-            -14},{25.6,-14},{25.6,-12.8}},
-                                        color={0,0,127}));
-    connect(booleanToReal1.y, add.u1) annotation (Line(points={{13,-40},{20,-40},
-            {20,-27.2},{25.6,-27.2}}, color={0,0,127}));
+    connect(booleanToReal.y, add.u2) annotation (Line(points={{19,0},{20,0},{20,-14},
+            {25.6,-14},{25.6,-12.8}},   color={0,0,127}));
+    connect(booleanToReal1.y, add.u1) annotation (Line(points={{19,-40},{20,-40},{
+            20,-27.2},{25.6,-27.2}},  color={0,0,127}));
     connect(add.y, switch4.u1) annotation (Line(points={{53.2,-20},{56,-20},{56,
             48},{62,48}},       color={0,0,127}));
     connect(switch4.y, y_Sta) annotation (Line(points={{85,40},{92,40},{92,0},{
             120,0}}, color={0,0,127}));
+    connect(const2.y, onOffSta2.reference) annotation (Line(points={{-59.2,-20},{-54,
+            -20},{-54,-34},{-48,-34}}, color={0,0,127}));
+    connect(const1.y, onOffSta1.reference) annotation (Line(points={{-59.2,20},{-54,
+            20},{-54,6},{-48,6}}, color={0,0,127}));
+    connect(onOffSta1.u, uHea) annotation (Line(points={{-48,-6},{-84,-6},{-84,0},
+            {-120,0}}, color={0,0,127}));
+    connect(onOffSta2.u, uHea) annotation (Line(points={{-48,-46},{-84,-46},{-84,0},
+            {-120,0}}, color={0,0,127}));
+    connect(onOffSta1.y, not1.u)
+      annotation (Line(points={{-25,0},{-19.6,0}}, color={255,0,255}));
+    connect(booleanToReal.u, not1.y)
+      annotation (Line(points={{-4,0},{-9.2,0}}, color={255,0,255}));
+    connect(booleanToReal1.u, not2.y)
+      annotation (Line(points={{-4,-40},{-9.2,-40}}, color={255,0,255}));
+    connect(onOffSta2.y, not2.u)
+      annotation (Line(points={{-25,-40},{-19.6,-40}}, color={255,0,255}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
             Line(
             points={{-58,-84},{-58,12},{4,12},{4,74},{82,74}},
@@ -3720,6 +3738,10 @@ First implementation.
     parameter Real uUppSta1 = uUppSta1 "PI upper bound to activate stage 1";
     parameter Real uLowSta2 = uLowSta2 "PI lower bound to activate stage 2";
     parameter Real uUppSta2 = uUppSta2 "PI upper bound to activate stage 2";
+    parameter Real kSta1 = kSta1 "PI center line to activate stage 1";
+    parameter Real kSta2 = kSta2 "PI center line to activate stage 2";
+    parameter Real banSta1 = banSta1 "PI band to activate stage 1";
+    parameter Real banSta2 = banSta2 "PI band to activate stage 2";
 
     Modelica.Blocks.Interfaces.RealInput TSetRooHea(final unit="K", displayUnit=
           "degC")
@@ -3765,8 +3787,14 @@ First implementation.
       uLowSta1=uLowSta1,
       uUppSta1=uUppSta1,
       uLowSta2=uLowSta2,
-      uUppSta2=uUppSta2)
-      annotation (Placement(transformation(extent={{74,140},{94,160}})));
+      uUppSta2=uUppSta2,
+      kSta1=kSta1,
+      kSta2=kSta2,
+      banSta1=banSta1,
+      banSta2=banSta2)
+      annotation (Placement(transformation(extent={{-8,-8},{8,8}},
+          rotation=-90,
+          origin={-26,162})));
     Modelica.Blocks.Logical.Switch swiTim "Switch for turning heating on/off"
       annotation (Placement(transformation(extent={{44,48},{64,68}})));
     Modelica.Blocks.Logical.OnOffController onOffConHea(bandwidth=1)
@@ -3788,9 +3816,6 @@ First implementation.
               {{100,80},{136,116}}), iconTransformation(extent={{100,80},{136,
               116}})));
   equation
-    connect(conHea.y, swiHea.u1) annotation (Line(points={{-37,180},{-24,180},{
-            -24,144},{2,144}},
-                            color={0,0,127}));
     connect(offHea.y, swiHea.u3) annotation (Line(points={{-27,50},{-14,50},{
             -14,128},{2,128}},
                       color={0,0,127}));
@@ -3819,11 +3844,6 @@ First implementation.
     connect(swiHea.y, UppLimSwi.u3) annotation (Line(points={{25,136},{28,136},
             {28,202},{38,202}},
                        color={0,0,127}));
-    connect(swiTim.y, heatStage.uHea) annotation (Line(points={{65,58},{68,58},
-            {68,150},{72,150}},
-                            color={0,0,127}));
-    connect(heatStage.y_Sta, heaSta) annotation (Line(points={{96,150},{118,150}},
-                                 color={0,0,127}));
     connect(UppLimSwi.u2, NotLim.y) annotation (Line(points={{38,210},{26,210},
             {26,206},{20.6,206}}, color={255,0,255}));
     connect(onOffConSupHeatSetPoi.y, NotLim.u) annotation (Line(points={{-9,6},
@@ -3841,6 +3861,14 @@ First implementation.
             255}));
     connect(onOffConHea.y, heaCal) annotation (Line(points={{-63,136},{-56,136},
             {-56,98},{118,98}}, color={255,0,255}));
+    connect(conHea.y, heatStage.uHea) annotation (Line(points={{-37,180},{-26,180},
+            {-26,171.6}}, color={0,0,127}));
+    connect(heatStage.y_Sta, swiHea.u1)
+      annotation (Line(points={{-26,152.4},{-26,144},{2,144}}, color={0,0,127}));
+    connect(swiTim.y, heaSta) annotation (Line(points={{65,58},{80,58},{80,150},{118,
+            150}}, color={0,0,127}));
+    connect(heaSta, heaSta)
+      annotation (Line(points={{118,150},{118,150}}, color={0,0,127}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,0},
               {100,220}}),       graphics={
                                   Rectangle(
