@@ -887,7 +887,7 @@ defined as parameters.
     package Examples
       "Collection of models that illustrate model use and test models"
 
-      model TestPartialRTUHP
+      model TesRTUHP
         "Example for the reversible heat pump model with ports to connect to other RTU components"
        extends Modelica.Icons.Example;
        extends hil_flexlab_model.Fluid.HeatPumps.BaseClasses.RTUHP;
@@ -962,7 +962,7 @@ defined as parameters.
         connect(combiTimeTable.y[4], outsideTemptoKelvin.Fahrenheit)
           annotation (Line(points={{-135,-82},{-120,-82},{-120,-60},{-98,-60}},
               color={0,0,127}));
-        connect(staTest.y, gain.u) annotation (Line(points={{-123.2,60},{-108,
+        connect(staTest.y, nSetGai.u) annotation (Line(points={{-123.2,60},{-108,
                 60},{-108,46},{-92,46}}, color={0,0,127}));
         connect(fanSup.port_b, port_a)
           annotation (Line(points={{-114,0},{-100,0}}, color={0,127,255}));
@@ -1006,7 +1006,274 @@ defined as parameters.
 </ul>
 </html>"),__Dymola_Commands(file="Modelica://AixLib/Resources/Scripts/Dymola/Fluid/HeatPumps/Examples/HeatPump.mos" "Simulate and plot"),
           Icon(coordinateSystem(extent={{-100,-100},{100,80}})));
-      end TestPartialRTUHP;
+      end TesRTUHP;
+
+      model TesFMU "Example for the heat pump and controls FMU"
+       extends Modelica.Icons.Example;
+
+        parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
+        parameter Real k_hea=0.18 "Proportional gain of heating controller";
+        parameter Modelica.SIunits.Time Ti_hea=2400 "Integral time constant of heating controller";
+        parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 310 "max supply air temperature";
+        parameter Real uLowSta1 = 0.05 "PI lower bound to activate stage 1";
+        parameter Real uUppSta1 = 0.15 "PI upper bound to activate stage 1";
+        parameter Real uLowSta2 = 0.35 "PI lower bound to activate stage 2";
+        parameter Real uUppSta2 = 0.45 "PI upper bound to activate stage 2";
+        parameter Real kSta1 = 0.05 "PI center line to activate stage 1";
+        parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
+        parameter Real banSta1 = 0.01 "PI band to activate stage 1";
+        parameter Real banSta2 = 0.01 "PI band to activate stage 2";
+
+        Buildings.Controls.OBC.UnitConversions.From_cfm from_cfm annotation (
+            Placement(transformation(extent={{-84,30},{-68,46}})));
+        Modelica.Blocks.Sources.Constant den(final k=1.189) "Fixed density of air"
+                                 annotation (Placement(transformation(
+              extent={{8,8},{-8,-8}},
+              rotation=180,
+              origin={-76,66})));
+        Modelica.Blocks.Math.Product m3s_kgs annotation (Placement(
+              transformation(extent={{-6,-6},{6,6}},
+              rotation=0,
+              origin={-50,44})));
+        Aachen_HP_2stage_FMU aachen_HP_2stage_FMU(
+          refIneFre=refIneFre,
+          k_hea=k_hea,
+          Ti_hea=Ti_hea,
+          maxSAT=maxSAT,
+          uLowSta1=uLowSta1,
+          uUppSta1=uUppSta1,
+          uLowSta2=uLowSta2,
+          uUppSta2=uUppSta2,
+          kSta1=kSta1,
+          kSta2=kSta2,
+          banSta1=banSta1,
+          banSta2=banSta2)
+          annotation (Placement(transformation(extent={{-20,-20},{20,20}})));
+        Modelica.Blocks.Math.Add sumTem(k1=1.65, k2=0.35)
+                                        annotation (Placement(transformation(
+              extent={{-6,-6},{6,6}},
+              rotation=0,
+              origin={-50,16})));
+        Modelica.Blocks.Math.Gain aveTem(k=0.5) annotation (Placement(
+              transformation(
+              extent={{-4,-4},{4,4}},
+              rotation=0,
+              origin={-34,8})));
+        Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(
+          tableOnFile=true,
+          tableName="tab1",
+          fileName=ModelicaServices.ExternalReferences.loadResource("modelica://hil_flexlab_model/Data/2022-02-18_HP_Filtered.txt"),
+          columns=6:20,
+          smoothness=Modelica.Blocks.Types.Smoothness.MonotoneContinuousDerivative1,
+          timeScale=60)
+          annotation (Placement(transformation(extent={{-120,-10},{-100,10}})));
+
+        Modelica.Blocks.Interfaces.RealOutput supTemMea
+          "Measured supply air temperature" annotation (Placement(
+              transformation(extent={{100,-80},{120,-60}}), iconTransformation(
+                extent={{100,-80},{120,-60}})));
+        Modelica.Blocks.Interfaces.RealOutput powTotMea "Measured power"
+          annotation (Placement(transformation(extent={{100,-100},{120,-80}}),
+              iconTransformation(extent={{100,-100},{120,-80}})));
+        Modelica.Thermal.HeatTransfer.Celsius.FromKelvin  supplyTemptoCelsius
+          annotation (Placement(transformation(extent={{20,-88},{36,-72}})));
+        Modelica.Thermal.HeatTransfer.Fahrenheit.ToKelvin supplyTemptoKelvin
+          annotation (Placement(transformation(extent={{-76,-88},{-60,-72}})));
+        Modelica.Blocks.Math.Add sta annotation (Placement(transformation(
+              extent={{6,-6},{-6,6}},
+              rotation=180,
+              origin={-76,90})));
+        Modelica.Blocks.Interfaces.RealOutput staMea "Measured stage"
+          annotation (Placement(transformation(extent={{100,60},{120,80}}),
+              iconTransformation(extent={{100,60},{120,80}})));
+        Modelica.Thermal.HeatTransfer.Fahrenheit.ToKelvin outsideTemptoKelvin
+          annotation (Placement(transformation(extent={{-84,-8},{-68,8}})));
+        Modelica.Blocks.Interfaces.RealOutput powTotMod "Modeled power"
+          annotation (Placement(transformation(extent={{100,10},{120,30}}),
+              iconTransformation(extent={{100,10},{120,30}})));
+        Modelica.Blocks.Interfaces.RealOutput supTemMod
+          "Modeled supply air temperature" annotation (Placement(transformation(
+                extent={{100,-10},{120,10}}), iconTransformation(extent={{100,
+                  -10},{120,10}})));
+        Modelica.Blocks.Interfaces.BooleanOutput heaCalMod annotation (
+            Placement(transformation(extent={{100,-30},{120,-10}}),
+              iconTransformation(extent={{100,-30},{120,-10}})));
+        Modelica.Thermal.HeatTransfer.Fahrenheit.ToKelvin rooTemptoKelvin
+          annotation (Placement(transformation(extent={{-76,-56},{-60,-40}})));
+        Modelica.Thermal.HeatTransfer.Fahrenheit.ToKelvin retTemptoKelvin
+          annotation (Placement(transformation(extent={{-84,12},{-68,28}})));
+        Modelica.Thermal.HeatTransfer.Celsius.FromKelvin supplyTempModtoCelsius
+          annotation (Placement(transformation(extent={{72,-8},{88,8}})));
+        Modelica.Thermal.HeatTransfer.Fahrenheit.ToKelvin setpointTemptoKelvin
+          annotation (Placement(transformation(extent={{-76,-34},{-60,-18}})));
+        Modelica.Blocks.Sources.Constant cp(final k=1006)
+          "Fixed specific heat of air" annotation (Placement(transformation(
+              extent={{8,8},{-8,-8}},
+              rotation=180,
+              origin={-40,66})));
+        Modelica.Blocks.Math.Add dTMea(k2=-1) annotation (Placement(transformation(
+              extent={{6,-6},{-6,6}},
+              rotation=180,
+              origin={48,-30})));
+        Modelica.Blocks.Math.Add dTMod(k2=-1) annotation (Placement(transformation(
+              extent={{6,-6},{-6,6}},
+              rotation=180,
+              origin={48,30})));
+        Modelica.Blocks.Math.Product mcp annotation (Placement(transformation(
+              extent={{-6,-6},{6,6}},
+              rotation=0,
+              origin={48,56})));
+        Modelica.Blocks.Interfaces.RealOutput qdotMod "Modeled thermal power"
+          annotation (Placement(transformation(extent={{100,34},{120,54}}),
+              iconTransformation(extent={{100,10},{120,30}})));
+        Modelica.Blocks.Interfaces.RealOutput qdotMea "Measured thermal power"
+          annotation (Placement(transformation(extent={{100,-54},{120,-34}}),
+              iconTransformation(extent={{100,10},{120,30}})));
+        Modelica.Blocks.Math.Product mcpdTMod annotation (Placement(transformation(
+              extent={{-6,-6},{6,6}},
+              rotation=0,
+              origin={82,44})));
+        Modelica.Blocks.Math.Product mcpdTMea annotation (Placement(transformation(
+              extent={{-6,-6},{6,6}},
+              rotation=0,
+              origin={84,-44})));
+        Modelica.Blocks.Interfaces.RealOutput PIHeaDemMea
+          "Measured PI heating demand" annotation (Placement(transformation(extent={{100,
+                  110},{120,90}}), iconTransformation(extent={{100,60},{120,80}})));
+        Modelica.Blocks.Math.Gain gaiPIHeaDem(k=0.01) annotation (Placement(
+              transformation(
+              extent={{-4,4},{4,-4}},
+              rotation=0,
+              origin={88,100})));
+      equation
+
+        connect(from_cfm.y, m3s_kgs.u2) annotation (Line(points={{-66.4,38},{-62,38},{
+                -62,40.4},{-57.2,40.4}},          color={0,0,127}));
+        connect(m3s_kgs.u1, den.y) annotation (Line(points={{-57.2,47.6},{-64,47.6},{-64,
+                66},{-67.2,66}},               color={0,0,127}));
+        connect(m3s_kgs.y, aachen_HP_2stage_FMU.u_m_flow) annotation (Line(
+              points={{-43.4,44},{-32,44},{-32,16},{-24,16}},
+                                                            color={0,0,127}));
+        connect(combiTimeTable.y[5], from_cfm.u) annotation (Line(points={{-99,
+                0},{-94,0},{-94,38},{-85.6,38}}, color={0,0,127}));
+        connect(supplyTemptoCelsius.Celsius, supTemMea) annotation (Line(points=
+               {{36.8,-80},{74,-80},{74,-70},{110,-70}}, color={0,0,127}));
+        connect(supplyTemptoKelvin.Kelvin,supplyTemptoCelsius. Kelvin)
+          annotation (Line(points={{-59.2,-80},{18.4,-80}},
+                                                        color={0,0,127}));
+        connect(combiTimeTable.y[3], supplyTemptoKelvin.Fahrenheit) annotation (
+           Line(points={{-99,0},{-94,0},{-94,-80},{-77.6,-80}}, color={0,0,127}));
+        connect(combiTimeTable.y[9], powTotMea) annotation (Line(points={{-99,0},
+                {-94,0},{-94,-90},{110,-90}}, color={0,0,127}));
+        connect(combiTimeTable.y[10], sta.u2) annotation (Line(points={{-99,0},
+                {-94,0},{-94,93.6},{-83.2,93.6}}, color={0,0,127}));
+        connect(combiTimeTable.y[11], sta.u1) annotation (Line(points={{-99,0},
+                {-94,0},{-94,86.4},{-83.2,86.4}}, color={0,0,127}));
+        connect(combiTimeTable.y[4], outsideTemptoKelvin.Fahrenheit)
+          annotation (Line(points={{-99,0},{-85.6,0}}, color={0,0,127}));
+        connect(outsideTemptoKelvin.Kelvin, aachen_HP_2stage_FMU.u_TDryBul)
+          annotation (Line(points={{-67.2,0},{-24,0}}, color={0,0,127}));
+        connect(sumTem.y, aveTem.u) annotation (Line(points={{-43.4,16},{-40,16},
+                {-40,8},{-38.8,8}}, color={0,0,127}));
+        connect(aveTem.y, aachen_HP_2stage_FMU.u_TMix)
+          annotation (Line(points={{-29.6,8},{-24,8}}, color={0,0,127}));
+        connect(powTotMod, powTotMod)
+          annotation (Line(points={{110,20},{110,20}}, color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.y_PEleHP, powTotMod) annotation (Line(
+              points={{22,13.6},{60,13.6},{60,20},{110,20}}, color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.y_HeaCal, heaCalMod) annotation (Line(
+              points={{22,-8},{60,-8},{60,-20},{110,-20}},     color={255,0,255}));
+        connect(combiTimeTable.y[1], rooTemptoKelvin.Fahrenheit) annotation (
+            Line(points={{-99,0},{-94,0},{-94,-48},{-77.6,-48}}, color={0,0,127}));
+        connect(rooTemptoKelvin.Kelvin, aachen_HP_2stage_FMU.u_TRoo)
+          annotation (Line(points={{-59.2,-48},{-40,-48},{-40,-16},{-24,-16}},
+              color={0,0,127}));
+        connect(retTemptoKelvin.Kelvin, sumTem.u1) annotation (Line(points={{
+                -67.2,20},{-58,20},{-58,19.6},{-57.2,19.6}}, color={0,0,127}));
+        connect(combiTimeTable.y[2], retTemptoKelvin.Fahrenheit) annotation (
+            Line(points={{-99,0},{-94,0},{-94,20},{-85.6,20}}, color={0,0,127}));
+        connect(outsideTemptoKelvin.Kelvin, sumTem.u2) annotation (Line(points=
+                {{-67.2,0},{-62,0},{-62,12},{-58,12},{-58,12.4},{-57.2,12.4}},
+              color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.y_TSup, supplyTempModtoCelsius.Kelvin)
+          annotation (Line(points={{22,8.4},{60,8.4},{60,0},{70.4,0}}, color={0,
+                0,127}));
+        connect(supplyTempModtoCelsius.Celsius, supTemMod)
+          annotation (Line(points={{88.8,0},{110,0}}, color={0,0,127}));
+        connect(sta.y, staMea) annotation (Line(points={{-69.4,90},{16,90},{16,
+                70},{110,70}}, color={0,0,127}));
+        connect(combiTimeTable.y[12], setpointTemptoKelvin.Fahrenheit) annotation (
+            Line(points={{-99,0},{-94,0},{-94,-26},{-77.6,-26}}, color={0,0,127}));
+        connect(setpointTemptoKelvin.Kelvin, aachen_HP_2stage_FMU.u_TRooSetPoi)
+          annotation (Line(points={{-59.2,-26},{-50,-26},{-50,-8},{-24,-8}}, color={0,
+                0,127}));
+        connect(m3s_kgs.y, mcp.u2) annotation (Line(points={{-43.4,44},{-32,44},{-32,52.4},
+                {40.8,52.4}}, color={0,0,127}));
+        connect(cp.y, mcp.u1) annotation (Line(points={{-31.2,66},{10,66},{10,60},{40,
+                60},{40,59.6},{40.8,59.6}}, color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.u_TMix, dTMea.u2) annotation (Line(points={{-24,8},
+                {-30,8},{-30,-26.4},{40.8,-26.4}}, color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.y_TSup, dTMod.u1) annotation (Line(points={{22,8.4},
+                {32,8.4},{32,26.4},{40.8,26.4}}, color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.u_TMix, dTMod.u2) annotation (Line(points={{-24,8},
+                {-30,8},{-30,33.6},{40.8,33.6}}, color={0,0,127}));
+        connect(supplyTemptoKelvin.Kelvin, dTMea.u1) annotation (Line(points={{-59.2,-80},
+                {-10,-80},{-10,-33.6},{40.8,-33.6}}, color={0,0,127}));
+        connect(mcpdTMea.y, qdotMea)
+          annotation (Line(points={{90.6,-44},{110,-44}}, color={0,0,127}));
+        connect(mcpdTMod.y, qdotMod)
+          annotation (Line(points={{88.6,44},{110,44}}, color={0,0,127}));
+        connect(dTMod.y, mcpdTMod.u2) annotation (Line(points={{54.6,30},{60,30},{60,40.4},
+                {74.8,40.4}}, color={0,0,127}));
+        connect(dTMea.y, mcpdTMea.u1) annotation (Line(points={{54.6,-30},{60,-30},{60,
+                -40},{76,-40},{76,-40.4},{76.8,-40.4}}, color={0,0,127}));
+        connect(mcp.y, mcpdTMod.u1) annotation (Line(points={{54.6,56},{64,56},{64,48},
+                {74,48},{74,47.6},{74.8,47.6}}, color={0,0,127}));
+        connect(mcp.y, mcpdTMea.u2) annotation (Line(points={{54.6,56},{64,56},{64,-47.6},
+                {76.8,-47.6}}, color={0,0,127}));
+        connect(PIHeaDemMea, gaiPIHeaDem.y)
+          annotation (Line(points={{110,100},{92.4,100}}, color={0,0,127}));
+        connect(combiTimeTable.y[15], gaiPIHeaDem.u) annotation (Line(points={{-99,0},
+                {-94,0},{-94,100},{83.2,100}}, color={0,0,127}));
+        annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
+                  -100},{100,100}})),
+          experiment(
+            StopTime=42000,
+            Interval=1,
+            Tolerance=1e-06),
+      __Dymola_Commands(file="modelica://AixLib/Resources/Scripts/Dymola/Fluid/HeatPumps/Examples/HeatPump.mos"
+              "Simulate and plot"),
+          Documentation(info="<html><h4>
+  <span style=\"color: #008000\">Overview</span>
+</h4>
+<p>
+  Simple test set-up for the HeatPumpDetailed model. The heat pump is
+  turned on and off while the source temperature increases linearly.
+  Outputs are the electric power consumption of the heat pump and the
+  supply temperature.
+</p>
+<p>
+  Besides using the default simple table data, the user should also
+  test tabulated data from <a href=
+  \"modelica://AixLib.DataBase.HeatPump\">AixLib.DataBase.HeatPump</a> or
+  polynomial functions.
+</p>
+</html>",   revisions="<html><ul>
+  <li>
+    <i>May 22, 2019</i> by Julian Matthes:<br/>
+    Rebuild due to the introducion of the thermal machine partial model
+    (see issue <a href=
+    \"https://github.com/RWTH-EBC/AixLib/issues/715\">#715</a>)
+  </li>
+  <li>
+    <i>November 26, 2018&#160;</i> by Fabian Wüllhorst:<br/>
+    First implementation (see issue <a href=
+    \"https://github.com/RWTH-EBC/AixLib/issues/577\">#577</a>)
+  </li>
+</ul>
+</html>"),__Dymola_Commands(file="Modelica://AixLib/Resources/Scripts/Dymola/Fluid/HeatPumps/Examples/HeatPump.mos" "Simulate and plot"),
+          Icon(coordinateSystem(extent={{-100,-100},{100,80}})));
+      end TesFMU;
       annotation (Icon(graphics={
             Rectangle(
               lineColor={200,200,200},
@@ -1417,108 +1684,107 @@ defined as parameters.
 
       model RTUHP "Model for RTU HP"
 
-       replaceable package Medium_sin = Buildings.Media.Air
-         constrainedby Modelica.Media.Interfaces.PartialMedium annotation (choicesAllMatching=true);
-       replaceable package Medium_sou = Buildings.Media.Air
-         constrainedby Modelica.Media.Interfaces.PartialMedium annotation (choicesAllMatching=true);
+       replaceable package Medium_sou = Buildings.Media.Air;
+       replaceable package Medium_sin = Buildings.Media.Air;
+       parameter Real refIneFre = refIneFre "refrigerant inertia parameter";
 
-       Buildings.Fluid.Sources.MassFlowSource_T             sourceSideMassFlowSource(
-         use_T_in=true,
-         m_flow=1,
-         nPorts=1,
-         redeclare package Medium = Medium_sou,
-         T=275.15) "Ideal mass flow source at the inlet of the source side"
-                   annotation (Placement(transformation(extent={{-62,-74},{-42,-54}})));
-       Buildings.Fluid.Sources.Boundary_pT               sourceSideFixedBoundary(nPorts=1,
-           redeclare package Medium = Medium_sou)
-               "Fixed boundary at the outlet of the source side"
-               annotation (Placement(transformation(extent={{-11,11},{11,-11}},
-             rotation=0,
-             origin={-53,-31})));
-       HeatPump heatPump(
-         Q_useNominal=6535,
-         refIneFre_constant=0.001,
-         nthOrder=3,
-         useBusConnectorOnly=true,
-         CEva=100,
-         GEvaOut=5,
-         CCon=100,
-         GConOut=5,
-         dpEva_nominal=0,
-         dpCon_nominal=0,
-         VCon=0.4,
-         use_conCap=false,
-         redeclare package Medium_con = Medium_sin,
-         redeclare package Medium_eva = Medium_sou,
-         use_refIne=true,
-         use_rev=false,
-         TCon_start=290.15,
-         TEva_start=281.15,
-         redeclare model PerDataMainHP =
-             AixLib.DataBase.HeatPump.PerformanceData.LookUpTable2D (dataTable=
-                hil_flexlab_model.Fluid.HeatPumps.Data.RongxinSampleHP()),
-         redeclare model PerDataRevHP =
-             AixLib.DataBase.Chiller.PerformanceData.LookUpTable2D (smoothness=
-                Modelica.Blocks.Types.Smoothness.LinearSegments, dataTable=
-                 AixLib.DataBase.Chiller.EN14511.Vitocal200AWO201()),
-         VEva=0.04,
-         use_evaCap=false,
-         scalingFactor=1,
-         energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
-         mFlow_conNominal=0.5,
-         mFlow_evaNominal=0.5,
-         use_autoCalc=false,
-         TAmbEva_nominal=273.15,
-         TAmbCon_nominal=288.15)
-                            annotation (Placement(transformation(
-             extent={{-24,-29},{24,29}},
-             rotation=0,
-             origin={2,-15})));
+       Buildings.Fluid.Sources.MassFlowSource_T inSou(
+          use_T_in=true,
+          m_flow=1,
+          nPorts=1,
+          redeclare package Medium = Medium_sou) "Ideal mass flow source at the inlet of the source side"
+          annotation (Placement(transformation(extent={{-62,-74},{-42,-54}})));
+       Buildings.Fluid.Sources.Boundary_pT outSou(nPorts=1, redeclare package
+            Medium = Medium_sou)
+          "Fixed boundary at the outlet of the source side" annotation (
+            Placement(transformation(
+              extent={{-11,11},{11,-11}},
+              rotation=0,
+              origin={-53,-29})));
+       HeatPump heaPum(
+          Q_useNominal=6535,
+          refIneFre_constant= refIneFre,
+          nthOrder=3,
+          useBusConnectorOnly=true,
+          CEva=100,
+          GEvaOut=5,
+          CCon=100,
+          GConOut=5,
+          dpEva_nominal=0,
+          dpCon_nominal=0,
+          VCon=0.4,
+          use_conCap=false,
+          redeclare package Medium_con = Medium_sin,
+          redeclare package Medium_eva = Medium_sou,
+          use_refIne=true,
+          use_rev=false,
+          TCon_start=290.15,
+          TEva_start=281.15,
+          redeclare model PerDataMainHP =
+              AixLib.DataBase.HeatPump.PerformanceData.LookUpTable2D (dataTable=
+                 hil_flexlab_model.Fluid.HeatPumps.Data.RongxinSampleHP()),
+          redeclare model PerDataRevHP =
+              AixLib.DataBase.Chiller.PerformanceData.LookUpTable2D (smoothness=
+                 Modelica.Blocks.Types.Smoothness.LinearSegments, dataTable=
+                  AixLib.DataBase.Chiller.EN14511.Vitocal200AWO201()),
+          VEva=0.04,
+          use_evaCap=false,
+          scalingFactor=1.35,
+          energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
+          mFlow_conNominal=0.5,
+          mFlow_evaNominal=0.5,
+          use_autoCalc=true,
+          TAmbEva_nominal=273.15,
+          TAmbCon_nominal=288.15) annotation (Placement(transformation(
+              extent={{-23,-28},{23,28}},
+              rotation=0,
+              origin={3.00001,-14})));
 
-       Modelica.Blocks.Sources.BooleanConstant booleanConstant
-         annotation (Placement(transformation(extent={{-6,-6},{6,6}},
-             rotation=0,
-             origin={-52,64})));
+       Modelica.Blocks.Sources.BooleanConstant heaOn annotation (Placement(
+              transformation(
+              extent={{-6,-6},{6,6}},
+              rotation=0,
+              origin={-52,64})));
 
-       Buildings.Fluid.Sensors.TemperatureTwoPort
-                                               senTAct(
-         final m_flow_nominal=heatPump.m1_flow_nominal,
-         final tau=1,
-         final initType=Modelica.Blocks.Types.Init.InitialState,
-         final tauHeaTra=1200,
-         final allowFlowReversal=heatPump.allowFlowReversalCon,
-         final transferHeat=false,
-         redeclare final package Medium = Medium_sin,
-         final T_start=303.15,
-         final TAmb=291.15) "Temperature at sink inlet" annotation (Placement(
-             transformation(
-             extent={{-10,-10},{10,10}},
-             rotation=0,
-             origin={60,0})));
+        Buildings.Fluid.Sensors.TemperatureTwoPort senTAct(
+          final m_flow_nominal=heaPum.m1_flow_nominal,
+          final tau=1,
+          final initType=Modelica.Blocks.Types.Init.InitialState,
+          final tauHeaTra=1200,
+          final allowFlowReversal=heaPum.allowFlowReversalCon,
+          final transferHeat=false,
+          redeclare final package Medium = Medium_sin,
+          final T_start=303.15,
+          final TAmb=291.15) "Temperature at sink inlet" annotation (Placement(
+              transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=0,
+              origin={60,0})));
        Modelica.Blocks.Sources.Constant iceFac(final k=1)
          "Fixed value for icing factor. 1 means no icing/frosting (full heat transfer in heat exchanger)" annotation (Placement(
              transformation(
              extent={{8,8},{-8,-8}},
              rotation=180,
              origin={-60,20})));
-       Modelica.Blocks.Math.Gain gain(k=0.5)
-         annotation (Placement(transformation(extent={{-90,36},{-70,56}})));
+       Modelica.Blocks.Math.Gain nSetGai(k=0.5)
+          annotation (Placement(transformation(extent={{-90,36},{-70,56}})));
        AixLib.Controls.Interfaces.VapourCompressionMachineControlBus sigBus1
          annotation (Placement(transformation(extent={{-36,16},{-6,50}}),
              iconTransformation(extent={{-24,24},{-6,50}})));
-       Modelica.Blocks.Interfaces.RealOutput P(quantity="Power", unit="W")
-         "Electrical power consumed by the unit"
-         annotation (Placement(transformation(extent={{100,70},{120,90}})));
-       Modelica.Blocks.Interfaces.RealInput TEvaIn(unit="K", displayUnit="degC")
-                     "Outside air dry bulb temperature"
-         annotation (Placement(transformation(extent={{-120,-90},{-100,-70}})));
+       Modelica.Blocks.Interfaces.RealOutput PEle(quantity="Power", unit="W")
+          "Electrical power consumed by the unit"
+          annotation (Placement(transformation(extent={{100,70},{120,90}})));
+       Modelica.Blocks.Interfaces.RealInput TEvaIn(quantity=
+              "ThermodynamicTemperature", unit="K", displayUnit="degC")
+          "Outside air dry bulb temperature" annotation (Placement(
+              transformation(extent={{-120,-90},{-100,-70}})));
        Modelica.Blocks.Interfaces.RealInput sta "Heating stage" annotation (
-           Placement(transformation(extent={{-120,70},{-100,90}}),
-             iconTransformation(extent={{-120,70},{-100,90}})));
-       Modelica.Blocks.Interfaces.RealOutput TSup(quantity="ThermodynamicTemperature",
-           unit="K")
-         "Electrical power consumed by the unit"
-         annotation (Placement(transformation(extent={{100,50},{120,70}})));
+            Placement(transformation(extent={{-120,70},{-100,90}}),
+              iconTransformation(extent={{-120,70},{-100,90}})));
+       Modelica.Blocks.Interfaces.RealOutput TSup(quantity=
+              "ThermodynamicTemperature", unit="K", displayUnit="degC")
+          "Electrical power consumed by the unit"
+          annotation (Placement(transformation(extent={{100,50},{120,70}})));
        Modelica.Fluid.Interfaces.FluidPort_a port_a(redeclare package Medium =
              Medium_sin)
          annotation (Placement(transformation(extent={{-110,-10},{-90,10}})));
@@ -1526,20 +1792,19 @@ defined as parameters.
              Medium_sin)
          annotation (Placement(transformation(extent={{90,-10},{110,10}})));
       equation
-       connect(sourceSideMassFlowSource.ports[1],heatPump. port_a2) annotation (Line(
-             points={{-42,-64},{26,-64},{26,-29.5}},             color={0,127,255}));
-       connect(heatPump.port_b2,sourceSideFixedBoundary. ports[1]) annotation (Line(
-             points={{-22,-29.5},{-22,-30},{-42,-30},{-42,-31}},
-                                                           color={0,127,255}));
-       connect(heatPump.port_b1,senTAct. port_a) annotation (Line(points={{26,-0.5},{
-               30,-0.5},{30,0},{50,0}},     color={0,127,255}));
-       connect(booleanConstant.y,sigBus1. modeSet) annotation (Line(points={{-45.4,64},
-               {-22,64},{-22,33.085},{-20.925,33.085}},            color={255,
-               0,255}), Text(
-           string="%second",
-           index=1,
-           extent={{-6,3},{-6,3}},
-           horizontalAlignment=TextAlignment.Right));
+        connect(inSou.ports[1], heaPum.port_a2) annotation (Line(points={{-42,
+                -64},{26,-64},{26,-28}}, color={0,127,255}));
+        connect(heaPum.port_b2, outSou.ports[1]) annotation (Line(points={{-20,
+                -28},{-42,-28},{-42,-29}}, color={0,127,255}));
+        connect(heaPum.port_b1, senTAct.port_a)
+          annotation (Line(points={{26,0},{50,0}}, color={0,127,255}));
+        connect(heaOn.y, sigBus1.modeSet) annotation (Line(points={{-45.4,64},{
+                -22,64},{-22,33.085},{-20.925,33.085}}, color={255,0,255}),
+            Text(
+            string="%second",
+            index=1,
+            extent={{-6,3},{-6,3}},
+            horizontalAlignment=TextAlignment.Right));
        connect(iceFac.y,sigBus1. iceFacMea) annotation (Line(points={{-51.2,20},{-24,
                20},{-24,32},{-22,32},{-22,33.085},{-20.925,33.085}},
                                                    color={0,0,127}), Text(
@@ -1547,38 +1812,38 @@ defined as parameters.
            index=1,
            extent={{6,3},{6,3}},
            horizontalAlignment=TextAlignment.Left));
-       connect(sigBus1,heatPump. sigBus) annotation (Line(
-           points={{-21,33},{-21,16},{-30,16},{-30,-24.425},{-21.76,-24.425}},
-           color={255,204,51},
-           thickness=0.5), Text(
-           string="%first",
-           index=-1,
-           extent={{-6,3},{-6,3}},
-           horizontalAlignment=TextAlignment.Right));
-       connect(sigBus1.PelMea,P)  annotation (Line(
-           points={{-20.925,33.085},{-4,33.085},{-4,80},{110,80}},
-           color={255,204,51},
-           thickness=0.5), Text(
-           string="%first",
-           index=-1,
-           extent={{-6,3},{-6,3}},
-           horizontalAlignment=TextAlignment.Right));
-       connect(gain.y,sigBus1. nSet) annotation (Line(points={{-69,46},{-46,46},{-46,
-               33.085},{-20.925,33.085}},      color={0,0,127}), Text(
-           string="%second",
-           index=1,
-           extent={{6,3},{6,3}},
-           horizontalAlignment=TextAlignment.Left));
-       connect(senTAct.T,TSup)  annotation (Line(points={{60,11},{60,60},{110,60}},
-                     color={0,0,127}));
-       connect(port_a,heatPump. port_a1) annotation (Line(points={{-100,0},{-62,0},{-62,
-               -0.5},{-22,-0.5}},             color={0,127,255}));
+        connect(sigBus1, heaPum.sigBus) annotation (Line(
+            points={{-21,33},{-21,16},{-30,16},{-30,-23.1},{-19.77,-23.1}},
+            color={255,204,51},
+            thickness=0.5), Text(
+            string="%first",
+            index=-1,
+            extent={{-6,3},{-6,3}},
+            horizontalAlignment=TextAlignment.Right));
+        connect(sigBus1.PelMea, PEle) annotation (Line(
+            points={{-20.925,33.085},{-4,33.085},{-4,80},{110,80}},
+            color={255,204,51},
+            thickness=0.5), Text(
+            string="%first",
+            index=-1,
+            extent={{-6,3},{-6,3}},
+            horizontalAlignment=TextAlignment.Right));
+        connect(nSetGai.y, sigBus1.nSet) annotation (Line(points={{-69,46},{-46,
+                46},{-46,33.085},{-20.925,33.085}}, color={0,0,127}), Text(
+            string="%second",
+            index=1,
+            extent={{6,3},{6,3}},
+            horizontalAlignment=TextAlignment.Left));
+        connect(senTAct.T, TSup) annotation (Line(points={{60,11},{60,60},{110,
+                60}}, color={0,0,127}));
+        connect(port_a, heaPum.port_a1)
+          annotation (Line(points={{-100,0},{-20,0}}, color={0,127,255}));
        connect(senTAct.port_b,port_b)
          annotation (Line(points={{70,0},{100,0}}, color={0,127,255}));
-        connect(TEvaIn, sourceSideMassFlowSource.T_in) annotation (Line(points=
-                {{-110,-80},{-86,-80},{-86,-60},{-64,-60}}, color={0,0,127}));
-        connect(sta, gain.u) annotation (Line(points={{-110,80},{-102,80},{-102,
-                46},{-92,46}}, color={0,0,127}));
+        connect(TEvaIn, inSou.T_in) annotation (Line(points={{-110,-80},{-86,-80},
+                {-86,-60},{-64,-60}}, color={0,0,127}));
+        connect(sta, nSetGai.u) annotation (Line(points={{-110,80},{-100,80},{
+                -100,46},{-92,46}}, color={0,0,127}));
        annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
              coordinateSystem(preserveAspectRatio=false)));
       end RTUHP;
@@ -1765,91 +2030,118 @@ defined as parameters.
 
     replaceable package Medium_sou = Buildings.Media.Air;
     replaceable package Medium_sin = Buildings.Media.Air;
+    parameter Real refIneFre = 0.015 "refrigerant inertia parameter";
+    parameter Real k_hea=0.18 "Proportional gain of heating controller";
+    parameter Modelica.SIunits.Time Ti_hea=2400 "Integral time constant of heating controller";
+    parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 310 "max supply air temperature";
+    parameter Real uLowSta1 = 0.05 "PI lower bound to activate stage 1";
+    parameter Real uUppSta1 = 0.15 "PI upper bound to activate stage 1";
+    parameter Real uLowSta2 = 0.35 "PI lower bound to activate stage 2";
+    parameter Real uUppSta2 = 0.45 "PI upper bound to activate stage 2";
+    parameter Real kSta1 = 0.05 "PI center line to activate stage 1";
+    parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
+    parameter Real banSta1 = 0.01 "PI band to activate stage 1";
+    parameter Real banSta2 = 0.01 "PI band to activate stage 2";
 
-    parameter Modelica.SIunits.DimensionlessRatio COP_heating = 3.5 "Coefficient of performance in heating";
-    parameter Modelica.SIunits.DimensionlessRatio COP_cooling = 3.5 "Coefficient of performance in cooling";
-
-    HeatPumps.BaseClasses.RTUHP RTUHP
-      annotation (Placement(transformation(extent={{-2,22},{34,60}})));
-    Buildings.Fluid.Sources.MassFlowSource_T boundary(
+    HeatPumps.BaseClasses.RTUHP rtuHP(
+      redeclare package Medium_sin = Medium_sin,
+      redeclare package Medium_sou = Medium_sou,
+      refIneFre=refIneFre) annotation (Placement(transformation(extent={{0,28},{32,60}})));
+    Buildings.Fluid.Sources.MassFlowSource_T supFan(
       redeclare package Medium = Medium_sou,
       use_m_flow_in=true,
       use_T_in=true,
       nPorts=1) annotation (Placement(transformation(extent={{-80,-2},{-60,18}})));
-    Modelica.Blocks.Interfaces.RealInput u_m_flow(final unit="kg/s")
-      annotation (Placement(transformation(extent={{-120,16},{-86,50}})));
-   Buildings.Fluid.Sources.Boundary_pT               sourceSideFixedBoundary(nPorts=1,
-        redeclare package Medium = Medium_sou)
-           "Fixed boundary at the outlet of the source side"
-           annotation (Placement(transformation(extent={{-11,11},{11,-11}},
-         rotation=180,
-         origin={73,17})));
-    Modelica.Blocks.Interfaces.RealOutput y_TSup(final unit="K", displayUnit="degC")
-      annotation (Placement(transformation(extent={{100,36},{120,56}})));
-    Modelica.Blocks.Interfaces.RealOutput y_Pow_HP(final unit="W")
-      annotation (Placement(transformation(extent={{100,58},{120,78}})));
-    BaseClasses.Controls.RTU_control_FMU rTU_control_FMU
-      annotation (Placement(transformation(extent={{2,-80},{22,-36}})));
-    Modelica.Blocks.Interfaces.RealInput uTDryBulb(final unit="K", displayUnit="degC")
-      "Zone temperature measurement" annotation (Placement(transformation(extent={
-              {-20,-20},{20,20}}, origin={-104,-36})));
-    Modelica.Blocks.Interfaces.RealInput uTRoom(final unit="K", displayUnit="degC")
-      "Zone temperature measurement" annotation (Placement(transformation(extent={
-              {-20,-20},{20,20}}, origin={-102,-62})));
-    Modelica.Blocks.Interfaces.RealInput uTRoomSetPoi(final unit="K", displayUnit=
-         "degC") "Zone temperature measurement" annotation (Placement(
-          transformation(extent={{-20,-20},{20,20}}, origin={-102,-86})));
-    Modelica.Blocks.Interfaces.RealInput uTMix(final unit="K", displayUnit="degC")
-      "Zone temperature measurement" annotation (Placement(transformation(extent={
-              {-20,-20},{20,20}}, origin={-104,-10})));
-    Modelica.Blocks.Interfaces.BooleanOutput y_HeaCall
-      annotation (Placement(transformation(extent={{98,-34},{118,-14}})));
-    Modelica.Blocks.Logical.Hysteresis hys_Sta1(
-      pre_y_start=false,
-      uLow=uTMix - 0.5,
-      uHigh=uTMix + 0.5) annotation (Placement(transformation(
-          extent={{13,-13},{-13,13}},
+    Modelica.Blocks.Interfaces.RealInput u_m_flow(unit="kg/s") annotation (
+        Placement(transformation(extent={{-140,60},{-100,100}}),
+          iconTransformation(extent={{-140,60},{-100,100}})));
+    Buildings.Fluid.Sources.Boundary_pT roo(nPorts=1, redeclare package Medium =
+          Medium_sou) "Fixed boundary at the outlet of the source side"
+      annotation (Placement(transformation(
+          extent={{-11,11},{11,-11}},
           rotation=180,
-          origin={69,-45})));
+          origin={79,21})));
+    Modelica.Blocks.Interfaces.RealOutput y_TSup(unit="K", displayUnit="degC")
+      annotation (Placement(transformation(extent={{100,32},{120,52}})));
+    Modelica.Blocks.Interfaces.RealOutput y_PEleHP(unit="W")
+      annotation (Placement(transformation(extent={{100,58},{120,78}})));
+    BaseClasses.Controls.RTU_control_FMU_Delay rtuConFMU(
+      k_hea=k_hea,
+      Ti_hea=Ti_hea,
+      uLowSta1=uLowSta1,
+      uUppSta1=uUppSta1,
+      uLowSta2=uLowSta2,
+      uUppSta2=uUppSta2,
+      maxSAT = maxSAT,
+      kSta1=kSta1,
+      kSta2=kSta2,
+      banSta1=banSta1,
+      banSta2=banSta2)
+      annotation (Placement(transformation(extent={{0,-72},{28,-44}})));
+    Modelica.Blocks.Interfaces.RealInput u_TDryBul(unit="K", displayUnit="degC")
+      "Zone temperature measurement" annotation (Placement(transformation(extent={
+              {-20,-20},{20,20}}, origin={-120,-32}), iconTransformation(extent={{
+              -140,-20},{-100,20}})));
+    Modelica.Blocks.Interfaces.RealInput u_TRoo(unit="K", displayUnit="degC")
+      "Zone temperature measurement" annotation (Placement(transformation(extent={
+              {-20,-20},{20,20}}, origin={-120,-90}), iconTransformation(extent={{
+              -140,-100},{-100,-60}})));
+    Modelica.Blocks.Interfaces.RealInput u_TRooSetPoi(unit="K", displayUnit=
+         "degC") "Zone temperature measurement" annotation (Placement(
+          transformation(extent={{-20,-20},{20,20}}, origin={-120,-60}),
+          iconTransformation(extent={{-140,-60},{-100,-20}})));
+    Modelica.Blocks.Interfaces.RealInput u_TMix(unit="K", displayUnit="degC")
+      "Zone temperature measurement" annotation (Placement(transformation(extent={
+              {-20,-20},{20,20}}, origin={-120,0}), iconTransformation(extent={{-140,
+              20},{-100,60}})));
+    Modelica.Blocks.Interfaces.BooleanOutput y_HeaCal
+      annotation (Placement(transformation(extent={{100,-50},{120,-30}})));
   equation
-    connect(boundary.ports[1], RTUHP.port_a) annotation (Line(points={{-60,8},{-16,
-            8},{-16,41},{-2,41}}, color={0,127,255}));
-    connect(u_m_flow, boundary.m_flow_in) annotation (Line(points={{-103,33},{-86,
-            33},{-86,16},{-82,16}}, color={0,0,127}));
-    connect(RTUHP.port_b, sourceSideFixedBoundary.ports[1]) annotation (Line(
-          points={{34,41},{52,41},{52,17},{62,17}}, color={0,127,255}));
-    connect(RTUHP.TSup, y_TSup) annotation (Line(points={{35.8,52.4},{65.9,52.4},
-            {65.9,46},{110,46}},color={0,0,127}));
-    connect(RTUHP.P, y_Pow_HP) annotation (Line(points={{35.8,56.2},{65.9,56.2},{65.9,
-            68},{110,68}}, color={0,0,127}));
-    connect(rTU_control_FMU.heaSta, RTUHP.sta) annotation (Line(points={{23,-46.2},
-            {23,12.9},{-3.8,12.9},{-3.8,56.2}}, color={0,0,127}));
-    connect(uTDryBulb, RTUHP.TEvaIn) annotation (Line(points={{-104,-36},{-54,-36},
-            {-54,25.8},{-3.8,25.8}}, color={0,0,127}));
-    connect(boundary.T_in, uTMix) annotation (Line(points={{-82,12},{-93,12},{-93,
-            -10},{-104,-10}}, color={0,0,127}));
-    connect(uTRoomSetPoi, rTU_control_FMU.TSetRooHea) annotation (Line(points={{-102,
-            -86},{-54,-86},{-54,-44.2},{0,-44.2}}, color={0,0,127}));
-    connect(uTRoom, rTU_control_FMU.TRoo) annotation (Line(points={{-102,-62},{-54,
-            -62},{-54,-56.2},{0,-56.2}}, color={0,0,127}));
-    connect(rTU_control_FMU.TSup, RTUHP.TSup) annotation (Line(points={{-0.2,-61.4},
-            {-0.2,-62},{-18,-62},{-18,-86},{35.8,-86},{35.8,52.4}}, color={0,0,127}));
-    connect(hys_Sta1.y, y_HeaCall) annotation (Line(points={{83.3,-45},{90.65,
-            -45},{90.65,-24},{108,-24}}, color={255,0,255}));
-    connect(hys_Sta1.u, RTUHP.TSup) annotation (Line(points={{53.4,-45},{53.4,
-            14.5},{35.8,14.5},{35.8,52.4}}, color={0,0,127}));
-    annotation (Icon(graphics={
-          Line(points={{198,100},{112,100},{112,44}}, color={0,0,127}),
-          Line(points={{198,120},{46,120},{46,46}},   color={0,0,127}),
-          Ellipse(
-            extent={{104,76},{114,48}},
-            lineColor={28,108,200},
-            fillColor={28,108,200},
-            fillPattern=FillPattern.Solid)}), experiment(
+    connect(supFan.ports[1], rtuHP.port_a) annotation (Line(points={{-60,8},{-16,8},
+            {-16,44},{0,44}}, color={0,127,255}));
+    connect(u_m_flow, supFan.m_flow_in) annotation (Line(points={{-120,80},{-90,80},
+            {-90,16},{-82,16}}, color={0,0,127}));
+    connect(rtuHP.port_b, roo.ports[1]) annotation (Line(points={{32,44},{52,44},{
+            52,21},{68,21}}, color={0,127,255}));
+    connect(rtuHP.TSup, y_TSup) annotation (Line(points={{33.6,53.6},{64,53.6},
+            {64,42},{110,42}},             color={0,0,127}));
+    connect(rtuHP.PEle, y_PEleHP) annotation (Line(points={{33.6,56.8},{64,56.8},{
+            64,68},{110,68}}, color={0,0,127}));
+    connect(rtuConFMU.heaSta, rtuHP.sta) annotation (Line(points={{30.52,
+            -52.9091},{36,-52.9091},{36,10},{-10,10},{-10,56},{-1.6,56},{-1.6,
+            56.8}},                                           color={0,0,127}));
+    connect(u_TDryBul, rtuHP.TEvaIn) annotation (Line(points={{-120,-32},{-40,-32},
+            {-40,31.2},{-1.6,31.2}}, color={0,0,127}));
+    connect(supFan.T_in, u_TMix) annotation (Line(points={{-82,12},{-90,12},{-90,0},
+            {-120,0}}, color={0,0,127}));
+    connect(u_TRoo, rtuConFMU.TRoo) annotation (Line(points={{-120,-90},{-38,
+            -90},{-38,-64.3636},{-2.8,-64.3636}},
+                                 color={0,0,127}));
+    connect(rtuConFMU.TSup, rtuHP.TSup) annotation (Line(points={{-2.8,-72},{
+            -22,-72},{-22,-90},{42,-90},{42,54},{34,54},{34,53.6},{33.6,53.6}},
+                                                                       color={0,0,
+            127}));
+    connect(u_TRooSetPoi, rtuConFMU.TSetRooHea) annotation (Line(points={{-120,
+            -60},{-50,-60},{-50,-49.0909},{-2.8,-49.0909}}, color={0,0,127}));
+    connect(rtuConFMU.heaCal, y_HeaCal) annotation (Line(points={{30.52,
+            -59.5273},{65.17,-59.5273},{65.17,-40},{110,-40}}, color={255,0,255}));
+    annotation (                              experiment(
         StartTime=19872000,
         StopTime=19958400,
         Interval=60,
-        Tolerance=1e-06));
+        Tolerance=1e-06), Icon(graphics={
+                                  Rectangle(
+          extent={{-100,-100},{100,100}},
+          lineColor={0,0,127},
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid),
+          Text(
+            extent={{-56,64},{68,-60}},
+            lineColor={0,0,0},
+            fillPattern=FillPattern.Solid,
+            fillColor={175,175,175},
+            textString="fmu",
+            textStyle={TextStyle.Bold})}));
   end Aachen_HP_2stage_FMU;
   annotation (Icon(graphics={
         Rectangle(
