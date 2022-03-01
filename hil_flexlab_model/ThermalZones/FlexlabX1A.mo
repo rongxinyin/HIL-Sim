@@ -301,8 +301,7 @@ model FlexlabX1A "Model of a flexlab x1a"
     wOpe=0.01,
     forceErrorControlOnFlow=false) "Opening between perimeter3 and core"
     annotation (Placement(transformation(extent={{82,74},{102,94}})));
-  Buildings.Fluid.Sensors.RelativePressure senRelPre(redeclare package Medium
-      =                                                                         Medium)
+  Buildings.Fluid.Sensors.RelativePressure senRelPre(redeclare package Medium = Medium)
     "Building pressure measurement"
     annotation (Placement(transformation(extent={{60,240},{40,260}})));
   Buildings.Fluid.Sources.Outside out(nPorts=1, redeclare package Medium = Medium)

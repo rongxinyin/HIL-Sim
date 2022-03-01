@@ -1,0 +1,32 @@
+Log-file of program ./dymosim
+(generated: Fri Nov 12 13:38:06 2021)
+
+dymosim started
+... "hil_flexlab_model.Examples.FlexlabX1aNoLeakBaseline1026" simulating
+... "dsin.txt" loading (dymosim input file)
+... "FlexlabX1aNoLeakBaseline1026.mat" creating (simulation result file)
+
+Integration started at T = 20385900 using integration method DASSL
+(DAE multi-step solver (dassl/dasslrt of Petzold modified by Dassault Systemes))
+
+Integration terminated successfully at T = 20562300
+   CPU-time for integration                : 376 seconds
+   CPU-time for one grid interval          : 1.92e+03 milliseconds
+   CPU-time for initialization             : 0.099 seconds
+   Number of result points                 : 5771
+   Number of grid points                   : 197
+   Number of accepted steps                : 89844
+   Number of f-evaluations (dynamics)      : 176983
+   Number of crossing function evaluations : 97859
+   Number of Jacobian-evaluations          : 35842
+   Number of model time events             : 1931
+   Number of input time events             : 0
+   Number of state events                  : 955
+   Number of step events                   : 0
+   Minimum integration stepsize            : 1.85e-08
+   Maximum integration stepsize            : 14.8
+   Maximum integration order               : 5
+Calling terminal section
+... "dsfinal.txt" creating (final states)
+
+SUCCESSFUL simulation of hil_flexlab_model.Examples.FlexlabX1aNoLeakBaseline1026
