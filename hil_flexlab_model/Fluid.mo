@@ -1012,14 +1012,14 @@ defined as parameters.
        extends Modelica.Icons.Example;
 
         parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
-        parameter Real k_hea=0.18 "Proportional gain of heating controller";
-        parameter Modelica.SIunits.Time Ti_hea=2400 "Integral time constant of heating controller";
+        parameter Real k_hea=0.33 "Proportional gain of heating controller";
+        parameter Modelica.SIunits.Time Ti_hea=20000 "Integral time constant of heating controller";
         parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 310 "max supply air temperature";
-        parameter Real uLowSta1 = 0.05 "PI lower bound to activate stage 1";
-        parameter Real uUppSta1 = 0.15 "PI upper bound to activate stage 1";
+        parameter Real uLowSta1 = 0.12 "PI lower bound to activate stage 1";
+        parameter Real uUppSta1 = 0.20 "PI upper bound to activate stage 1";
         parameter Real uLowSta2 = 0.35 "PI lower bound to activate stage 2";
         parameter Real uUppSta2 = 0.45 "PI upper bound to activate stage 2";
-        parameter Real kSta1 = 0.05 "PI center line to activate stage 1";
+        parameter Real kSta1 = 0.12 "PI center line to activate stage 1";
         parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
         parameter Real banSta1 = 0.01 "PI band to activate stage 1";
         parameter Real banSta2 = 0.01 "PI band to activate stage 2";
@@ -1062,7 +1062,8 @@ defined as parameters.
         Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(
           tableOnFile=true,
           tableName="tab1",
-          fileName=ModelicaServices.ExternalReferences.loadResource("modelica://hil_flexlab_model/Data/2022-02-18_HP_Filtered.txt"),
+          fileName=ModelicaServices.ExternalReferences.loadResource(
+              "modelica://hil_flexlab_model/Data/2022-03-06_HP_Filtered.txt"),
           columns=6:20,
           smoothness=Modelica.Blocks.Types.Smoothness.MonotoneContinuousDerivative1,
           timeScale=60)
