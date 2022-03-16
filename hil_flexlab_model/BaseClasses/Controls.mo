@@ -3757,8 +3757,8 @@ First implementation.
           origin={-120,60})));
     Modelica.Blocks.Interfaces.RealOutput heaSta(final unit="1")
       "Control signal for heating"
-      annotation (Placement(transformation(extent={{100,132},{136,168}}),
-          iconTransformation(extent={{100,132},{136,168}})));
+      annotation (Placement(transformation(extent={{100,40},{136,76}}),
+          iconTransformation(extent={{100,40},{136,76}})));
     Buildings.Controls.Continuous.LimPID conHea(
       controllerType=Modelica.Blocks.Types.SimpleController.PI,
       Ti=Ti_hea,
@@ -3815,6 +3815,9 @@ First implementation.
       "Control signal for heating" annotation (Placement(transformation(extent=
               {{100,80},{136,116}}), iconTransformation(extent={{100,80},{136,
               116}})));
+    Modelica.Blocks.Interfaces.RealOutput sigPI(final unit="1")
+      "PI signal for heating" annotation (Placement(transformation(extent={{100,120},
+              {136,156}}), iconTransformation(extent={{100,120},{136,156}})));
   equation
     connect(offHea.y, swiHea.u3) annotation (Line(points={{-27,50},{-14,50},{
             -14,128},{2,128}},
@@ -3865,10 +3868,12 @@ First implementation.
             {-26,171.6}}, color={0,0,127}));
     connect(heatStage.y_Sta, swiHea.u1)
       annotation (Line(points={{-26,152.4},{-26,144},{2,144}}, color={0,0,127}));
-    connect(swiTim.y, heaSta) annotation (Line(points={{65,58},{80,58},{80,150},{118,
-            150}}, color={0,0,127}));
+    connect(swiTim.y, heaSta) annotation (Line(points={{65,58},{118,58}},
+                   color={0,0,127}));
     connect(heaSta, heaSta)
-      annotation (Line(points={{118,150},{118,150}}, color={0,0,127}));
+      annotation (Line(points={{118,58},{118,58}},   color={0,0,127}));
+    connect(conHea.y, sigPI) annotation (Line(points={{-37,180},{12,180},{12,160},
+            {72,160},{72,138},{118,138}}, color={0,0,127}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,0},
               {100,220}}),       graphics={
                                   Rectangle(
