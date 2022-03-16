@@ -1015,14 +1015,11 @@ defined as parameters.
         parameter Real k_hea=0.33 "Proportional gain of heating controller";
         parameter Modelica.SIunits.Time Ti_hea=20000 "Integral time constant of heating controller";
         parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 310 "max supply air temperature";
-        parameter Real uLowSta1 = 0.12 "PI lower bound to activate stage 1";
-        parameter Real uUppSta1 = 0.20 "PI upper bound to activate stage 1";
-        parameter Real uLowSta2 = 0.35 "PI lower bound to activate stage 2";
-        parameter Real uUppSta2 = 0.45 "PI upper bound to activate stage 2";
         parameter Real kSta1 = 0.12 "PI center line to activate stage 1";
         parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
         parameter Real banSta1 = 0.01 "PI band to activate stage 1";
         parameter Real banSta2 = 0.01 "PI band to activate stage 2";
+        parameter Real onOffConHeaBan = 1 "bandwidth for on off heating controller";
 
         Buildings.Controls.OBC.UnitConversions.From_cfm from_cfm annotation (
             Placement(transformation(extent={{-84,30},{-68,46}})));
@@ -1040,14 +1037,11 @@ defined as parameters.
           k_hea=k_hea,
           Ti_hea=Ti_hea,
           maxSAT=maxSAT,
-          uLowSta1=uLowSta1,
-          uUppSta1=uUppSta1,
-          uLowSta2=uLowSta2,
-          uUppSta2=uUppSta2,
           kSta1=kSta1,
           kSta2=kSta2,
           banSta1=banSta1,
-          banSta2=banSta2)
+          banSta2=banSta2,
+          onOffConHeaBan=onOffConHeaBan)
           annotation (Placement(transformation(extent={{-20,-20},{20,20}})));
         Modelica.Blocks.Math.Add sumTem(k1=1.65, k2=0.35)
                                         annotation (Placement(transformation(
@@ -2049,14 +2043,11 @@ defined as parameters.
     parameter Real k_hea=0.18 "Proportional gain of heating controller";
     parameter Modelica.SIunits.Time Ti_hea=2400 "Integral time constant of heating controller";
     parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 310 "max supply air temperature";
-    parameter Real uLowSta1 = 0.05 "PI lower bound to activate stage 1";
-    parameter Real uUppSta1 = 0.15 "PI upper bound to activate stage 1";
-    parameter Real uLowSta2 = 0.35 "PI lower bound to activate stage 2";
-    parameter Real uUppSta2 = 0.45 "PI upper bound to activate stage 2";
     parameter Real kSta1 = 0.05 "PI center line to activate stage 1";
     parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
     parameter Real banSta1 = 0.01 "PI band to activate stage 1";
     parameter Real banSta2 = 0.01 "PI band to activate stage 2";
+    parameter Real onOffConHeaBan = 1 "bandwidth for on off heating controller";
 
     HeatPumps.BaseClasses.RTUHP rtuHP(
       redeclare package Medium_sin = Medium_sin,
@@ -2083,15 +2074,12 @@ defined as parameters.
     BaseClasses.Controls.RTU_control_FMU_Delay rtuConFMU(
       k_hea=k_hea,
       Ti_hea=Ti_hea,
-      uLowSta1=uLowSta1,
-      uUppSta1=uUppSta1,
-      uLowSta2=uLowSta2,
-      uUppSta2=uUppSta2,
       maxSAT = maxSAT,
       kSta1=kSta1,
       kSta2=kSta2,
       banSta1=banSta1,
-      banSta2=banSta2)
+      banSta2=banSta2,
+      onOffConHeaBan=onOffConHeaBan)
       annotation (Placement(transformation(extent={{0,-72},{28,-44}})));
     Modelica.Blocks.Interfaces.RealInput u_TDryBul(unit="K", displayUnit="degC")
       "Zone temperature measurement" annotation (Placement(transformation(extent={

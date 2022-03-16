@@ -3632,10 +3632,6 @@ First implementation.
 
   model HeatStage
 
-    parameter Real uLowSta1 = uLowSta1 "PI lower bound to activate stage 1";
-    parameter Real uUppSta1 = uUppSta1 "PI upper bound to activate stage 1";
-    parameter Real uLowSta2 = uLowSta2 "PI lower bound to activate stage 2";
-    parameter Real uUppSta2 = uUppSta2 "PI upper bound to activate stage 2";
     parameter Real kSta1 = kSta1 "PI center line to activate stage 1";
     parameter Real kSta2 = kSta2 "PI center line to activate stage 2";
     parameter Real banSta1 = banSta1 "PI band to activate stage 1";
@@ -3734,14 +3730,12 @@ First implementation.
     parameter Real k_hea=k_hea "Proportional gain of heating controller";
     parameter Modelica.SIunits.Time Ti_hea=Ti_hea "Integral time constant of heating controller";
     parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = maxSAT "max supply air temperature";
-    parameter Real uLowSta1 = uLowSta1 "PI lower bound to activate stage 1";
-    parameter Real uUppSta1 = uUppSta1 "PI upper bound to activate stage 1";
-    parameter Real uLowSta2 = uLowSta2 "PI lower bound to activate stage 2";
-    parameter Real uUppSta2 = uUppSta2 "PI upper bound to activate stage 2";
     parameter Real kSta1 = kSta1 "PI center line to activate stage 1";
     parameter Real kSta2 = kSta2 "PI center line to activate stage 2";
     parameter Real banSta1 = banSta1 "PI band to activate stage 1";
-    parameter Real banSta2 = banSta2 "PI band to activate stage 2";
+    parameter Real onOffConHeaBan = onOffConHeaBan "bandwidth for on off heating controller";
+
+      parameter Real banSta2 = banSta2 "PI band to activate stage 2";
 
     Modelica.Blocks.Interfaces.RealInput TSetRooHea(final unit="K", displayUnit=
           "degC")
@@ -3784,10 +3778,6 @@ First implementation.
       "Setpoint temperature for freeze protection"
       annotation (Placement(transformation(extent={{-80,20},{-60,40}})));
     HeatStage heatStage(
-      uLowSta1=uLowSta1,
-      uUppSta1=uUppSta1,
-      uLowSta2=uLowSta2,
-      uUppSta2=uUppSta2,
       kSta1=kSta1,
       kSta2=kSta2,
       banSta1=banSta1,
@@ -3797,7 +3787,7 @@ First implementation.
           origin={-26,162})));
     Modelica.Blocks.Logical.Switch swiTim "Switch for turning heating on/off"
       annotation (Placement(transformation(extent={{44,48},{64,68}})));
-    Modelica.Blocks.Logical.OnOffController onOffConHea(bandwidth=1)
+    Modelica.Blocks.Logical.OnOffController onOffConHea(bandwidth=onOffConHeaBan)
       "Enable heating"
       annotation (Placement(transformation(extent={{-84,126},{-64,146}})));
     Modelica.Blocks.Logical.Switch UppLimSwi "Switch for turning heating on/off"
