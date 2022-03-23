@@ -1128,7 +1128,7 @@ defined as parameters.
           annotation (Placement(transformation(extent={{100,34},{120,54}}),
               iconTransformation(extent={{100,10},{120,30}})));
         Modelica.Blocks.Interfaces.RealOutput qdotMea "Measured thermal power"
-          annotation (Placement(transformation(extent={{100,-54},{120,-34}}),
+          annotation (Placement(transformation(extent={{100,-62},{120,-42}}),
               iconTransformation(extent={{100,10},{120,30}})));
         Modelica.Blocks.Math.Product mcpdTMod annotation (Placement(transformation(
               extent={{-6,-6},{6,6}},
@@ -1146,6 +1146,9 @@ defined as parameters.
               extent={{-4,4},{4,-4}},
               rotation=0,
               origin={88,100})));
+        Modelica.Blocks.Interfaces.RealOutput PIMod "Measured thermal power"
+          annotation (Placement(transformation(extent={{100,-46},{120,-26}}),
+              iconTransformation(extent={{100,10},{120,30}})));
       equation
 
         connect(from_cfm.y, m3s_kgs.u2) annotation (Line(points={{-66.4,38},{-62,38},{
@@ -1221,7 +1224,8 @@ defined as parameters.
         connect(supplyTemptoKelvin.Kelvin, dTMea.u1) annotation (Line(points={{-59.2,-80},
                 {-10,-80},{-10,-33.6},{40.8,-33.6}}, color={0,0,127}));
         connect(mcpdTMea.y, qdotMea)
-          annotation (Line(points={{90.6,-44},{110,-44}}, color={0,0,127}));
+          annotation (Line(points={{90.6,-44},{100,-44},{100,-52},{110,-52}},
+                                                          color={0,0,127}));
         connect(mcpdTMod.y, qdotMod)
           annotation (Line(points={{88.6,44},{110,44}}, color={0,0,127}));
         connect(dTMod.y, mcpdTMod.u2) annotation (Line(points={{54.6,30},{60,30},{60,40.4},
@@ -1236,6 +1240,8 @@ defined as parameters.
           annotation (Line(points={{110,100},{92.4,100}}, color={0,0,127}));
         connect(combiTimeTable.y[15], gaiPIHeaDem.u) annotation (Line(points={{-99,0},
                 {-94,0},{-94,100},{83.2,100}}, color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.y_PI, PIMod) annotation (Line(points={{22,
+                -14.4},{62,-14.4},{62,-36},{110,-36}}, color={0,0,127}));
         annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
                   -100},{100,100}})),
           experiment(
@@ -2097,6 +2103,8 @@ defined as parameters.
               20},{-100,60}})));
     Modelica.Blocks.Interfaces.BooleanOutput y_HeaCal
       annotation (Placement(transformation(extent={{100,-50},{120,-30}})));
+    Modelica.Blocks.Interfaces.RealOutput y_PI
+      annotation (Placement(transformation(extent={{100,-82},{120,-62}})));
   equation
     connect(supFan.ports[1], rtuHP.port_a) annotation (Line(points={{-60,8},{-16,8},
             {-16,44},{0,44}}, color={0,127,255}));
@@ -2126,6 +2134,8 @@ defined as parameters.
             -60},{-50,-60},{-50,-49.0909},{-2.8,-49.0909}}, color={0,0,127}));
     connect(rtuConFMU.heaCal, y_HeaCal) annotation (Line(points={{30.52,
             -59.5273},{65.17,-59.5273},{65.17,-40},{110,-40}}, color={255,0,255}));
+    connect(rtuConFMU.PI_y, y_PI) annotation (Line(points={{30.52,-66.4},{67.26,
+            -66.4},{67.26,-72},{110,-72}}, color={0,0,127}));
     annotation (                              experiment(
         StartTime=19872000,
         StopTime=19958400,

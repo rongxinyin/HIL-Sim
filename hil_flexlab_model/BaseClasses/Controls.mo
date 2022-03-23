@@ -3815,6 +3815,9 @@ First implementation.
       "Control signal for heating" annotation (Placement(transformation(extent=
               {{100,80},{136,116}}), iconTransformation(extent={{100,80},{136,
               116}})));
+    Modelica.Blocks.Interfaces.RealOutput PI_y "Control signal for heating"
+      annotation (Placement(transformation(extent={{100,26},{136,62}}),
+          iconTransformation(extent={{100,26},{136,62}})));
   equation
     connect(offHea.y, swiHea.u3) annotation (Line(points={{-27,50},{-14,50},{
             -14,128},{2,128}},
@@ -3869,6 +3872,8 @@ First implementation.
             150}}, color={0,0,127}));
     connect(heaSta, heaSta)
       annotation (Line(points={{118,150},{118,150}}, color={0,0,127}));
+    connect(conHea.y, PI_y) annotation (Line(points={{-37,180},{30,180},{30,44},
+            {118,44}}, color={0,0,127}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,0},
               {100,220}}),       graphics={
                                   Rectangle(
