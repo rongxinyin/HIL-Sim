@@ -3794,7 +3794,7 @@ First implementation.
       banSta2=banSta2)
       annotation (Placement(transformation(extent={{-8,-8},{8,8}},
           rotation=-90,
-          origin={-26,162})));
+          origin={-24,162})));
     Modelica.Blocks.Logical.Switch swiTim "Switch for turning heating on/off"
       annotation (Placement(transformation(extent={{44,48},{64,68}})));
     Modelica.Blocks.Logical.OnOffController onOffConHea(bandwidth=1)
@@ -3818,6 +3818,8 @@ First implementation.
     Modelica.Blocks.Interfaces.RealOutput PI_y "Control signal for heating"
       annotation (Placement(transformation(extent={{100,26},{136,62}}),
           iconTransformation(extent={{100,26},{136,62}})));
+    Modelica.Blocks.Math.RealToBoolean realToBoolean1(threshold=0.10)
+      annotation (Placement(transformation(extent={{56,86},{76,106}})));
   equation
     connect(offHea.y, swiHea.u3) annotation (Line(points={{-27,50},{-14,50},{
             -14,128},{2,128}},
@@ -3862,18 +3864,21 @@ First implementation.
     connect(realToBoolean.y, onDelay.u) annotation (Line(points={{97,210},{100,
             210},{100,168},{50,168},{50,110},{14,110},{14,96}}, color={255,0,
             255}));
-    connect(onOffConHea.y, heaCal) annotation (Line(points={{-63,136},{-56,136},
-            {-56,98},{118,98}}, color={255,0,255}));
-    connect(conHea.y, heatStage.uHea) annotation (Line(points={{-37,180},{-26,180},
-            {-26,171.6}}, color={0,0,127}));
+    connect(conHea.y, heatStage.uHea) annotation (Line(points={{-37,180},{-24,
+            180},{-24,171.6}},
+                          color={0,0,127}));
     connect(heatStage.y_Sta, swiHea.u1)
-      annotation (Line(points={{-26,152.4},{-26,144},{2,144}}, color={0,0,127}));
+      annotation (Line(points={{-24,152.4},{-24,144},{2,144}}, color={0,0,127}));
     connect(swiTim.y, heaSta) annotation (Line(points={{65,58},{80,58},{80,150},{118,
             150}}, color={0,0,127}));
     connect(heaSta, heaSta)
       annotation (Line(points={{118,150},{118,150}}, color={0,0,127}));
     connect(conHea.y, PI_y) annotation (Line(points={{-37,180},{30,180},{30,44},
             {118,44}}, color={0,0,127}));
+    connect(heaCal, realToBoolean1.y) annotation (Line(points={{118,98},{98,98},
+            {98,96},{77,96}}, color={255,0,255}));
+    connect(realToBoolean1.u, conHea.y) annotation (Line(points={{54,96},{-34,
+            96},{-34,180},{-37,180}}, color={0,0,127}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,0},
               {100,220}}),       graphics={
                                   Rectangle(
