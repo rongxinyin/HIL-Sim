@@ -1047,8 +1047,9 @@ defined as parameters.
           kSta1=kSta1,
           kSta2=kSta2,
           banSta1=banSta1,
-          banSta2=banSta2)
-          annotation (Placement(transformation(extent={{-20,-20},{20,20}})));
+          banSta2=banSta2,
+          rtuConFMU(onOffConHea(bandwidth=0.15)))
+          annotation (Placement(transformation(extent={{-18,-20},{22,20}})));
         Modelica.Blocks.Math.Add sumTem(k1=1.65, k2=0.35)
                                         annotation (Placement(transformation(
               extent={{-6,-6},{6,6}},
@@ -1156,7 +1157,7 @@ defined as parameters.
         connect(m3s_kgs.u1, den.y) annotation (Line(points={{-57.2,47.6},{-64,47.6},{-64,
                 66},{-67.2,66}},               color={0,0,127}));
         connect(m3s_kgs.y, aachen_HP_2stage_FMU.u_m_flow) annotation (Line(
-              points={{-43.4,44},{-32,44},{-32,16},{-24,16}},
+              points={{-43.4,44},{-32,44},{-32,16},{-22,16}},
                                                             color={0,0,127}));
         connect(combiTimeTable.y[5], from_cfm.u) annotation (Line(points={{-99,
                 0},{-94,0},{-94,38},{-85.6,38}}, color={0,0,127}));
@@ -1176,21 +1177,21 @@ defined as parameters.
         connect(combiTimeTable.y[4], outsideTemptoKelvin.Fahrenheit)
           annotation (Line(points={{-99,0},{-85.6,0}}, color={0,0,127}));
         connect(outsideTemptoKelvin.Kelvin, aachen_HP_2stage_FMU.u_TDryBul)
-          annotation (Line(points={{-67.2,0},{-24,0}}, color={0,0,127}));
+          annotation (Line(points={{-67.2,0},{-22,0}}, color={0,0,127}));
         connect(sumTem.y, aveTem.u) annotation (Line(points={{-43.4,16},{-40,16},
                 {-40,8},{-38.8,8}}, color={0,0,127}));
         connect(aveTem.y, aachen_HP_2stage_FMU.u_TMix)
-          annotation (Line(points={{-29.6,8},{-24,8}}, color={0,0,127}));
+          annotation (Line(points={{-29.6,8},{-22,8}}, color={0,0,127}));
         connect(powTotMod, powTotMod)
           annotation (Line(points={{110,20},{110,20}}, color={0,0,127}));
         connect(aachen_HP_2stage_FMU.y_PEleHP, powTotMod) annotation (Line(
-              points={{22,13.6},{60,13.6},{60,20},{110,20}}, color={0,0,127}));
+              points={{24,13.6},{60,13.6},{60,20},{110,20}}, color={0,0,127}));
         connect(aachen_HP_2stage_FMU.y_HeaCal, heaCalMod) annotation (Line(
-              points={{22,-8},{60,-8},{60,-20},{110,-20}},     color={255,0,255}));
+              points={{24,-8},{60,-8},{60,-20},{110,-20}},     color={255,0,255}));
         connect(combiTimeTable.y[1], rooTemptoKelvin.Fahrenheit) annotation (
             Line(points={{-99,0},{-94,0},{-94,-48},{-77.6,-48}}, color={0,0,127}));
         connect(rooTemptoKelvin.Kelvin, aachen_HP_2stage_FMU.u_TRoo)
-          annotation (Line(points={{-59.2,-48},{-40,-48},{-40,-16},{-24,-16}},
+          annotation (Line(points={{-59.2,-48},{-40,-48},{-40,-16},{-22,-16}},
               color={0,0,127}));
         connect(retTemptoKelvin.Kelvin, sumTem.u1) annotation (Line(points={{
                 -67.2,20},{-58,20},{-58,19.6},{-57.2,19.6}}, color={0,0,127}));
@@ -1200,7 +1201,7 @@ defined as parameters.
                 {{-67.2,0},{-62,0},{-62,12},{-58,12},{-58,12.4},{-57.2,12.4}},
               color={0,0,127}));
         connect(aachen_HP_2stage_FMU.y_TSup, supplyTempModtoCelsius.Kelvin)
-          annotation (Line(points={{22,8.4},{60,8.4},{60,0},{70.4,0}}, color={0,
+          annotation (Line(points={{24,8.4},{60,8.4},{60,0},{70.4,0}}, color={0,
                 0,127}));
         connect(supplyTempModtoCelsius.Celsius, supTemMod)
           annotation (Line(points={{88.8,0},{110,0}}, color={0,0,127}));
@@ -1209,17 +1210,17 @@ defined as parameters.
         connect(combiTimeTable.y[12], setpointTemptoKelvin.Fahrenheit) annotation (
             Line(points={{-99,0},{-94,0},{-94,-26},{-77.6,-26}}, color={0,0,127}));
         connect(setpointTemptoKelvin.Kelvin, aachen_HP_2stage_FMU.u_TRooSetPoi)
-          annotation (Line(points={{-59.2,-26},{-50,-26},{-50,-8},{-24,-8}}, color={0,
+          annotation (Line(points={{-59.2,-26},{-50,-26},{-50,-8},{-22,-8}}, color={0,
                 0,127}));
         connect(m3s_kgs.y, mcp.u2) annotation (Line(points={{-43.4,44},{-32,44},{-32,52.4},
                 {40.8,52.4}}, color={0,0,127}));
         connect(cp.y, mcp.u1) annotation (Line(points={{-31.2,66},{10,66},{10,60},{40,
                 60},{40,59.6},{40.8,59.6}}, color={0,0,127}));
-        connect(aachen_HP_2stage_FMU.u_TMix, dTMea.u2) annotation (Line(points={{-24,8},
+        connect(aachen_HP_2stage_FMU.u_TMix, dTMea.u2) annotation (Line(points={{-22,8},
                 {-30,8},{-30,-26.4},{40.8,-26.4}}, color={0,0,127}));
-        connect(aachen_HP_2stage_FMU.y_TSup, dTMod.u1) annotation (Line(points={{22,8.4},
+        connect(aachen_HP_2stage_FMU.y_TSup, dTMod.u1) annotation (Line(points={{24,8.4},
                 {32,8.4},{32,26.4},{40.8,26.4}}, color={0,0,127}));
-        connect(aachen_HP_2stage_FMU.u_TMix, dTMod.u2) annotation (Line(points={{-24,8},
+        connect(aachen_HP_2stage_FMU.u_TMix, dTMod.u2) annotation (Line(points={{-22,8},
                 {-30,8},{-30,33.6},{40.8,33.6}}, color={0,0,127}));
         connect(supplyTemptoKelvin.Kelvin, dTMea.u1) annotation (Line(points={{-59.2,-80},
                 {-10,-80},{-10,-33.6},{40.8,-33.6}}, color={0,0,127}));
@@ -1240,7 +1241,7 @@ defined as parameters.
           annotation (Line(points={{110,100},{92.4,100}}, color={0,0,127}));
         connect(combiTimeTable.y[15], gaiPIHeaDem.u) annotation (Line(points={{-99,0},
                 {-94,0},{-94,100},{83.2,100}}, color={0,0,127}));
-        connect(aachen_HP_2stage_FMU.y_PI, PIMod) annotation (Line(points={{22,
+        connect(aachen_HP_2stage_FMU.y_PI, PIMod) annotation (Line(points={{24,
                 -14.4},{62,-14.4},{62,-36},{110,-36}}, color={0,0,127}));
         annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
                   -100},{100,100}})),
@@ -1281,6 +1282,274 @@ defined as parameters.
 </html>"),__Dymola_Commands(file="Modelica://AixLib/Resources/Scripts/Dymola/Fluid/HeatPumps/Examples/HeatPump.mos" "Simulate and plot"),
           Icon(coordinateSystem(extent={{-100,-100},{100,80}})));
       end TesFMU;
+
+      model TesFMU_compile "Example for the heat pump and controls FMU"
+       extends Modelica.Icons.Example;
+
+        parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
+        parameter Real k_hea=0.33 "Proportional gain of heating controller";
+        parameter Modelica.SIunits.Time Ti_hea=20000 "Integral time constant of heating controller";
+        parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 310 "max supply air temperature";
+        parameter Real uLowSta1 = 0.12 "PI lower bound to activate stage 1";
+        parameter Real uUppSta1 = 0.20 "PI upper bound to activate stage 1";
+        parameter Real uLowSta2 = 0.35 "PI lower bound to activate stage 2";
+        parameter Real uUppSta2 = 0.45 "PI upper bound to activate stage 2";
+        parameter Real kSta1 = 0.12 "PI center line to activate stage 1";
+        parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
+        parameter Real banSta1 = 0.01 "PI band to activate stage 1";
+        parameter Real banSta2 = 0.01 "PI band to activate stage 2";
+
+        Buildings.Controls.OBC.UnitConversions.From_cfm from_cfm annotation (
+            Placement(transformation(extent={{-84,30},{-68,46}})));
+        Modelica.Blocks.Sources.Constant den(final k=1.189) "Fixed density of air"
+                                 annotation (Placement(transformation(
+              extent={{8,8},{-8,-8}},
+              rotation=180,
+              origin={-76,66})));
+        Modelica.Blocks.Math.Product m3s_kgs annotation (Placement(
+              transformation(extent={{-6,-6},{6,6}},
+              rotation=0,
+              origin={-50,44})));
+        hil_flexlab_model_Fluid_Aachen_HP_02stage_FMU_fmu aachen_HP_2stage_FMU
+          annotation (Placement(transformation(extent={{-16,-20},{24,20}})));
+        Modelica.Blocks.Math.Add sumTem(k1=1.65, k2=0.35)
+                                        annotation (Placement(transformation(
+              extent={{-6,-6},{6,6}},
+              rotation=0,
+              origin={-50,16})));
+        Modelica.Blocks.Math.Gain aveTem(k=0.5) annotation (Placement(
+              transformation(
+              extent={{-4,-4},{4,4}},
+              rotation=0,
+              origin={-34,8})));
+        Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(
+          tableOnFile=true,
+          tableName="tab1",
+          fileName=ModelicaServices.ExternalReferences.loadResource(
+              "modelica://hil_flexlab_model/Data/2022-03-06_HP_Filtered.txt"),
+          columns=6:20,
+          smoothness=Modelica.Blocks.Types.Smoothness.MonotoneContinuousDerivative1,
+          timeScale=60)
+          annotation (Placement(transformation(extent={{-120,-10},{-100,10}})));
+
+        Modelica.Blocks.Interfaces.RealOutput supTemMea
+          "Measured supply air temperature" annotation (Placement(
+              transformation(extent={{100,-80},{120,-60}}), iconTransformation(
+                extent={{100,-80},{120,-60}})));
+        Modelica.Blocks.Interfaces.RealOutput powTotMea "Measured power"
+          annotation (Placement(transformation(extent={{100,-100},{120,-80}}),
+              iconTransformation(extent={{100,-100},{120,-80}})));
+        Modelica.Thermal.HeatTransfer.Celsius.FromKelvin  supplyTemptoCelsius
+          annotation (Placement(transformation(extent={{20,-88},{36,-72}})));
+        Modelica.Thermal.HeatTransfer.Fahrenheit.ToKelvin supplyTemptoKelvin
+          annotation (Placement(transformation(extent={{-76,-88},{-60,-72}})));
+        Modelica.Blocks.Math.Add sta annotation (Placement(transformation(
+              extent={{6,-6},{-6,6}},
+              rotation=180,
+              origin={-76,90})));
+        Modelica.Blocks.Interfaces.RealOutput staMea "Measured stage"
+          annotation (Placement(transformation(extent={{100,60},{120,80}}),
+              iconTransformation(extent={{100,60},{120,80}})));
+        Modelica.Thermal.HeatTransfer.Fahrenheit.ToKelvin outsideTemptoKelvin
+          annotation (Placement(transformation(extent={{-84,-8},{-68,8}})));
+        Modelica.Blocks.Interfaces.RealOutput powTotMod "Modeled power"
+          annotation (Placement(transformation(extent={{100,10},{120,30}}),
+              iconTransformation(extent={{100,10},{120,30}})));
+        Modelica.Blocks.Interfaces.RealOutput supTemMod
+          "Modeled supply air temperature" annotation (Placement(transformation(
+                extent={{100,-10},{120,10}}), iconTransformation(extent={{100,
+                  -10},{120,10}})));
+        Modelica.Blocks.Interfaces.BooleanOutput heaCalMod annotation (
+            Placement(transformation(extent={{100,-30},{120,-10}}),
+              iconTransformation(extent={{100,-30},{120,-10}})));
+        Modelica.Thermal.HeatTransfer.Fahrenheit.ToKelvin rooTemptoKelvin
+          annotation (Placement(transformation(extent={{-76,-56},{-60,-40}})));
+        Modelica.Thermal.HeatTransfer.Fahrenheit.ToKelvin retTemptoKelvin
+          annotation (Placement(transformation(extent={{-84,12},{-68,28}})));
+        Modelica.Thermal.HeatTransfer.Celsius.FromKelvin supplyTempModtoCelsius
+          annotation (Placement(transformation(extent={{72,-8},{88,8}})));
+        Modelica.Thermal.HeatTransfer.Fahrenheit.ToKelvin setpointTemptoKelvin
+          annotation (Placement(transformation(extent={{-76,-34},{-60,-18}})));
+        Modelica.Blocks.Sources.Constant cp(final k=1006)
+          "Fixed specific heat of air" annotation (Placement(transformation(
+              extent={{8,8},{-8,-8}},
+              rotation=180,
+              origin={-40,66})));
+        Modelica.Blocks.Math.Add dTMea(k2=-1) annotation (Placement(transformation(
+              extent={{6,-6},{-6,6}},
+              rotation=180,
+              origin={48,-30})));
+        Modelica.Blocks.Math.Add dTMod(k2=-1) annotation (Placement(transformation(
+              extent={{6,-6},{-6,6}},
+              rotation=180,
+              origin={48,30})));
+        Modelica.Blocks.Math.Product mcp annotation (Placement(transformation(
+              extent={{-6,-6},{6,6}},
+              rotation=0,
+              origin={48,56})));
+        Modelica.Blocks.Interfaces.RealOutput qdotMod "Modeled thermal power"
+          annotation (Placement(transformation(extent={{100,34},{120,54}}),
+              iconTransformation(extent={{100,10},{120,30}})));
+        Modelica.Blocks.Interfaces.RealOutput qdotMea "Measured thermal power"
+          annotation (Placement(transformation(extent={{100,-62},{120,-42}}),
+              iconTransformation(extent={{100,10},{120,30}})));
+        Modelica.Blocks.Math.Product mcpdTMod annotation (Placement(transformation(
+              extent={{-6,-6},{6,6}},
+              rotation=0,
+              origin={82,44})));
+        Modelica.Blocks.Math.Product mcpdTMea annotation (Placement(transformation(
+              extent={{-6,-6},{6,6}},
+              rotation=0,
+              origin={84,-44})));
+        Modelica.Blocks.Interfaces.RealOutput PIHeaDemMea
+          "Measured PI heating demand" annotation (Placement(transformation(extent={{100,
+                  110},{120,90}}), iconTransformation(extent={{100,60},{120,80}})));
+        Modelica.Blocks.Math.Gain gaiPIHeaDem(k=0.01) annotation (Placement(
+              transformation(
+              extent={{-4,4},{4,-4}},
+              rotation=0,
+              origin={88,100})));
+        Modelica.Blocks.Interfaces.RealOutput PIMod "Measured thermal power"
+          annotation (Placement(transformation(extent={{100,-46},{120,-26}}),
+              iconTransformation(extent={{100,10},{120,30}})));
+
+      equation
+
+        connect(from_cfm.y, m3s_kgs.u2) annotation (Line(points={{-66.4,38},{-62,38},{
+                -62,40.4},{-57.2,40.4}},          color={0,0,127}));
+        connect(m3s_kgs.u1, den.y) annotation (Line(points={{-57.2,47.6},{-64,47.6},{-64,
+                66},{-67.2,66}},               color={0,0,127}));
+        connect(m3s_kgs.y, aachen_HP_2stage_FMU.u_m_flow) annotation (Line(
+              points={{-43.4,44},{-32,44},{-32,13.4},{-16.8,13.4}},
+                                                            color={0,0,127}));
+        connect(combiTimeTable.y[5], from_cfm.u) annotation (Line(points={{-99,
+                0},{-94,0},{-94,38},{-85.6,38}}, color={0,0,127}));
+        connect(supplyTemptoCelsius.Celsius, supTemMea) annotation (Line(points=
+               {{36.8,-80},{74,-80},{74,-70},{110,-70}}, color={0,0,127}));
+        connect(supplyTemptoKelvin.Kelvin,supplyTemptoCelsius. Kelvin)
+          annotation (Line(points={{-59.2,-80},{18.4,-80}},
+                                                        color={0,0,127}));
+        connect(combiTimeTable.y[3], supplyTemptoKelvin.Fahrenheit) annotation (
+           Line(points={{-99,0},{-94,0},{-94,-80},{-77.6,-80}}, color={0,0,127}));
+        connect(combiTimeTable.y[9], powTotMea) annotation (Line(points={{-99,0},
+                {-94,0},{-94,-90},{110,-90}}, color={0,0,127}));
+        connect(combiTimeTable.y[10], sta.u2) annotation (Line(points={{-99,0},
+                {-94,0},{-94,93.6},{-83.2,93.6}}, color={0,0,127}));
+        connect(combiTimeTable.y[11], sta.u1) annotation (Line(points={{-99,0},
+                {-94,0},{-94,86.4},{-83.2,86.4}}, color={0,0,127}));
+        connect(combiTimeTable.y[4], outsideTemptoKelvin.Fahrenheit)
+          annotation (Line(points={{-99,0},{-85.6,0}}, color={0,0,127}));
+        connect(outsideTemptoKelvin.Kelvin, aachen_HP_2stage_FMU.u_TDryBul)
+          annotation (Line(points={{-67.2,0},{-44,0},{-44,6.8},{-16.8,6.8}},
+                                                       color={0,0,127}));
+        connect(sumTem.y, aveTem.u) annotation (Line(points={{-43.4,16},{-40,16},
+                {-40,8},{-38.8,8}}, color={0,0,127}));
+        connect(aveTem.y, aachen_HP_2stage_FMU.u_TMix)
+          annotation (Line(points={{-29.6,8},{-24,8},{-24,-13.2},{-16.8,-13.2}},
+                                                       color={0,0,127}));
+        connect(powTotMod, powTotMod)
+          annotation (Line(points={{110,20},{110,20}}, color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.y_PEleHP, powTotMod) annotation (Line(
+              points={{28,4},{60,4},{60,20},{110,20}},       color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.y_HeaCal, heaCalMod) annotation (Line(
+              points={{28,-4},{60,-4},{60,-20},{110,-20}},     color={255,0,255}));
+        connect(combiTimeTable.y[1], rooTemptoKelvin.Fahrenheit) annotation (
+            Line(points={{-99,0},{-94,0},{-94,-48},{-77.6,-48}}, color={0,0,127}));
+        connect(rooTemptoKelvin.Kelvin, aachen_HP_2stage_FMU.u_TRoo)
+          annotation (Line(points={{-59.2,-48},{-40,-48},{-40,0},{-16.8,0}},
+              color={0,0,127}));
+        connect(retTemptoKelvin.Kelvin, sumTem.u1) annotation (Line(points={{
+                -67.2,20},{-58,20},{-58,19.6},{-57.2,19.6}}, color={0,0,127}));
+        connect(combiTimeTable.y[2], retTemptoKelvin.Fahrenheit) annotation (
+            Line(points={{-99,0},{-94,0},{-94,20},{-85.6,20}}, color={0,0,127}));
+        connect(outsideTemptoKelvin.Kelvin, sumTem.u2) annotation (Line(points=
+                {{-67.2,0},{-62,0},{-62,12},{-58,12},{-58,12.4},{-57.2,12.4}},
+              color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.y_TSup, supplyTempModtoCelsius.Kelvin)
+          annotation (Line(points={{28,12},{60,12},{60,0},{70.4,0}},   color={0,
+                0,127}));
+        connect(supplyTempModtoCelsius.Celsius, supTemMod)
+          annotation (Line(points={{88.8,0},{110,0}}, color={0,0,127}));
+        connect(sta.y, staMea) annotation (Line(points={{-69.4,90},{16,90},{16,
+                70},{110,70}}, color={0,0,127}));
+        connect(combiTimeTable.y[12], setpointTemptoKelvin.Fahrenheit) annotation (
+            Line(points={{-99,0},{-94,0},{-94,-26},{-77.6,-26}}, color={0,0,127}));
+        connect(setpointTemptoKelvin.Kelvin, aachen_HP_2stage_FMU.u_TRooSetPoi)
+          annotation (Line(points={{-59.2,-26},{-50,-26},{-50,-6.6},{-16.8,-6.6}},
+                                                                             color={0,
+                0,127}));
+        connect(m3s_kgs.y, mcp.u2) annotation (Line(points={{-43.4,44},{-32,44},{-32,52.4},
+                {40.8,52.4}}, color={0,0,127}));
+        connect(cp.y, mcp.u1) annotation (Line(points={{-31.2,66},{10,66},{10,60},{40,
+                60},{40,59.6},{40.8,59.6}}, color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.u_TMix, dTMea.u2) annotation (Line(points={{-16.8,
+                -13.2},{-30,-13.2},{-30,-26.4},{40.8,-26.4}},
+                                                   color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.y_TSup, dTMod.u1) annotation (Line(points={{28,12},
+                {32,12},{32,26.4},{40.8,26.4}},  color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.u_TMix, dTMod.u2) annotation (Line(points={{-16.8,
+                -13.2},{-30,-13.2},{-30,33.6},{40.8,33.6}},
+                                                 color={0,0,127}));
+        connect(supplyTemptoKelvin.Kelvin, dTMea.u1) annotation (Line(points={{-59.2,-80},
+                {-10,-80},{-10,-33.6},{40.8,-33.6}}, color={0,0,127}));
+        connect(mcpdTMea.y, qdotMea)
+          annotation (Line(points={{90.6,-44},{100,-44},{100,-52},{110,-52}},
+                                                          color={0,0,127}));
+        connect(mcpdTMod.y, qdotMod)
+          annotation (Line(points={{88.6,44},{110,44}}, color={0,0,127}));
+        connect(dTMod.y, mcpdTMod.u2) annotation (Line(points={{54.6,30},{60,30},{60,40.4},
+                {74.8,40.4}}, color={0,0,127}));
+        connect(dTMea.y, mcpdTMea.u1) annotation (Line(points={{54.6,-30},{60,-30},{60,
+                -40},{76,-40},{76,-40.4},{76.8,-40.4}}, color={0,0,127}));
+        connect(mcp.y, mcpdTMod.u1) annotation (Line(points={{54.6,56},{64,56},{64,48},
+                {74,48},{74,47.6},{74.8,47.6}}, color={0,0,127}));
+        connect(mcp.y, mcpdTMea.u2) annotation (Line(points={{54.6,56},{64,56},{64,-47.6},
+                {76.8,-47.6}}, color={0,0,127}));
+        connect(PIHeaDemMea, gaiPIHeaDem.y)
+          annotation (Line(points={{110,100},{92.4,100}}, color={0,0,127}));
+        connect(combiTimeTable.y[15], gaiPIHeaDem.u) annotation (Line(points={{-99,0},
+                {-94,0},{-94,100},{83.2,100}}, color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.y_PI, PIMod) annotation (Line(points={{28,-12},
+                {62,-12},{62,-36},{110,-36}},          color={0,0,127}));
+        annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
+                  -100},{100,100}})),
+          experiment(
+            StopTime=42000,
+            Interval=1,
+            Tolerance=1e-06),
+      __Dymola_Commands(file="modelica://AixLib/Resources/Scripts/Dymola/Fluid/HeatPumps/Examples/HeatPump.mos"
+              "Simulate and plot"),
+          Documentation(info="<html><h4>
+  <span style=\"color: #008000\">Overview</span>
+</h4>
+<p>
+  Simple test set-up for the HeatPumpDetailed model. The heat pump is
+  turned on and off while the source temperature increases linearly.
+  Outputs are the electric power consumption of the heat pump and the
+  supply temperature.
+</p>
+<p>
+  Besides using the default simple table data, the user should also
+  test tabulated data from <a href=
+  \"modelica://AixLib.DataBase.HeatPump\">AixLib.DataBase.HeatPump</a> or
+  polynomial functions.
+</p>
+</html>",   revisions="<html><ul>
+  <li>
+    <i>May 22, 2019</i> by Julian Matthes:<br/>
+    Rebuild due to the introducion of the thermal machine partial model
+    (see issue <a href=
+    \"https://github.com/RWTH-EBC/AixLib/issues/715\">#715</a>)
+  </li>
+  <li>
+    <i>November 26, 2018&#160;</i> by Fabian Wüllhorst:<br/>
+    First implementation (see issue <a href=
+    \"https://github.com/RWTH-EBC/AixLib/issues/577\">#577</a>)
+  </li>
+</ul>
+</html>"),__Dymola_Commands(file="Modelica://AixLib/Resources/Scripts/Dymola/Fluid/HeatPumps/Examples/HeatPump.mos" "Simulate and plot"),
+          Icon(coordinateSystem(extent={{-100,-100},{100,80}})));
+      end TesFMU_compile;
       annotation (Icon(graphics={
             Rectangle(
               lineColor={200,200,200},
