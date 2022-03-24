@@ -1048,7 +1048,7 @@ defined as parameters.
           kSta2=kSta2,
           banSta1=banSta1,
           banSta2=banSta2,
-          rtuConFMU(onOffConHea(bandwidth=0.15)))
+          rtuConFMU(onOffConHea(bandwidth=0.192)))
           annotation (Placement(transformation(extent={{-18,-20},{22,20}})));
         Modelica.Blocks.Math.Add sumTem(k1=1.65, k2=0.35)
                                         annotation (Placement(transformation(
@@ -1187,7 +1187,7 @@ defined as parameters.
         connect(aachen_HP_2stage_FMU.y_PEleHP, powTotMod) annotation (Line(
               points={{24,13.6},{60,13.6},{60,20},{110,20}}, color={0,0,127}));
         connect(aachen_HP_2stage_FMU.y_HeaCal, heaCalMod) annotation (Line(
-              points={{24,-8},{60,-8},{60,-20},{110,-20}},     color={255,0,255}));
+              points={{24,-5.2},{60,-5.2},{60,-20},{110,-20}}, color={255,0,255}));
         connect(combiTimeTable.y[1], rooTemptoKelvin.Fahrenheit) annotation (
             Line(points={{-99,0},{-94,0},{-94,-48},{-77.6,-48}}, color={0,0,127}));
         connect(rooTemptoKelvin.Kelvin, aachen_HP_2stage_FMU.u_TRoo)
@@ -1241,8 +1241,8 @@ defined as parameters.
           annotation (Line(points={{110,100},{92.4,100}}, color={0,0,127}));
         connect(combiTimeTable.y[15], gaiPIHeaDem.u) annotation (Line(points={{-99,0},
                 {-94,0},{-94,100},{83.2,100}}, color={0,0,127}));
-        connect(aachen_HP_2stage_FMU.y_PI, PIMod) annotation (Line(points={{24,
-                -14.4},{62,-14.4},{62,-36},{110,-36}}, color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.y_PI, PIMod) annotation (Line(points={{24,-9.2},{
+                62,-9.2},{62,-36},{110,-36}},          color={0,0,127}));
         annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
                   -100},{100,100}})),
           experiment(
@@ -2331,8 +2331,8 @@ defined as parameters.
     Modelica.Blocks.Interfaces.RealInput u_m_flow(unit="kg/s") annotation (
         Placement(transformation(extent={{-140,60},{-100,100}}),
           iconTransformation(extent={{-140,60},{-100,100}})));
-    Buildings.Fluid.Sources.Boundary_pT roo(nPorts=1, redeclare package Medium =
-          Medium_sou) "Fixed boundary at the outlet of the source side"
+    Buildings.Fluid.Sources.Boundary_pT roo(nPorts=1, redeclare package Medium
+        = Medium_sou) "Fixed boundary at the outlet of the source side"
       annotation (Placement(transformation(
           extent={{-11,11},{11,-11}},
           rotation=180,
@@ -2371,9 +2371,23 @@ defined as parameters.
               {-20,-20},{20,20}}, origin={-120,0}), iconTransformation(extent={{-140,
               20},{-100,60}})));
     Modelica.Blocks.Interfaces.BooleanOutput y_HeaCal
-      annotation (Placement(transformation(extent={{100,-50},{120,-30}})));
+      annotation (Placement(transformation(extent={{100,-22},{120,-2}}),
+          iconTransformation(extent={{100,-22},{120,-2}})));
     Modelica.Blocks.Interfaces.RealOutput y_PI
-      annotation (Placement(transformation(extent={{100,-82},{120,-62}})));
+      annotation (Placement(transformation(extent={{100,-56},{120,-36}}),
+          iconTransformation(extent={{100,-56},{120,-36}})));
+    Modelica.Blocks.Interfaces.RealOutput y_heaSta annotation (Placement(
+          transformation(extent={{100,-2},{120,18}}), iconTransformation(extent
+            ={{100,-2},{120,18}})));
+    Modelica.Blocks.Interfaces.RealOutput y_prs_heaSta annotation (Placement(
+          transformation(extent={{100,-78},{120,-58}}), iconTransformation(
+            extent={{100,-78},{120,-58}})));
+    Modelica.Blocks.Interfaces.RealOutput y_pos_heaSta annotation (Placement(
+          transformation(extent={{100,-98},{120,-78}}), iconTransformation(
+            extent={{100,-98},{120,-78}})));
+    Modelica.Blocks.Interfaces.RealOutput y_diff annotation (Placement(
+          transformation(extent={{100,-40},{120,-20}}), iconTransformation(
+            extent={{100,-56},{120,-36}})));
   equation
     connect(supFan.ports[1], rtuHP.port_a) annotation (Line(points={{-60,8},{-16,8},
             {-16,44},{0,44}}, color={0,127,255}));
@@ -2386,7 +2400,7 @@ defined as parameters.
     connect(rtuHP.PEle, y_PEleHP) annotation (Line(points={{33.6,56.8},{64,56.8},{
             64,68},{110,68}}, color={0,0,127}));
     connect(rtuConFMU.heaSta, rtuHP.sta) annotation (Line(points={{30.52,
-            -52.9091},{36,-52.9091},{36,10},{-10,10},{-10,56},{-1.6,56},{-1.6,
+            -46.2909},{36,-46.2909},{36,10},{-10,10},{-10,56},{-1.6,56},{-1.6,
             56.8}},                                           color={0,0,127}));
     connect(u_TDryBul, rtuHP.TEvaIn) annotation (Line(points={{-120,-32},{-40,-32},
             {-40,31.2},{-1.6,31.2}}, color={0,0,127}));
@@ -2402,9 +2416,18 @@ defined as parameters.
     connect(u_TRooSetPoi, rtuConFMU.TSetRooHea) annotation (Line(points={{-120,
             -60},{-50,-60},{-50,-49.0909},{-2.8,-49.0909}}, color={0,0,127}));
     connect(rtuConFMU.heaCal, y_HeaCal) annotation (Line(points={{30.52,
-            -59.5273},{65.17,-59.5273},{65.17,-40},{110,-40}}, color={255,0,255}));
-    connect(rtuConFMU.PI_y, y_PI) annotation (Line(points={{30.52,-66.4},{67.26,
-            -66.4},{67.26,-72},{110,-72}}, color={0,0,127}));
+            -51.1273},{65.17,-51.1273},{65.17,-12},{110,-12}}, color={255,0,255}));
+    connect(rtuConFMU.PI_y, y_PI) annotation (Line(points={{30.52,-60.2909},{
+            67.26,-60.2909},{67.26,-46},{110,-46}},
+                                           color={0,0,127}));
+    connect(rtuConFMU.heaSta, y_heaSta) annotation (Line(points={{30.52,
+            -46.2909},{66.26,-46.2909},{66.26,8},{110,8}}, color={0,0,127}));
+    connect(y_prs_heaSta, rtuConFMU.pre_swi1_Stage_y) annotation (Line(points={
+            {110,-68},{72,-68},{72,-64.8727},{30.52,-64.8727}}, color={0,0,127}));
+    connect(y_pos_heaSta, rtuConFMU.post_swi1_Stage_y) annotation (Line(points=
+            {{110,-88},{70,-88},{70,-69.7091},{30.52,-69.7091}}, color={0,0,127}));
+    connect(rtuConFMU.onOff_diff_y, y_diff) annotation (Line(points={{30.52,
+            -55.7091},{67.26,-55.7091},{67.26,-30},{110,-30}}, color={0,0,127}));
     annotation (                              experiment(
         StartTime=19872000,
         StopTime=19958400,
