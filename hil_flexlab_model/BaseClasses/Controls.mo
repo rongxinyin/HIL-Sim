@@ -3689,10 +3689,6 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
 
   model HeatStage
 
-    parameter Real uLowSta1 = uLowSta1 "PI lower bound to activate stage 1";
-    parameter Real uUppSta1 = uUppSta1 "PI upper bound to activate stage 1";
-    parameter Real uLowSta2 = uLowSta2 "PI lower bound to activate stage 2";
-    parameter Real uUppSta2 = uUppSta2 "PI upper bound to activate stage 2";
     parameter Real kSta1 = kSta1 "PI center line to activate stage 1";
     parameter Real kSta2 = kSta2 "PI center line to activate stage 2";
     parameter Real banSta1 = banSta1 "PI band to activate stage 1";
@@ -3791,14 +3787,12 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
     parameter Real k_hea=k_hea "Proportional gain of heating controller";
     parameter Modelica.SIunits.Time Ti_hea=Ti_hea "Integral time constant of heating controller";
     parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = maxSAT "max supply air temperature";
-    parameter Real uLowSta1 = uLowSta1 "PI lower bound to activate stage 1";
-    parameter Real uUppSta1 = uUppSta1 "PI upper bound to activate stage 1";
-    parameter Real uLowSta2 = uLowSta2 "PI lower bound to activate stage 2";
-    parameter Real uUppSta2 = uUppSta2 "PI upper bound to activate stage 2";
     parameter Real kSta1 = kSta1 "PI center line to activate stage 1";
     parameter Real kSta2 = kSta2 "PI center line to activate stage 2";
     parameter Real banSta1 = banSta1 "PI band to activate stage 1";
-    parameter Real banSta2 = banSta2 "PI band to activate stage 2";
+    parameter Real onOffConHeaBan = onOffConHeaBan "bandwidth for on off heating controller";
+
+      parameter Real banSta2 = banSta2 "PI band to activate stage 2";
 
     Modelica.Blocks.Interfaces.RealInput TSetRooHea(final unit="K", displayUnit=
           "degC")
@@ -3814,8 +3808,8 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
           origin={-120,60})));
     Modelica.Blocks.Interfaces.RealOutput heaSta(final unit="1")
       "Control signal for heating"
-      annotation (Placement(transformation(extent={{100,184},{136,220}}),
-          iconTransformation(extent={{100,184},{136,220}})));
+      annotation (Placement(transformation(extent={{100,40},{136,76}}),
+          iconTransformation(extent={{100,40},{136,76}})));
     Buildings.Controls.Continuous.LimPID conHea(
       controllerType=Modelica.Blocks.Types.SimpleController.PI,
       Ti=Ti_hea,
@@ -3841,10 +3835,6 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
       "Setpoint temperature for freeze protection"
       annotation (Placement(transformation(extent={{-80,20},{-60,40}})));
     HeatStage heatStage(
-      uLowSta1=uLowSta1,
-      uUppSta1=uUppSta1,
-      uLowSta2=uLowSta2,
-      uUppSta2=uUppSta2,
       kSta1=kSta1,
       kSta2=kSta2,
       banSta1=banSta1,
@@ -3883,8 +3873,11 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
               8},{134,44}}), iconTransformation(extent={{100,0},{136,36}})));
     Modelica.Blocks.Interfaces.RealOutput onOff_diff_y
       "Control signal for heating" annotation (Placement(transformation(extent=
-              {{100,110},{136,146}}), iconTransformation(extent={{100,110},{136,
-              146}})));
+              {{100,80},{136,116}}), iconTransformation(extent={{100,80},{136,
+              116}})));
+    Modelica.Blocks.Interfaces.RealOutput sigPI(final unit="1")
+      "PI signal for heating" annotation (Placement(transformation(extent={{100,120},
+              {136,156}}), iconTransformation(extent={{100,120},{136,156}})));
   equation
     connect(offHea.y, swiHea.u3) annotation (Line(points={{-27,50},{-14,50},{
             -14,128},{2,128}},
@@ -3931,9 +3924,8 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
             180},{-24,171.6}},
                           color={0,0,127}));
     connect(heatStage.y_Sta, swiHea.u1)
-      annotation (Line(points={{-24,152.4},{-24,144},{2,144}}, color={0,0,127}));
-    connect(swiTim.y, heaSta) annotation (Line(points={{65,58},{80,58},{80,202},
-            {118,202}},
+      annotation (Line(points={{-26,152.4},{-26,144},{2,144}}, color={0,0,127}));
+    connect(swiTim.y, heaSta) annotation (Line(points={{65,58},{118,58}},
                    color={0,0,127}));
     connect(heaSta, heaSta)
       annotation (Line(points={{118,202},{118,202}}, color={0,0,127}));
@@ -3954,6 +3946,9 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
             {-57,168},{-56,168}}, color={255,0,255}));
     connect(onOffConHea.diff, onOff_diff_y) annotation (Line(points={{-63,131.2},
             {21.5,131.2},{21.5,128},{118,128}}, color={0,0,127}));
+      annotation (Line(points={{118,58},{118,58}},   color={0,0,127}));
+    connect(conHea.y, sigPI) annotation (Line(points={{-37,180},{12,180},{12,160},
+            {72,160},{72,138},{118,138}}, color={0,0,127}));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,0},
               {100,220}}),       graphics={
                                   Rectangle(
