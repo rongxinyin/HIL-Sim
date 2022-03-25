@@ -1869,8 +1869,8 @@ First implementation.
       pre(y) = pre_y_start;
     equation
       diff = u-(reference - bandwidth/2);
-      y = pre(y) and (u < reference + bandwidth/2) or (u < reference - bandwidth/
-        2);
+      y = (pre(y) and (u < (reference + bandwidth/2))) or (u < (reference - bandwidth/
+        2));
 
       annotation (Icon(coordinateSystem(preserveAspectRatio=true, extent={{-100,
                 -100},{100,100}}), graphics={
