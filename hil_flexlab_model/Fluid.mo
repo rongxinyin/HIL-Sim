@@ -129,8 +129,6 @@ package Fluid "HP models are stored here"
             lineColor={28,108,200},
             fillColor={28,108,200},
             fillPattern=FillPattern.Solid)}), experiment(
-        StartTime=19872000,
-        StopTime=19958400,
         Interval=60,
         Tolerance=1e-06));
   end HeatHeatpumpCoolHeatpumpAuxHea_noIEC;
