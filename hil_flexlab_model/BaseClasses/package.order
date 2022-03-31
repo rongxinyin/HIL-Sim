@@ -1,2 +1,17 @@
 PartialOpenLoopX1aV1
 PartialOpenLoopX1aNoLeakage
+PartialOpenLoopX1aNoLeakage0830
+PartialOpenLoopX1aV10831
+Eco_Enable
+Eco_Enable_weiping
+PartialOpenLoopXRa
+partialAirUnit
+partialInterface
+HeatRecoveryIEC
+Infiltration
+IdealValve
+Functions
+Controls
+COP_ASHP_AuxHeat
+partialInterface_noPV
+partialAirUnit_noCool

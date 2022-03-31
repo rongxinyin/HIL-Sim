@@ -4,7 +4,8 @@ model FlexlabX1aBaseline
   extends Modelica.Icons.Example;
   extends BaseClasses.PartialOpenLoopX1aV1(
     heaCoi(show_T=true),
-    cooCoi(show_T=true));
+    cooCoi(show_T=true),
+    dpRetDuc1(dp_nominal=10));
 
   Modelica.Blocks.Sources.Constant TSupSetHea(y(
       final quantity="ThermodynamicTemperature",
@@ -29,7 +30,7 @@ model FlexlabX1aBaseline
   Buildings.Examples.VAVReheat.Controls.RoomTemperatureSetpoint TSetRoo(
     final THeaOn=THeaOn,
     final THeaOff=THeaOff,
-    final TCooOn=TCooOn,
+    final TCooOn=273.15 + 23.3,
     final TCooOff=TCooOff)
     annotation (Placement(transformation(extent={{-300,-358},{-280,-338}})));
   Buildings.Examples.VAVReheat.Controls.DuctStaticPressureSetpoint pSetDuc(
@@ -390,5 +391,9 @@ This is for
     __Dymola_Commands(file=
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/ASHRAE2006.mos"
         "Simulate and plot"),
-    experiment(StopTime=172800, Tolerance=1e-06));
+    experiment(
+      StartTime=24454800,
+      StopTime=24627600,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"));
 end FlexlabX1aBaseline;

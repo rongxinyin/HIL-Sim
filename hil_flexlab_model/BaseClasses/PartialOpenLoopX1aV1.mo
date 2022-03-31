@@ -8,57 +8,57 @@ partial model PartialOpenLoopX1aV1
 
   constant Integer numZon=3 "Total number of served VAV boxes";
   constant Real leakageFrac=0.2 "Leakage fraction of AHU upstream duct";
-  parameter Modelica.Units.SI.Volume VRooCor=AFloCor*flo.hRoo
+  parameter Modelica.SIunits.Volume VRooCor=AFloCor*flo.hRoo
     "Room volume core";
-  parameter Modelica.Units.SI.Volume VRooSou=AFloSou*flo.hRoo
+  parameter Modelica.SIunits.Volume VRooSou=AFloSou*flo.hRoo
     "Room volume south";
-  parameter Modelica.Units.SI.Volume VRooNor=AFloNor*flo.hRoo
+  parameter Modelica.SIunits.Volume VRooNor=AFloNor*flo.hRoo
     "Room volume north";
-  parameter Modelica.Units.SI.Volume VRooPle=AFloPle*flo.hRoo "Room volume plenum";
+  parameter Modelica.SIunits.Volume VRooPle=AFloPle*flo.hRoo "Room volume plenum";
 
-  parameter Modelica.Units.SI.Area AFloCor=flo.cor.AFlo "Floor area core";
-  parameter Modelica.Units.SI.Area AFloSou=flo.sou.AFlo "Floor area south";
-  parameter Modelica.Units.SI.Area AFloNor=flo.nor.AFlo "Floor area north";
-  parameter Modelica.Units.SI.Area AFloPle=flo.ple.AFlo "Floor area plenum";
+  parameter Modelica.SIunits.Area AFloCor=flo.cor.AFlo "Floor area core";
+  parameter Modelica.SIunits.Area AFloSou=flo.sou.AFlo "Floor area south";
+  parameter Modelica.SIunits.Area AFloNor=flo.nor.AFlo "Floor area north";
+  parameter Modelica.SIunits.Area AFloPle=flo.ple.AFlo "Floor area plenum";
 
-  parameter Modelica.Units.SI.Area AFlo[numZon]={flo.cor.AFlo,flo.sou.AFlo,
+  parameter Modelica.SIunits.Area AFlo[numZon]={flo.cor.AFlo,flo.sou.AFlo,
       flo.nor.AFlo} "Floor area of each zone";
-  final parameter Modelica.Units.SI.Area ATot=sum(AFlo) "Total floor area";
+  final parameter Modelica.SIunits.Area ATot=sum(AFlo) "Total floor area";
 
   constant Real conv=1.2/3600 "Conversion factor for nominal mass flow rate";
-    parameter Modelica.Units.SI.MassFlowRate mCor_flow_nominal=0.106*1.2
+    parameter Modelica.SIunits.MassFlowRate mCor_flow_nominal=0.106*1.2
     "Design mass flow rate core";
-  parameter Modelica.Units.SI.MassFlowRate mSou_flow_nominal=0.189*1.2
+  parameter Modelica.SIunits.MassFlowRate mSou_flow_nominal=0.189*1.2
     "Design mass flow rate perimeter 1";
-  parameter Modelica.Units.SI.MassFlowRate mPle_flow_nominal=0.11*1.2
+  parameter Modelica.SIunits.MassFlowRate mPle_flow_nominal=0.11*1.2*0.1
     "Design mass flow rate perimeter 2";
-  parameter Modelica.Units.SI.MassFlowRate mNor_flow_nominal=0.106*1.2
+  parameter Modelica.SIunits.MassFlowRate mNor_flow_nominal=0.106*1.2
     "Design mass flow rate perimeter 3";
- // parameter Modelica.Units.SI.MassFlowRate mCor_flow_nominal=6*VRooCor*conv
+ // parameter Modelica.SIunits.MassFlowRate mCor_flow_nominal=6*VRooCor*conv
  //   "Design mass flow rate core";
- // parameter Modelica.Units.SI.MassFlowRate mSou_flow_nominal=6*VRooSou*conv
+ // parameter Modelica.SIunits.MassFlowRate mSou_flow_nominal=6*VRooSou*conv
  //   "Design mass flow rate perimeter 1";
- // parameter Modelica.Units.SI.MassFlowRate mPle_flow_nominal=9*VRooPle*conv
+ // parameter Modelica.SIunits.MassFlowRate mPle_flow_nominal=9*VRooPle*conv
  //   "Design mass flow rate perimeter 2";
- // parameter Modelica.Units.SI.MassFlowRate mNor_flow_nominal=6*VRooNor*conv
+ // parameter Modelica.SIunits.MassFlowRate mNor_flow_nominal=6*VRooNor*conv
  //   "Design mass flow rate perimeter 3";
-  parameter Modelica.Units.SI.MassFlowRate m_flow_nominal=1.0*(mCor_flow_nominal
+  parameter Modelica.SIunits.MassFlowRate m_flow_nominal=1.0*(mCor_flow_nominal
        + mSou_flow_nominal + mPle_flow_nominal + mNor_flow_nominal) "Nominal mass flow rate";
-  parameter Modelica.Units.SI.Angle lat=37.87*3.14159/180 "Latitude";
+  parameter Modelica.SIunits.Angle lat=37.87*3.14159/180 "Latitude";
 
-  parameter Modelica.Units.SI.Temperature THeaOn=293.15
+  parameter Modelica.SIunits.Temperature THeaOn=293.15
     "Heating setpoint during on";
-  parameter Modelica.Units.SI.Temperature THeaOff=285.15
+  parameter Modelica.SIunits.Temperature THeaOff=285.15
     "Heating setpoint during off";
-  parameter Modelica.Units.SI.Temperature TCooOn=297.15
+  parameter Modelica.SIunits.Temperature TCooOn=273.15+23.3
     "Cooling setpoint during on";
-  parameter Modelica.Units.SI.Temperature TCooOff=303.15
+  parameter Modelica.SIunits.Temperature TCooOff=303.15
     "Cooling setpoint during off";
-  parameter Modelica.Units.SI.PressureDifference dpBuiStaSet(min=0) = 12
+  parameter Modelica.SIunits.PressureDifference dpBuiStaSet(min=0) = 12
     "Building static pressure";
   parameter Real yFanMin = 0.1 "Minimum fan speed";
 
-//  parameter Modelica.Units.SI.HeatFlowRate QHeaCoi_nominal= 2.5*yFanMin*m_flow_nominal*1000*(20 - 4)
+//  parameter Modelica.SIunits.HeatFlowRate QHeaCoi_nominal= 2.5*yFanMin*m_flow_nominal*1000*(20 - 4)
 //    "Nominal capacity of heating coil";
 
   parameter Boolean allowFlowReversal=true
@@ -339,7 +339,7 @@ partial model PartialOpenLoopX1aV1
     "Splitter for room supply into Middle and South Zone"
     annotation (Placement(transformation(extent={{824,-30},{844,-50}})));
   Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(filNam=
-        Modelica.Utilities.Files.loadResource("Resources/weatherdata/US_Berkeley_2020_New.mos"))
+        Modelica.Utilities.Files.loadResource("Resources/weatherdata/US_Berkeley_2021_0822.mos"))
     annotation (Placement(transformation(extent={{-360,170},{-340,190}})));
   Buildings.BoundaryConditions.WeatherData.Bus weaBus "Weather Data Bus"
     annotation (Placement(transformation(extent={{-330,170},{-310,190}}),
@@ -425,19 +425,18 @@ partial model PartialOpenLoopX1aV1
   Results res(
     final A=ATot,
     PFan=fanSup.P + 0,
-    PHea=heaCoi.Q2_flow + cor.terHea.Q1_flow + sou.terHea.Q1_flow + cor.terHea.Q1_flow
-         + nor.terHea.Q1_flow,
+    PHea=heaCoi.Q2_flow + cor.terHea.Q1_flow + sou.terHea.Q1_flow + nor.terHea.Q1_flow,
     PCooSen=cooCoi.QSen2_flow,
     PCooLat=cooCoi.QLat2_flow) "Results of the simulation";
   /*fanRet*/
 
 protected
   model Results "Model to store the results of the simulation"
-    parameter Modelica.Units.SI.Area A "Floor area";
-    input Modelica.Units.SI.Power PFan "Fan energy";
-    input Modelica.Units.SI.Power PHea "Heating energy";
-    input Modelica.Units.SI.Power PCooSen "Sensible cooling energy";
-    input Modelica.Units.SI.Power PCooLat "Latent cooling energy";
+    parameter Modelica.SIunits.Area A "Floor area";
+    input Modelica.SIunits.Power PFan "Fan energy";
+    input Modelica.SIunits.Power PHea "Heating energy";
+    input Modelica.SIunits.Power PCooSen "Sensible cooling energy";
+    input Modelica.SIunits.Power PCooLat "Latent cooling energy";
 
     Real EFan(
       unit="J/m2",
@@ -504,7 +503,7 @@ public
     m_flow_nominal=mPle_flow_nominal,
     redeclare package Medium = MediumA,
     allowFlowReversal=allowFlowReversal,
-    dp_nominal=5)  "Pressure drop for return duct"
+    dp_nominal=40) "Pressure drop for return duct"
     annotation (Placement(transformation(extent={{562,38},{542,58}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
@@ -577,7 +576,7 @@ equation
       thickness=0.5,
       smooth=Smooth.None));
   connect(weaBus, flo.weaBus) annotation (Line(
-      points={{-320,180},{-320,513},{952.571,513}},
+      points={{-320,180},{-320,527.62},{952.571,527.62}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));

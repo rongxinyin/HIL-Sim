@@ -6,13 +6,13 @@ model FlexlabX1aValidation
 //  extends BaseClasses.PartialOpenLoopX1aV1(min(nin=3),
 //      ave(nin=3));
 
-  parameter Modelica.Units.SI.VolumeFlowRate VPriSysMax_flow=m_flow_nominal/1.2
+  parameter Modelica.SIunits.VolumeFlowRate VPriSysMax_flow=m_flow_nominal/1.2
     "Maximum expected system primary airflow rate at design stage";
-  parameter Modelica.Units.SI.VolumeFlowRate minZonPriFlo[numZon]={
+  parameter Modelica.SIunits.VolumeFlowRate minZonPriFlo[numZon]={
       mCor_flow_nominal,mSou_flow_nominal,mNor_flow_nominal}/1.2 "Minimum expected zone primary flow rate";
-  parameter Modelica.Units.SI.Time samplePeriod=120
+  parameter Modelica.SIunits.Time samplePeriod=120
     "Sample period of component, set to the same value as the trim and respond that process yPreSetReq";
-  parameter Modelica.Units.SI.PressureDifference dpDisRetMax=40
+  parameter Modelica.SIunits.PressureDifference dpDisRetMax=40
     "Maximum return fan discharge static pressure setpoint";
 
   Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Controller conVAVNor(
@@ -37,7 +37,7 @@ model FlexlabX1aValidation
     annotation (Placement(transformation(extent={{176,242},{196,262}})));
   Buildings.Controls.OBC.CDL.Integers.MultiSum TZonResReq(nin=3)
     "Number of zone temperature requests"
-    annotation (Placement(transformation(extent={{298,288},{318,308}})));
+    annotation (Placement(transformation(extent={{292,288},{312,308}})));
   Buildings.Controls.OBC.CDL.Integers.MultiSum PZonResReq(nin=3)
     "Number of zone pressure requests"
     annotation (Placement(transformation(extent={{296,244},{316,264}})));
@@ -62,7 +62,7 @@ model FlexlabX1aValidation
   Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.ModeAndSetPoints TZonSet[numZon](
     final TZonHeaOn=fill(THeaOn, numZon),
     final TZonHeaOff=fill(THeaOff, numZon),
-    TZonCooOn=fill(24, numZon),
+    TZonCooOn={296.45},
     final TZonCooOff=fill(TCooOff, numZon)) "Zone setpoint temperature"
     annotation (Placement(transformation(extent={{-32,322},{-12,342}})));
   Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow.Zone
@@ -129,13 +129,13 @@ equation
                                       color={0,0,127}));
 
   connect(conVAVNor.yZonTemResReq, TZonResReq.u[1]) annotation (Line(points={{680,38},
-          {750,38},{750,224},{270,224},{270,302.667},{296,302.667}},     color=
+          {750,38},{750,224},{270,224},{270,302.667},{290,302.667}},     color=
           {255,127,0}));
   connect(conVAVCor.yZonTemResReq, TZonResReq.u[2]) annotation (Line(points={{802,42},
-          {810,42},{810,240},{274,240},{274,298},{296,298}},         color={255,
+          {810,42},{810,240},{274,240},{274,298},{290,298}},         color={255,
           127,0}));
   connect(conVAVSou.yZonTemResReq, TZonResReq.u[3]) annotation (Line(points={{1042,38},
-          {1054,38},{1054,216},{278,216},{278,293.333},{296,293.333}},
+          {1054,38},{1054,216},{278,216},{278,293.333},{290,293.333}},
         color={255,127,0}));
   connect(conVAVNor.yZonPreResReq, PZonResReq.u[1]) annotation (Line(points={{680,34},
           {758,34},{758,236},{284,236},{284,258.667},{294,258.667}},     color=
@@ -276,7 +276,7 @@ equation
                      color={0,0,127}));
   connect(TZonSet[1].yOpeMod, conAHU.uOpeMod) annotation (Line(points={{-10,325},
           {158,325},{158,437.556},{356,437.556}}, color={255,127,0}));
-  connect(TZonResReq.y, conAHU.uZonTemResReq) annotation (Line(points={{320,298},
+  connect(TZonResReq.y, conAHU.uZonTemResReq) annotation (Line(points={{314,298},
           {322,298},{322,432.222},{356,432.222}}, color={255,127,0}));
   connect(PZonResReq.y, conAHU.uZonPreResReq) annotation (Line(points={{318,254},
           {324,254},{324,426.889},{356,426.889}}, color={255,127,0}));
