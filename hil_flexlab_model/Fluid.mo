@@ -1315,7 +1315,7 @@ defined as parameters.
               rotation=0,
               origin={-50,44})));
         hil_flexlab_model_Fluid_Aachen_HP_02stage_FMU_fmu aachen_HP_2stage_FMU
-          annotation (Placement(transformation(extent={{-16,-20},{24,20}})));
+          annotation (Placement(transformation(extent={{-18,-18},{22,22}})));
         Modelica.Blocks.Math.Add sumTem(k1=1.65, k2=0.35)
                                         annotation (Placement(transformation(
               extent={{-6,-6},{6,6}},
@@ -1424,7 +1424,7 @@ defined as parameters.
         connect(m3s_kgs.u1, den.y) annotation (Line(points={{-57.2,47.6},{-64,47.6},{-64,
                 66},{-67.2,66}},               color={0,0,127}));
         connect(m3s_kgs.y, aachen_HP_2stage_FMU.u_m_flow) annotation (Line(
-              points={{-43.4,44},{-32,44},{-32,13.4},{-16.8,13.4}},
+              points={{-43.4,44},{-32,44},{-32,15.4},{-18.8,15.4}},
                                                             color={0,0,127}));
         connect(combiTimeTable.y[5], from_cfm.u) annotation (Line(points={{-99,
                 0},{-94,0},{-94,38},{-85.6,38}}, color={0,0,127}));
@@ -1444,23 +1444,23 @@ defined as parameters.
         connect(combiTimeTable.y[4], outsideTemptoKelvin.Fahrenheit)
           annotation (Line(points={{-99,0},{-85.6,0}}, color={0,0,127}));
         connect(outsideTemptoKelvin.Kelvin, aachen_HP_2stage_FMU.u_TDryBul)
-          annotation (Line(points={{-67.2,0},{-44,0},{-44,6.8},{-16.8,6.8}},
+          annotation (Line(points={{-67.2,0},{-44,0},{-44,8.8},{-18.8,8.8}},
                                                        color={0,0,127}));
         connect(sumTem.y, aveTem.u) annotation (Line(points={{-43.4,16},{-40,16},
                 {-40,8},{-38.8,8}}, color={0,0,127}));
         connect(aveTem.y, aachen_HP_2stage_FMU.u_TMix)
-          annotation (Line(points={{-29.6,8},{-24,8},{-24,-13.2},{-16.8,-13.2}},
+          annotation (Line(points={{-29.6,8},{-24,8},{-24,-11.2},{-18.8,-11.2}},
                                                        color={0,0,127}));
         connect(powTotMod, powTotMod)
           annotation (Line(points={{110,20},{110,20}}, color={0,0,127}));
         connect(aachen_HP_2stage_FMU.y_PEleHP, powTotMod) annotation (Line(
-              points={{28,4},{60,4},{60,20},{110,20}},       color={0,0,127}));
+              points={{26,6},{60,6},{60,20},{110,20}},       color={0,0,127}));
         connect(aachen_HP_2stage_FMU.y_HeaCal, heaCalMod) annotation (Line(
-              points={{28,-4},{60,-4},{60,-20},{110,-20}},     color={255,0,255}));
+              points={{26,-2},{60,-2},{60,-20},{110,-20}},     color={255,0,255}));
         connect(combiTimeTable.y[1], rooTemptoKelvin.Fahrenheit) annotation (
             Line(points={{-99,0},{-94,0},{-94,-48},{-77.6,-48}}, color={0,0,127}));
         connect(rooTemptoKelvin.Kelvin, aachen_HP_2stage_FMU.u_TRoo)
-          annotation (Line(points={{-59.2,-48},{-40,-48},{-40,0},{-16.8,0}},
+          annotation (Line(points={{-59.2,-48},{-40,-48},{-40,2},{-18.8,2}},
               color={0,0,127}));
         connect(retTemptoKelvin.Kelvin, sumTem.u1) annotation (Line(points={{
                 -67.2,20},{-58,20},{-58,19.6},{-57.2,19.6}}, color={0,0,127}));
@@ -1470,7 +1470,7 @@ defined as parameters.
                 {{-67.2,0},{-62,0},{-62,12},{-58,12},{-58,12.4},{-57.2,12.4}},
               color={0,0,127}));
         connect(aachen_HP_2stage_FMU.y_TSup, supplyTempModtoCelsius.Kelvin)
-          annotation (Line(points={{28,12},{60,12},{60,0},{70.4,0}},   color={0,
+          annotation (Line(points={{26,14},{60,14},{60,0},{70.4,0}},   color={0,
                 0,127}));
         connect(supplyTempModtoCelsius.Celsius, supTemMod)
           annotation (Line(points={{88.8,0},{110,0}}, color={0,0,127}));
@@ -1479,20 +1479,20 @@ defined as parameters.
         connect(combiTimeTable.y[12], setpointTemptoKelvin.Fahrenheit) annotation (
             Line(points={{-99,0},{-94,0},{-94,-26},{-77.6,-26}}, color={0,0,127}));
         connect(setpointTemptoKelvin.Kelvin, aachen_HP_2stage_FMU.u_TRooSetPoi)
-          annotation (Line(points={{-59.2,-26},{-50,-26},{-50,-6.6},{-16.8,-6.6}},
+          annotation (Line(points={{-59.2,-26},{-50,-26},{-50,-4.6},{-18.8,-4.6}},
                                                                              color={0,
                 0,127}));
         connect(m3s_kgs.y, mcp.u2) annotation (Line(points={{-43.4,44},{-32,44},{-32,52.4},
                 {40.8,52.4}}, color={0,0,127}));
         connect(cp.y, mcp.u1) annotation (Line(points={{-31.2,66},{10,66},{10,60},{40,
                 60},{40,59.6},{40.8,59.6}}, color={0,0,127}));
-        connect(aachen_HP_2stage_FMU.u_TMix, dTMea.u2) annotation (Line(points={{-16.8,
-                -13.2},{-30,-13.2},{-30,-26.4},{40.8,-26.4}},
+        connect(aachen_HP_2stage_FMU.u_TMix, dTMea.u2) annotation (Line(points={{-18.8,
+                -11.2},{-30,-11.2},{-30,-26.4},{40.8,-26.4}},
                                                    color={0,0,127}));
-        connect(aachen_HP_2stage_FMU.y_TSup, dTMod.u1) annotation (Line(points={{28,12},
-                {32,12},{32,26.4},{40.8,26.4}},  color={0,0,127}));
-        connect(aachen_HP_2stage_FMU.u_TMix, dTMod.u2) annotation (Line(points={{-16.8,
-                -13.2},{-30,-13.2},{-30,33.6},{40.8,33.6}},
+        connect(aachen_HP_2stage_FMU.y_TSup, dTMod.u1) annotation (Line(points={{26,14},
+                {32,14},{32,26.4},{40.8,26.4}},  color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.u_TMix, dTMod.u2) annotation (Line(points={{-18.8,
+                -11.2},{-30,-11.2},{-30,33.6},{40.8,33.6}},
                                                  color={0,0,127}));
         connect(supplyTemptoKelvin.Kelvin, dTMea.u1) annotation (Line(points={{-59.2,-80},
                 {-10,-80},{-10,-33.6},{40.8,-33.6}}, color={0,0,127}));
@@ -1513,8 +1513,8 @@ defined as parameters.
           annotation (Line(points={{110,100},{92.4,100}}, color={0,0,127}));
         connect(combiTimeTable.y[15], gaiPIHeaDem.u) annotation (Line(points={{-99,0},
                 {-94,0},{-94,100},{83.2,100}}, color={0,0,127}));
-        connect(aachen_HP_2stage_FMU.y_PI, PIMod) annotation (Line(points={{28,-12},
-                {62,-12},{62,-36},{110,-36}},          color={0,0,127}));
+        connect(aachen_HP_2stage_FMU.y_PI, PIMod) annotation (Line(points={{26,-10},
+                {62,-10},{62,-36},{110,-36}},          color={0,0,127}));
         annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,
                   -100},{100,100}})),
           experiment(
@@ -2311,15 +2311,14 @@ defined as parameters.
     replaceable package Medium_sou = Buildings.Media.Air;
     replaceable package Medium_sin = Buildings.Media.Air;
     parameter Real refIneFre = 0.015 "refrigerant inertia parameter";
-    parameter Real k_hea=0.18 "Proportional gain of heating controller";
+    parameter Real k_hea=0.33 "Proportional gain of heating controller";
     parameter Modelica.SIunits.Time Ti_hea=2400 "Integral time constant of heating controller";
-    parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 310 "max supply air temperature";
-    parameter Real kSta1 = 0.05 "PI center line to activate stage 1";
+    parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 311 "max supply air temperature";
+    parameter Real kSta1 = 0.12 "PI center line to activate stage 1";
     parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
     parameter Real banSta1 = 0.01 "PI band to activate stage 1";
     parameter Real banSta2 = 0.01 "PI band to activate stage 2";
-    parameter Real onOffConHeaBan = 0.192
-                                         "bandwidth for on off heating controller";
+    parameter Real onOffConHeaBan = 1    "bandwidth for on off heating controller";
 
     HeatPumps.BaseClasses.RTUHP rtuHP(
       redeclare package Medium_sin = Medium_sin,
