@@ -1,4 +1,4 @@
-within hil_flexlab_model;
+﻿within hil_flexlab_model;
 package Fluid "HP models are stored here"
   model HeatHeatpumpCoolHeatpumpAuxHea_noIEC
     "Air supply unit model with heatpump heating and cooling and auxiliary electric heater for heating"
@@ -1668,8 +1668,8 @@ defined as parameters.
             Line(points={{-79,0},{-48,0},{-48,8},{-22,8}}, color={0,0,127}));
         connect(combiTimeTable.y[2], mcp.u2) annotation (Line(points={{-79,0},{
                 -62,0},{-62,52.4},{40.8,52.4}}, color={0,0,127}));
-        connect(combiTimeTable.y[2], aachen_HP_2stage_FMU.u_m_flow) annotation
-          (Line(points={{-79,0},{-62,0},{-62,16},{-22,16}}, color={0,0,127}));
+        connect(combiTimeTable.y[2], aachen_HP_2stage_FMU.u_m_flow) annotation (
+           Line(points={{-79,0},{-62,0},{-62,16},{-22,16}}, color={0,0,127}));
         connect(combiTimeTable.y[3], aachen_HP_2stage_FMU.u_TDryBul)
           annotation (Line(points={{-79,0},{-22,0}}, color={0,0,127}));
         connect(combiTimeTable.y[4], aachen_HP_2stage_FMU.u_TRooSetPoi)
@@ -2563,15 +2563,15 @@ defined as parameters.
             46},{110,46}},                 color={0,0,127}));
     connect(rtuHP.PEle, y_PEleHP) annotation (Line(points={{33.6,56.8},{64,56.8},
             {64,64},{110,64}},color={0,0,127}));
-    connect(rtuConFMU.heaSta, rtuHP.sta) annotation (Line(points={{30.52,-64.6182},
-            {36,-64.6182},{36,10},{-10,10},{-10,56},{-1.6,56},{-1.6,56.8}},
-                                                              color={0,0,127}));
+    connect(rtuConFMU.heaSta, rtuHP.sta) annotation (Line(points={{30.52,
+            -64.6182},{36,-64.6182},{36,10},{-10,10},{-10,56},{-1.6,56},{-1.6,
+            56.8}},                                           color={0,0,127}));
     connect(u_TDryBul, rtuHP.TEvaIn) annotation (Line(points={{-120,-32},{-40,-32},
             {-40,31.2},{-1.6,31.2}}, color={0,0,127}));
     connect(supFan.T_in, u_TMix) annotation (Line(points={{-82,12},{-90,12},{-90,0},
             {-120,0}}, color={0,0,127}));
-    connect(u_TRoo, rtuConFMU.TRoo) annotation (Line(points={{-120,-90},{-38,-90},
-            {-38,-64.3636},{-2.8,-64.3636}},
+    connect(u_TRoo, rtuConFMU.TRoo) annotation (Line(points={{-120,-90},{-38,
+            -90},{-38,-64.3636},{-2.8,-64.3636}},
                                  color={0,0,127}));
     connect(rtuConFMU.TSup, rtuHP.TSup) annotation (Line(points={{-2.8,-72},{-22,
             -72},{-22,-90},{42,-90},{42,53.6},{33.6,53.6}},            color={0,0,
@@ -2584,23 +2584,23 @@ defined as parameters.
             {62,-36},{62,-51.1273},{30.52,-51.1273}},           color={0,0,127}));
     connect(y_pos_heaSta, rtuConFMU.post_swi1_Stage_y) annotation (Line(points={{110,-52},
             {68,-52},{68,-55.4545},{30.52,-55.4545}},            color={0,0,127}));
-    connect(rtuConFMU.onOff_diff_y, y_diff) annotation (Line(points={{30.52,-68.4364},
-            {56,-68.4364},{56,-96},{110,-96}},                 color={0,0,127}));
-    connect(y_PI, rtuConFMU.sigPI) annotation (Line(points={{110,-20},{56,-20},{
-            56,-47.5636},{30.52,-47.5636}},
+    connect(rtuConFMU.onOff_diff_y, y_diff) annotation (Line(points={{30.52,
+            -68.4364},{56,-68.4364},{56,-96},{110,-96}},       color={0,0,127}));
+    connect(y_PI, rtuConFMU.sigPI) annotation (Line(points={{110,-20},{56,-20},
+            {56,-47.5636},{30.52,-47.5636}},
                                          color={0,0,127}));
-    connect(rtuConFMU.heaSta, y_heaSta) annotation (Line(points={{30.52,-64.6182},
-            {62,-64.6182},{62,-82},{110,-82}},
+    connect(rtuConFMU.heaSta, y_heaSta) annotation (Line(points={{30.52,
+            -64.6182},{62,-64.6182},{62,-82},{110,-82}},
                                          color={0,0,127}));
     connect(y_PI, y_PI)
       annotation (Line(points={{110,-20},{110,-20}}, color={0,0,127}));
       annotation (Placement(transformation(extent={{100,-74},{120,-54}}),
           iconTransformation(extent={{100,-74},{120,-54}})),
                                               experiment(
-        StartTime=19872000,
-        StopTime=19958400,
         Interval=60,
-        Tolerance=1e-06), Icon(graphics={
+        Tolerance=1e-06,
+        __Dymola_Algorithm="Dassl"),
+                          Icon(graphics={
                                   Rectangle(
           extent={{-100,-100},{100,100}},
           lineColor={0,0,127},
