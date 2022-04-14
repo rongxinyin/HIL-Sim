@@ -1,4 +1,4 @@
-﻿within hil_flexlab_model;
+within hil_flexlab_model;
 package Fluid "HP models are stored here"
   model HeatHeatpumpCoolHeatpumpAuxHea_noIEC
     "Air supply unit model with heatpump heating and cooling and auxiliary electric heater for heating"
@@ -1007,30 +1007,29 @@ defined as parameters.
       end TesRTUHP;
 
       model TesFMU "Example for the heat pump and controls FMU"
-       extends Modelica.Icons.Example;
+        extends Modelica.Icons.Example;
 
         parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
-        parameter Real k_hea=0.33 "Proportional gain of heating controller";
-        parameter Modelica.SIunits.Time Ti_hea=20000 "Integral time constant of heating controller";
-        parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 310 "max supply air temperature";
+        parameter Real k_hea = 1.25 "Proportional gain of heating controller";
+        parameter Modelica.SIunits.Time Ti_hea = 7000 "Integral time constant of heating controller";
+        parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 311 "max supply air temperature";
         parameter Real kSta1 = 0.12 "PI center line to activate stage 1";
         parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
         parameter Real banSta1 = 0.01 "PI band to activate stage 1";
         parameter Real banSta2 = 0.01 "PI band to activate stage 2";
-        parameter Real onOffConHeaBan = 0.192
-                                             "bandwidth for on off heating controller";
+        parameter Real onOffConHeaBan = 0.25 "bandwidth for on off heating controller";
 
         Buildings.Controls.OBC.UnitConversions.From_cfm from_cfm annotation (
-            Placement(transformation(extent={{-84,30},{-68,46}})));
+            Placement(transformation(extent={{-84,34},{-68,50}})));
         Modelica.Blocks.Sources.Constant den(final k=1.189) "Fixed density of air"
                                  annotation (Placement(transformation(
               extent={{8,8},{-8,-8}},
               rotation=180,
-              origin={-76,66})));
+              origin={-76,68})));
         Modelica.Blocks.Math.Product m3s_kgs annotation (Placement(
               transformation(extent={{-6,-6},{6,6}},
               rotation=0,
-              origin={-50,44})));
+              origin={-50,46})));
         Aachen_HP_2stage_FMU aachen_HP_2stage_FMU(
           refIneFre=refIneFre,
           k_hea=k_hea,
@@ -1559,18 +1558,17 @@ defined as parameters.
 
       model TesFMUwXRAdat
         "Example for the heat pump and controls FMU with XRA data"
-       extends Modelica.Icons.Example;
+        extends Modelica.Icons.Example;
 
         parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
-        parameter Real k_hea=0.33 "Proportional gain of heating controller";
-        parameter Modelica.SIunits.Time Ti_hea=20000 "Integral time constant of heating controller";
-        parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 310 "max supply air temperature";
+        parameter Real k_hea = 1.25 "Proportional gain of heating controller";
+        parameter Modelica.SIunits.Time Ti_hea = 7000 "Integral time constant of heating controller";
+        parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 311 "max supply air temperature";
         parameter Real kSta1 = 0.12 "PI center line to activate stage 1";
         parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
         parameter Real banSta1 = 0.01 "PI band to activate stage 1";
         parameter Real banSta2 = 0.01 "PI band to activate stage 2";
-        parameter Real onOffConHeaBan = 0.192
-                                             "bandwidth for on off heating controller";
+        parameter Real onOffConHeaBan = 0.25 "bandwidth for on off heating controller";
 
         Aachen_HP_2stage_FMU aachen_HP_2stage_FMU(
           refIneFre=refIneFre,
@@ -2473,15 +2471,16 @@ defined as parameters.
 
     replaceable package Medium_sou = Buildings.Media.Air;
     replaceable package Medium_sin = Buildings.Media.Air;
-    parameter Real refIneFre = 0.015 "refrigerant inertia parameter";
-    parameter Real k_hea=0.33 "Proportional gain of heating controller";
-    parameter Modelica.SIunits.Time Ti_hea=2400 "Integral time constant of heating controller";
+
+    parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
+    parameter Real k_hea = 1.25 "Proportional gain of heating controller";
+    parameter Modelica.SIunits.Time Ti_hea = 7000 "Integral time constant of heating controller";
     parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 311 "max supply air temperature";
     parameter Real kSta1 = 0.12 "PI center line to activate stage 1";
     parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
     parameter Real banSta1 = 0.01 "PI band to activate stage 1";
     parameter Real banSta2 = 0.01 "PI band to activate stage 2";
-    parameter Real onOffConHeaBan = 1    "bandwidth for on off heating controller";
+    parameter Real onOffConHeaBan = 0.25 "bandwidth for on off heating controller";
 
     HeatPumps.BaseClasses.RTUHP rtuHP(
       redeclare package Medium_sin = Medium_sin,
