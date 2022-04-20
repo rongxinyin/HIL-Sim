@@ -5,7 +5,7 @@ package Glasses "Package with thermophysical properties for window glas"
   record ID104 = Buildings.HeatTransfer.Data.Glasses.Generic (
       x=0.003,
       k=1.0,
-      tauSol={0.32},
+      tauSol={0.276},
       rhoSol_a={0.24},
       rhoSol_b={0.075},
       tauIR=0,

@@ -1098,6 +1098,7 @@ extends Modelica.Icons.Package;
           azi={Buildings.Types.Azimuth.N}),
         intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
         extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
+        mSenFac=1,
         lat=0.66098585832754);
 
     replaceable parameter
