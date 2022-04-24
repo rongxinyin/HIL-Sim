@@ -4011,8 +4011,6 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
     Modelica.Blocks.Sources.Constant UpperLimSup(k=maxSAT)
       "Setpoint temperature for freeze protection"
       annotation (Placement(transformation(extent={{-80,10},{-60,30}})));
-    Modelica.Blocks.Logical.Switch swiTim "Switch for turning heating on/off"
-      annotation (Placement(transformation(extent={{44,48},{64,68}})));
     hil_flexlab_model.BaseClasses.Controls.BaseClasses.OnOffController onOffConHea(bandwidth=
          onOffConHeaBan)
       "Enable heating"
@@ -4021,13 +4019,6 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
       annotation (Placement(transformation(extent={{40,200},{60,220}})));
     Modelica.Blocks.Logical.Not NotLim
       annotation (Placement(transformation(extent={{8,200},{20,212}})));
-    Modelica.Blocks.MathBoolean.OnDelay
-                                  onDelay(delayTime=120)
-      annotation (Placement(transformation(extent={{-10,-10},{10,10}},
-          rotation=-90,
-          origin={14,82})));
-    Modelica.Blocks.Math.RealToBoolean realToBoolean
-      annotation (Placement(transformation(extent={{76,200},{96,220}})));
     Modelica.Blocks.Interfaces.BooleanOutput heaCal
       "Control signal for heating" annotation (Placement(transformation(extent={{100,88},
               {136,124}}),           iconTransformation(extent={{100,88},{136,
@@ -4077,19 +4068,6 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
             {26,206},{20.6,206}}, color={255,0,255}));
     connect(onOffConSupHeatSetPoi.y, NotLim.u) annotation (Line(points={{-9,6},
             {-6,6},{-6,206},{6.8,206}}, color={255,0,255}));
-    connect(offHea.y, swiTim.u3)
-      annotation (Line(points={{-27,50},{42,50}}, color={0,0,127}));
-    connect(UppLimSwi.y, swiTim.u1) annotation (Line(points={{61,210},{66,210},
-            {66,180},{38,180},{38,66},{42,66}}, color={0,0,127}));
-    connect(onDelay.y, swiTim.u2)
-      annotation (Line(points={{14,70},{14,58},{42,58}}, color={255,0,255}));
-    connect(UppLimSwi.y, realToBoolean.u)
-      annotation (Line(points={{61,210},{74,210}}, color={0,0,127}));
-    connect(realToBoolean.y, onDelay.u) annotation (Line(points={{97,210},{98,
-            210},{98,174},{66,174},{66,114},{14,114},{14,96}},  color={255,0,
-            255}));
-    connect(swiTim.y, heaSta) annotation (Line(points={{65,58},{118,58}},
-                   color={0,0,127}));
     connect(heaSta, heaSta)
       annotation (Line(points={{118,58},{118,58}},   color={0,0,127}));
     connect(heaCal, onOffConHea.y) annotation (Line(points={{118,106},{-32,106},
@@ -4110,6 +4088,8 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
             -18,180},{-37,180}}, color={0,0,127}));
     connect(conHea.y, pre_swi1_Stage_y) annotation (Line(points={{-37,180},{32,
             180},{32,164},{118,164}}, color={0,0,127}));
+    connect(UppLimSwi.y, heaSta) annotation (Line(points={{61,210},{82,210},{82,
+            58},{118,58}}, color={0,0,127}));
       annotation (Line(points={{118,58},{118,58}},   color={0,0,127}),
                 Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,0},
               {100,220}}),       graphics={
