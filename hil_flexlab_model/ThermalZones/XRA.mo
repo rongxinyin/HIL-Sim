@@ -1062,11 +1062,16 @@ extends Modelica.Icons.Package;
 
   model TestCellRotate
     "Model of LBNL User Test Facility Cell XRA north facing"
+    parameter Real wWinFra = 1.03
+      "Uncertainty factor to scale window width in xrb";
+      parameter Real tauFra = 0.92
+      "Uncertainty factor to scale glass solar gain";
+
     extends Buildings.ThermalZones.Detailed.MixedAir(AFlo=60.97,
         nSurBou=4,
         nConPar=0,
         nConBou=5,
-        nConExt=4,
+        nConExt=3,
         nConExtWin=1,
         hRoo=3.6576,
         surBou(
@@ -1077,23 +1082,22 @@ extends Modelica.Icons.Package;
         datConExt(
            layers={extDoo,
            R16p8Wal,
-           R20Wal,
-           bedDiv},
-           A={1.3716 * 2.39, 3.6576*2.52-2.39*1.3716, 6.6675*9.144, 3.6576 * 1.524},
-           til={Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling, Buildings.Types.Tilt.Wall},
-           azi={Buildings.Types.Azimuth.N,Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.W}),
+           R52Wal},
+           A={1.3716 * 2.39, 3.6576*2.52-2.39*1.3716, 3.6576*9.144},
+           til={Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall},
+           azi={Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.E}),
         datConBou(
-           layers = {bedDiv,celDiv, parCon, parDoo, R52Wal},
-           A = {3.6576 * 7.62, 3.6576 * 9.144, 3.6576*2.886075-2.39*1.22, 2.39*1.22, 3.6576*1.2614},
-           til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall},
-           azi = {Buildings.Types.Azimuth.W, Buildings.Types.Azimuth.E, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.N},
-           stateAtSurface_a = {false, false, true, true, true}),
+           layers = {celDiv, parCon, parDoo, R52Wal, R20Wal},
+           A = {3.6576 * 9.144, 3.6576*2.886075-2.39*1.22, 2.39*1.22, 3.6576*1.2614, 6.645*9.144},
+           til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling},
+           azi = {Buildings.Types.Azimuth.W, Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.S},
+           stateAtSurface_a = {false, true, true, true, true}),
         datConExtWin(
           layers={R16p8Wal},
           A={6.6675*3.6576},
           glaSys={glaSys},
           hWin={1.8288},
-          wWin={5.88},
+          wWin={5.88*wWinFra},
           til={Buildings.Types.Tilt.Wall},
           azi={Buildings.Types.Azimuth.N}),
         intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
@@ -1136,7 +1140,8 @@ extends Modelica.Icons.Package;
       annotation (Placement(transformation(extent={{410,-72},{430,-52}})));
     parameter
       Data.Constructions.GlazingSystems.SingleClear3
-      glaSys(haveInteriorShade=true)
+      glaSys(glass={Data.Constructions.Glasses.ID104(tauSol={0.32*tauFra})},
+             haveInteriorShade=false)
       annotation (Placement(transformation(extent={{346,-152},{366,-132}})));
     annotation(Documentation(info="<html>
   <p>

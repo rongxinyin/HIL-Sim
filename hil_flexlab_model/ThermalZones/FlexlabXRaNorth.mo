@@ -15,7 +15,7 @@ model FlexlabXRaNorth "Model of a flexlab xra north facing"
   parameter Modelica.SIunits.Length hWin = 1.5 "Height of windows";
   parameter Real kIntNor(min=0, max=1) = 1
     "Gain factor to scale internal heat gain in north zone";
-  parameter Real mSenFac = 5
+  parameter Real mSenFac = 10.7
     "Gain factor to scale sensible thermal mass in xrb";
   constant Modelica.SIunits.Height hRoo=2.74 "Room height";
 
@@ -32,7 +32,7 @@ model FlexlabXRaNorth "Model of a flexlab xra north facing"
     hRoo=1.625,
     nSurBou=0,
     nConPar=0,
-    nConBou=6,
+    nConBou=4,
     nConExt=4,
     nConExtWin=0,
     datConExt(
@@ -40,14 +40,14 @@ model FlexlabXRaNorth "Model of a flexlab xra north facing"
          SouthExt,
          NorthExt,
          R20Wal},
-         A={9.33*1.63, 6.49*1.75, 2.68*1.5, 6.49*9.33},
+         A={9.33*1.63, 6.49*1.75, 2.68*1.5, 6.645*9.144},
          til={Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling},
          azi={Buildings.Types.Azimuth.W,Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.S}),
     datConBou(
-         layers = {celDiv, parCon, parCon, ceiling, ceiling, ceiling},
-         A = {9.33*1.63, 1.26*1.5, 2.55*1.5, 6.49*3.23, 6.49*3.05, 6.49*3.05},
-         til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Floor, Buildings.Types.Tilt.Floor, Buildings.Types.Tilt.Floor},
-         azi = {Buildings.Types.Azimuth.E, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.S}),
+         layers = {celDiv, parCon, parCon, ceiling},
+         A = {9.33*1.63, 1.26*1.5, 2.55*1.5, 6.645*9.144},
+         til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Floor},
+         azi = {Buildings.Types.Azimuth.E, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.S}),
     nPorts=2,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
       extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
@@ -55,7 +55,7 @@ model FlexlabXRaNorth "Model of a flexlab xra north facing"
     final sampleModel=sampleModel) "Ceiling plenum"
     annotation (Placement(transformation(extent={{108,-14},{148,26}})));
 
-  Modelica.Blocks.Sources.Constant uSha(k=1)
+  Modelica.Blocks.Sources.Constant uSha(k=0)
     "Control signal for the shading device"
     annotation (Placement(transformation(extent={{4,244},{24,264}})));
   Modelica.Blocks.Routing.Replicator replicator(nout=1)
@@ -74,7 +74,7 @@ model FlexlabXRaNorth "Model of a flexlab xra north facing"
     redeclare package Medium = Medium,
     VRoo=6.49*3.23*3.6576,
     s=6.49/3.23,
-    azi=Buildings.Types.Azimuth.W,
+    azi=Buildings.Types.Azimuth.E,
     final use_windPressure=use_windPressure)
     "Model for air infiltration through the envelope"
     annotation (Placement(transformation(extent={{-4,150},{32,190}})));
@@ -1549,7 +1549,7 @@ model FlexlabXRaNorth "Model of a flexlab xra north facing"
                         redeclare package Medium = Medium,
                         mSenFac = mSenFac,
                         nPorts=4)
-    annotation (Placement(transformation(extent={{108,162},{148,202}})));
+    annotation (Placement(transformation(extent={{108,164},{148,204}})));
 
   Modelica.Fluid.Vessels.BaseClasses.VesselFluidPorts_b portsCell[2](redeclare
       package Medium = Medium) "Fluid inlets and outlets"
@@ -1644,21 +1644,21 @@ equation
   connect(add3_3.y, multiplex3_1.u3[1]) annotation (Line(points={{-21,260},{-14,
           260},{-14,287},{-6,287}},  color={0,0,127}));
   connect(multiplex3_1.y, testCellRotate.qGai_flow) annotation (Line(points={{17,294},
-          {86,294},{86,190},{106.4,190}},         color={0,0,127}));
+          {86,294},{86,192},{106.4,192}},         color={0,0,127}));
   connect(temAirCellA.port, testCellRotate.heaPorAir)
-    annotation (Line(points={{268,180},{198,180},{198,182},{127,182}},
+    annotation (Line(points={{268,180},{198,180},{198,184},{127,184}},
                                                    color={191,0,0}));
-  connect(testCellRotate.surf_conBou[5], ple.surf_conBou[6]) annotation (Line(
-        points={{134,166},{178,166},{178,-24},{134,-24},{134,-9.16667}}, color=
+  connect(testCellRotate.surf_conBou[5], ple.surf_conBou[4]) annotation (Line(
+        points={{134,168},{178,168},{178,-24},{134,-24},{134,-9.25}},    color=
           {191,0,0}));
   connect(leaCell.port_b, testCellRotate.ports[3]) annotation (Line(points={{32,170},
-          {72,170},{72,173},{113,173}},      color={0,127,255}));
-  connect(testCellRotate.ports[1], portsCell[1]) annotation (Line(points={{113,169},
-          {87.5,169},{87.5,154},{48,154}},      color={0,127,255}));
-  connect(testCellRotate.ports[2], portsCell[2]) annotation (Line(points={{113,171},
-          {82,171},{82,154},{68,154}},      color={0,127,255}));
-  connect(replicator.y, testCellRotate.uSha) annotation (Line(points={{63,254},{
-          76,254},{76,200},{106.4,200}},  color={0,0,127}));
+          {72,170},{72,175},{113,175}},      color={0,127,255}));
+  connect(testCellRotate.ports[1], portsCell[1]) annotation (Line(points={{113,171},
+          {87.5,171},{87.5,154},{48,154}},      color={0,127,255}));
+  connect(testCellRotate.ports[2], portsCell[2]) annotation (Line(points={{113,173},
+          {82,173},{82,154},{68,154}},      color={0,127,255}));
+  connect(replicator.y, testCellRotate.uSha) annotation (Line(points={{63,254},
+          {76,254},{76,202},{106.4,202}}, color={0,0,127}));
   connect(weaBus, closet.weaBus) annotation (Line(
       points={{210,234},{210,282},{248,282},{248,400},{213.9,400},{213.9,399.9}},
       color={255,204,51},
@@ -1676,7 +1676,7 @@ equation
           450},{176,450},{176,366},{202,366}},
                                         color={191,0,0}));
   connect(closet.surf_surBou[2], testCellRotate.surf_conBou[3]) annotation (
-      Line(points={{192.2,368},{134,368},{134,166}}, color={191,0,0}));
+      Line(points={{192.2,368},{134,368},{134,168}}, color={191,0,0}));
   connect(weaBus, electrical.weaBus) annotation (Line(
       points={{210,234},{316,234},{316,482},{281.9,482},{281.9,481.9}},
       color={255,204,51},
@@ -1688,7 +1688,7 @@ equation
   connect(TRooAir, temAirCellA.T) annotation (Line(points={{390,166},{338,166},{
           338,180},{288,180}}, color={0,0,127}));
   connect(testCellRotate.weaBus, weaBus) annotation (Line(
-      points={{145.9,199.9},{177.95,199.9},{177.95,234},{210,234}},
+      points={{145.9,201.9},{177.95,201.9},{177.95,234},{210,234}},
       color={255,204,51},
       thickness=0.5), Text(
       string="%second",
@@ -1696,7 +1696,7 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(senRelPre.port_a, testCellRotate.ports[4]) annotation (Line(points={{100,108},
-          {106,108},{106,175},{113,175}},          color={0,127,255}));
+          {106,108},{106,177},{113,177}},          color={0,127,255}));
 
   connect(greater.y,occ)
     annotation (Line(points={{379,280},{408,280}}, color={255,0,255}));

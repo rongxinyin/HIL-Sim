@@ -4,14 +4,15 @@ package Glasses "Package with thermophysical properties for window glas"
 
   record ID104 = Buildings.HeatTransfer.Data.Glasses.Generic (
       x=0.003,
-      k=1.0,
-      tauSol={0.276},
-      rhoSol_a={0.24},
-      rhoSol_b={0.075},
+      k=0.92,
+      tauSol={0.32},
+      rhoSol_a={0.17},
+      rhoSol_b={0.07},
       tauIR=0,
       absIR_a=0.58,
-      absIR_b=0.84)
-    "Generic Clear Glass 3.048mm with plexi film. Manufacturer: Generic."
+      absIR_b=0.58)
+    "Generic Clear Glass 3.048mm with plexi film. Manufacturer: Generic. Original 3mm clear glass: absIR_a=0.58,
+      absIR_b=0.84"
     annotation (
       defaultComponentPrefixes="parameter",
       defaultComponentName="datGla");

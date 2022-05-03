@@ -1,8 +1,8 @@
 within hil_flexlab_model.Examples;
-model XRA_Baseline_Calibration_0410
-  "flexlab baseline as XRB heat pump, no leakage"
+model XRA_Baseline_Calibration_0501
+  "flexlab baseline as XRB heat pump, after envelope calibration"
 
-  parameter Real senFac = 1
+  parameter Real senFac = 0.88
     "Gain factor to scale oa flow in xrb";
 
   extends Modelica.Icons.Example;
@@ -1497,4 +1497,4 @@ This is for
       Interval=300,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
-end XRA_Baseline_Calibration_0410;
+end XRA_Baseline_Calibration_0501;
