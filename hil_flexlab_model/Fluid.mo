@@ -3383,7 +3383,6 @@ defined as parameters.
             textString="fmu",
             textStyle={TextStyle.Bold})}));
   end Aachen_HP_VS_FMU;
->>>>>>> 6e6836e58b6fc1f38d1ef522e6cbe488187f0d79
   annotation (Icon(graphics={
         Rectangle(
           lineColor={200,200,200},
