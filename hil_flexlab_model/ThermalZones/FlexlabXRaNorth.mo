@@ -85,7 +85,8 @@ model FlexlabXRaNorth "Model of a flexlab xra north facing"
        "degC") "Room air temperatures" annotation (Placement(transformation(
           extent={{380,156},{400,176}}), iconTransformation(extent={{380,156},{
             400,176}})));
-  Buildings.Fluid.Sensors.RelativePressure senRelPre(redeclare package Medium = Medium)
+  Buildings.Fluid.Sensors.RelativePressure senRelPre(redeclare package Medium
+      =                                                                         Medium)
     "Building pressure measurement"
     annotation (Placement(transformation(extent={{100,98},{80,118}})));
   Buildings.Fluid.Sources.Outside out(nPorts=1, redeclare package Medium = Medium)
@@ -1721,45 +1722,6 @@ equation
           fillColor={170,213,255},
           fillPattern=FillPattern.Sphere),
         Rectangle(
-          extent={{0,-80},{294,-60}},
-          lineColor={95,95,95},
-          fillColor={255,255,255},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{0,-74},{294,-66}},
-          lineColor={95,95,95},
-          fillColor={170,213,255},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{8,8},{294,100}},
-          lineColor={95,95,95},
-          fillColor={95,95,95},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{20,88},{280,22}},
-          pattern=LinePattern.None,
-          lineColor={117,148,176},
-          fillColor={170,213,255},
-          fillPattern=FillPattern.Sphere),
-        Polygon(
-          points={{-56,170},{20,94},{12,88},{-62,162},{-56,170}},
-          smooth=Smooth.None,
-          fillColor={95,95,95},
-          fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None),
-        Polygon(
-          points={{290,16},{366,-60},{358,-66},{284,8},{290,16}},
-          smooth=Smooth.None,
-          fillColor={95,95,95},
-          fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None),
-        Polygon(
-          points={{284,96},{360,168},{368,162},{292,90},{284,96}},
-          smooth=Smooth.None,
-          fillColor={95,95,95},
-          fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None),
-        Rectangle(
           extent={{-80,120},{-60,-20}},
           lineColor={95,95,95},
           fillColor={255,255,255},
@@ -1769,41 +1731,30 @@ equation
           lineColor={95,95,95},
           fillColor={170,213,255},
           fillPattern=FillPattern.Solid),
-        Polygon(
-          points={{-64,-56},{18,22},{26,16},{-58,-64},{-64,-56}},
-          smooth=Smooth.None,
-          fillColor={95,95,95},
-          fillPattern=FillPattern.Solid,
-          pattern=LinePattern.None),
         Rectangle(
-          extent={{360,122},{380,-18}},
+          extent={{10,56},{264,48}},
           lineColor={95,95,95},
           fillColor={255,255,255},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{366,122},{374,-18}},
-          lineColor={95,95,95},
-          fillColor={170,213,255},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{2,170},{296,178}},
-          lineColor={95,95,95},
-          fillColor={170,213,255},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{2,160},{296,180}},
-          lineColor={95,95,95},
-          fillColor={255,255,255},
-          fillPattern=FillPattern.Solid),
-        Rectangle(
-          extent={{2,166},{296,174}},
-          lineColor={95,95,95},
-          fillColor={170,213,255},
           fillPattern=FillPattern.Solid),
         Text(
           extent={{-84,234},{-62,200}},
           lineColor={0,0,255},
-          textString="dP")}),
+          textString="dP"),
+        Rectangle(
+          extent={{10,-16},{18,110}},
+          lineColor={95,95,95},
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid),
+        Rectangle(
+          extent={{136,-18},{144,108}},
+          lineColor={95,95,95},
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid),
+        Rectangle(
+          extent={{256,-18},{264,108}},
+          lineColor={95,95,95},
+          fillColor={255,255,255},
+          fillPattern=FillPattern.Solid)}),
     Documentation(revisions="<html>
 <ul>
 <li>

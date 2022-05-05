@@ -863,6 +863,33 @@ defined as parameters.
 </ul>
 </html>"));
       end RongxinSampleHP;
+
+      record AAONRQ002Cooling "AAON-RQ-002 cooling performance dataset"
+        extends AixLib.DataBase.Chiller.ChillerBaseDataDefinition(
+          tableP_ele=[0, 23.9, 29.4, 35, 40; 8,1460.0, 1660.0, 1880.0, 2130.0;  13,1470.0, 1670.0, 1900.0, 2150.0],
+          tableQdot_eva=[0, 23.9, 29.4, 35, 40; 8,6335.0, 6083.0, 5807.0, 5582.0;  13,5341.0, 5113.0, 4873.0,4618.0],
+          mFlow_conNom=7743/4180/5,
+          mFlow_evaNom=(1190*1.2)/3600,
+          tableUppBou=[20, 20; 35, 20]);
+
+        annotation (
+          Icon(coordinateSystem(preserveAspectRatio=false)),
+          Diagram(coordinateSystem(preserveAspectRatio=false)),
+          Documentation(info="<html><p>
+  Data&#160;record&#160;for&#160;type&#160;AWO-M/AWO-M-E-AC&#160;201.A04,
+  obtained from the technical guide in the UK. <a href=
+  \"https://professionals.viessmann.co.uk/content/dam/vi-brands/UK/PDFs/Datasheets/Vitocal%20Technical%20Guide.PDF/_jcr_content/renditions/original.media_file.download_attachment.file/Vitocal%20Technical%20Guide.PDF\">
+  Link</a> to the datasheet
+</p>
+<ul>
+  <li>
+    <i>November 26, 2018&#160;</i> by Fabian Wüllhorst:<br/>
+    First implementation (see issue <a href=
+    \"https://github.com/RWTH-EBC/AixLib/issues/577\">#577</a>)
+  </li>
+</ul>
+</html>"));
+      end AAONRQ002Cooling;
       annotation (Icon(graphics={
             Rectangle(
               lineColor={200,200,200},
@@ -3212,7 +3239,7 @@ defined as parameters.
             textStyle={TextStyle.Bold})}),
       Diagram(coordinateSystem(extent={{-100,-100},{100,120}})));
   end Aachen_HP_2stage_FMU_wTMixCalc_ReaFlo;
-  
+
   model HeatpumpFanCurve "heatpump fan power curve"
     parameter Real a = 102 "Fan power curve coefficient a";
     parameter Real b = 906 "Fan power curve coefficient b";
@@ -3232,7 +3259,7 @@ defined as parameters.
             textStyle={TextStyle.Bold})}),                         Diagram(
           coordinateSystem(preserveAspectRatio=false)));
   end HeatpumpFanCurve;
-  
+
   model Aachen_HP_VS_FMU
     "Air supply unit model with heatpump heating and cooling and auxiliary electric heater for heating"
 

@@ -1390,7 +1390,7 @@ equation
   connect(OAFloRea.y[1], OAFra.u)
     annotation (Line(points={{31.7,245},{70.8,244}}, color={0,0,127}));
   connect(OAFra.y, aachen_HP_2stage_FMU_wTMixCalc.u_OAFlow) annotation (Line(
-        points={{107.6,244},{140,244},{140,24},{157.2,24},{157.2,9.65455}},
+        points={{107.6,244},{124,244},{124,10},{157.2,10},{157.2,9.65455}},
         color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-400},{1440,
