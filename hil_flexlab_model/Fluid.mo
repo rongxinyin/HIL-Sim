@@ -2566,8 +2566,8 @@ defined as parameters.
               AixLib.DataBase.HeatPump.PerformanceData.LookUpTable2D (dataTable=
                  hil_flexlab_model.Fluid.HeatPumps.Data.RongxinSampleHP()),
           redeclare model PerDataRevHP =
-              AixLib.DataBase.Chiller.PerformanceData.LookUpTable2D (smoothness
-                =Modelica.Blocks.Types.Smoothness.LinearSegments, dataTable=
+              AixLib.DataBase.Chiller.PerformanceData.LookUpTable2D (smoothness=
+                 Modelica.Blocks.Types.Smoothness.LinearSegments, dataTable=
                   hil_flexlab_model.Fluid.HeatPumps.Data.AAONRQ002Cooling()),
           VEva=0.04,
           use_evaCap=false,
@@ -2581,12 +2581,6 @@ defined as parameters.
               extent={{-23,-28},{23,28}},
               rotation=0,
               origin={3.00001,-14})));
-
-       Modelica.Blocks.Sources.BooleanConstant heaOn annotation (Placement(
-              transformation(
-              extent={{-6,-6},{6,6}},
-              rotation=0,
-              origin={-52,64})));
 
         Buildings.Fluid.Sensors.TemperatureTwoPort senTAct(
           final m_flow_nominal=heaPum.m1_flow_nominal,
@@ -2621,8 +2615,8 @@ defined as parameters.
           "Outside air dry bulb temperature" annotation (Placement(
               transformation(extent={{-120,-90},{-100,-70}})));
        Modelica.Blocks.Interfaces.RealInput sta "Heating stage" annotation (
-            Placement(transformation(extent={{-120,70},{-100,90}}),
-              iconTransformation(extent={{-120,70},{-100,90}})));
+            Placement(transformation(extent={{-120,52},{-100,72}}),
+              iconTransformation(extent={{-120,52},{-100,72}})));
        Modelica.Blocks.Interfaces.RealOutput TSup(quantity=
               "ThermodynamicTemperature", unit="K", displayUnit="degC")
           "Electrical power consumed by the unit"
@@ -2633,6 +2627,9 @@ defined as parameters.
        Modelica.Fluid.Interfaces.FluidPort_b port_b(redeclare package Medium =
              Medium_sin)
          annotation (Placement(transformation(extent={{90,-10},{110,10}})));
+       Modelica.Blocks.Interfaces.BooleanInput heasta "Heating stage"
+          annotation (Placement(transformation(extent={{-120,80},{-100,100}}),
+              iconTransformation(extent={{-120,80},{-100,100}})));
       equation
         connect(inSou.ports[1], heaPum.port_a2) annotation (Line(points={{-42,
                 -64},{26,-64},{26,-28}}, color={0,127,255}));
@@ -2640,13 +2637,6 @@ defined as parameters.
                 -28},{-42,-28},{-42,-29}}, color={0,127,255}));
         connect(heaPum.port_b1, senTAct.port_a)
           annotation (Line(points={{26,0},{50,0}}, color={0,127,255}));
-        connect(heaOn.y, sigBus1.modeSet) annotation (Line(points={{-45.4,64},{
-                -22,64},{-22,33.085},{-20.925,33.085}}, color={255,0,255}),
-            Text(
-            string="%second",
-            index=1,
-            extent={{-6,3},{-6,3}},
-            horizontalAlignment=TextAlignment.Right));
        connect(iceFac.y,sigBus1. iceFacMea) annotation (Line(points={{-51.2,20},{-24,
                20},{-24,32},{-22,32},{-22,33.085},{-20.925,33.085}},
                                                    color={0,0,127}), Text(
@@ -2684,8 +2674,15 @@ defined as parameters.
          annotation (Line(points={{70,0},{100,0}}, color={0,127,255}));
         connect(TEvaIn, inSou.T_in) annotation (Line(points={{-110,-80},{-86,-80},
                 {-86,-60},{-64,-60}}, color={0,0,127}));
-        connect(sta, nSetGai.u) annotation (Line(points={{-110,80},{-100,80},{
+        connect(sta, nSetGai.u) annotation (Line(points={{-110,62},{-100,62},{
                 -100,46},{-92,46}}, color={0,0,127}));
+        connect(heasta, sigBus1.modeSet) annotation (Line(points={{-110,90},{
+                -22,90},{-22,33.085},{-20.925,33.085}}, color={255,0,255}),
+            Text(
+            string="%second",
+            index=1,
+            extent={{6,3},{6,3}},
+            horizontalAlignment=TextAlignment.Left));
        annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
              coordinateSystem(preserveAspectRatio=false)));
       end RTUHP_Cool;
@@ -3617,7 +3614,7 @@ defined as parameters.
     Modelica.Blocks.Interfaces.RealOutput y_PEleHP(unit="W")
       annotation (Placement(transformation(extent={{100,60},{120,80}}),
           iconTransformation(extent={{100,60},{120,80}})));
-    BaseClasses.Controls.RTU_control_FMU_Delay rtuConFMU(
+    BaseClasses.Controls.RTU_control_FMU_Delay_Cool rtuConFMU(
       k_hea=k_hea,
       Ti_hea=Ti_hea,
       maxSAT = maxSAT,
@@ -3626,19 +3623,19 @@ defined as parameters.
       banSta1=banSta1,
       banSta2=banSta2,
       onOffConHeaBan=onOffConHeaBan)
-      annotation (Placement(transformation(extent={{0,-72},{28,-44}})));
+      annotation (Placement(transformation(extent={{0,-80},{22,-32}})));
     Modelica.Blocks.Interfaces.RealInput u_TDryBul(unit="K", displayUnit="degC")
       "outside temperature measurement"
-                                     annotation (Placement(transformation(extent={
-              {-20,-20},{20,20}}, origin={-120,-32}), iconTransformation(extent={{-140,
+                                     annotation (Placement(transformation(extent={{-16,-16},
+              {16,16}},           origin={-118,-26}), iconTransformation(extent={{-140,
               -20},{-100,20}})));
     Modelica.Blocks.Interfaces.RealInput u_TRoo(unit="K", displayUnit="degC")
-      "Zone temperature measurement" annotation (Placement(transformation(extent={
-              {-20,-20},{20,20}}, origin={-120,-90}), iconTransformation(extent={{-140,
+      "Zone temperature measurement" annotation (Placement(transformation(extent={{-16,-16},
+              {16,16}},           origin={-116,-100}),iconTransformation(extent={{-140,
               -100},{-100,-60}})));
-    Modelica.Blocks.Interfaces.RealInput u_TRooSetPoi(unit="K", displayUnit=
+    Modelica.Blocks.Interfaces.RealInput u_THeaSetPoi(unit="K", displayUnit=
          "degC") "Zone temperature measurement" annotation (Placement(
-          transformation(extent={{-20,-20},{20,20}}, origin={-120,-60}),
+          transformation(extent={{-17,-17},{17,17}}, origin={-117,-49}),
           iconTransformation(extent={{-140,-60},{-100,-20}})));
     Modelica.Blocks.Interfaces.BooleanOutput y_HeaCal
       annotation (Placement(transformation(extent={{100,-80},{120,-60}}),
@@ -3687,6 +3684,14 @@ defined as parameters.
       "return temperature measurement" annotation (Placement(transformation(
             extent={{-20,-20},{20,20}}, origin={-120,50}), iconTransformation(
             extent={{-140,20},{-100,60}})));
+    Modelica.Blocks.Logical.Switch swiHea "Switch for turning heating on/off"
+      annotation (Placement(transformation(extent={{-5,-5},{5,5}},
+          rotation=90,
+          origin={-11,-19})));
+    Modelica.Blocks.Interfaces.RealInput u_TCooSetPoi(unit="K", displayUnit=
+          "degC") "Zone temperature measurement" annotation (Placement(
+          transformation(extent={{-16,-16},{16,16}}, origin={-118,-74}),
+          iconTransformation(extent={{-140,-60},{-100,-20}})));
   equation
     connect(supFan.ports[1], rtuHP.port_a) annotation (Line(points={{-60,8},{-16,8},
             {-16,44},{0,44}}, color={0,127,255}));
@@ -3699,26 +3704,24 @@ defined as parameters.
             {64,50},{110,50}},             color={0,0,127}));
     connect(rtuHP.PEle, y_PEleHP) annotation (Line(points={{33.6,56.8},{64,56.8},
             {64,70},{110,70}},color={0,0,127}));
-    connect(rtuConFMU.heaSta, rtuHP.sta) annotation (Line(points={{30.52,
-            -64.6182},{36,-64.6182},{36,10},{-10,10},{-10,56},{-1.6,56},{-1.6,
-            56.8}},                                           color={0,0,127}));
-    connect(u_TDryBul, rtuHP.TEvaIn) annotation (Line(points={{-120,-32},{-40,-32},
-            {-40,31.2},{-1.6,31.2}}, color={0,0,127}));
-    connect(u_TRoo, rtuConFMU.TRoo) annotation (Line(points={{-120,-90},{-38,
-            -90},{-38,-64.3636},{-2.8,-64.3636}},
+    connect(u_TDryBul, rtuHP.TEvaIn) annotation (Line(points={{-118,-26},{-40,
+            -26},{-40,31.2},{-1.6,31.2}},
+                                     color={0,0,127}));
+    connect(u_TRoo, rtuConFMU.TRoo) annotation (Line(points={{-116,-100},{-38,
+            -100},{-38,-73.4545},{-2.2,-73.4545}},
                                  color={0,0,127}));
-    connect(rtuConFMU.TSup, rtuHP.TSup) annotation (Line(points={{-2.8,-72},{-22,
-            -72},{-22,-90},{42,-90},{42,53.6},{33.6,53.6}},            color={0,0,
+    connect(rtuConFMU.TSup, rtuHP.TSup) annotation (Line(points={{-2.2,-80},{
+            -22,-80},{-22,-90},{42,-90},{42,53.6},{33.6,53.6}},        color={0,0,
             127}));
-    connect(u_TRooSetPoi, rtuConFMU.TSetRooHea) annotation (Line(points={{-120,
-            -60},{-50,-60},{-50,-49.0909},{-2.8,-49.0909}}, color={0,0,127}));
-    connect(rtuConFMU.heaCal, y_HeaCal) annotation (Line(points={{30.52,
-            -58.5091},{68,-58.5091},{68,-70},{110,-70}},       color={255,0,255}));
+    connect(u_THeaSetPoi, rtuConFMU.TSetRooHea) annotation (Line(points={{-117,
+            -49},{-50,-49},{-50,-60.3636},{-2.2,-60.3636}}, color={0,0,127}));
+    connect(rtuConFMU.heaCal, y_HeaCal) annotation (Line(points={{23.98,
+            -69.7455},{68,-69.7455},{68,-70},{110,-70}},       color={255,0,255}));
     connect(y_PI, rtuConFMU.sigPI) annotation (Line(points={{110,-20},{56,-20},
-            {56,-47.5636},{30.52,-47.5636}},
+            {56,-59.0545},{23.98,-59.0545}},
                                          color={0,0,127}));
-    connect(rtuConFMU.heaSta, y_heaSta) annotation (Line(points={{30.52,
-            -64.6182},{62,-64.6182},{62,-90},{110,-90}},
+    connect(rtuConFMU.heaSta, y_heaSta) annotation (Line(points={{23.98,
+            -73.4545},{62,-73.4545},{62,-90},{110,-90}},
                                          color={0,0,127}));
     connect(y_PI, y_PI)
       annotation (Line(points={{110,-20},{110,-20}}, color={0,0,127}));
@@ -3731,7 +3734,7 @@ defined as parameters.
             -206,42.4},{-199.2,42.4}}, color={0,0,127}));
     connect(minOA.y,fraOA. u1) annotation (Line(points={{-213.4,18},{-206,18},{
             -206,-0.4},{-173.2,-0.4}},       color={0,0,127}));
-    connect(u_TDryBul, perOA.u2) annotation (Line(points={{-120,-32},{-100,-32},
+    connect(u_TDryBul, perOA.u2) annotation (Line(points={{-118,-26},{-100,-26},
             {-100,-10},{-146,-10},{-146,-1.6},{-137.2,-1.6}}, color={0,0,127}));
     connect(fraRA.y, perRA.u1) annotation (Line(points={{-159.4,36},{-152,36},{
             -152,20.4},{-137.2,20.4}}, color={0,0,127}));
@@ -3749,6 +3752,19 @@ defined as parameters.
             -90,68},{-178,68},{-178,32.4},{-173.2,32.4}}, color={0,0,127}));
     connect(u_m_flow, fraOA.u2) annotation (Line(points={{-120,80},{-90,80},{
             -90,68},{-178,68},{-178,-7.6},{-173.2,-7.6}}, color={0,0,127}));
+    connect(rtuHP.heasta, rtuConFMU.heaCal) annotation (Line(points={{-1.6,58.4},
+            {-1.6,-3.04},{23.98,-3.04},{23.98,-69.7455}}, color={255,0,255}));
+    connect(u_TCooSetPoi, rtuConFMU.TSetRooCoo) annotation (Line(points={{-118,
+            -74},{-60,-74},{-60,-46.6182},{-1.32,-46.6182}}, color={0,0,127}));
+    connect(rtuConFMU.cooSta, swiHea.u3) annotation (Line(points={{24.09,
+            -48.6909},{-6.955,-48.6909},{-6.955,-25},{-7,-25}}, color={0,0,127}));
+    connect(rtuConFMU.heaSta, swiHea.u1) annotation (Line(points={{23.98,
+            -73.4545},{23.98,-85.7272},{-15,-85.7272},{-15,-25}}, color={0,0,
+            127}));
+    connect(swiHea.y, rtuHP.sta) annotation (Line(points={{-11,-13.5},{-11,
+            20.25},{-1.6,20.25},{-1.6,53.92}}, color={0,0,127}));
+    connect(swiHea.u2, rtuConFMU.heaCal) annotation (Line(points={{-11,-25},{
+            -11,-25.5},{23.98,-25.5},{23.98,-69.7455}}, color={255,0,255}));
       annotation (Placement(transformation(extent={{100,-74},{120,-54}}),
           iconTransformation(extent={{100,-74},{120,-54}})),
                                               experiment(
