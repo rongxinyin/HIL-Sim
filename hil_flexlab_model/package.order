@@ -1,9 +1,11 @@
 ThermalZones
 BaseClasses
 HeatPumps
+Plants
 Data
 Examples
 AirCooledChiller_PrimaryLoop
 AC_Chiller_PrimaryLoop
 AC_Chiller_PrimaryLoop_addpts
 AC_AWHP_PrimaryLoop_addpts
+AC_AWHP_PrimaryLoop_addpts_wTES
