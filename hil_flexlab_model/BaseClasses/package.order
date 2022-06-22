@@ -13,3 +13,5 @@ HeatRecoveryIEC
 Infiltration
 InternalLoad
 OccupancyLoad
+PartialOpenLoopX1aV1_Chiller
+Chiller_Prim_Loop

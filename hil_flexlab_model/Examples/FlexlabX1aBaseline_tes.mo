@@ -1,23 +1,24 @@
 within hil_flexlab_model.Examples;
-model FlexlabX1aDR
-  "Variable air volume flow system with terminal reheat - flexlab demand response"
+model FlexlabX1aBaseline_tes
+  "Variable air volume flow system with terminal reheat - flexlab baseline"
   extends Modelica.Icons.Example;
   extends BaseClasses.PartialOpenLoopX1aV1(
     heaCoi(show_T=true),
     cooCoi(show_T=true),
-    dpRetDuc1(dp_nominal=10));
+    dpRetDuc1(dp_nominal=30),
+    souCoo(use_T_in=true));
 
   Modelica.Blocks.Sources.Constant TSupSetHea(y(
       final quantity="ThermodynamicTemperature",
       final unit="K",
       displayUnit="degC",
       min=0), k=273.15 + 10) "Supply air temperature setpoint for heating"
-    annotation (Placement(transformation(extent={{-200,-172},{-180,-152}})));
+    annotation (Placement(transformation(extent={{-180,-172},{-160,-152}})));
   Buildings.Examples.VAVReheat.Controls.FanVFD conFanSup(xSet_nominal(
         displayUnit="Pa") = 410, r_N_min=yFanMin) "Controller for fan"
     annotation (Placement(transformation(extent={{240,-10},{260,10}})));
   Buildings.Examples.VAVReheat.Controls.ModeSelector modeSelector
-    annotation (Placement(transformation(extent={{-200,-320},{-180,-300}})));
+    annotation (Placement(transformation(extent={{-202,-320},{-182,-300}})));
   Buildings.Examples.VAVReheat.Controls.ControlBus controlBus
     annotation (Placement(transformation(extent={{-250,-352},{-230,-332}})));
 
@@ -32,7 +33,7 @@ model FlexlabX1aDR
     final THeaOff=THeaOff,
     final TCooOn=273.15 + 23.3,
     final TCooOff=TCooOff)
-    annotation (Placement(transformation(extent={{-320,-358},{-300,-338}})));
+    annotation (Placement(transformation(extent={{-300,-358},{-280,-338}})));
   Buildings.Examples.VAVReheat.Controls.DuctStaticPressureSetpoint pSetDuc(
     nin=3,
     controllerType=Modelica.Blocks.Types.SimpleController.PI,
@@ -81,30 +82,11 @@ model FlexlabX1aDR
 
   Buildings.Controls.OBC.CDL.Logical.Or or2
     annotation (Placement(transformation(extent={{0,-180},{20,-160}})));
-  Modelica.Blocks.Sources.Constant CooTSet(k=273.15)
-    "Zone air temperature set point"
-    annotation (Placement(transformation(extent={{840,-176},{820,-156}})));
-  Modelica.Blocks.Math.Add add
-    annotation (Placement(transformation(extent={{784,-146},{764,-126}})));
-  Modelica.Blocks.Sources.Constant HeaTSet(k=273.15)
-    "Zone air temperature set point"
-    annotation (Placement(transformation(extent={{840,-140},{820,-120}})));
-  Modelica.Blocks.Math.Add add1
-    annotation (Placement(transformation(extent={{784,-182},{764,-162}})));
-  Modelica.Blocks.Sources.CombiTimeTable heaSetDR(
-    table=[0,15.6; 6,15.6; 6,21.1; 20,21.1; 20,15.6; 24,15.6],
-    extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic,
-    timeScale=3600) "heating schedule for demand response"
-    annotation (Placement(transformation(extent={{674,-224},{694,-204}})));
-  Modelica.Blocks.Sources.CombiTimeTable cooSetDR(
-    table=[0,26.7; 6,26.7; 6,23.3; 14,23.3; 14,25.6; 18,25.6; 18,23.3; 20,23.3;
-        20,26.7; 24,26.7],
-    extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic,
-    timeScale=3600) "cooling schedule for demand response"
-    annotation (Placement(transformation(extent={{674,-272},{694,-252}})));
+  AC_AWHP_PrimaryLoop_addpts_wTES aC_AWHP_PrimaryLoop_addpts_wTES
+    annotation (Placement(transformation(extent={{164,-216},{210,-180}})));
 equation
   connect(TSupSetHea.y, heaCoiCon.u_s) annotation (Line(
-      points={{-179,-162},{-96,-162},{-96,-202},{-82,-202}},
+      points={{-159,-162},{-96,-162},{-96,-202},{-82,-202}},
       color={0,0,127},
       pattern=LinePattern.Dash));
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
@@ -113,7 +95,7 @@ equation
       smooth=Smooth.None,
       pattern=LinePattern.Dot));
   connect(controlBus, modeSelector.cb) annotation (Line(
-      points={{-240,-342},{-152,-342},{-152,-303.182},{-196.818,-303.182}},
+      points={{-240,-342},{-152,-342},{-152,-303.182},{-198.818,-303.182}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None), Text(
@@ -148,12 +130,12 @@ equation
       pattern=LinePattern.Dash));
   connect(conEco.TSupHeaSet, TSupSetHea.y) annotation (Line(
       points={{-81.3333,145.333},{-156,145.333},{-156,-120},{-140,-120},{-140,
-          -162},{-179,-162}},
+          -162},{-159,-162}},
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
   connect(TSetRoo.controlBus, controlBus) annotation (Line(
-      points={{-308,-342},{-240,-342}},
+      points={{-288,-342},{-240,-342}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
@@ -180,12 +162,12 @@ equation
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
   connect(TSupSetHea.y, TSetCoo.TSetHea) annotation (Line(
-      points={{-179,-162},{-140,-162},{-140,-202},{-132,-202}},
+      points={{-159,-162},{-140,-162},{-140,-202},{-132,-202}},
       color={0,0,0},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
   connect(modeSelector.cb, TSetCoo.controlBus) annotation (Line(
-      points={{-196.818,-303.182},{-152,-303.182},{-152,-210},{-121.8,-210}},
+      points={{-198.818,-303.182},{-152,-303.182},{-152,-210},{-121.8,-210}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
@@ -216,6 +198,19 @@ equation
           {1044,44},{1066,44}},     color={0,0,127}));
   connect(conVAVSou.yVal, sou.yVal) annotation (Line(points={{1015,25},{1024,25},
           {1024,28},{1066,28}}, color={0,0,127}));
+  connect(conVAVSou.TRooHeaSet, controlBus.TRooSetHea) annotation (Line(points={{992,37},
+          {980,37},{980,40},{964,40},{964,-342},{-240,-342}},
+                                                     color={0,0,127}));
+  connect(conVAVSou.TRooCooSet, controlBus.TRooSetCoo) annotation (Line(points={{992,30},
+          {964,30},{964,-342},{-240,-342}},          color={0,0,127}));
+  connect(conVAVCor.TRooHeaSet, controlBus.TRooSetHea) annotation (Line(points={{780,49},
+          {728,49},{728,-342},{-240,-342}},          color={0,0,127}));
+  connect(conVAVCor.TRooCooSet, controlBus.TRooSetCoo) annotation (Line(points={{780,42},
+          {728,42},{728,-342},{-240,-342}},          color={0,0,127}));
+  connect(conVAVNor.TRooHeaSet, controlBus.TRooSetHea) annotation (Line(points={{638,47},
+          {594,47},{594,-342},{-240,-342}},             color={0,0,127}));
+  connect(conVAVNor.TRooCooSet, controlBus.TRooSetCoo) annotation (Line(points={{638,40},
+          {594,40},{594,-342},{-240,-342}},             color={0,0,127}));
 
   connect(occSch.tNexOcc, controlBus.dTNexOcc) annotation (Line(
       points={{-297,-204},{-240,-204},{-240,-342}},
@@ -242,13 +237,13 @@ equation
       points={{-76,150.667},{-76,120},{-240,120},{-240,-342}},
       color={255,204,51},
       thickness=0.5));
-  connect(modeSelector.yFan, conFanSup.uFan) annotation (Line(points={{-179.545,
+  connect(modeSelector.yFan, conFanSup.uFan) annotation (Line(points={{-181.545,
           -310},{260,-310},{260,-30},{226,-30},{226,6},{238,6}}, color={255,0,
           255}));
   connect(conFanSup.y, fanSup.y) annotation (Line(points={{261,0},{280,0},{280,
           -20},{310,-20},{310,-28}}, color={0,0,127}));
-  connect(modeSelector.yFan, swiCooCoi.u2) annotation (Line(points={{-179.545,
-          -310},{-20,-310},{-20,-248},{58,-248}},
+  connect(modeSelector.yFan, swiCooCoi.u2) annotation (Line(points={{-181.545,
+          -310},{-22,-310},{-22,-248},{58,-248}},
                                               color={255,0,255}));
   connect(swiCooCoi.u1, cooCoiCon.y) annotation (Line(points={{58,-240},{-20,
           -240},{-59,-240}},      color={0,0,127}));
@@ -260,15 +255,13 @@ equation
   connect(coiOff.y, swiHeaCoi.u3) annotation (Line(points={{-38,-162},{-28,-162},
           {-28,-218},{58,-218}},
                               color={0,0,127}));
-  connect(TSup.T, cooCoiCon.u_m) annotation (Line(points={{340,-29},{340,-12},{
-          372,-12},{372,-268},{-70,-268},{-70,-252}}, color={0,0,127}));
-  connect(TSup.T, heaCoiCon.u_m) annotation (Line(points={{340,-29},{340,-12},{
-          372,-12},{372,-268},{-88,-268},{-88,-222},{-70,-222},{-70,-214}},
+  connect(TSup.T, cooCoiCon.u_m) annotation (Line(points={{340,-29},{340,-10},{
+          372,-10},{372,-266},{-70,-266},{-70,-252}}, color={0,0,127}));
+  connect(TSup.T, heaCoiCon.u_m) annotation (Line(points={{340,-29},{340,-16},{
+          378,-16},{378,-272},{-82,-272},{-82,-226},{-70,-226},{-70,-214}},
         color={0,0,127}));
   connect(gaiHeaCoi.u, swiHeaCoi.y)
     annotation (Line(points={{98,-210},{82,-210},{82,-210}}, color={0,0,127}));
-  connect(gaiCooCoi.u, swiCooCoi.y) annotation (Line(points={{98,-248},{88,-248},
-          {88,-248},{82,-248}}, color={0,0,127}));
   connect(eco.yExh, conEco.yOA) annotation (Line(
       points={{-3,-34},{-2,-34},{-2,152},{-59.3333,152}},
       color={0,0,127},
@@ -279,8 +272,8 @@ equation
       pattern=LinePattern.Dash));
   connect(freSta.y, or2.u1) annotation (Line(points={{22,-92},{22,-92},{40,-92},
           {40,-150},{-20,-150},{-20,-170},{-2,-170}},        color={255,0,255}));
-  connect(or2.u2, modeSelector.yFan) annotation (Line(points={{-2,-178},{-20,
-          -178},{-20,-310},{-179.545,-310}},
+  connect(or2.u2, modeSelector.yFan) annotation (Line(points={{-2,-178},{-24,
+          -178},{-24,-310},{-181.545,-310}},
                                      color={255,0,255}));
   connect(or2.y, swiHeaCoi.u2) annotation (Line(points={{22,-170},{40,-170},{40,
           -190},{40,-190},{40,-210},{58,-210}}, color={255,0,255}));
@@ -300,30 +293,25 @@ equation
           {811.5,52},{820,52}}, color={0,0,127}));
   connect(conVAVCor.yVal, cor.yVal) annotation (Line(points={{803,37},{812.5,37},
           {812.5,36},{820,36}}, color={0,0,127}));
-  connect(add1.y, conVAVCor.TRooCooSet) annotation (Line(points={{763,-172},{
-          752,-172},{752,42},{780,42}},
-                                    color={0,0,127}));
-  connect(CooTSet.y, add1.u1)
-    annotation (Line(points={{819,-166},{786,-166}}, color={0,0,127}));
-  connect(HeaTSet.y, add.u1)
-    annotation (Line(points={{819,-130},{786,-130}}, color={0,0,127}));
-  connect(heaSetDR.y[1], add.u2) annotation (Line(points={{695,-214},{804,-214},
-          {804,-142},{786,-142}}, color={0,0,127}));
-  connect(add.y, conVAVCor.TRooHeaSet) annotation (Line(points={{763,-136},{740,
-          -136},{740,50},{780,50},{780,49}}, color={0,0,127}));
-  connect(cooSetDR.y[1], add1.u2) annotation (Line(points={{695,-262},{802,-262},
-          {802,-178},{786,-178}}, color={0,0,127}));
-  connect(add.y, conVAVSou.TRooHeaSet) annotation (Line(points={{763,-136},{740,
-          -136},{740,-68},{912,-68},{912,37},{992,37}}, color={0,0,127}));
-  connect(add1.y, conVAVSou.TRooCooSet) annotation (Line(points={{763,-172},{
-          752,-172},{752,-28},{900,-28},{900,30},{992,30}}, color={0,0,127}));
-  connect(add.y, conVAVNor.TRooHeaSet) annotation (Line(points={{763,-136},{592,
-          -136},{592,47},{638,47}}, color={0,0,127}));
-  connect(add1.y, conVAVNor.TRooCooSet) annotation (Line(points={{763,-172},{
-          602,-172},{602,40},{638,40}}, color={0,0,127}));
+  connect(aC_AWHP_PrimaryLoop_addpts_wTES.T_chw_out, souCoo.T_in) annotation (
+      Line(points={{193,-178},{193,-156},{226,-156},{226,-132}}, color={0,0,127}));
+  connect(aC_AWHP_PrimaryLoop_addpts_wTES.m_flow_sec, senRetMFlo.m_flow)
+    annotation (Line(points={{169.2,-178},{169.2,-146},{169,-146},{169,-114}},
+        color={0,0,127}));
+  connect(aC_AWHP_PrimaryLoop_addpts_wTES.T_chw_in, TRet_chw.T) annotation (
+      Line(points={{176.8,-178},{176.8,-159},{169,-159},{169,-88}}, color={0,0,
+          127}));
+  connect(aC_AWHP_PrimaryLoop_addpts_wTES.T_air_in, TOut.y) annotation (Line(
+        points={{212,-213.4},{-248,-213.4},{-248,180},{-279,180}}, color={0,0,
+          127}));
+  connect(swiCooCoi.y, gaiCooCoi.u)
+    annotation (Line(points={{82,-248},{142,-248}}, color={0,0,127}));
+  connect(swiCooCoi.u2, aC_AWHP_PrimaryLoop_addpts_wTES.chiOn) annotation (Line(
+        points={{58,-248},{46,-248},{46,-288},{132,-288},{132,-211.2},{162,
+          -211.2}}, color={255,0,255}));
   annotation (
-    Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-400},{1440,
-            580}})),
+    Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-520,-440},{
+            1440,580}})),
     Documentation(info="<html>
 <p>
 This model consist of an HVAC system, a building envelope model and a model
@@ -409,8 +397,7 @@ for <a href=\"https://github.com/ibpsa/modelica-ibpsa/issues/404\">#404</a>.
 </li>
 <li>
 September 24, 2015 by Michael Wetter:<br/>
-Set default temperature for 
-to avoid conflicting
+Set default temperature for medium to avoid conflicting
 start values for alias variables of the temperature
 of the building and the ambient air.
 This is for
@@ -422,8 +409,9 @@ This is for
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/ASHRAE2006.mos"
         "Simulate and plot"),
     experiment(
-      StartTime=24796800,
-      StopTime=24969600,
-      Interval=300,
-      __Dymola_Algorithm="Dassl"));
-end FlexlabX1aDR;
+      StartTime=24454800,
+      StopTime=24627600,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"),
+    Icon(coordinateSystem(extent={{-520,-440},{1440,580}})));
+end FlexlabX1aBaseline_tes;

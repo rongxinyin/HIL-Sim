@@ -30,7 +30,7 @@ partial model PartialOpenLoopX1aV1
     "Design mass flow rate core";
   parameter Modelica.SIunits.MassFlowRate mSou_flow_nominal=0.189*1.2
     "Design mass flow rate perimeter 1";
-  parameter Modelica.SIunits.MassFlowRate mPle_flow_nominal=0.11*1.2*0.1
+  parameter Modelica.SIunits.MassFlowRate mPle_flow_nominal=0.11*1.2
     "Design mass flow rate perimeter 2";
   parameter Modelica.SIunits.MassFlowRate mNor_flow_nominal=0.106*1.2
     "Design mass flow rate perimeter 3";
@@ -163,7 +163,7 @@ partial model PartialOpenLoopX1aV1
     nPorts=1) "Sink for cooling coil" annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={180,-138})));
+        origin={180,-120})));
   Modelica.Blocks.Routing.RealPassThrough TOut(y(
       final quantity="ThermodynamicTemperature",
       final unit="K",
@@ -184,10 +184,9 @@ partial model PartialOpenLoopX1aV1
   Buildings.Controls.SetPoints.OccupancySchedule occSch(occupancy=3600*{6,19})
     "Occupancy schedule"
     annotation (Placement(transformation(extent={{-318,-220},{-298,-200}})));
-  Buildings.Types.Utilities.Math.Min min(nin=3)
-    "Computes lowest room temperature"
+  Buildings.Utilities.Math.Min min(nin=3) "Computes lowest room temperature"
     annotation (Placement(transformation(extent={{1200,440},{1220,460}})));
-  Buildings.Types.Utilities.Math.Average ave(nin=3)
+  Buildings.Utilities.Math.Average ave(nin=3)
     "Compute average of room temperatures"
     annotation (Placement(transformation(extent={{1200,410},{1220,430}})));
   Buildings.Fluid.Sources.MassFlowSource_T souCoo(
@@ -340,7 +339,7 @@ partial model PartialOpenLoopX1aV1
     "Splitter for room supply into Middle and South Zone"
     annotation (Placement(transformation(extent={{824,-30},{844,-50}})));
   Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(filNam=
-        Modelica.Utilities.Files.loadResource("Resources/weatherdata/US_Berkeley_2021_0822.mos"))
+        Modelica.Utilities.Files.loadResource("Resources/weatherdata/US_Berkeley_2020_New.mos"))
     annotation (Placement(transformation(extent={{-360,170},{-340,190}})));
   Buildings.BoundaryConditions.WeatherData.Bus weaBus "Weather Data Bus"
     annotation (Placement(transformation(extent={{-330,170},{-310,190}}),
@@ -475,7 +474,7 @@ public
     annotation (Placement(transformation(extent={{100,-220},{120,-200}})));
   Buildings.Controls.OBC.CDL.Continuous.Gain gaiCooCoi(k=m_flow_nominal*1000*15
         /4200/10) "Gain for cooling coil mass flow rate"
-    annotation (Placement(transformation(extent={{144,-258},{164,-238}})));
+    annotation (Placement(transformation(extent={{100,-258},{120,-238}})));
   Buildings.Controls.OBC.CDL.Logical.OnOffController freSta(bandwidth=1)
     "Freeze stat for heating coil"
     annotation (Placement(transformation(extent={{0,-102},{20,-82}})));
@@ -506,18 +505,6 @@ public
     allowFlowReversal=allowFlowReversal,
     dp_nominal=40) "Pressure drop for return duct"
     annotation (Placement(transformation(extent={{562,38},{542,58}})));
-  Buildings.Fluid.Sensors.TemperatureTwoPort TRet_chw(
-    redeclare package Medium = MediumA,
-    m_flow_nominal=m_flow_nominal,
-    allowFlowReversal=allowFlowReversal) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={180,-88})));
-  Buildings.Fluid.Sensors.MassFlowRate   senRetMFlo(redeclare package Medium =
-        Buildings.Media.Water) "Sensor for cooling coil return flow rate"
-    annotation (Placement(transformation(extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={180,-114})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,-10}},
@@ -569,6 +556,10 @@ equation
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
+  connect(cooCoi.port_b1, sinCoo.ports[1]) annotation (Line(
+      points={{190,-52},{180,-52},{180,-110}},
+      color={28,108,200},
+      thickness=0.5));
   connect(weaDat.weaBus, weaBus) annotation (Line(
       points={{-340,180},{-320,180}},
       color={255,204,51},
@@ -585,7 +576,7 @@ equation
       thickness=0.5,
       smooth=Smooth.None));
   connect(weaBus, flo.weaBus) annotation (Line(
-      points={{-320,180},{-320,527.62},{952.571,527.62}},
+      points={{-320,180},{-320,513},{952.571,513}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
@@ -666,7 +657,7 @@ equation
       thickness=0.5));
   connect(gaiHeaCoi.y, souHea.m_flow_in) annotation (Line(points={{122,-210},{
           124,-210},{124,-132}}, color={0,0,127}));
-  connect(gaiCooCoi.y, souCoo.m_flow_in) annotation (Line(points={{166,-248},{
+  connect(gaiCooCoi.y, souCoo.m_flow_in) annotation (Line(points={{122,-248},{
           222,-248},{222,-132}}, color={0,0,127}));
   connect(dpDisSupFan.port_b, amb.ports[3]) annotation (Line(
       points={{320,10},{320,14},{-88,14},{-88,-47.9333},{-114,-47.9333}},
@@ -723,12 +714,6 @@ equation
           48},{570,76},{578,76}}, color={0,127,255}));
   connect(splRetRoo1.port_3, flo.portsPle[2]) annotation (Line(points={{620,10},
           {620,442.48},{1010,442.48}}, color={0,127,255}));
-  connect(cooCoi.port_b1, TRet_chw.port_b) annotation (Line(points={{190,-52},{
-          180,-52},{180,-78}}, color={0,127,255}));
-  connect(TRet_chw.port_a, senRetMFlo.port_b)
-    annotation (Line(points={{180,-98},{180,-104}}, color={0,127,255}));
-  connect(senRetMFlo.port_a, sinCoo.ports[1])
-    annotation (Line(points={{180,-124},{180,-128}}, color={0,127,255}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-380,
             -400},{1420,600}}), graphics={Line(points={{310,404}}, color={28,
               108,200}), Line(
