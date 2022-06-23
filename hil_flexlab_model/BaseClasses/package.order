@@ -15,3 +15,5 @@ Controls
 COP_ASHP_AuxHeat
 partialInterface_noPV
 partialAirUnit_noCool
+PartialOpenLoopX1aV1_Chiller
+Chiller_Prim_Loop
