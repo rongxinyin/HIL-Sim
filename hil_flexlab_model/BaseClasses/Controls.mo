@@ -4105,8 +4105,8 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
     Modelica.Blocks.Interfaces.RealOutput sigPI(final unit="1")
       "PI signal for heating" annotation (Placement(transformation(extent={{100,174},
               {136,210}}), iconTransformation(extent={{100,174},{136,210}})));
-    Modelica.Blocks.Interfaces.RealInput TSetRooCoo(final unit="K", displayUnit
-        ="degC")  "Zone cooling setpoint temperature"
+    Modelica.Blocks.Interfaces.RealInput TSetRooCoo(final unit="K", displayUnit=
+         "degC")  "Zone cooling setpoint temperature"
                                           annotation (Placement(transformation(
           extent={{20,20},{-20,-20}},
           rotation=180,
