@@ -86,6 +86,15 @@ model FlexlabX1aBaseline_tes_weiping_062822
   AC_AWHP_PrimaryLoop_addpts_wTES_weiping062822
     aC_AWHP_PrimaryLoop_addpts_wTES_weiping062822_1
     annotation (Placement(transformation(extent={{162,-216},{208,-180}})));
+     replaceable Examples.CasDat.CustomCase
+                          casDat(minOAFlo=16/2118.88*casDat.occ_density*1.2*roo.roo.AFlo)
+    constrainedby Examples.Data.BBR_4B_Med(
+                                 minOAFlo=16/2118.88*casDat.occ_density*1.2*roo.roo.AFlo)
+    "Case study data"
+    annotation (Placement(transformation(extent={{-180,82},{-160,102}})));
+
+
+
 equation
   connect(TSupSetHea.y, heaCoiCon.u_s) annotation (Line(
       points={{-159,-162},{-96,-162},{-96,-202},{-82,-202}},

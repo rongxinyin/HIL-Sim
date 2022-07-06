@@ -347,4 +347,50 @@ This record contains the information for a multi-family residential building
 </p>
 </html>"));
   end BATT;
+
+  record PLNT "Plant (HP+TES)  Sizing Record"
+    parameter Modelica.SIunits.Power QCoo_flow_nominal = 22000 "Design cooling capacity" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.Power QHea_flow_nominal = 14000 "Design heating capacity" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.MassFlowRate mAir_flow_nominal = 2.2 "Design air flowrate of system" annotation(Dialog(group="System Specifications"));
+    parameter Modelica.SIunits.Energy HTes_nominal = 3600000 "Design hot storage capacity (factor * 1kWh)" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.Energy LTes_nominal = 3600000 "Design warm storage capacity (factor * 1kWh)" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.Energy CTes_nominal = 3600000 "Design cold storage capacity (factor * 1kWh)" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.DimensionlessRatio HTesScale = HTes_nominal/130000 "Scale factor for hot TES prototype size" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.DimensionlessRatio LTesScale = LTes_nominal/130000 "Scale factor for warm TES prototype size" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.DimensionlessRatio CTesScale = CTes_nominal/130000 "Scale factor for cold TES prototype size" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.TemperatureDifference dTCoo = 11-7 "Inlet temperature difference in cold TES rack" annotation(Dialog(group="System Specifications"));
+    parameter Modelica.SIunits.TemperatureDifference dTHea = 52-43 "Inlet temperature difference in hot TES rack" annotation(Dialog(group="System Specifications"));
+    parameter Modelica.SIunits.MassFlowRate mCooWat_flow_nominal = QCoo_flow_nominal/(4201*dTCoo) "Design water flowrate of cooling system" annotation(Dialog(group="System Specifications"));
+    parameter Modelica.SIunits.MassFlowRate mHeaWat_flow_nominal = QHea_flow_nominal/(4187*dTHea) "Design water flowrate of heating system" annotation(Dialog(group="System Specifications"));
+    parameter Modelica.SIunits.MassFlowRate mTes_flow_nominal = max(mCooWat_flow_nominal,mHeaWat_flow_nominal) "Design water flowrate through TES" annotation(Dialog(group="System Specifications"));
+    parameter Modelica.SIunits.MassFlowRate mSwec_flow_nominal = mTes_flow_nominal "Design water flowrate through SWEC" annotation(Dialog(group="System Specifications"));
+    /* ModelicaServices.ExternalReferences.loadResource("rtu-pcm/modelica-rtu-pcm/RTUPCM/Resources/Scripts/Dymola/HVAC/Examples/3B.txt") annotation(Dialog(group="Tariff Structure")) */
+    /* ModelicaServices.ExternalReferences.loadResource("rtu-pcm/modelica-rtu-pcm/RTUPCM/Resources/weatherdata/USA_NM_Albuquerque.Intl.AP.723650_TMY3.mos") annotation(Dialog(group="Climate Data")) */
+     annotation (Icon(coordinateSystem(preserveAspectRatio=true, extent={{-100,-100},{100,100}}), graphics={
+          Text(
+            lineColor={0,0,255},
+            extent={{-150,60},{150,100}},
+            textString="%name"),
+          Rectangle(
+            origin={0.0,-25.0},
+            lineColor={64,64,64},
+            fillColor={255,215,136},
+            fillPattern=FillPattern.Solid,
+            extent={{-100.0,-75.0},{100.0,75.0}},
+            radius=25.0),
+          Line(
+            points={{-100.0,0.0},{100.0,0.0}},
+            color={64,64,64}),
+          Line(
+            origin={0.0,-50.0},
+            points={{-100.0,0.0},{100.0,0.0}},
+            color={64,64,64}),
+          Line(
+            origin={0.0,-25.0},
+            points={{0.0,75.0},{0.0,-75.0}},
+            color={64,64,64})}), Documentation(info="<html>
+          <p>This record contains the design loads of the different climates and building types.
+</p>
+</html>"));
+  end PLNT;
 end BaseClasses;

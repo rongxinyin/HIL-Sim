@@ -1,6 +1,6 @@
 within hil_flexlab_model.Data;
 record BBR_3C_Med
-extends RTUPCM.HVAC.Examples.Data.BaseClasses.BBR(
+extends hil_flexlab_model.Data.BaseClasses.BBR(
  chargeStartMorn_LTes = 0,
  chargeEndMorn_LTes = 21600,
  dischargeStart_LTes = 32400.0,
@@ -15,19 +15,19 @@ extends RTUPCM.HVAC.Examples.Data.BaseClasses.BBR(
  chargeEndNight_CTes = 86400,
  IECHR_exists = false,
  Epc_exists = false);
-extends RTUPCM.HVAC.Examples.Data.BaseClasses.MAPR(
+extends hil_flexlab_model.Data.BaseClasses.MAPR(
  TSolCoo = 283.15,
  TLiqCoo = 285.15,
  LHeaCoo = 126000,
  cPCMCoo = 2050,
  dPCMCoo = 1125,
  kPCMCoo = 0.2);
-extends RTUPCM.HVAC.Examples.Data.BaseClasses.OPCO(
+extends hil_flexlab_model.Data.BaseClasses.OPCO(
  TSetSupCW = 280.15,
  TSetSupHW = 325.15,
  TSetSupAirCoo = 285.95,
  TSetSupAirHea = 313.15);
-extends RTUPCM.HVAC.Examples.Data.BaseClasses.DELO(
+extends hil_flexlab_model.Data.BaseClasses.DELO(
  QCoo_flow_nominal = 52113.0,
  QHea_flow_nominal = 106850.0,
  mAir_flow_nominal = 3.479,

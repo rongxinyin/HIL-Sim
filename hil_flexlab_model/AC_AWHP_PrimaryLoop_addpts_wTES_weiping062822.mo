@@ -174,15 +174,22 @@ model AC_AWHP_PrimaryLoop_addpts_wTES_weiping062822
   Modelica.Blocks.Sources.Constant TSetSupChiConst(final k=TSupChi_nominal)
     "Set point for chiller temperature"
     annotation (Placement(transformation(extent={{180,-320},{192,-308}})));
-  BaseCoolingVarCOP_weiping_062822 coo(m_flow_nominal=mAWHP_flow_nominal+
-   mTes_flow_nominal, k=k, c=c, d=d, TSol=TSol, TLiq=TLiq, LHea=LHea,
-   Q_flow_nominal=Q_flow_nominal, mAWHP_flow_nominal=mAWHP_flow_nominal,
-   mSwec_flow_nominal=mSwec_flow_nominal,mTes_flow_nominal=mTes_flow_nominal,
-   Tes_nominal=Tes_nominal, dp_nominal=dp_nominal, dpFixed_nominal=
-   dpFixed_nominal, dpValve_nominal=dpValve_nominal) annotation (Placement(transformation(
+  BaseCoolingVarCOP_weiping_062822 coo(m_flow_nominal=casDat.mAWHP_flow_nominal+
+   casDat.mTes_flow_nominal, k=casDat.k, c=casDat.c, d=casDat.d, TSol=casDat.TSol, TLiq=casDat.TLiq, LHea=casDat.LHea,
+   Q_flow_nominal=casDat.Q_flow_nominal, mAWHP_flow_nominal=casDat.mAWHP_flow_nominal,
+   mSwec_flow_nominal=casDat.mSwec_flow_nominal,mTes_flow_nominal=casDat.mTes_flow_nominal,
+   Tes_nominal=casDat.Tes_nominal, dp_nominal=casDat.dp_nominal, dpFixed_nominal=
+   casDat.dpFixed_nominal, dpValve_nominal=casDat.dpValve_nominal) annotation (Placement(transformation(
         extent={{-20,-56},{20,56}},
         rotation=90,
         origin={224,-238})));
+ replaceable Examples.CasDat.CustomCase
+                          casDat(minOAFlo=16/2118.88*casDat.occ_density*1.2*roo.roo.AFlo)
+    constrainedby Examples.Data.BBR_4B_Med(
+                                 minOAFlo=16/2118.88*casDat.occ_density*1.2*roo.roo.AFlo)
+    "Case study data"
+    annotation (Placement(transformation(extent={{-180,82},{-160,102}})));
+
 equation
 
   connect(chw_sup.port_3, chw_ret.port_3)
