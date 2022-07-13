@@ -70,14 +70,6 @@ model AC_AWHP_PrimaryLoop_addpts_wTES_weiping062822
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={168,-136})));
-  Buildings.Fluid.Sources.MassFlowSource_T sec_ret(
-    redeclare package Medium = MediumW,
-    use_m_flow_in=true,
-    use_T_in=true,
-    nPorts=1) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={168,-90})));
   Buildings.Fluid.Sources.Boundary_pT bou(redeclare package Medium = MediumW,
       nPorts=1)                                                                                    annotation (Placement(
         transformation(
@@ -86,7 +78,38 @@ model AC_AWHP_PrimaryLoop_addpts_wTES_weiping062822
         origin={408,-136})));
   Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium =
         Buildings.Media.Water, m_flow_nominal=mSec_flow_nominal)
-    annotation (Placement(transformation(extent={{350,-106},{370,-86}})));
+    annotation (Placement(transformation(extent={{348,-110},{370,-86}})));
+  Buildings.Fluid.Sensors.TemperatureTwoPort sen_retTem(redeclare package
+      Medium = Buildings.Media.Water, m_flow_nominal=m_flow)
+    annotation (Placement(transformation(extent={{-12,12},{12,-12}},
+        rotation=270,
+        origin={168,-182})));
+  Modelica.Blocks.Sources.Constant TSetSupChiConst(final k=casDat.TSetSupCW)
+    "Set point for chiller temperature"
+    annotation (Placement(transformation(extent={{176,-318},{188,-306}})));
+
+  Plant_Controller_weiping_062822  plaCon(TSolCoo=casDat.TSolCoo,TLiqCoo=casDat.TLiqCoo,
+    chargeStartMorn_CTes=casDat.chargeStartMorn_CTes,
+    chargeEndMorn_CTes=casDat.chargeEndMorn_CTes,
+    dischargeStart_CTes=casDat.dischargeStart_CTes,
+    dischargeEnd_CTes=casDat.dischargeEnd_CTes,
+    chargeStartNight_CTes=casDat.chargeStartNight_CTes,
+    chargeEndNight_CTes=casDat.chargeEndNight_CTes)
+    annotation (Placement(transformation(extent={{268,-304},{320,-278}})));
+
+  BaseCoolingVarCOP_weiping_062822 coo(m_flow_nominal=casDat.mAWHP_flow_nominal+
+   casDat.mTes_flow_nominal, k=casDat.kPCMCoo, c=casDat.cPCMCoo, d=casDat.dPCMCoo, TSol=casDat.TSolCoo, TLiq=casDat.TLiqCoo, LHea=casDat.LHeaCoo,
+   Q_flow_nominal=casDat.QCoo_flow_nominal, mAWHP_flow_nominal=casDat.mAWHP_flow_nominal,mTes_flow_nominal=casDat.mTes_flow_nominal,
+   Tes_nominal=casDat.CTes_nominal, dp_nominal=casDat.dp_nominal, dpFixed_nominal=
+   casDat.dpFixed_nominal, dpValve_nominal=casDat.dpValve_nominal) annotation (Placement(transformation(
+        extent={{-20,-53},{20,53}},
+        rotation=90,
+        origin={221,-238})));
+
+  hil_flexlab_model.Data.BBR_3C_Med casDat
+    "Case study data"
+    annotation (Placement(transformation(extent={{490,10},{550,-50}})));
+
   Modelica.Blocks.Interfaces.BooleanInput chiOn "On signal for chiller plant"
     annotation (Placement(transformation(extent={{-20,-20},{20,20}},
         rotation=270,
