@@ -48,7 +48,8 @@ partial model partialSourceCoo_weiping_062822
         extent={{-4,-4},{4,4}},
         rotation=0,
         origin={-90,60})));
-  HeatPumps.BlackBox_Generic_TSetpoint blackBox_Generic_TSetpoint
+  HeatPumps.BlackBox_Generic_TSetpoint blackBox_Generic_TSetpoint(QNom=
+        Q_flow_nominal, m_flow_nominal=mSou_flow_nominal)
     annotation (Placement(transformation(
         extent={{11,-13},{-11,13}},
         rotation=180,
