@@ -1,22 +1,26 @@
 within hil_flexlab_model;
 model Plant_Controller_weiping_062822
-  parameter Real table[:, :]
-    "Table matrix (time = first column; e.g., table=[0, 0; 1, 1; 2, 4])";
   parameter Real TSolCoo;
-   parameter Real TLiqCoo;
-
+  parameter Real TLiqCoo;
+  parameter Modelica.SIunits.Time chargeStartMorn_CTes;
+  parameter Modelica.SIunits.Time chargeEndMorn_CTes;
+  parameter Modelica.SIunits.Time dischargeStart_CTes;
+  parameter Modelica.SIunits.Time dischargeEnd_CTes;
+  parameter Modelica.SIunits.Time chargeStartNight_CTes;
+  parameter Modelica.SIunits.Time chargeEndNight_CTes;
 
   Modelica.Blocks.Sources.Constant conTesCha(k=-0.5)
     "Control signal for TES charging"
     annotation (Placement(transformation(extent={{10,-10},{-10,10}},
         rotation=0,
-        origin={-34,-66})));
+        origin={-18,-60})));
   Modelica.Blocks.Math.RealToInteger intRea "Integer to real"
     annotation (Placement(transformation(extent={{10,-10},{-10,10}},
         rotation=0,
         origin={74,-42})));
   Modelica.Blocks.Sources.CombiTimeTable SchTes(
-    table=table,
+    table=[chargeStartMorn_CTes,0; chargeEndMorn_CTes,2; dischargeStart_CTes,1;
+        dischargeEnd_CTes,2; chargeStartNight_CTes,0; chargeEndNight_CTes,0],
     smoothness=Modelica.Blocks.Types.Smoothness.ConstantSegments,
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "TES charging and discharging schedule"
