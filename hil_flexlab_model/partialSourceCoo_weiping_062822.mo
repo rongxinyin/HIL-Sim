@@ -2,7 +2,7 @@ within hil_flexlab_model;
 partial model partialSourceCoo_weiping_062822
   "Base primary system with single source for cooling"
   replaceable package Medium = Buildings.Media.Water "Water media model";
-  parameter Modelica.SIunits.MassFlowRate mSou_flow_nominal "Nominal mass flow rate through source";
+  parameter Modelica.SIunits.MassFlowRate mSou_flow_nominal = 1e-15 "Nominal mass flow rate through source";
   parameter Modelica.SIunits.Power Q_flow_nominal "Nominal thermal power of source";
   parameter Modelica.SIunits.PressureDifference dp_nominal(min=0, displayUnit="Pa")
     "Nominal pressure raise, used for default pressure curve if not specified in record per";

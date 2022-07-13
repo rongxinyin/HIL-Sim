@@ -1,7 +1,7 @@
 within hil_flexlab_model;
 model Tes_weiping_062822 "Tes storage implementation"
   replaceable package Medium = Buildings.Media.Water "Medium for water flow";
-  parameter Modelica.SIunits.MassFlowRate mTes_flow_nominal "Nominal mass flow rate through TES device";
+  parameter Modelica.SIunits.MassFlowRate mTes_flow_nominal = 1e-15 "Nominal mass flow rate through TES device";
   parameter Modelica.SIunits.ThermalConductivity k=0.584 "Thermal conductivity of PCM";
   parameter Modelica.SIunits.SpecificHeatCapacity c=2910 "Specific heat capacity of PCM";
   parameter Modelica.SIunits.Density d(displayUnit="kg/m3") = 1500 "Mass density of PCM";

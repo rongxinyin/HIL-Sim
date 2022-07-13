@@ -3,19 +3,20 @@ model BaseCoolingVarCOP_weiping_062822
   "Basic cooling plant with variable COP components"
   extends hil_flexlab_model.Plants.BaseClasses.partialPlant(m_flow_nominal=
         mAWHP_flow_nominal + mTes_flow_nominal, senTemRet);
-  parameter Modelica.SIunits.MassFlowRate mAWHP_flow_nominal "Nominal mass flowrate of air-to-water heat pump";
-  parameter Modelica.SIunits.MassFlowRate mSwec_flow_nominal "Nominal mass flowrate of swec";
-  parameter Modelica.SIunits.MassFlowRate mTes_flow_nominal "Nominal mass flowrate of tes";
+  parameter Modelica.SIunits.MassFlowRate mAWHP_flow_nominal = 1e-15 "Nominal mass flowrate of air-to-water heat pump";
+  parameter Modelica.SIunits.MassFlowRate mTes_flow_nominal = 1e-15 "Nominal mass flowrate of tes";
   parameter Modelica.SIunits.ThermalConductivity k=0.584 "Thermal conductivity of PCM";
   parameter Modelica.SIunits.SpecificHeatCapacity c=2910 "Specific heat capacity of PCM";
   parameter Modelica.SIunits.Density d=1500 "Mass density of PCM";
   parameter Modelica.SIunits.Temperature TSol=273.15 + 29.5 "Solidus temperature of PCM.";
   parameter Modelica.SIunits.Temperature TLiq=273.15 + 29.66 "Liquidus temperature of PCM";
   parameter Modelica.SIunits.SpecificInternalEnergy LHea=278140 "Latent heat of phase change";
-
-
+  parameter Modelica.SIunits.DimensionlessRatio COPCoo_ASHP=3
+    "Cooling COP of ASHP";
+  parameter Modelica.SIunits.DimensionlessRatio COPCoo_SWEC=3
+    "Cooling COP of SWEC";
   parameter Modelica.SIunits.Power Q_flow_nominal;
-  parameter Modelica.SIunits.Energy Tes_nominal
+  parameter Modelica.SIunits.Energy Tes_nominal = 25200000
     "Design TES capacity";
   parameter Modelica.SIunits.PressureDifference dp_nominal(min=0, displayUnit="Pa")
     "Nominal pressure raise, used for default pressure curve if not specified in record per";
