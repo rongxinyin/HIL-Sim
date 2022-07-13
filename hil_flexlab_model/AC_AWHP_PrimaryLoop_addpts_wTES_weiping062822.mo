@@ -102,6 +102,14 @@ model AC_AWHP_PrimaryLoop_addpts_wTES_weiping062822
         extent={{-20,-20},{20,20}},
         rotation=270,
         origin={228,40})));
+  Modelica.Blocks.Interfaces.RealInput T_air_in annotation (Placement(
+        transformation(
+        extent={{-20,-20},{20,20}},
+        rotation=180,
+        origin={576,-330}), iconTransformation(
+        extent={{-20,-20},{20,20}},
+        rotation=180,
+        origin={580,-314})));
   Modelica.Blocks.Interfaces.RealInput m_flow_sec annotation (Placement(
         transformation(
         extent={{-20,-20},{20,20}},
@@ -110,6 +118,7 @@ model AC_AWHP_PrimaryLoop_addpts_wTES_weiping062822
         extent={{-20,-20},{20,20}},
         rotation=270,
         origin={152,40})));
+
   Modelica.Blocks.Interfaces.RealOutput T_chw_out annotation (Placement(
         transformation(
         extent={{-20,-20},{20,20}},
@@ -118,46 +127,27 @@ model AC_AWHP_PrimaryLoop_addpts_wTES_weiping062822
         extent={{-20,-20},{20,20}},
         rotation=90,
         origin={390,40})));
-  Modelica.Blocks.Interfaces.RealInput T_air_in annotation (Placement(
-        transformation(
-        extent={{-20,-20},{20,20}},
-        rotation=180,
-        origin={576,-322}), iconTransformation(
-        extent={{-20,-20},{20,20}},
-        rotation=180,
-        origin={580,-314})));
   Modelica.Blocks.Interfaces.RealOutput chi_P annotation (Placement(
         transformation(
         extent={{-22,-22},{22,22}},
         rotation=180,
-        origin={76,-264}),  iconTransformation(
+        origin={78,-260}),  iconTransformation(
         extent={{-22,-22},{22,22}},
         rotation=270,
         origin={168,-360})));
-  Modelica.Blocks.Interfaces.RealOutput pum_P annotation (Placement(
-        transformation(extent={{560,-216},{598,-178}}), iconTransformation(
-          extent={{560,-210},{598,-172}})));
-  Buildings.Fluid.Sensors.TemperatureTwoPort sen_retTem(redeclare package
-      Medium = Buildings.Media.Water, m_flow_nominal=m_flow)
-    annotation (Placement(transformation(extent={{-11,13},{11,-13}},
-        rotation=270,
-        origin={169,-181})));
   Modelica.Blocks.Interfaces.RealOutput T_pch_in annotation (Placement(
         transformation(
-        extent={{-27,-27},{27,27}},
+        extent={{-21,-21},{21,21}},
         rotation=180,
-        origin={77,-217}), iconTransformation(
+        origin={79,-231}), iconTransformation(
         extent={{-20,-20},{20,20}},
         rotation=180,
         origin={78,-186})));
-  Modelica.Blocks.Interfaces.RealOutput m_flow_pri annotation (Placement(
-        transformation(extent={{560,-266},{598,-228}}), iconTransformation(
-          extent={{560,-266},{598,-228}})));
   Modelica.Blocks.Interfaces.RealOutput chi_spd annotation (Placement(
         transformation(
         extent={{-22,-22},{22,22}},
         rotation=180,
-        origin={78,-292}), iconTransformation(
+        origin={78,-290}), iconTransformation(
         extent={{-22,-22},{22,22}},
         rotation=270,
         origin={122,-360})));
@@ -165,83 +155,70 @@ model AC_AWHP_PrimaryLoop_addpts_wTES_weiping062822
         transformation(
         extent={{-22,-22},{22,22}},
         rotation=180,
-        origin={78,-324}), iconTransformation(
+        origin={78,-320}), iconTransformation(
         extent={{-22,-22},{22,22}},
         rotation=270,
         origin={212,-360})));
-  Plant_Controller_weiping_062822  plaCon(table=table,TSolCoo=TSol,TLiqCoo=TLiq)
-    annotation (Placement(transformation(extent={{268,-304},{320,-278}})));
-  Modelica.Blocks.Sources.Constant TSetSupChiConst(final k=casDat.TSetSupCW)
-    "Set point for chiller temperature"
-    annotation (Placement(transformation(extent={{180,-320},{192,-308}})));
-  BaseCoolingVarCOP_weiping_062822 coo(m_flow_nominal=casDat.mAWHP_flow_nominal+
-   casDat.mTes_flow_nominal, k=casDat.kPCMCoo, c=casDat.cPCMCoo, d=casDat.dPCMCoo, TSol=casDat.TSolCoo, TLiq=casDat.TLiqCoo, LHea=casDat.LHeaCoo,
-   Q_flow_nominal=casDat.QCoo_flow_nominal, mAWHP_flow_nominal=casDat.mAWHP_flow_nominal,
-   mSwec_flow_nominal=casDat.mSwec_flow_nominal,mTes_flow_nominal=casDat.mTes_flow_nominal,
-   Tes_nominal=casDat.LTes_nominal, dp_nominal=casDat.dp_nominal, dpFixed_nominal=
-   casDat.dpFixed_nominal, dpValve_nominal=casDat.dpValve_nominal) annotation (Placement(transformation(
-        extent={{-20,-56},{20,56}},
-        rotation=90,
-        origin={224,-238})));
-
-   hil_flexlab_model.Data.BBR_3C_Med casDat
-    "Case study data"
-    annotation (Placement(transformation(extent={{-6,-92},{54,-152}})));
+  Modelica.Blocks.Interfaces.RealOutput pum_P annotation (Placement(
+        transformation(extent={{560,-230},{598,-192}}), iconTransformation(
+          extent={{560,-210},{598,-172}})));
+  Modelica.Blocks.Interfaces.RealOutput m_flow_pri annotation (Placement(
+        transformation(extent={{560,-280},{598,-242}}), iconTransformation(
+          extent={{560,-266},{598,-228}})));
 
 equation
-
-  connect(chw_sup.port_3, chw_ret.port_3)
-    annotation (Line(points={{298,-136},{178,-136}}, color={0,127,255}));
-  connect(m_flow_sec, sec_ret.m_flow_in) annotation (Line(points={{120,38},{120,
-          -78},{176,-78}},       color={0,0,127}));
-  connect(T_chw_in, sec_ret.T_in) annotation (Line(points={{194,36},{194,-78},{
-          172,-78}},  color={0,0,127}));
-  connect(senTem.port_b,bou. ports[1]) annotation (Line(points={{370,-96},{384,-96},
+  connect(senTem.port_b,bou.ports[1]) annotation (Line(points={{370,-98},{384,-98},
           {384,-136},{398,-136}},       color={0,127,255}));
-  connect(senTem.T, T_chw_out) annotation (Line(points={{360,-85},{360,40}},
-                                color={0,0,127}));
-  connect(sec_ret.ports[1], chw_ret.port_2)
-    annotation (Line(points={{168,-100},{168,-126}}, color={0,127,255}));
+  connect(senTem.T, T_chw_out) annotation (Line(points={{359,-84.8},{359,22},{360,
+          22},{360,40}},        color={0,0,127}));
   connect(chw_sup.port_1, senTem.port_a) annotation (Line(points={{308,-126},{308,
-          -96},{350,-96}},   color={0,127,255}));
-  connect(chw_ret.port_1, sen_retTem.port_a) annotation (Line(points={{168,-146},
-          {168,-170},{169,-170}}, color={0,127,255}));
-  connect(sen_retTem.T, T_pch_in)
-    annotation (Line(points={{154.7,-181},{114,-181},{114,-217},{77,-217}},
-                                                    color={0,0,127}));
-  connect(T_chw_out, T_chw_out) annotation (Line(points={{360,40},{360,40}},
-                               color={0,0,127}));
-  connect(chi_spd, chi_spd)
-    annotation (Line(points={{78,-292},{78,-292}}, color={0,0,127}));
-  connect(chi_P, chi_P)
-    annotation (Line(points={{76,-264},{76,-264}}, color={0,0,127}));
-  connect(plaCon.enaChi, chiOn) annotation (Line(points={{294,-306.08},{294,
-          -314},{354,-314},{354,-160},{246,-160},{246,36}},          color={255,
-          0,255}));
-  connect(senTem.T, plaCon.uTMea) annotation (Line(points={{360,-85},{360,-204},
-          {322,-204},{322,-262},{302.32,-262},{302.32,-306.08}}, color={0,0,127}));
-  connect(coo.port_b, sen_retTem.port_b) annotation (Line(points={{216.246,-218},
-          {210,-218},{210,-194},{169,-194},{169,-192}}, color={0,127,255}));
-  connect(coo.port_a, chw_sup.port_2) annotation (Line(points={{236.923,-218},{
-          430,-218},{430,-152},{308,-152},{308,-146}},
+          -98},{348,-98}},   color={0,127,255}));
+  connect(T_air_in, coo.uTDryBul) annotation (Line(points={{576,-330},{172,-330},
+          {172,-262},{172.485,-262}}, color={0,0,127}));
+  connect(TSetSupChiConst.y, coo.TSetASHP) annotation (Line(points={{188.6,-312},
+          {192,-312},{192,-262},{192.462,-262}}, color={0,0,127}));
+  connect(TSetSupChiConst.y, plaCon.uTSet) annotation (Line(points={{188.6,-312},
+          {320,-312},{320,-306.08},{318.96,-306.08}}, color={0,0,127}));
+  connect(plaCon.yASHP, coo.uASHP) annotation (Line(points={{281.52,-276.7},{
+          281.52,-276},{282,-276},{282,-270},{180,-270},{180,-262},{180.231,
+          -262}},
+        color={0,0,127}));
+  connect(plaCon.yTES, coo.uTes) annotation (Line(points={{273.2,-276.96},{273.2,
+          -276},{272,-276},{272,-268},{220,-268},{220,-262},{221,-262}}, color={
+          0,0,127}));
+  connect(coo.port_a, chw_sup.port_2) annotation (Line(points={{233.231,-218},{
+          232,-218},{232,-160},{308,-160},{308,-146}},
                                                    color={0,127,255}));
-  connect(coo.TSetASHP, TSetSupChiConst.y) annotation (Line(points={{193.846,
-          -262},{193.846,-314},{192.6,-314}},
-                                        color={0,0,127}));
-  connect(coo.uTes, plaCon.yTES) annotation (Line(points={{224,-262},{224,-288},
-          {275.28,-288},{275.28,-276.7}}, color={0,0,127}));
-  connect(coo.uASHP, plaCon.yASHP) annotation (Line(points={{180.923,-262},{
-          180.923,-276.7},{281.52,-276.7}},
-                                    color={0,0,127}));
-  connect(coo.uTDryBul, T_air_in) annotation (Line(points={{172.738,-262},{
-          172.738,-322},{576,-322}},
-                             color={0,0,127}));
-  connect(coo.COP_HP, chi_COP) annotation (Line(points={{172.738,-216},{138,
-          -216},{138,-324},{78,-324}}, color={0,0,127}));
-  connect(coo.HP_spd, chi_spd) annotation (Line(points={{177.046,-216},{138,
-          -216},{138,-292},{78,-292}}, color={0,0,127}));
-  connect(coo.PEle, chi_P) annotation (Line(points={{168,-216},{136,-216},{136,
-          -264},{76,-264}}, color={0,0,127}));
+  connect(chw_ret.port_3, chw_sup.port_3)
+    annotation (Line(points={{178,-136},{298,-136}}, color={0,127,255}));
+  connect(coo.port_b, sen_retTem.port_b) annotation (Line(points={{213.662,-218},
+          {214,-218},{214,-194},{168,-194}}, color={0,127,255}));
+  connect(sen_retTem.port_a, chw_ret.port_1)
+    annotation (Line(points={{168,-170},{168,-146}}, color={0,127,255}));
+  connect(chw_ret.port_2, sec_ret.ports[1]) annotation (Line(points={{168,-126},
+          {168,-126},{168,-100}}, color={0,127,255}));
+  connect(m_flow_sec, sec_ret.m_flow_in) annotation (Line(points={{120,38},{120,
+          -20},{176,-20},{176,-78}}, color={0,0,127}));
+  connect(T_chw_in, sec_ret.T_in) annotation (Line(points={{194,36},{194,-40},{170,
+          -40},{170,-78},{172,-78}}, color={0,0,127}));
+  connect(plaCon.enaChi, chiOn) annotation (Line(points={{294,-306.08},{294,-324},
+          {368,-324},{368,-194},{246,-194},{246,36}}, color={255,0,255}));
+  connect(coo.TTes, plaCon.uTTes) annotation (Line(points={{200.615,-216},{200,
+          -216},{200,-206},{340,-206},{340,-316},{310,-316},{310,-306.08},{
+          310.64,-306.08}},
+        color={0,0,127}));
+  connect(senTem.T, plaCon.uTMea) annotation (Line(points={{359,-84.8},{359,-76},
+          {440,-76},{440,-320},{302.32,-320},{302.32,-306.08}}, color={0,0,127}));
+  connect(sen_retTem.T, T_pch_in) annotation (Line(points={{154.8,-182},{126,-182},
+          {126,-231},{79,-231}}, color={0,0,127}));
+  connect(coo.PEle, chi_P) annotation (Line(points={{168,-216},{168,-212},{136,-212},
+          {136,-260},{78,-260}}, color={0,0,127}));
+  connect(coo.COP_HP, chi_COP) annotation (Line(points={{172.485,-216},{172,
+          -216},{172,-208},{146,-208},{146,-320},{78,-320}},
+                                                       color={0,0,127}));
+  connect(coo.HP_spd, chi_spd) annotation (Line(points={{176.562,-216},{176,
+          -216},{176,-204},{156,-204},{156,-290},{78,-290}},
+                                                       color={0,0,127}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{100,
             -340},{560,20}}),   graphics={Line(points={{310,404}}, color={28,
               108,200}), Line(

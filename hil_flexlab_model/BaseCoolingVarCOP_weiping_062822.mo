@@ -172,7 +172,7 @@ equation
           122},{110,122}},
                       color={0,0,127}));
   connect(spl3.port_2, senMasFloSup.port_a) annotation (Line(points={{20,60},{20,
-          18},{80,18},{80,34}}, color={0,127,255}));
+          18},{78,18},{78,10}}, color={0,127,255}));
   connect(multiSum.y, PEle)
     annotation (Line(points={{87.02,260},{110,260}}, color={0,0,127}));
   connect(TES.SOC, SOC) annotation (Line(points={{-19,-2},{20,-2},{20,0},{110,0}},
@@ -181,12 +181,14 @@ equation
           {0,-240},{80,-240},{80,-220},{110,-220}}, color={0,0,127}));
   connect(senTemRetSwe.port_a, spl5.port_2)
     annotation (Line(points={{20,-238},{20,-130}}, color={0,127,255}));
-  connect(AWHP.TSetSou, TSetASHP) annotation (Line(points={{-54,153},{-72,153},{
-          -72,140},{-120,140}}, color={0,0,127}));
-  connect(AWHP.TDryBul, uTDryBul) annotation (Line(points={{-54,158.8},{-120,158.8},
-          {-120,238}}, color={0,0,127}));
-  connect(AWHP.uPum, uASHP) annotation (Line(points={{-54,156},{-120,156},{-120,
-          200}}, color={0,0,127}));
+  connect(AWHP.TSetSou, TSetASHP) annotation (Line(points={{-54,149.6},{-70,149.6},
+          {-70,140},{-120,140}},color={0,0,127}));
+  connect(AWHP.TDryBul, uTDryBul) annotation (Line(points={{-54,153},{-70,153},{
+          -70,240},{-120,240},{-120,238}},
+                       color={0,0,127}));
+  connect(AWHP.uPum, uASHP) annotation (Line(points={{-54,156},{-64,156},{-64,200},
+          {-120,200}},
+                 color={0,0,127}));
   connect(AWHP.PEle, multiSum.u[1]) annotation (Line(points={{-31,160},{40,160},
           {40,260},{74,260}}, color={0,0,127}));
   connect(AWHP.port_a, spl1.port_3) annotation (Line(points={{-32,156},{0,156},{

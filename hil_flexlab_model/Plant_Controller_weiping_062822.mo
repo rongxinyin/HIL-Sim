@@ -46,7 +46,7 @@ hil_flexlab_model.Plants.Controls.Controller4
     "Temperature of return water to ASHP" annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={-72,110})));
+        origin={-80,108})));
   Modelica.Blocks.Interfaces.RealInput uTSet
     "Control signal discharge limit for TES" annotation (Placement(
         transformation(
@@ -91,22 +91,23 @@ hil_flexlab_model.Plants.Controls.Controller4
     "Constant for cold TES discharge limit"
     annotation (Placement(transformation(extent={{74,38},{54,58}})));
 equation
-  connect(conTesCha.y,swiTes. u1) annotation (Line(points={{-45,-66},{4,-66},
-          {4,18},{-50,18}},color={0,0,127}));
+  connect(conTesCha.y,swiTes. u1) annotation (Line(points={{-29,-60},{-44,-60},
+          {-44,18},{-50,18}},
+                           color={0,0,127}));
   connect(C4Coo.enaDis, C1Coo.enaTesDis) annotation (Line(points={{7,-14},{
           -6,-14},{-6,78},{-12,78}},    color={255,0,255}));
-  connect(C4Coo.enaCha,swiTes. u2) annotation (Line(points={{7,-6},{8,-6},{
-          8,10},{-50,10}}, color={255,0,255}));
-  connect(C1Coo.yTesDis, swiTes.u3) annotation (Line(points={{-36,80},{-36,
-          2},{-50,2}},     color={0,0,127}));
+  connect(C4Coo.enaCha,swiTes. u2) annotation (Line(points={{7,-6},{0,-6},{0,10},
+          {-50,10}},       color={255,0,255}));
+  connect(C1Coo.yTesDis, swiTes.u3) annotation (Line(points={{-36,80},{-40,80},
+          {-40,2},{-50,2}},color={0,0,127}));
   connect(C4Coo.mode, intRea.y) annotation (Line(points={{30,-2},{60,-2},{60,
           -42},{63,-42}},
                      color={255,127,0}));
   connect(SchTes.y[1], intRea.u)
-    annotation (Line(points={{105,-18},{86,-18},{86,-42}},
+    annotation (Line(points={{105,-18},{90,-18},{90,-42},{86,-42}},
                                                   color={0,0,127}));
   connect(swiTes.y, yTES)
-    annotation (Line(points={{-73,10},{-72,10},{-72,110}}, color={0,0,127}));
+    annotation (Line(points={{-73,10},{-80,10},{-80,108}}, color={0,0,127}));
   connect(C1Coo.TSet, uTSet) annotation (Line(points={{-12,88},{96,88},{96,
           -115},{97,-115}},
                      color={0,0,127}));
@@ -119,8 +120,9 @@ equation
           {34,-115},{33,-115}},color={255,0,255}));
   connect(C1Coo.yASHP, yASHP) annotation (Line(points={{-36,68},{-48,68},{
           -48,110}}, color={0,0,127}));
-  connect(uTTes, C4Coo.Ttes) annotation (Line(points={{77,-115},{77,-62.5},
-          {30,-62.5},{30,-10}}, color={0,0,127}));
+  connect(uTTes, C4Coo.Ttes) annotation (Line(points={{77,-115},{77,-62},{42,
+          -62},{42,-10},{30,-10}},
+                                color={0,0,127}));
   connect(conTesChiDisLim.y, C1Coo.uTesLim) annotation (Line(points={{53,48},{
           30,48},{30,82},{-12,82}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
