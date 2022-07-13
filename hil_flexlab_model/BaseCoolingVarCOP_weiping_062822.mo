@@ -113,10 +113,7 @@ model BaseCoolingVarCOP_weiping_062822
     annotation (Placement(transformation(extent={{100,250},{120,270}})));
   Modelica.Blocks.Math.MultiSum multiSum(nu=1)
     annotation (Placement(transformation(extent={{74,254},{86,266}})));
-  parameter Modelica.SIunits.DimensionlessRatio COPCoo_ASHP=3
-    "Cooling COP of ASHP";
-  parameter Modelica.SIunits.DimensionlessRatio COPCoo_SWEC=3
-    "Cooling COP of SWEC";
+
 
   Modelica.Blocks.Interfaces.RealInput TSetASHP
     "Set point temperature of the fluid that leaves the heatpump"
