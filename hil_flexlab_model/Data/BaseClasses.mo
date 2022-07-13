@@ -265,9 +265,12 @@ This record contains the information for a multi-family residential building
     parameter Modelica.SIunits.DimensionlessRatio CTesScale = CTes_nominal/130000 "Scale factor for cold TES prototype size" annotation(Dialog(group="Climate Data"));
     parameter Modelica.SIunits.TemperatureDifference dTCoo = 11-7 "Inlet temperature difference in cold TES rack" annotation(Dialog(group="System Specifications"));
     parameter Modelica.SIunits.TemperatureDifference dTHea = 52-43 "Inlet temperature difference in hot TES rack" annotation(Dialog(group="System Specifications"));
-    parameter Modelica.SIunits.MassFlowRate mCooWat_flow_nominal = QCoo_flow_nominal/(4201*dTCoo) "Design water flowrate of cooling system" annotation(Dialog(group="System Specifications"));
+    parameter Modelica.SIunits.PressureDifference dpValve_nominal = 1000
+                                                                       "Nominal pressure drop of fully open valve";
+    parameter Modelica.SIunits.PressureDifference dpFixed_nominal = 1000 "pressure drop of pipe and other resistances that are in series" annotation(Dialog(group="System Specifications"));
+    parameter Modelica.SIunits.MassFlowRate mAWHP_flow_nominal = QCoo_flow_nominal/(4201*dTCoo) "Design water flowrate of cooling system" annotation(Dialog(group="System Specifications"));
     parameter Modelica.SIunits.MassFlowRate mHeaWat_flow_nominal = QHea_flow_nominal/(4187*dTHea) "Design water flowrate of heating system" annotation(Dialog(group="System Specifications"));
-    parameter Modelica.SIunits.MassFlowRate mTes_flow_nominal = max(mCooWat_flow_nominal,mHeaWat_flow_nominal) "Design water flowrate through TES" annotation(Dialog(group="System Specifications"));
+    parameter Modelica.SIunits.MassFlowRate mTes_flow_nominal = mAWHP_flow_nominal "Design water flowrate through TES" annotation(Dialog(group="System Specifications"));
     parameter Modelica.SIunits.MassFlowRate mSwec_flow_nominal = mTes_flow_nominal "Design water flowrate through SWEC" annotation(Dialog(group="System Specifications"));
     /* ModelicaServices.ExternalReferences.loadResource("rtu-pcm/modelica-rtu-pcm/RTUPCM/Resources/Scripts/Dymola/HVAC/Examples/3B.txt") annotation(Dialog(group="Tariff Structure")) */
     /* ModelicaServices.ExternalReferences.loadResource("rtu-pcm/modelica-rtu-pcm/RTUPCM/Resources/weatherdata/USA_NM_Albuquerque.Intl.AP.723650_TMY3.mos") annotation(Dialog(group="Climate Data")) */
@@ -299,54 +302,6 @@ This record contains the information for a multi-family residential building
 </html>"));
   end DELO;
 
-  record BATT "Electrochemical Battery Record"
-    parameter Modelica.SIunits.Power BatteryChargeRateMax = 5000 "Design charge rate" annotation(Dialog(group="Battery Data"));
-    parameter Modelica.SIunits.Power BatteryDischargeRateMax = 5000 "Design discharge rate" annotation(Dialog(group="Battery Data"));
-    parameter Modelica.SIunits.Energy BatteryUsableSizeSma = 13.5*3600000 "Design battery capacity (factor * 1kWh)" annotation(Dialog(group="Battery Data"));
-    parameter Modelica.SIunits.Energy BatteryUsableSizeMed = 13.5*3600000 "Design battery capacity (factor * 1kWh)" annotation(Dialog(group="Battery Data"));
-    parameter Modelica.SIunits.Energy BatteryUsableSizeLar = 13.5*3600000 "Design battery capacity (factor * 1kWh)" annotation(Dialog(group="Battery Data"));
-    parameter Modelica.SIunits.DimensionlessRatio BatteryRoundTripEfficiency = 0.85 "round trip efficiency" annotation(Dialog(group="Battery Data"));
-    parameter Modelica.SIunits.Time chargeStartMornS_batt = 1*0*3600 "Continue charging at 12am" annotation(Dialog(group="State Schedule: Summer"));
-    parameter Modelica.SIunits.Time chargeEndMornS_batt = 1*14*3600 "Stop charging at 2pm"  annotation(Dialog(group="State Schedule: Summer"));
-    parameter Modelica.SIunits.Time dischargeStartS_batt = 1*14*3600 "Begin discharging at 2pm"  annotation(Dialog(group="State Schedule: Summer"));
-    parameter Modelica.SIunits.Time dischargeEndS_batt = 1*18*3600 "Stop discharging at 6pm"  annotation(Dialog(group="State Schedule: Summer"));
-    parameter Modelica.SIunits.Time chargeStartNightS_batt = 1*18*3600 "Begin charging at 6pm"  annotation(Dialog(group="State Schedule: Summer"));
-    parameter Modelica.SIunits.Time chargeEndNightS_batt = 1*24*3600 "Stop charging at 12am"  annotation(Dialog(group="State Schedule: Summer"));
-    parameter Modelica.SIunits.Time chargeStartMornW_batt = 1*0*3600 "Continue charging at 12am" annotation(Dialog(group="State Schedule: Winter"));
-    parameter Modelica.SIunits.Time chargeEndMornW_batt = 1*14*3600 "Stop charging at 2pm"  annotation(Dialog(group="State Schedule: Winter"));
-    parameter Modelica.SIunits.Time dischargeStartW_batt = 1*14*3600 "Begin discharging at 2pm"  annotation(Dialog(group="State Schedule: Winter"));
-    parameter Modelica.SIunits.Time dischargeEndW_batt = 1*18*3600 "Stop discharging at 6pm"  annotation(Dialog(group="State Schedule: Winter"));
-    parameter Modelica.SIunits.Time chargeStartNightW_batt = 1*18*3600 "Begin charging at 6pm"  annotation(Dialog(group="State Schedule: Winter"));
-    parameter Modelica.SIunits.Time chargeEndNightW_batt = 1*24*3600 "Stop charging at 12am"  annotation(Dialog(group="State Schedule: Winter"));
-    parameter Modelica.SIunits.Time StartDateS_batt = 120*24*3600 "Summer start date: May 1" annotation(Dialog(group="State Schedule: Summer"));
-    parameter Modelica.SIunits.Time ReturnDateW_batt = 273*24*3600 "Winter return date: Oct 1" annotation(Dialog(group="State Schedule: Winter"));
-     annotation (Icon(coordinateSystem(preserveAspectRatio=true, extent={{-100,-100},{100,100}}), graphics={
-          Text(
-            lineColor={0,0,255},
-            extent={{-150,60},{150,100}},
-            textString="%name"),
-          Rectangle(
-            origin={0.0,-25.0},
-            lineColor={64,64,64},
-            fillColor={255,215,136},
-            fillPattern=FillPattern.Solid,
-            extent={{-100.0,-75.0},{100.0,75.0}},
-            radius=25.0),
-          Line(
-            points={{-100.0,0.0},{100.0,0.0}},
-            color={64,64,64}),
-          Line(
-            origin={0.0,-50.0},
-            points={{-100.0,0.0},{100.0,0.0}},
-            color={64,64,64}),
-          Line(
-            origin={0.0,-25.0},
-            points={{0.0,75.0},{0.0,-75.0}},
-            color={64,64,64})}), Documentation(info="<html>
-          <p>This record contains the design sizing of the Lithium-ion battery.
-</p>
-</html>"));
-  end BATT;
 
   record PLNT "Plant (HP+TES)  Sizing Record"
     parameter Modelica.SIunits.Power QCoo_flow_nominal = 22000 "Design cooling capacity" annotation(Dialog(group="Climate Data"));

@@ -107,7 +107,8 @@ model BaseCoolingVarCOP_weiping_062822
     annotation (Placement(transformation(extent={{-140,-20},{-100,20}})));
   Modelica.Blocks.Interfaces.RealOutput TTes "Outlet fluid temperature of TES"
     annotation (Placement(transformation(extent={{100,90},{120,110}})));
-  Modelica.Blocks.Interfaces.RealOutput PEle(unit="W") "Electrical power consumption"
+  Modelica.Blocks.Interfaces.RealOutput PEle(unit="W")
+    "Electrical power consumption"
     annotation (Placement(transformation(extent={{100,250},{120,270}})));
   Modelica.Blocks.Math.MultiSum multiSum(nu=1)
     annotation (Placement(transformation(extent={{74,254},{86,266}})));
@@ -136,6 +137,10 @@ model BaseCoolingVarCOP_weiping_062822
     annotation (Placement(transformation(extent={{-52,140},{-32,160}})));
 
 
+  Modelica.Blocks.Interfaces.RealOutput COP_HP "Electrical power consumption"
+    annotation (Placement(transformation(extent={{100,228},{120,248}})));
+  Modelica.Blocks.Interfaces.RealOutput HP_spd "Heat pump speed"
+    annotation (Placement(transformation(extent={{100,208},{120,228}})));
 equation
   connect(spl2.port_2, senTemSupAWHP.port_a)
     annotation (Line(points={{20,116},{20,110}}, color={0,127,255}));
@@ -189,4 +194,8 @@ equation
           {-14,126},{10,126}}, color={0,127,255}));
   connect(AWHP.TSup, TASHP)
     annotation (Line(points={{-31,148},{110,148}}, color={0,0,127}));
+  connect(AWHP.yCOP, COP_HP) annotation (Line(points={{-31,158.2},{36.5,158.2},
+          {36.5,238},{110,238}}, color={0,0,127}));
+  connect(AWHP.ySpd, HP_spd) annotation (Line(points={{-31,154.4},{36.5,154.4},
+          {36.5,218},{110,218}}, color={0,0,127}));
 end BaseCoolingVarCOP_weiping_062822;

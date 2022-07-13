@@ -58,6 +58,16 @@ partial model partialSourceCoo_weiping_062822
         extent={{7,-7},{-7,7}},
         rotation=180,
         origin={-77,21})));
+  Modelica.Blocks.Interfaces.RealInput TSetSou
+    "Set point temperature of the fluid that leaves the heatpump"
+    annotation (Placement(transformation(extent={{-140,-24},{-100,16}})));
+  Modelica.Blocks.Interfaces.RealInput TDryBul(unit="K")
+    "Dry bulb temperature of source air"
+    annotation (Placement(transformation(extent={{-140,10},{-100,50}})));
+  Modelica.Blocks.Math.RealToBoolean intRea "Integer to real"
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={-84,-44})));
 equation
   connect(senTemSouRet.port_a, pumSou.port_a)
     annotation (Line(points={{20,60},{10,60}}, color={0,127,255}));
@@ -79,9 +89,20 @@ equation
           255}));
   connect(pumSou.port_b, blackBox_Generic_TSetpoint.port_a) annotation (
       Line(points={{-10,60},{-36,60},{-36,0.8}}, color={0,127,255}));
-  connect(prescribedTemperature.port, blackBox_Generic_TSetpoint.heatPort)
-    annotation (Line(points={{-70,21},{-48,21},{-48,6},{-47,6}}, color={191,
+  connect(blackBox_Generic_TSetpoint.heatPort, prescribedTemperature.port)
+    annotation (Line(points={{-47,6},{-58.5,6},{-58.5,21},{-70,21}}, color={191,
           0,0}));
+  connect(blackBox_Generic_TSetpoint.TSet, TSetSou) annotation (Line(points={{
+          -53.6,-22.6},{-77.8,-22.6},{-77.8,-4},{-120,-4}}, color={0,0,127}));
+  connect(TDryBul, prescribedTemperature.T) annotation (Line(points={{-120,30},
+          {-104,30},{-104,21},{-85.4,21}}, color={0,0,127}));
+  connect(blackBox_Generic_TSetpoint.TSource, TDryBul) annotation (Line(points=
+          {{-67.46,-5.96},{-67.46,12.02},{-120,12.02},{-120,30}}, color={0,0,
+          127}));
+  connect(intRea.y, blackBox_Generic_TSetpoint.HP_On) annotation (Line(points={
+          {-73,-44},{-70,-44},{-70,-16.88},{-67.24,-16.88}}, color={255,0,255}));
+  connect(gai.y, intRea.u) annotation (Line(points={{-59,60},{-98,60},{-98,-44},
+          {-96,-44}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end partialSourceCoo_weiping_062822;

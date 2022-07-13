@@ -11,22 +11,7 @@ record PSP_4B_Med "Portable (SW facing) Classroom in Albuquerque, New Mexico"
       mAir_flow_nominal = 0.3304,
       LTes_nominal = 19.9*3600000,
       CTes_nominal = 59.6*3600000);
-  extends hil_flexlab_model.Data.BaseClasses.BATT(
-      BatteryUsableSizeSma = 4.6,
-      BatteryUsableSizeMed = 23.8,
-      BatteryUsableSizeLar = 47.5,
-      chargeStartMornS_batt = 1*0*3600,
-      chargeEndMornS_batt = 1*9*3600,
-      dischargeStartS_batt = 1*9*3600,
-      dischargeEndS_batt = 1*19*3600,
-      chargeStartNightS_batt = 1*19*3600,
-      chargeEndNightS_batt = 1*24*3600,
-      chargeStartMornW_batt = 1*0*3600,
-      chargeEndMornW_batt = 1*8*3600,
-      dischargeStartW_batt = 1*8*3600,
-      dischargeEndW_batt = 1*21*3600,
-      chargeStartNightW_batt = 1*21*3600,
-      chargeEndNightW_batt = 1*24*3600);
+
   parameter String weaDatImport = ModelicaServices.ExternalReferences.loadResource("modelica://RTUPCM/Resources/weatherdata/USA_NM_Albuquerque.Intl.AP.723650_TMY3.mos") annotation(Dialog(group="Climate Data"));
   /* ModelicaServices.ExternalReferences.loadResource("rtu-pcm/modelica-rtu-pcm/RTUPCM/Resources/Scripts/Dymola/HVAC/Examples/3B.txt") annotation(Dialog(group="Tariff Structure")) */
   /* ModelicaServices.ExternalReferences.loadResource("rtu-pcm/modelica-rtu-pcm/RTUPCM/Resources/weatherdata/USA_NM_Albuquerque.Intl.AP.723650_TMY3.mos") annotation(Dialog(group="Climate Data")) */

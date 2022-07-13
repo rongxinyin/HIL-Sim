@@ -1,20 +1,12 @@
 within hil_flexlab_model.Data;
 record BBR_3C_Med
 extends hil_flexlab_model.Data.BaseClasses.BBR(
- chargeStartMorn_LTes = 0,
- chargeEndMorn_LTes = 21600,
- dischargeStart_LTes = 32400.0,
- dischargeEnd_LTes = 75600,
- chargeStartNight_LTes = 82800,
- chargeEndNight_LTes = 86400,
  chargeStartMorn_CTes = 0,
  chargeEndMorn_CTes = 25200,
  dischargeStart_CTes = 50400.0,
  dischargeEnd_CTes = 72000,
  chargeStartNight_CTes = 75600,
- chargeEndNight_CTes = 86400,
- IECHR_exists = false,
- Epc_exists = false);
+ chargeEndNight_CTes = 86400);
 extends hil_flexlab_model.Data.BaseClasses.MAPR(
  TSolCoo = 283.15,
  TLiqCoo = 285.15,
@@ -33,6 +25,8 @@ extends hil_flexlab_model.Data.BaseClasses.DELO(
  mAir_flow_nominal = 3.479,
  LTes_nominal = 270000000.0,
  CTes_nominal = 460800000.0,
- mSwec_flow_nominal = 0.0);
+ mSwec_flow_nominal = 0.0,
+ dpFixed_nominal = 1000,
+ dpValve_nominal = 1000);
 parameter String weaDatImport = ModelicaServices.ExternalReferences.loadResource("modelica://RTUPCM/Resources/weatherdata/USA_CA_San.Francisco.Intl.AP.724940_TMY3.mos");
 end BBR_3C_Med;

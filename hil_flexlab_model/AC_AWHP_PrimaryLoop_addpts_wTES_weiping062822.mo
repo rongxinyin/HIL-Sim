@@ -32,12 +32,12 @@ model AC_AWHP_PrimaryLoop_addpts_wTES_weiping062822
     "Pressure drop of pipe and other resistances that are in series";
   parameter Modelica.SIunits.PressureDifference dpValve_nominal(displayUnit="Pa", min=0) = 1000
     "Nominal pressure drop of fully open valve";
-  parameter Real table[:, :] = [casDat.chargeStartMornS,0;
-    casDat.chargeEndMornS,2;
-    casDat.dischargeStartS,1;
-    casDat.dischargeEndS,2;
-    casDat.chargeStartNightS,0;
-    casDat.chargeEndNightS,0]
+  parameter Real table[:, :] = [casDat.chargeStartMorn_CTes,0;
+    casDat.chargeEndMorn_CTes,2;
+    casDat.dischargeStart_CTes,1;
+    casDat.dischargeEnd_CTes,2;
+    casDat.chargeStartNight_CTes,0;
+    casDat.chargeEndNight_CTes,0]
     "Table matrix (time = first column; e.g., table=[0, 0; 1, 1; 2, 4])";
 
 
@@ -169,26 +169,24 @@ model AC_AWHP_PrimaryLoop_addpts_wTES_weiping062822
         extent={{-22,-22},{22,22}},
         rotation=270,
         origin={212,-360})));
-  Plant_Controller_weiping_062822  plaCon(table=table)
+  Plant_Controller_weiping_062822  plaCon(table=table,TSolCoo=TSol,TLiqCoo=TLiq)
     annotation (Placement(transformation(extent={{268,-304},{320,-278}})));
-  Modelica.Blocks.Sources.Constant TSetSupChiConst(final k=TSupChi_nominal)
+  Modelica.Blocks.Sources.Constant TSetSupChiConst(final k=casDat.TSetSupCW)
     "Set point for chiller temperature"
     annotation (Placement(transformation(extent={{180,-320},{192,-308}})));
   BaseCoolingVarCOP_weiping_062822 coo(m_flow_nominal=casDat.mAWHP_flow_nominal+
-   casDat.mTes_flow_nominal, k=casDat.k, c=casDat.c, d=casDat.d, TSol=casDat.TSol, TLiq=casDat.TLiq, LHea=casDat.LHea,
-   Q_flow_nominal=casDat.Q_flow_nominal, mAWHP_flow_nominal=casDat.mAWHP_flow_nominal,
+   casDat.mTes_flow_nominal, k=casDat.kPCMCoo, c=casDat.cPCMCoo, d=casDat.dPCMCoo, TSol=casDat.TSolCoo, TLiq=casDat.TLiqCoo, LHea=casDat.LHeaCoo,
+   Q_flow_nominal=casDat.QCoo_flow_nominal, mAWHP_flow_nominal=casDat.mAWHP_flow_nominal,
    mSwec_flow_nominal=casDat.mSwec_flow_nominal,mTes_flow_nominal=casDat.mTes_flow_nominal,
-   Tes_nominal=casDat.Tes_nominal, dp_nominal=casDat.dp_nominal, dpFixed_nominal=
+   Tes_nominal=casDat.LTes_nominal, dp_nominal=casDat.dp_nominal, dpFixed_nominal=
    casDat.dpFixed_nominal, dpValve_nominal=casDat.dpValve_nominal) annotation (Placement(transformation(
         extent={{-20,-56},{20,56}},
         rotation=90,
         origin={224,-238})));
- replaceable Examples.CasDat.CustomCase
-                          casDat(minOAFlo=16/2118.88*casDat.occ_density*1.2*roo.roo.AFlo)
-    constrainedby Examples.Data.BBR_4B_Med(
-                                 minOAFlo=16/2118.88*casDat.occ_density*1.2*roo.roo.AFlo)
+
+   hil_flexlab_model.Data.BBR_3C_Med casDat
     "Case study data"
-    annotation (Placement(transformation(extent={{-180,82},{-160,102}})));
+    annotation (Placement(transformation(extent={{-6,-92},{54,-152}})));
 
 equation
 
@@ -217,13 +215,9 @@ equation
     annotation (Line(points={{78,-292},{78,-292}}, color={0,0,127}));
   connect(chi_P, chi_P)
     annotation (Line(points={{76,-264},{76,-264}}, color={0,0,127}));
-  connect(plant_Controller.enaChi, chiOn) annotation (Line(points={{284.24,
-          -316.08},{284.24,-314},{354,-314},{354,-160},{246,-160},{246,36}},
-                                                                     color={255,
+  connect(plaCon.enaChi, chiOn) annotation (Line(points={{294,-306.08},{294,
+          -314},{354,-314},{354,-160},{246,-160},{246,36}},          color={255,
           0,255}));
-  connect(senTem.T, plant_Controller.uTMea) annotation (Line(points={{360,-85},
-          {360,-204},{322,-204},{322,-262},{287.08,-262},{287.08,-320.08}},
-                                                         color={0,0,127}));
   connect(senTem.T, plaCon.uTMea) annotation (Line(points={{360,-85},{360,-204},
           {322,-204},{322,-262},{302.32,-262},{302.32,-306.08}}, color={0,0,127}));
   connect(coo.port_b, sen_retTem.port_b) annotation (Line(points={{216.246,-218},
@@ -242,6 +236,12 @@ equation
   connect(coo.uTDryBul, T_air_in) annotation (Line(points={{172.738,-262},{
           172.738,-322},{576,-322}},
                              color={0,0,127}));
+  connect(coo.COP_HP, chi_COP) annotation (Line(points={{172.738,-216},{138,
+          -216},{138,-324},{78,-324}}, color={0,0,127}));
+  connect(coo.HP_spd, chi_spd) annotation (Line(points={{177.046,-216},{138,
+          -216},{138,-292},{78,-292}}, color={0,0,127}));
+  connect(coo.PEle, chi_P) annotation (Line(points={{168,-216},{136,-216},{136,
+          -264},{76,-264}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{100,
             -340},{560,20}}),   graphics={Line(points={{310,404}}, color={28,
               108,200}), Line(

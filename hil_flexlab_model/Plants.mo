@@ -328,7 +328,7 @@ package Plants
             transformation(
             extent={{-10,-10},{10,10}},
             rotation=90,
-            origin={80,44})));
+            origin={78,20})));
       Modelica.Blocks.Interfaces.RealOutput TRet(unit="K")
         "Temperature of return water from coil"
         annotation (Placement(transformation(extent={{100,54},{120,74}}),
@@ -337,7 +337,8 @@ package Plants
       connect(senTemRet.port_a, port_a) annotation (Line(points={{50,-30},{80,-30},
               {80,-60},{100,-60}}, color={0,127,255}));
       connect(senMasFloSup.port_b, port_b)
-        annotation (Line(points={{80,54},{80,36},{100,36}}, color={0,127,255}));
+        annotation (Line(points={{78,30},{88,30},{88,36},{100,36}},
+                                                            color={0,127,255}));
       connect(TRet, senTemRet.T)
         annotation (Line(points={{110,64},{40,64},{40,-19}}, color={0,0,127}));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-260},
@@ -556,8 +557,7 @@ package Plants
     end Controller1Cooling;
 
     model Controller1Cooling_old "Controller 1 for cooling"
-      parameter Modelica.SIunits.DimensionlessRatio stage_tes_to_swec = 1/3 "PI signal at which to stage on Swec, if enabled";
-      parameter Modelica.SIunits.DimensionlessRatio stage_swec_to_ashp = 2/3 "PI signal at which to stage on ASHP, if enabled";
+      parameter Modelica.SIunits.DimensionlessRatio stage_tes_to_ashp = 1/2 "PI signal at which to stage on Swec, if enabled";
       Buildings.Controls.Continuous.LimPID conPI(
         controllerType=Modelica.Blocks.Types.SimpleController.PI,
         k=0.1,
@@ -682,5 +682,133 @@ package Plants
                 -160},{100,160}})), Diagram(coordinateSystem(preserveAspectRatio=
                 false, extent={{-100,-160},{100,160}})));
     end Controller1Cooling_old;
+
+    model Controller4 "Controller 4"
+      parameter Modelica.SIunits.Temperature TLimCha "Limit for charging";
+      parameter Modelica.SIunits.TemperatureDifference deadbandCha "Hysteresis deadband for TLimCha";
+      parameter Modelica.SIunits.Temperature TLimDis "Limit for discharging";
+      parameter Modelica.SIunits.TemperatureDifference deadbandDis "Hysteresis deadband for TLimDis";
+      parameter Boolean Cold "True for cooling pcm, False for heating pcm";
+      Modelica.Blocks.Logical.Hysteresis hysCha(
+        uLow=TLimCha - deadbandCha,
+        uHigh=TLimCha + deadbandCha,
+        pre_y_start=true) "Hysteresis for charging"
+        annotation (Placement(transformation(extent={{-60,20},{-40,40}})));
+      Modelica.Blocks.Interfaces.RealInput Ttes
+        "Temperature of thermal energy storage"
+        annotation (Placement(transformation(extent={{-140,-20},{-100,20}})));
+      Modelica.Blocks.Logical.LogicalSwitch swiCha
+        "Switch for charging hot or cold pcm"
+        annotation (Placement(transformation(extent={{20,20},{40,40}})));
+      Modelica.Blocks.Sources.BooleanConstant conCold(k=Cold)
+        "Constant for Cold parameter"
+        annotation (Placement(transformation(extent={{-82,-30},{-62,-10}})));
+      Modelica.Blocks.Logical.Not notColdCha "Not cold for charging"
+        annotation (Placement(transformation(extent={{-10,0},{10,20}})));
+      Modelica.Blocks.Interfaces.BooleanOutput enaCha "Enable pcm charging"
+        annotation (Placement(transformation(extent={{100,30},{120,50}})));
+      Modelica.Blocks.Logical.Hysteresis hysDis(
+        uLow=TLimDis - deadbandDis,
+        uHigh=TLimDis + deadbandDis,
+        pre_y_start=true) "Hysteresis for discharging"
+        annotation (Placement(transformation(extent={{-60,-80},{-40,-60}})));
+      Modelica.Blocks.Logical.LogicalSwitch swiCha1
+        "Switch for charging hot or cold pcm"
+        annotation (Placement(transformation(extent={{20,-80},{40,-60}})));
+      Modelica.Blocks.Logical.Not notColdDis "Not cold for discharging"
+        annotation (Placement(transformation(extent={{-10,-60},{10,-40}})));
+      Modelica.Blocks.Interfaces.BooleanOutput enaDis "Enable pcm discharging"
+        annotation (Placement(transformation(extent={{100,-50},{120,-30}})));
+      Modelica.Blocks.Interfaces.IntegerInput mode
+        "Current mode (0 = charging, 1 = discharging, 2 = off)"
+        annotation (Placement(transformation(extent={{-140,60},{-100,100}})));
+      Modelica.Blocks.Math.IntegerToReal intRea "Integer to real"
+        annotation (Placement(transformation(extent={{-80,50},{-60,70}})));
+      Modelica.Blocks.Logical.LessEqualThreshold detCha
+        "Detect if charging mode, otherwise discharging mode"
+        annotation (Placement(transformation(extent={{-40,50},{-20,70}})));
+      Modelica.Blocks.Logical.And andCha "And for charging mode"
+        annotation (Placement(transformation(extent={{60,40},{80,60}})));
+      Modelica.Blocks.Logical.And andDis "And for discharging mode"
+        annotation (Placement(transformation(extent={{60,-100},{80,-80}})));
+      Modelica.Blocks.Logical.Not notCha "Not for charging" annotation (Placement(
+            transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=-90,
+            origin={50,-30})));
+      Modelica.Blocks.Logical.GreaterEqualThreshold detOff(threshold=2)
+        "Detect if off mode"
+        annotation (Placement(transformation(extent={{-40,80},{-20,100}})));
+      Modelica.Blocks.Logical.And andCha1
+                                         "And for charging mode"
+        annotation (Placement(transformation(extent={{80,80},{100,100}})));
+      Modelica.Blocks.Logical.And andDis2 "And for discharging mode"
+        annotation (Placement(transformation(extent={{80,-20},{100,0}})));
+      Modelica.Blocks.Logical.Not notOff "Not for turning off"
+        annotation (Placement(transformation(extent={{20,80},{40,100}})));
+    equation
+      connect(Ttes, hysCha.u)
+        annotation (Line(points={{-120,0},{-90,0},{-90,30},{-62,30}},
+                                                    color={0,0,127}));
+      connect(conCold.y, swiCha.u2) annotation (Line(points={{-61,-20},{-20,-20},{
+              -20,30},{18,30}},
+                    color={255,0,255}));
+      connect(hysCha.y, swiCha.u1) annotation (Line(points={{-39,30},{-28,30},{-28,
+              38},{18,38}},
+                        color={255,0,255}));
+      connect(hysCha.y, notColdCha.u) annotation (Line(points={{-39,30},{-28,30},{
+              -28,10},{-12,10}},
+                           color={255,0,255}));
+      connect(notColdCha.y, swiCha.u3) annotation (Line(points={{11,10},{14,10},{14,
+              22},{18,22}}, color={255,0,255}));
+      connect(Ttes, hysDis.u) annotation (Line(points={{-120,0},{-90,0},{-90,-70},{
+              -62,-70}},
+                     color={0,0,127}));
+      connect(conCold.y, swiCha1.u2) annotation (Line(points={{-61,-20},{-20,-20},{
+              -20,-70},{18,-70}},
+                         color={255,0,255}));
+      connect(hysDis.y, notColdDis.u) annotation (Line(points={{-39,-70},{-26,-70},
+              {-26,-50},{-12,-50}},
+                             color={255,0,255}));
+      connect(notColdDis.y, swiCha1.u1) annotation (Line(points={{11,-50},{14,-50},
+              {14,-62},{18,-62}},color={255,0,255}));
+      connect(hysDis.y, swiCha1.u3) annotation (Line(points={{-39,-70},{-26,-70},{
+              -26,-78},{18,-78}},
+                              color={255,0,255}));
+      connect(mode, intRea.u)
+        annotation (Line(points={{-120,80},{-90,80},{-90,60},{-82,60}},
+                                                      color={255,127,0}));
+      connect(intRea.y, detCha.u)
+        annotation (Line(points={{-59,60},{-42,60}}, color={0,0,127}));
+      connect(swiCha1.y, andDis.u2) annotation (Line(points={{41,-70},{46,-70},{46,
+              -98},{58,-98}}, color={255,0,255}));
+      connect(swiCha.y, andCha.u2) annotation (Line(points={{41,30},{46,30},{46,42},
+              {58,42}}, color={255,0,255}));
+      connect(detCha.y, andCha.u1) annotation (Line(points={{-19,60},{50,60},{50,50},
+              {58,50}}, color={255,0,255}));
+      connect(detCha.y, notCha.u)
+        annotation (Line(points={{-19,60},{50,60},{50,-18}},
+                                                           color={255,0,255}));
+      connect(notCha.y, andDis.u1)
+        annotation (Line(points={{50,-41},{50,-90},{58,-90}}, color={255,0,255}));
+      connect(intRea.y, detOff.u) annotation (Line(points={{-59,60},{-50,60},{-50,
+              90},{-42,90}}, color={0,0,127}));
+      connect(andCha.y, andCha1.u2) annotation (Line(points={{81,50},{90,50},{90,70},
+              {70,70},{70,82},{78,82}}, color={255,0,255}));
+      connect(andCha1.y, enaCha)
+        annotation (Line(points={{101,90},{110,90},{110,40}}, color={255,0,255}));
+      connect(andDis.y, andDis2.u2) annotation (Line(points={{81,-90},{88,-90},{88,
+              -68},{68,-68},{68,-18},{78,-18}}, color={255,0,255}));
+      connect(detOff.y, notOff.u)
+        annotation (Line(points={{-19,90},{18,90}}, color={255,0,255}));
+      connect(notOff.y, andCha1.u1)
+        annotation (Line(points={{41,90},{78,90}}, color={255,0,255}));
+      connect(notOff.y, andDis2.u1) annotation (Line(points={{41,90},{52,90},{52,
+              -10},{78,-10}}, color={255,0,255}));
+      connect(andDis2.y, enaDis) annotation (Line(points={{101,-10},{110,-10},{110,
+              -40}}, color={255,0,255}));
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+            coordinateSystem(preserveAspectRatio=false)));
+    end Controller4;
   end Controls;
 end Plants;

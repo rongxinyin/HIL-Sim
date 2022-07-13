@@ -36,7 +36,6 @@ First implementation.
     annotation (
       defaultComponentPrefixes="parameter",
       defaultComponentName="datSol");
-
   record Concrete = Buildings.HeatTransfer.Data.Solids.Generic (
       k=1.4,
       d=2240,
@@ -44,7 +43,6 @@ First implementation.
     annotation (
       defaultComponentPrefixes="parameter",
       defaultComponentName="datSol");
-
   record InsulationBoard = Buildings.HeatTransfer.Data.Solids.Generic (
       k=0.03,
       d=40,
@@ -52,7 +50,6 @@ First implementation.
     annotation (
       defaultComponentPrefixes="parameter",
       defaultComponentName="datSol");
-
   record Glass = Buildings.HeatTransfer.Data.Solids.Generic (
       k=1.0,
       d=2500,
@@ -60,7 +57,6 @@ First implementation.
     annotation (
       defaultComponentPrefixes="parameter",
       defaultComponentName="datSol");
-
   record GypsumBoard = Buildings.HeatTransfer.Data.Solids.Generic (
       k=0.16,
       d=800,
@@ -68,7 +64,6 @@ First implementation.
     annotation (
       defaultComponentPrefixes="parameter",
       defaultComponentName="datSol");
-
   record Plywood = Buildings.HeatTransfer.Data.Solids.Generic (
       k=0.12,
       d=540,
@@ -76,7 +71,6 @@ First implementation.
     annotation (
       defaultComponentPrefixes="parameter",
       defaultComponentName="datSol");
-
   record Steel = Buildings.HeatTransfer.Data.Solids.Generic (
       k=50.2,
       d=7850,
@@ -85,7 +79,6 @@ First implementation.
     annotation (
       defaultComponentPrefixes="parameter",
       defaultComponentName="datSol");
-
   record CottonBatt =
                  Buildings.HeatTransfer.Data.Solids.Generic (
       k=0.059,

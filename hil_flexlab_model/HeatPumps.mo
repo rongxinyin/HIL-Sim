@@ -90,19 +90,19 @@ package HeatPumps "Contains heat pump models"
         points={{-6,11},{16,11},{16,-20},{10,-20}},
         color={191,0,0},
         smooth=Smooth.None));
-    connect(TSet, energyPump.TSetpoint) annotation (Line(points={{-106,0},{-82,0},
-            {-82,-6},{-60,-6}}, color={0,0,127}));
     connect(Tin.T, energyPump.TLoadHX_in) annotation (Line(points={{70,-49},{70,-34},
             {-8,-34},{-8,-32},{-44,-32},{-44,-15.8},{-43.6,-15.8}}, color={0,0,127}));
     connect(energyPump.m_flowLoadHX, senMasFlo.m_flow) annotation (Line(points={{-56.2,
             -16},{-56,-16},{-56,-49},{40,-49}}, color={0,0,127}));
     connect(energyPump.loadPort, heatFlowSensor.port_a) annotation (Line(points={{
             -40,-6},{-36,-6},{-36,11},{-32,11}}, color={191,0,0}));
+
+    connect(energyPump.TSetpoint, TSet) annotation (Line(points={{-60,-6},{-76,
+            -6},{-76,0},{-106,0}}, color={0,0,127}));
     connect(TSource, energyPump.TSourceHX) annotation (Line(points={{-106,-40},
             {-84,-40},{-84,-11.4},{-60.4,-11.4}}, color={0,0,127}));
-    connect(energyPump.on, HP_On) annotation (Line(points={{-60.2,1.4},{-77.1,1.4},
-            {-77.1,28},{-106,28}}, color={255,0,255}));
-
+    connect(energyPump.on, HP_On) annotation (Line(points={{-60.2,1.4},{-73.1,
+            1.4},{-73.1,28},{-106,28}}, color={255,0,255}));
       annotation (Placement(transformation(extent={{-82,66},{-62,86}})),
       Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,
               100}})),
