@@ -1,28 +1,9 @@
-Log-file of program ./dymosim
-(generated: Fri Jan  7 11:47:56 2022)
-
-dymosim started
-... "dsin.txt" loading (dymosim input file)
-... "FlexlabX1aNoLeakBaseline1202_weiping.mat" creating (simulation result file)
-
-Integration started at T = 21427200 using integration method DASSL
-(DAE multi-step solver (dassl/dasslrt of Petzold modified by Dassault Systemes))
-Integration terminated successfully at T = 21600000
-   CPU-time for integration                : 77.1 seconds
-   CPU-time for one grid interval          : 134 milliseconds
-   CPU-time for initialization             : 0.0396 seconds
-   Number of result points                 : 3281
-   Number of grid points                   : 577
-   Number of accepted steps                : 21738
-   Number of f-evaluations (dynamics)      : 36992
-   Number of crossing function evaluations : 23734
-   Number of Jacobian-evaluations          : 15040
-   Number of model time events             : 1454
-   Number of input time events             : 0
-   Number of state events                  : 42
-   Number of step events                   : 0
-   Minimum integration stepsize            : 0.00126
-   Maximum integration stepsize            : 45.3
-   Maximum integration order               : 4
-Calling terminal section
-... "dsfinal.txt" creating (final states)
+dsmodel.c:362:10: fatal error: getTimeSpan.c: No such file or directory
+  362 | #include <getTimeSpan.c>
+      |          ^~~~~~~~~~~~~~~
+compilation terminated.
+In file included from /opt/dymola-2020x-x86_64/source/matrixop.c:3840:
+/opt/dymola-2020x-x86_64/source/localeless.cpp: In function ‘fscanfC_Bracket_255s’:
+/opt/dymola-2020x-x86_64/source/localeless.cpp:250:2: warning: ignoring return value of ‘fscanf’, declared with attribute warn_unused_result [-Wunused-result]
+  250 |  fscanf(f, "%[^\\[]255s", s);
+      |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~

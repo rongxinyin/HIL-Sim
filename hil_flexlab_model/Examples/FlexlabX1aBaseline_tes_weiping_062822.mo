@@ -82,12 +82,9 @@ model FlexlabX1aBaseline_tes_weiping_062822
 
   Buildings.Controls.OBC.CDL.Logical.Or or2
     annotation (Placement(transformation(extent={{0,-180},{20,-160}})));
-  hil_flexlab_model.AC_AWHP_PrimaryLoop_addpts_wTES_no_y
+  hil_flexlab_model.Baseclasses_WH.AC_AWHP_PrimaryLoop_addpts_wTES_no_y
     aC_AWHP_PrimaryLoop_addpts_wTES_weiping062822_1
     annotation (Placement(transformation(extent={{162,-216},{188,-196}})));
-  hil_flexlab_model.Data.BBR_3C_Med casDat
-    "Case study data"
-    annotation (Placement(transformation(extent={{-180,82},{-160,102}})));
 
 
 
@@ -303,7 +300,7 @@ equation
   connect(swiCooCoi.y, gaiCooCoi.u)
     annotation (Line(points={{82,-248},{98,-248}},  color={0,0,127}));
   connect(aC_AWHP_PrimaryLoop_addpts_wTES_weiping062822_1.T_chw_out, souCoo.T_in)
-    annotation (Line(points={{178.391,-194.889},{178.391,-146},{226,-146},{226,
+    annotation (Line(points={{178.391,-194.889},{178.391,-238},{226,-238},{226,
           -132}},
         color={0,0,127}));
   connect(aC_AWHP_PrimaryLoop_addpts_wTES_weiping062822_1.T_chw_in, TRet_chw.T)

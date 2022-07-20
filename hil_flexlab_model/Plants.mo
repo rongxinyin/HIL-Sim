@@ -810,5 +810,134 @@ package Plants
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
             coordinateSystem(preserveAspectRatio=false)));
     end Controller4;
+
+    model Controller1Cool_TES_ASHP "Controller 1 for heating"
+      parameter Modelica.SIunits.DimensionlessRatio stage_tes_to_ashp = 1/2 "PI signal at which to stage on ASHP, if enabled";
+      Buildings.Controls.Continuous.LimPID conPI(
+        controllerType=Modelica.Blocks.Types.SimpleController.PI,
+        k=0.1,
+        Ti=120,
+        reset=Buildings.Types.Reset.Parameter)
+                            "Feedback controller"
+        annotation (Placement(transformation(extent={{-80,-10},{-60,10}})));
+      Modelica.Blocks.Interfaces.RealInput TSet "Temperature setpoint"
+        annotation (Placement(transformation(extent={{-140,120},{-100,160}})));
+      Buildings.Controls.OBC.CDL.Interfaces.RealOutput yTesDis
+        "Control signal for TES discharging"
+        annotation (Placement(transformation(extent={{100,40},{140,80}})));
+      Buildings.Controls.OBC.CDL.Interfaces.RealOutput yASHP
+        "Control signal for ASHP"
+        annotation (Placement(transformation(extent={{100,-80},{140,-40}})));
+      Modelica.Blocks.Interfaces.RealInput TMea "Measured temperature" annotation (
+          Placement(transformation(
+            extent={{-20,-20},{20,20}},
+            rotation=90,
+            origin={0,-180})));
+      Modelica.Blocks.Interfaces.RealInput uTesLim
+        "Control signal discharge limit for TES"
+        annotation (Placement(transformation(extent={{-140,60},{-100,100}})));
+      Modelica.Blocks.Logical.Switch swiTes "Switch for TES"
+        annotation (Placement(transformation(extent={{66,22},{86,42}})));
+      Modelica.Blocks.Logical.Switch swiASHP "Switch for ASHP"
+        annotation (Placement(transformation(extent={{66,-58},{86,-38}})));
+      Modelica.Blocks.Interfaces.BooleanInput enaTesDis
+        "Enable signal for TES discharging"
+        annotation (Placement(transformation(extent={{-140,20},{-100,60}})));
+      Modelica.Blocks.Interfaces.BooleanInput enaASHP "Enable signal for ASHP"
+        annotation (Placement(transformation(extent={{-140,-60},{-100,-20}})));
+      Modelica.Blocks.Interfaces.BooleanInput enaCoo "Enable signal for heating"
+        annotation (Placement(transformation(extent={{-140,-180},{-100,-140}})));
+      Buildings.Controls.OBC.CDL.Logical.TrueFalseHold truFalHol(trueHoldDuration=
+            15*60) annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=90,
+            origin={-80,-140})));
+      Modelica.Blocks.Logical.Not not1 annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=90,
+            origin={-80,-110})));
+      Modelica.Blocks.Logical.And and1
+        annotation (Placement(transformation(extent={{20,-120},{40,-100}})));
+    protected
+      Buildings.Controls.OBC.CDL.Continuous.Sources.Constant con0(final k=0)
+        "Contant that outputs zero"
+        annotation (Placement(transformation(extent={{-30,30},{-10,50}})));
+      Buildings.Controls.OBC.CDL.Continuous.Line TES
+        "Block to compute the setpoint for TES"
+        annotation (Placement(transformation(extent={{30,30},{50,50}})));
+    protected
+      Buildings.Controls.OBC.CDL.Continuous.Line AWHP
+        "Block to compute the setpoint for ASHP"
+        annotation (Placement(transformation(extent={{30,-50},{50,-30}})));
+      Buildings.Controls.OBC.CDL.Continuous.Sources.Constant con1(final k=1.0)
+        "Contant that outputs 1.0"
+        annotation (Placement(transformation(extent={{-30,-70},{-10,-50}})));
+      Buildings.Controls.OBC.CDL.Continuous.Sources.Constant con50(final k=
+            stage_tes_to_ashp)
+        "Contant that outputs 1/2"
+        annotation (Placement(transformation(extent={{-30,-40},{-10,-20}})));
+      Buildings.Controls.OBC.CDL.Continuous.Sources.Constant on(final k=1)
+        "Contant that outputs one"
+        annotation (Placement(transformation(extent={{-30,60},{-10,80}})));
+      Buildings.Controls.OBC.CDL.Continuous.Sources.Constant off(final k=0)
+        "Contant that outputs zero"
+        annotation (Placement(transformation(extent={{-20,140},{0,160}})));
+    equation
+      connect(conPI.u_s, TSet) annotation (Line(points={{-82,0},{-90,0},{-90,140},{
+              -120,140}}, color={0,0,127}));
+      connect(con0.y, TES.x1) annotation (Line(points={{-8,40},{-6,40},{-6,48},{28,
+              48}}, color={0,0,127}));
+      connect(con0.y, TES.f1) annotation (Line(points={{-8,40},{-6,40},{-6,44},{28,
+              44}}, color={0,0,127}));
+      connect(conPI.y, TES.u) annotation (Line(points={{-59,0},{-50,0},{-50,20},{12,
+              20},{12,40},{28,40}}, color={0,0,127}));
+      connect(on.y, AWHP.f2) annotation (Line(points={{-8,70},{10,70},{10,-48},{28,
+              -48}}, color={0,0,127}));
+      connect(con50.y, AWHP.x1) annotation (Line(points={{-8,-30},{0,-30},{0,-32},{
+              28,-32}}, color={0,0,127}));
+      connect(AWHP.f1, TES.x1) annotation (Line(points={{28,-36},{-6,-36},{-6,48},{
+              28,48}}, color={0,0,127}));
+      connect(AWHP.u, TES.u) annotation (Line(points={{28,-40},{12,-40},{12,40},{28,
+              40}}, color={0,0,127}));
+      connect(AWHP.x2, con1.y) annotation (Line(points={{28,-44},{0,-44},{0,-60},{
+              -8,-60}}, color={0,0,127}));
+      connect(conPI.u_m, TMea) annotation (Line(points={{-70,-12},{-70,-90},{0,-90},
+              {0,-180}},       color={0,0,127}));
+      connect(uTesLim, TES.f2) annotation (Line(points={{-120,80},{-50,80},{-50,102},
+              {26,102},{26,32},{28,32}},
+                                 color={0,0,127}));
+      connect(TES.y, swiTes.u1)
+        annotation (Line(points={{52,40},{64,40}}, color={0,0,127}));
+      connect(swiTes.y, yTesDis) annotation (Line(points={{87,32},{90,32},{90,60},{
+              120,60}}, color={0,0,127}));
+      connect(swiASHP.u1, AWHP.y)
+        annotation (Line(points={{64,-40},{52,-40}}, color={0,0,127}));
+      connect(swiASHP.y, yASHP) annotation (Line(points={{87,-48},{90,-48},{90,-60},
+              {120,-60}}, color={0,0,127}));
+      connect(off.y, swiTes.u3) annotation (Line(points={{2,150},{56,150},{56,24},{
+              64,24}}, color={0,0,127}));
+      connect(swiASHP.u3, swiTes.u3) annotation (Line(points={{64,-56},{56,-56},{56,
+              24},{64,24}}, color={0,0,127}));
+      connect(enaTesDis, swiTes.u2) annotation (Line(points={{-120,40},{-94,40},{-94,
+              24},{52,24},{52,32},{64,32}}, color={255,0,255}));
+      connect(TES.x2, AWHP.x1) annotation (Line(points={{28,36},{0,36},{0,-32},{28,
+              -32}}, color={0,0,127}));
+      connect(enaCoo, truFalHol.u) annotation (Line(points={{-120,-160},{-80,-160},
+              {-80,-152}}, color={255,0,255}));
+      connect(truFalHol.y, not1.u)
+        annotation (Line(points={{-80,-128},{-80,-122}}, color={255,0,255}));
+      connect(conPI.trigger, not1.y) annotation (Line(points={{-78,-12},{-80,-12},{
+              -80,-99}}, color={255,0,255}));
+      connect(and1.y, swiASHP.u2) annotation (Line(points={{41,-110},{58,-110},{58,
+              -48},{64,-48}}, color={255,0,255}));
+      connect(and1.u1, enaASHP) annotation (Line(points={{18,-110},{-40,-110},{-40,
+              -80},{-92,-80},{-92,-40},{-120,-40}},
+                                               color={255,0,255}));
+      connect(enaCoo, and1.u2) annotation (Line(points={{-120,-160},{-40,-160},{-40,
+              -118},{18,-118}}, color={255,0,255}));
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
+                -160},{100,160}})), Diagram(coordinateSystem(preserveAspectRatio=
+                false, extent={{-100,-160},{100,160}})));
+    end Controller1Cool_TES_ASHP;
   end Controls;
 end Plants;
