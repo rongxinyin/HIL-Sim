@@ -1,9 +1,0 @@
-dsmodel.c:362:10: fatal error: getTimeSpan.c: No such file or directory
-  362 | #include <getTimeSpan.c>
-      |          ^~~~~~~~~~~~~~~
-compilation terminated.
-In file included from /opt/dymola-2020x-x86_64/source/matrixop.c:3840:
-/opt/dymola-2020x-x86_64/source/localeless.cpp: In function ‘fscanfC_Bracket_255s’:
-/opt/dymola-2020x-x86_64/source/localeless.cpp:250:2: warning: ignoring return value of ‘fscanf’, declared with attribute warn_unused_result [-Wunused-result]
-  250 |  fscanf(f, "%[^\\[]255s", s);
-      |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~
