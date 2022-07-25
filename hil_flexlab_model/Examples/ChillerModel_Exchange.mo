@@ -4,8 +4,8 @@ model ChillerModel_Exchange
   extends Modelica.Icons.Example;
 
 
- hil_flexlab_model.AC_Chiller_PrimaryLoop_addpts cpl    annotation (Placement(transformation(extent={{6,-28},
-            {40,-2}})));
+  hil_flexlab_model.Plants.AC_Chiller_PrimaryLoop_addpts cpl
+    annotation (Placement(transformation(extent={{6,-28},{40,-2}})));
 
   Modelica.Blocks.Sources.Constant m_in(k=0.15)
     annotation (Placement(transformation(extent={{-58,26},{-38,46}})));

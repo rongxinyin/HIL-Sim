@@ -82,7 +82,7 @@ model FlexlabX1aBaseline_tes_weiping_062822
 
   Buildings.Controls.OBC.CDL.Logical.Or or2
     annotation (Placement(transformation(extent={{0,-180},{20,-160}})));
-  hil_flexlab_model.Baseclasses_WH.AC_AWHP_PrimaryLoop_addpts_wTES_no_y
+  hil_flexlab_model.Plants.Baseclasses_WH.AC_AWHP_PrimaryLoop_addpts_wTES_no_y_debug
     aC_AWHP_PrimaryLoop_addpts_wTES_weiping062822_1
     annotation (Placement(transformation(extent={{162,-216},{188,-196}})));
 
@@ -300,25 +300,25 @@ equation
   connect(swiCooCoi.y, gaiCooCoi.u)
     annotation (Line(points={{82,-248},{98,-248}},  color={0,0,127}));
   connect(aC_AWHP_PrimaryLoop_addpts_wTES_weiping062822_1.T_chw_out, souCoo.T_in)
-    annotation (Line(points={{178.391,-194.889},{178.391,-238},{226,-238},{226,
-          -132}},
+    annotation (Line(points={{178.391,-194.889},{178.391,-190},{226,-190},{226,
+          -180}},
         color={0,0,127}));
-  connect(aC_AWHP_PrimaryLoop_addpts_wTES_weiping062822_1.T_chw_in, TRet_chw.T)
-    annotation (Line(points={{169.235,-194.889},{246,-194.889},{246,-156},{
-          176.8,-156},{176.8,-97},{187,-97},{187,-112}},
-                                     color={0,0,127}));
-  connect(aC_AWHP_PrimaryLoop_addpts_wTES_weiping062822_1.m_flow_sec,
-    senRetMFlo.m_flow) annotation (Line(points={{164.939,-194.889},{164.939,
-          -162},{169.2,-162},{169.2,-144},{187,-144},{187,-148}},
-                                                     color={0,0,127}));
   connect(aC_AWHP_PrimaryLoop_addpts_wTES_weiping062822_1.chiOn, swiCooCoi.u2)
-    annotation (Line(points={{160.87,-213.333},{180,-213.333},{180,-228},{-2,
-          -228},{-2,-248},{58,-248}},
+    annotation (Line(points={{160.87,-213.333},{156,-213.333},{156,-228},{-26,
+          -228},{-26,-248},{58,-248}},
                             color={255,0,255}));
   connect(aC_AWHP_PrimaryLoop_addpts_wTES_weiping062822_1.T_air_in, TOut.y)
-    annotation (Line(points={{189.13,-214.556},{166,-214.556},{166,-296},{16,
-          -296},{16,-207.4},{-252,-207.4},{-252,180},{-279,180}},
+    annotation (Line(points={{189.13,-214.556},{198,-214.556},{198,-296},{48,
+          -296},{48,-207.4},{-220,-207.4},{-220,180},{-279,180}},
                                                         color={0,0,127}));
+  connect(VSupNor_flow1.V_flow, aC_AWHP_PrimaryLoop_addpts_wTES_weiping062822_1.m_flow_sec)
+    annotation (Line(points={{169,-96},{166,-96},{166,-194.889},{164.939,
+          -194.889}}, color={0,0,127}));
+  connect(TSup1.T, aC_AWHP_PrimaryLoop_addpts_wTES_weiping062822_1.T_chw_in)
+    annotation (Line(points={{169,-130},{169,-163},{169.235,-163},{169.235,
+          -194.889}}, color={0,0,127}));
+  connect(gaiCooCoi.y, pumSou.m_flow_in) annotation (Line(points={{122,-248},{
+          182,-248},{182,-92},{234,-92}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-520,-440},{
             1440,580}})),

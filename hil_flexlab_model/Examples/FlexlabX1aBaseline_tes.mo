@@ -82,7 +82,7 @@ model FlexlabX1aBaseline_tes
 
   Buildings.Controls.OBC.CDL.Logical.Or or2
     annotation (Placement(transformation(extent={{0,-180},{20,-160}})));
-  AC_AWHP_PrimaryLoop_addpts_wTES aC_AWHP_PrimaryLoop_addpts_wTES
+  Plants.AC_AWHP_PrimaryLoop_addpts_wTES aC_AWHP_PrimaryLoop_addpts_wTES
     annotation (Placement(transformation(extent={{164,-216},{210,-180}})));
 equation
   connect(TSupSetHea.y, heaCoiCon.u_s) annotation (Line(
