@@ -38,8 +38,8 @@ package Plants
           extent={{-10,-10},{10,10}},
           rotation=180,
           origin={378,-164})));
-    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium
-        = Buildings.Media.Water)
+    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium =
+          Buildings.Media.Water)
       annotation (Placement(transformation(extent={{332,-174},{352,-154}})));
     Modelica.Blocks.Interfaces.RealOutput Tout annotation (Placement(
           transformation(
@@ -314,8 +314,8 @@ package Plants
           extent={{-10,-10},{10,10}},
           rotation=180,
           origin={406,-136})));
-    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium
-        = Buildings.Media.Water, m_flow_nominal=mSec_flow_nominal)
+    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium =
+          Buildings.Media.Water, m_flow_nominal=mSec_flow_nominal)
       annotation (Placement(transformation(extent={{350,-146},{370,-126}})));
     Modelica.Blocks.Interfaces.BooleanInput chiOn "On signal for chiller plant"
       annotation (Placement(transformation(extent={{-20,-20},{20,20}},
@@ -739,8 +739,8 @@ This is for
           extent={{-10,-10},{10,10}},
           rotation=180,
           origin={406,-136})));
-    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium
-        = Buildings.Media.Water, m_flow_nominal=mSec_flow_nominal)
+    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium =
+          Buildings.Media.Water, m_flow_nominal=mSec_flow_nominal)
       annotation (Placement(transformation(extent={{350,-146},{370,-126}})));
     Modelica.Blocks.Interfaces.BooleanInput chiOn "On signal for chiller plant"
       annotation (Placement(transformation(extent={{-20,-20},{20,20}},
@@ -1175,8 +1175,8 @@ This is for
           extent={{-10,-10},{10,10}},
           rotation=180,
           origin={406,-136})));
-    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium
-        = Buildings.Media.Water, m_flow_nominal=mSec_flow_nominal)
+    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium =
+          Buildings.Media.Water, m_flow_nominal=mSec_flow_nominal)
       annotation (Placement(transformation(extent={{350,-146},{370,-126}})));
     Modelica.Blocks.Interfaces.BooleanInput chiOn "On signal for chiller plant"
       annotation (Placement(transformation(extent={{-20,-20},{20,20}},
@@ -1609,8 +1609,8 @@ This is for
           extent={{-10,-10},{10,10}},
           rotation=180,
           origin={408,-136})));
-    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium
-        = Buildings.Media.Water, m_flow_nominal=mSec_flow_nominal)
+    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium =
+          Buildings.Media.Water, m_flow_nominal=mSec_flow_nominal)
       annotation (Placement(transformation(extent={{350,-106},{370,-86}})));
     Modelica.Blocks.Interfaces.BooleanInput chiOn "On signal for chiller plant"
       annotation (Placement(transformation(extent={{-20,-20},{20,20}},
@@ -2073,8 +2073,8 @@ This is for
           extent={{-10,-10},{10,10}},
           rotation=180,
           origin={458,-138})));
-    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium
-        = Buildings.Media.Water, m_flow_nominal=mSec_flow_nominal)
+    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium =
+          Buildings.Media.Water, m_flow_nominal=mSec_flow_nominal)
       annotation (Placement(transformation(extent={{350,-106},{370,-86}})));
     Modelica.Blocks.Interfaces.BooleanInput chiOn "On signal for chiller plant"
       annotation (Placement(transformation(extent={{-20,-20},{20,20}},
@@ -2740,12 +2740,12 @@ This is for
                                               color={0,127,255}));
     connect(booToInt.y, pumChiWat.m_flow_in) annotation (Line(points={{304.5,-109},
             {317.25,-109},{317.25,-115},{328.2,-115}}, color={0,0,127}));
-    connect(chiOn, booToInt.u) annotation (Line(points={{278,38},{286,38},{286,-109},
-            {293,-109}}, color={255,0,255}));
     connect(SchTes.y[1], plaCon.uSch) annotation (Line(points={{345,-204},{338,-204},
             {338,-218.4},{326.16,-218.4}}, color={0,0,127}));
     connect(coo.TSup, plaCon.uTMea) annotation (Line(points={{263.992,-142.4},{
             263.992,-184.2},{304.32,-184.2},{304.32,-224.4}}, color={0,0,127}));
+    connect(plaCon.yPum, booToInt.u) annotation (Line(points={{288.72,-190.5},{
+            288.72,-151.25},{293,-151.25},{293,-109}}, color={255,0,255}));
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{100,-280},
               {560,20}}),         graphics={Line(points={{310,404}}, color={28,
                 108,200}), Line(
@@ -5062,6 +5062,14 @@ This is for
             extent={{-15,-15},{15,15}},
             rotation=180,
             origin={116,-76})));
+      Modelica.Blocks.Logical.Or or1
+        annotation (Placement(transformation(extent={{14,18},{2,30}})));
+      Modelica.Blocks.Interfaces.BooleanOutput yPum
+        "Temperature of return water to ASHP" annotation (Placement(
+            transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=90,
+            origin={-28,110})));
     equation
       connect(conTesCha.y,swiTes. u1) annotation (Line(points={{-29,-60},{-44,-60},
               {-44,18},{-50,18}},
@@ -5080,9 +5088,6 @@ This is for
       connect(C1Coo.TSet, uTSet) annotation (Line(points={{-12,88},{96,88},{96,
               -115},{97,-115}},
                          color={0,0,127}));
-      connect(C1Coo.enaCoo, enaChi) annotation (Line(points={{-12,58},{34,58},{
-              34,-115},{33,-115}},
-                          color={255,0,255}));
       connect(uTMea, C1Coo.TMea) annotation (Line(points={{55,-115},{55,-30.5},{-24,
               -30.5},{-24,56}}, color={0,0,127}));
       connect(C1Coo.yASHP, yASHP) annotation (Line(points={{-36,68},{-48,68},{
@@ -5096,6 +5101,14 @@ This is for
               30,70},{-12,70}}, color={255,0,255}));
       connect(intRea.u, uSch) annotation (Line(points={{86,-42},{102,-42},{102,
               -43},{117,-43}}, color={0,0,127}));
+      connect(C4Coo.enaCha, or1.u2) annotation (Line(points={{7,-6},{14,-6},{14,
+              19.2},{15.2,19.2}}, color={255,0,255}));
+      connect(or1.u1, enaChi) annotation (Line(points={{15.2,24},{26,24},{26,
+              -115},{33,-115}}, color={255,0,255}));
+      connect(or1.y, C1Coo.enaCoo) annotation (Line(points={{1.4,24},{-4,24},{
+              -4,58},{-12,58}}, color={255,0,255}));
+      connect(or1.y, yPum) annotation (Line(points={{1.4,24},{-12,24},{-12,110},
+              {-28,110}}, color={255,0,255}));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
             coordinateSystem(preserveAspectRatio=false)));
     end Plant_Controller_weiping_062822;
@@ -5660,8 +5673,8 @@ This is for
           annotation (Placement(transformation(extent={{10,-10},{-10,10}},
               rotation=180,
               origin={-84,-36})));
-        Buildings.Fluid.Sources.Boundary_pT sinSupCoo(redeclare package Medium
-            = MediumW, nPorts=1)
+        Buildings.Fluid.Sources.Boundary_pT sinSupCoo(redeclare package Medium =
+              MediumW, nPorts=1)
                              annotation (Placement(transformation(extent={{10,-10},{-10,
                   10}}, origin={142,4})));
         Buildings.Fluid.Sources.PropertySource_T souRetCoo(redeclare package
@@ -7658,8 +7671,6 @@ This is for
       connect(chw_ret.port_2, port_a) annotation (Line(points={{166,-40},{166,7.5},{
               171,7.5},{171,27}},
                               color={0,127,255}));
-      connect(plaCon.enaChi, chiOn) annotation (Line(points={{296,-224.4},{442,-224.4},
-              {442,38},{278,38}}, color={255,0,255}));
       connect(port_b, port_b) annotation (Line(points={{391,-5},{392,-5},{392,-6},{389,
               -6},{391,-6},{391,-5}}, color={0,127,255}));
       connect(pumChiWat.port_b, chw_sup.port_2) annotation (Line(points={{339,-106},
@@ -7669,12 +7680,14 @@ This is for
                                                 color={0,127,255}));
       connect(booToInt.y, pumChiWat.m_flow_in) annotation (Line(points={{304.5,-109},
               {317.25,-109},{317.25,-115},{328.2,-115}}, color={0,0,127}));
-      connect(chiOn, booToInt.u) annotation (Line(points={{278,38},{286,38},{286,-109},
-              {293,-109}}, color={255,0,255}));
       connect(SchTes.y[1], plaCon.uSch) annotation (Line(points={{345,-204},{338,-204},
               {338,-218.4},{326.16,-218.4}}, color={0,0,127}));
       connect(coo.TSup, plaCon.uTMea) annotation (Line(points={{263.992,-142.4},
               {263.992,-184.2},{304.32,-184.2},{304.32,-224.4}}, color={0,0,127}));
+      connect(chiOn, plaCon.enaChi) annotation (Line(points={{278,38},{290,38},
+              {290,-224.4},{296,-224.4}}, color={255,0,255}));
+      connect(plaCon.yPum, booToInt.u) annotation (Line(points={{288.72,-190.5},
+              {288.72,-150.25},{293,-150.25},{293,-109}}, color={255,0,255}));
       annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{100,-280},
                 {560,20}}),         graphics={Line(points={{310,404}}, color={28,
                   108,200}), Line(

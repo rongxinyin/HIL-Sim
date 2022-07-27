@@ -73,7 +73,7 @@ model FlexlabX1aBaseline_tes_0721_ports
     annotation (Placement(transformation(extent={{60,-220},{80,-200}})));
   Buildings.Controls.OBC.CDL.Logical.Switch swiCooCoi
     "Switch to switch off cooling coil"
-    annotation (Placement(transformation(extent={{60,-258},{80,-238}})));
+    annotation (Placement(transformation(extent={{60,-260},{80,-240}})));
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant coiOff(k=0)
     "Signal to switch water flow through coils off"
     annotation (Placement(transformation(extent={{-60,-172},{-40,-152}})));
@@ -86,7 +86,7 @@ model FlexlabX1aBaseline_tes_0721_ports
 
   Modelica.Blocks.Logical.OnOffController onOffConCoo(bandwidth=1)
     "Enable cooling"
-    annotation (Placement(transformation(extent={{96,-338},{116,-318}})));
+    annotation (Placement(transformation(extent={{96,-384},{116,-364}})));
 equation
   connect(TSupSetHea.y, heaCoiCon.u_s) annotation (Line(
       points={{-159,-162},{-96,-162},{-96,-202},{-82,-202}},
@@ -246,14 +246,12 @@ equation
   connect(conFanSup.y, fanSup.y) annotation (Line(points={{261,0},{280,0},{280,
           -20},{310,-20},{310,-28}}, color={0,0,127}));
   connect(modeSelector.yFan, swiCooCoi.u2) annotation (Line(points={{-181.545,
-          -310},{-22,-310},{-22,-248},{58,-248}},
+          -310},{-22,-310},{-22,-250},{58,-250}},
                                               color={255,0,255}));
-  connect(swiCooCoi.u1, cooCoiCon.y) annotation (Line(points={{58,-240},{-20,
-          -240},{-59,-240}},      color={0,0,127}));
   connect(swiHeaCoi.u1, heaCoiCon.y)
     annotation (Line(points={{58,-202},{-59,-202}}, color={0,0,127}));
   connect(coiOff.y, swiCooCoi.u3) annotation (Line(points={{-38,-162},{-28,-162},
-          {-28,-256},{58,-256}},
+          {-28,-258},{58,-258}},
                               color={0,0,127}));
   connect(coiOff.y, swiHeaCoi.u3) annotation (Line(points={{-38,-162},{-28,-162},
           {-28,-218},{58,-218}},
@@ -297,7 +295,8 @@ equation
   connect(conVAVCor.yVal, cor.yVal) annotation (Line(points={{803,37},{812.5,37},
           {812.5,36},{866,36}}, color={0,0,127}));
   connect(swiCooCoi.y, gaiCooCoi.u)
-    annotation (Line(points={{82,-248},{98,-248}},  color={0,0,127}));
+    annotation (Line(points={{82,-250},{90,-250},{90,-248},{98,-248}},
+                                                    color={0,0,127}));
   connect(aC_AWHP_PrimaryLoop_addpts_wTES_weiping062822_1.T_air_in, TOut.y)
     annotation (Line(points={{189.13,-218.267},{198,-218.267},{198,-296},{48,
           -296},{48,-207.4},{-220,-207.4},{-220,180},{-279,180}},
@@ -311,17 +310,19 @@ equation
   connect(cooCoi.port_b1, aC_AWHP_PrimaryLoop_addpts_wTES_weiping062822_1.port_a)
     annotation (Line(points={{190,-52},{160,-52},{160,-198},{170.139,-198},{
           170.139,-197.667}}, color={0,127,255}));
-  connect(aC_AWHP_PrimaryLoop_addpts_wTES_weiping062822_1.chiOn, onOffConCoo.y)
-    annotation (Line(points={{160.643,-211.6},{160.643,-269.8},{117,-269.8},{
-          117,-328}}, color={255,0,255}));
-  connect(max.y, onOffConCoo.u) annotation (Line(points={{1215,492},{1304,492},
-          {1304,-334},{94,-334}}, color={0,0,127}));
+  connect(swiCooCoi.u1, cooCoiCon.y) annotation (Line(points={{58,-242},{-59,
+          -242},{-59,-240}}, color={0,0,127}));
   connect(onOffConCoo.reference, controlBus.TRooSetCoo) annotation (Line(points
-        ={{94,-322},{-72,-322},{-72,-342},{-240,-342}}, color={0,0,127}), Text(
+        ={{94,-368},{-72,-368},{-72,-342},{-240,-342}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
+  connect(max.y, onOffConCoo.u) annotation (Line(points={{1215,492},{656,492},{
+          656,-380},{94,-380}}, color={0,0,127}));
+  connect(aC_AWHP_PrimaryLoop_addpts_wTES_weiping062822_1.chiOn, onOffConCoo.y)
+    annotation (Line(points={{160.643,-211.6},{160.643,-293.8},{117,-293.8},{
+          117,-374}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-520,-440},{
             1440,580}})),
