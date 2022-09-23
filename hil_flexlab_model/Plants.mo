@@ -2560,6 +2560,7 @@ This is for
 
     package MediumA = Buildings.Media.Air "Medium model for air";
     package MediumW = Buildings.Media.Water "Medium model for water";
+    package MediumG = Buildings.Media.Antifreeze.PropyleneGlycolWater(property_T=283.15, X_a=0.09) "Medium model for 9% prop glycol mix with water";
       constant Modelica.SIunits.MassFlowRate m_flow=0.4
       "Nominal mass flow rate";
 
@@ -2570,7 +2571,7 @@ This is for
       "Design mass flow rate of secondary loop";
 
     Buildings.Fluid.FixedResistances.Junction chw_sup(
-      redeclare package Medium = MediumW,
+      redeclare package Medium = MediumG,
       m_flow_nominal={m_flow + mSec_flow_nominal,-mSec_flow_nominal,
           m_flow},
       from_dp=true,
@@ -2582,7 +2583,7 @@ This is for
           rotation=270,
           origin={308,-136})));
     Buildings.Fluid.FixedResistances.Junction chw_ret(
-      redeclare package Medium = MediumW,
+      redeclare package Medium = MediumG,
       m_flow_nominal={mSec_flow_nominal,-(m_flow + mSec_flow_nominal),
           m_flow},
       from_dp=true,
@@ -2594,21 +2595,21 @@ This is for
           rotation=90,
           origin={168,-136})));
     Buildings.Fluid.Sources.MassFlowSource_T sec_ret(
-      redeclare package Medium = MediumW,
+      redeclare package Medium = MediumG,
       use_m_flow_in=true,
       use_T_in=true,
       nPorts=1) annotation (Placement(transformation(
           extent={{-10,-10},{10,10}},
           rotation=270,
           origin={168,-90})));
-    Buildings.Fluid.Sources.Boundary_pT bou(redeclare package Medium = MediumW,
+    Buildings.Fluid.Sources.Boundary_pT bou(redeclare package Medium = MediumG,
         nPorts=1)                                                                                    annotation (Placement(
           transformation(
           extent={{-10,-10},{10,10}},
           rotation=180,
           origin={408,-136})));
     Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium =
-          Buildings.Media.Water, m_flow_nominal=mSec_flow_nominal)
+          MediumG, m_flow_nominal=mSec_flow_nominal)
       annotation (Placement(transformation(extent={{348,-106},{368,-86}})));
     Modelica.Blocks.Interfaces.BooleanInput chiOn "On signal for chiller plant"
       annotation (Placement(transformation(extent={{-20,-20},{20,20}},
@@ -2704,7 +2705,7 @@ This is for
     Buildings.Fluid.Movers.FlowControlled_m_flow pumChiWat(
       use_inputFilter=false,
       allowFlowReversal=false,
-      redeclare package Medium = MediumW,
+      redeclare package Medium = MediumG,
       energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
       m_flow_nominal=m_flow,
       addPowerToMedium=false,
@@ -3744,8 +3745,8 @@ This is for
       dt=(casDat.chargeEndNight_CTes - casDat.chargeStartNight_CTes) + (casDat.chargeEndMorn_CTes
            - casDat.chargeStartMorn_CTes)) "Charge controller for cooling"
       annotation (Placement(transformation(extent={{336,-268},{316,-248}})));
-    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium
-        = Buildings.Media.Water, m_flow_nominal=mSec_flow_nominal)
+    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium =
+          Buildings.Media.Water, m_flow_nominal=mSec_flow_nominal)
       annotation (Placement(transformation(extent={{-10,-10},{10,10}},
           rotation=270,
           origin={368,-88})));
@@ -4557,6 +4558,54 @@ This is for
           Tolerance=1e-06,
           __Dymola_Algorithm="Radau"));
     end ASHPCoolingVarCOP;
+
+    partial model partialPlant_glycol
+      "A partial model for a plant implementation"
+      replaceable package Medium =
+          Buildings.Media.Antifreeze.PropyleneGlycolWater (                        property_T=283.15, X_a=0.09) "Water media model";
+      parameter Modelica.SIunits.MassFlowRate m_flow_nominal "Nominal mass flowrate of plant";
+      parameter Modelica.SIunits.Power Q_flow_nominal "Nominal heating or cooling power of plant";
+      Modelica.Fluid.Interfaces.FluidPort_a port_a(redeclare package Medium =
+            Medium) "Fluid connector b (return)"
+        annotation (Placement(transformation(extent={{90,-70},{110,-50}})));
+      Modelica.Fluid.Interfaces.FluidPort_b port_b(redeclare package Medium =
+            Medium) "Fluid connector b (supply)"
+        annotation (Placement(transformation(extent={{90,26},{110,46}}),
+            iconTransformation(extent={{90,26},{110,46}})));
+      Modelica.Blocks.Interfaces.RealOutput TSup(unit="K")
+        "Temperature of supply water"
+        annotation (Placement(transformation(extent={{100,112},{120,132}}),
+            iconTransformation(extent={{100,112},{120,132}})));
+      Buildings.Fluid.Sensors.TemperatureTwoPort senTemRet(
+        redeclare package Medium = Medium,
+        m_flow_nominal=m_flow_nominal)
+               "Temperature sensor for return water" annotation (Placement(
+            transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=180,
+            origin={40,-30})));
+      Buildings.Fluid.Sensors.MassFlowRate senMasFloSup(redeclare package Medium =
+            Medium) "Mass flow sensor for supply water" annotation (Placement(
+            transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=90,
+            origin={78,20})));
+      Modelica.Blocks.Interfaces.RealOutput TRet(unit="K")
+        "Temperature of return water from coil"
+        annotation (Placement(transformation(extent={{100,54},{120,74}}),
+            iconTransformation(extent={{100,54},{120,74}})));
+    equation
+      connect(senTemRet.port_a, port_a) annotation (Line(points={{50,-30},{80,-30},
+              {80,-60},{100,-60}}, color={0,127,255}));
+      connect(senMasFloSup.port_b, port_b)
+        annotation (Line(points={{78,30},{88,30},{88,36},{100,36}},
+                                                            color={0,127,255}));
+      connect(TRet, senTemRet.T)
+        annotation (Line(points={{110,64},{40,64},{40,-19}}, color={0,0,127}));
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-260},
+                {100,260}})),                                        Diagram(
+            coordinateSystem(preserveAspectRatio=false, extent={{-100,-260},{100,260}})));
+    end partialPlant_glycol;
   end BaseClasses;
 
   package Controls
@@ -9907,7 +9956,7 @@ This is for
 
     model BaseCoolingVarCOP_3SP
       "Basic cooling plant with variable COP components"
-      extends hil_flexlab_model.Plants.BaseClasses.partialPlant(m_flow_nominal=
+      extends hil_flexlab_model.Plants.BaseClasses.partialPlant_glycol(m_flow_nominal=
             mAWHP_flow_nominal + mTes_flow_nominal, senTemRet);
       parameter Modelica.SIunits.MassFlowRate mAWHP_flow_nominal = 1e-15 "Nominal mass flowrate of air-to-water heat pump";
       parameter Modelica.SIunits.MassFlowRate mTes_flow_nominal = 1e-15 "Nominal mass flowrate of tes";
