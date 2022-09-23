@@ -2343,7 +2343,7 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
       final yMin=0,
       final k=k_hea,
       reset=Buildings.Types.Reset.Parameter,
-      reverseAction=false) "Heating feedback controller"
+      reverseActing=not (false)) "Heating feedback controller"
       annotation (Placement(transformation(extent={{0,108},{20,128}})));
     Modelica.Blocks.Logical.Switch swiHea "Switch for turning heating on/off"
       annotation (Placement(transformation(extent={{72,108},{92,128}})));
@@ -2356,7 +2356,7 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
       final yMin=0,
       final k=k_coo,
       reset=Buildings.Types.Reset.Parameter,
-      reverseAction=true) "Cooling feedback controller"
+      reverseActing=not (true)) "Cooling feedback controller"
       annotation (Placement(transformation(extent={{0,48},{20,68}})));
     Modelica.Blocks.Sources.Constant fanFloVen(k=mAir_flow_minOA/
           mAir_flow_nominal)
@@ -2432,7 +2432,7 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
       final yMin=0,
       final k=k_hea,
       reset=Buildings.Types.Reset.Parameter,
-      reverseAction=false) "Freeze protection feedback controller"
+      reverseActing=not (false)) "Freeze protection feedback controller"
       annotation (Placement(transformation(extent={{0,-152},{20,-132}})));
     Modelica.Blocks.Interfaces.RealInput TMix(final unit="K", displayUnit="degC")
       "Mixed air temperature"
@@ -2670,7 +2670,7 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
       final yMin=0,
       final k=k,
       reset=Buildings.Types.Reset.Parameter,
-      reverseAction=true) "Economizer feedback controller"
+      reverseActing=not (true)) "Economizer feedback controller"
       annotation (Placement(transformation(extent={{0,0},{20,20}})));
     Modelica.Blocks.Logical.OnOffController onOffConEco(bandwidth=DeadBand_coo)
       "Enable economizer"
@@ -2893,7 +2893,7 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
       final yMin=0,
       final k=k_hea,
       reset=Buildings.Types.Reset.Parameter,
-      reverseAction=false) "Heating feedback controller"
+      reverseActing=not (false)) "Heating feedback controller"
       annotation (Placement(transformation(extent={{0,108},{20,128}})));
     Modelica.Blocks.Logical.Switch swiHea "Switch for turning heating on/off"
       annotation (Placement(transformation(extent={{72,108},{92,128}})));
@@ -2966,7 +2966,7 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
       final yMin=0,
       final k=k_hea,
       reset=Buildings.Types.Reset.Parameter,
-      reverseAction=false) "Freeze protection feedback controller"
+      reverseActing=not (false)) "Freeze protection feedback controller"
       annotation (Placement(transformation(extent={{0,-152},{20,-132}})));
     Modelica.Blocks.Interfaces.RealInput TMix(final unit="K", displayUnit="degC")
       "Mixed air temperature"
@@ -3272,7 +3272,7 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
       final yMin=0,
       final k=k_hea,
       reset=Buildings.Types.Reset.Parameter,
-      reverseAction=false) "Heating feedback controller"
+      reverseActing=not (false)) "Heating feedback controller"
       annotation (Placement(transformation(extent={{0,108},{20,128}})));
     Modelica.Blocks.Logical.Switch swiHea "Switch for turning heating on/off"
       annotation (Placement(transformation(extent={{72,108},{92,128}})));
@@ -3285,7 +3285,7 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
       final yMin=0,
       final k=k_coo,
       reset=Buildings.Types.Reset.Parameter,
-      reverseAction=true) "Cooling feedback controller"
+      reverseActing=not (true)) "Cooling feedback controller"
       annotation (Placement(transformation(extent={{8,46},{28,66}})));
     Modelica.Blocks.Sources.Constant fanFloVen(k=mAir_flow_minOA/
           mAir_flow_nominal)
@@ -3361,7 +3361,7 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
       final yMin=0,
       final k=k_hea,
       reset=Buildings.Types.Reset.Parameter,
-      reverseAction=false) "Freeze protection feedback controller"
+      reverseActing=not (false)) "Freeze protection feedback controller"
       annotation (Placement(transformation(extent={{0,-152},{20,-132}})));
     Modelica.Blocks.Interfaces.RealInput TMix(final unit="K", displayUnit="degC")
       "Mixed air temperature"
@@ -4121,7 +4121,7 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
       final yMin=0,
       final k=k_coo,
       reset=Buildings.Types.Reset.Parameter,
-      reverseAction=true) "Cooling feedback controller"
+      reverseActing=not (true)) "Cooling feedback controller"
       annotation (Placement(transformation(extent={{-4,316},{16,336}})));
     Modelica.Blocks.Sources.Constant offCoo(k=0) "Off signal"
       annotation (Placement(transformation(extent={{42,256},{62,276}})));

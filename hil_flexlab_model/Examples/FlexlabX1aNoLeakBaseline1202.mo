@@ -56,14 +56,14 @@ model FlexlabX1aNoLeakBaseline1202
     Ti=300) "Controller for heating coil"
     annotation (Placement(transformation(extent={{-174,-212},{-154,-192}})));
   Buildings.Controls.Continuous.LimPID cooCoiCon(
-    reverseAction=true,
     Td=60,
     initType=Modelica.Blocks.Types.Init.InitialState,
     yMax=1,
     yMin=0,
     controllerType=Modelica.Blocks.Types.SimpleController.PI,
     Ti=600,
-    k=0.1) "Controller for cooling coil"
+    k=0.1,
+    reverseActing=not (true)) "Controller for cooling coil"
     annotation (Placement(transformation(extent={{-174,-250},{-154,-230}})));
   Buildings.Controls.OBC.CDL.Logical.Switch swiHeaCoi
     "Switch to switch off heating coil"

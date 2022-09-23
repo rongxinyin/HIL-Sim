@@ -8,8 +8,8 @@ extends hil_flexlab_model.Data.BaseClasses.BBR(
  chargeStartNight_CTes = 75600,
  chargeEndNight_CTes = 86400);
 extends hil_flexlab_model.Data.BaseClasses.MAPR(
- TSolCoo = 283.15,
- TLiqCoo = 285.15,
+ TSolCoo = 280.15,
+ TLiqCoo = 282.15,
  LHeaCoo = 126000,
  cPCMCoo = 2050,
  dPCMCoo = 1125,
@@ -23,7 +23,7 @@ extends hil_flexlab_model.Data.BaseClasses.DELO(
  QCoo_flow_nominal = 52113.0,
  QHea_flow_nominal = 106850.0,
  mAir_flow_nominal = 3.479,
- LTes_nominal = 270000000.0,
+ LTes_nominal = 67500000.0,
  CTes_nominal = 460800000.0,
  mSwec_flow_nominal = 0.0,
  dpFixed_nominal = 1000,
