@@ -3142,8 +3142,8 @@ This is for
           extent={{-10,-10},{10,10}},
           rotation=180,
           origin={408,-136})));
-    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium
-        = MediumG, m_flow_nominal=mSec_flow_nominal)
+    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium =
+          MediumG, m_flow_nominal=mSec_flow_nominal)
       annotation (Placement(transformation(extent={{348,-106},{368,-86}})));
     Modelica.Blocks.Interfaces.BooleanInput chiOn "On signal for chiller plant"
       annotation (Placement(transformation(extent={{-20,-20},{20,20}},
@@ -3230,7 +3230,7 @@ This is for
           transformation(
           extent={{-20,-56},{20,56}},
           rotation=90,
-          origin={222,-240})));
+          origin={224,-240})));
     hil_flexlab_model.Plants.Baseclasses_WH.Plant_Controller_3SP plaCon(TSolCoo=casDat.TSolCoo, TLiqCoo=casDat.TLiqCoo)
       annotation (Placement(transformation(extent={{252,-316},{304,-290}})));
     Modelica.Blocks.Math.BooleanToReal booToInt(final realTrue=m_flow)
@@ -3245,12 +3245,9 @@ This is for
       dt=(casDat.chargeEndNight_CTes - casDat.chargeStartNight_CTes) + (casDat.chargeEndMorn_CTes
            - casDat.chargeStartMorn_CTes)) "Charge controller for cooling"
       annotation (Placement(transformation(extent={{542,-400},{522,-380}})));
-    Modelica.Blocks.Sources.Constant TSetSupChiConst1(final k=casDat.TSetSupCW)
+    Modelica.Blocks.Sources.Constant TSetSupChiConst1(final k=273.15 + 8)
       "Set point for chiller temperature"
       annotation (Placement(transformation(extent={{454,-394},{466,-382}})));
-    Modelica.Blocks.Sources.Constant TSetSupChiConst2(final k=casDat.TSetSupCW)
-      "Set point for chiller temperature"
-      annotation (Placement(transformation(extent={{390,-368},{402,-356}})));
     Modelica.Blocks.Interfaces.RealInput TES_Mode annotation (Placement(
           transformation(
           extent={{-20,-20},{20,20}},
@@ -3290,13 +3287,13 @@ This is for
     connect(chi_P, chi_P)
       annotation (Line(points={{76,-264},{76,-264}}, color={0,0,127}));
     connect(sen_retTem.port_b, coo.port_b) annotation (Line(points={{169,-192},
-            {208,-192},{208,-220},{214.246,-220}},color={0,127,255}));
-    connect(coo.uTDryBul, T_air_in) annotation (Line(points={{170.738,-264},{
+            {208,-192},{208,-220},{216.246,-220}},color={0,127,255}));
+    connect(coo.uTDryBul, T_air_in) annotation (Line(points={{172.738,-264},{
             169.584,-264},{169.584,-320},{598,-320}}, color={0,0,127}));
-    connect(plaCon.yTES, coo.uTes) annotation (Line(points={{253.625,-288.7},{253.64,
-            -288.7},{253.64,-264},{222,-264}},         color={0,0,127}));
+    connect(plaCon.yTES, coo.uTes) annotation (Line(points={{253.625,-288.7},{
+            191.64,-288.7},{191.64,-264},{224,-264}},  color={0,0,127}));
     connect(plaCon.yASHP, coo.uASHP) annotation (Line(points={{260.45,-288.7},{
-            177.76,-288.7},{177.76,-264},{178.923,-264}},  color={0,0,127}));
+            177.76,-288.7},{177.76,-264},{180.923,-264}},  color={0,0,127}));
     connect(plaCon.enaChi, chiOn) annotation (Line(points={{262.4,-318.08},{262.4,
             -314},{354,-314},{354,-160},{246,-160},{246,36}},          color={255,
             0,255}));
@@ -3305,39 +3302,41 @@ This is for
                                                            color={0,0,127}));
     connect(senTem.T, plaCon.uTMea) annotation (Line(points={{358,-85},{358,-204},
             {322,-204},{322,-262},{273.45,-262},{273.45,-318.08}}, color={0,0,127}));
-    connect(coo.PEle, chi_P) annotation (Line(points={{166,-218},{132,-218},{132,-264},
-            {76,-264}}, color={0,0,127}));
+    connect(coo.PEle, chi_P) annotation (Line(points={{168,-218},{132,-218},{
+            132,-264},{76,-264}},
+                        color={0,0,127}));
     connect(plaCon.yPum,booToInt. u) annotation (Line(points={{263.7,-288.7},{263.7,
             -243.25},{251,-243.25},{251,-183}},        color={255,0,255}));
-    connect(coo.COP_HP, chi_COP) annotation (Line(points={{171.6,-218},{134,
+    connect(coo.COP_HP, chi_COP) annotation (Line(points={{173.6,-218},{134,
             -218},{134,-296},{78,-296}},
                                    color={0,0,127}));
     connect(plaCon.uChaCon,chaConCoo. y) annotation (Line(points={{267.925,-318.08},
             {267.925,-390},{521,-390}},        color={0,0,127}));
-    connect(coo.SOC,chaConCoo. SOC) annotation (Line(points={{222,-218},{222,-278},
-            {578,-278},{578,-390},{544,-390}},       color={0,0,127}));
+    connect(coo.SOC,chaConCoo. SOC) annotation (Line(points={{224,-218},{224,
+            -278},{578,-278},{578,-390},{544,-390}}, color={0,0,127}));
     connect(plaCon.uTSet,TSetSupChiConst1. y) annotation (Line(points={{283.85,-318.08},
             {283.85,-368.04},{466.6,-368.04},{466.6,-388}},          color={0,0,
             127}));
-    connect(coo.TSetASHP, TSetSupChiConst2.y) annotation (Line(points={{191.846,
-            -264},{191.846,-362},{402.6,-362}},
-                                          color={0,0,127}));
-    connect(TES_Mode, plaCon.uSch) annotation (Line(points={{602,-406},{458,-406},
-            {458,-312.62},{306.925,-312.62}}, color={0,0,127}));
+    connect(TES_Mode, plaCon.uSch) annotation (Line(points={{602,-406},{458,
+            -406},{458,-312.62},{306.925,-312.62}},
+                                              color={0,0,127}));
     connect(plaCon.yenaCha, chaConCoo.enaCha) annotation (Line(points={{266.625,-288.7},
             {407.312,-288.7},{407.312,-382},{544,-382}}, color={255,0,255}));
-    connect(coo.TRet, plaCon.uTRet) annotation (Line(points={{208.215,-218},{
+    connect(coo.TRet, plaCon.uTRet) annotation (Line(points={{210.215,-218},{
             244,-218},{244,-318.08},{278.65,-318.08}},
                                              color={0,0,127}));
-    connect(coo.TTes, plaCon.uTTes) annotation (Line(points={{200.462,-218},{
+    connect(coo.TTes, plaCon.uTTes) annotation (Line(points={{202.462,-218},{
             240,-218},{240,-318.08},{278.65,-318.08}},
                                              color={0,0,127}));
-    connect(coo.SOC, tes_SOC) annotation (Line(points={{222,-218},{162,-218},{
+    connect(coo.SOC, tes_SOC) annotation (Line(points={{224,-218},{162,-218},{
             162,-338},{78,-338}}, color={0,0,127}));
     connect(sec_ret.ports[1], sen_retTem.port_a) annotation (Line(points={{168,
-            -100},{168,-136},{168,-170},{169,-170}}, color={0,127,255}));
-    connect(coo.port_a, senTem.port_a) annotation (Line(points={{234.923,-220},
-            {234.923,-131},{348,-131},{348,-96}}, color={0,127,255}));
+            -100},{168,-170},{169,-170}},            color={0,127,255}));
+    connect(coo.port_a, senTem.port_a) annotation (Line(points={{236.923,-220},
+            {236.923,-131},{348,-131},{348,-96}}, color={0,127,255}));
+    connect(plaCon.yTSet, coo.TSetASHP) annotation (Line(points={{257.525,
+            -288.7},{221.762,-288.7},{221.762,-264},{193.846,-264}}, color={0,0,
+            127}));
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{100,-420},
               {580,20}}),         graphics={Line(points={{310,404}}, color={28,
                 108,200}), Line(
@@ -4642,9 +4641,6 @@ This is for
     hil_flexlab_model.Plants.Baseclasses_WH.Plant_Controller_3SP
       plaCon(TSolCoo=casDat.TSolCoo, TLiqCoo=casDat.TLiqCoo)
       annotation (Placement(transformation(extent={{270,-222},{322,-192}})));
-    Modelica.Blocks.Sources.Constant TSetSupChiConst(final k=casDat.TSetSupCW)
-      "Set point for chiller temperature"
-      annotation (Placement(transformation(extent={{184,-236},{196,-224}})));
     hil_flexlab_model.Plants.Baseclasses_WH.BaseCoolingVarCOP_weiping_062822
       coo(
       m_flow_nominal=casDat.mAWHP_flow_nominal + casDat.mTes_flow_nominal,
@@ -4670,7 +4666,7 @@ This is for
       "Case study data"
       annotation (Placement(transformation(extent={{110,-250},{134,-274}})));
 
-    Modelica.Blocks.Sources.Constant TSetSupChiConst1(final k=casDat.TSetSupCW)
+    Modelica.Blocks.Sources.Constant TSetSupChiConst1(final k=273.15 + 8)
       "Set point for chiller temperature"
       annotation (Placement(transformation(extent={{248,-262},{260,-250}})));
     Buildings.Fluid.Sensors.TemperatureTwoPort sen_retTem(redeclare package
@@ -4719,9 +4715,6 @@ This is for
           origin={368,-88})));
   equation
 
-    connect(coo.TSetASHP, TSetSupChiConst.y) annotation (Line(points={{267.385,
-            -179.2},{267.385,-230},{196.6,-230}},
-                                          color={0,0,127}));
     connect(coo.uASHP, plaCon.yASHP) annotation (Line(points={{278.692,-179.2},
             {278.692,-190.5},{278.45,-190.5}},
                                       color={0,0,127}));
@@ -4765,6 +4758,9 @@ This is for
                                         color={0,127,255}));
     connect(senTem.port_a, port_b) annotation (Line(points={{368,-78},{380,-78},{380,
             -5},{391,-5}}, color={0,127,255}));
+    connect(plaCon.yTSet, coo.TSetASHP) annotation (Line(points={{275.525,
+            -190.5},{275.525,-185.25},{267.385,-185.25},{267.385,-179.2}},
+          color={0,0,127}));
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{100,-280},
               {560,20}}),         graphics={Line(points={{310,404}}, color={28,
                 108,200}), Line(
@@ -5496,10 +5492,11 @@ This is for
         annotation (Line(points={{21,94},{25.2,94}}, color={0,0,127}));
       connect(cooCor.y, pow.u2)
         annotation (Line(points={{34.4,94},{44,94}}, color={0,0,127}));
-      connect(sou.Q_flow, pow.u1) annotation (Line(points={{-48,-11},{-48,-20},{-20,
-              -20},{-20,88},{20,88},{20,82},{44,82}}, color={0,0,127}));
+      connect(sou.Q_flow, pow.u1) annotation (Line(points={{-48,-9},{-48,-20},{
+              -20,-20},{-20,88},{20,88},{20,82},{44,82}},
+                                                      color={0,0,127}));
       connect(sou.TSet, TSetSou)
-        annotation (Line(points={{-48,12},{-48,30},{-120,30}}, color={0,0,127}));
+        annotation (Line(points={{-48,14},{-48,30},{-120,30}}, color={0,0,127}));
       connect(cop.y, COP) annotation (Line(points={{21,94},{62,94},{62,84},{110,
               84}}, color={0,0,127}));
       annotation (experiment(
@@ -7660,7 +7657,9 @@ This is for
             origin={112,24})));
       Modelica.Blocks.Sources.Constant conTesChaTemp(k=-4)
         "Constant for cold TES discharge limit"
-        annotation (Placement(transformation(extent={{86,-24},{66,-4}})));
+        annotation (Placement(transformation(extent={{10,-10},{-10,10}},
+            rotation=180,
+            origin={74,12})));
       Modelica.Blocks.Logical.Switch swiTes1
                                             "TES charging and discharging switch"
         annotation (Placement(transformation(extent={{10,-10},{-10,10}},
@@ -7678,6 +7677,12 @@ This is for
             extent={{-10,-10},{10,10}},
             rotation=90,
             origin={140,-32})));
+      Modelica.Blocks.Interfaces.RealOutput yTSet
+        "Temperature setpoint derived from mode logic" annotation (Placement(
+            transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=90,
+            origin={-66,110})));
     equation
       connect(C4Coo.enaCha,swiTes. u2) annotation (Line(points={{9,-6},{0,-6},{
               0,10},{-50,10}}, color={255,0,255}));
@@ -7719,14 +7724,15 @@ This is for
               -2,-14},{-2,78},{-12,78}}, color={255,0,255}));
       connect(add.u2, uTSet) annotation (Line(points={{118,12},{120,12},{120,
               -115},{97,-115}}, color={0,0,127}));
-      connect(conTesChaTemp.y, add.u1) annotation (Line(points={{65,-14},{74,
-              -14},{74,12},{106,12}}, color={0,0,127}));
-      connect(add.y, swiTes1.u1) annotation (Line(points={{112,35},{252,35},{
-              252,72}}, color={0,0,127}));
+      connect(conTesChaTemp.y, add.u1) annotation (Line(points={{85,12},{106,12}},
+                                      color={0,0,127}));
+      connect(add.y, swiTes1.u1) annotation (Line(points={{112,35},{192,35},{
+              192,46},{310,46},{310,72},{252,72}},
+                        color={0,0,127}));
       connect(C4Coo.enaCha, swiTes1.u2) annotation (Line(points={{9,-6},{102,-6},
               {102,-4},{196,-4},{196,26},{252,26},{252,64}}, color={255,0,255}));
-      connect(swiTes1.u3, uTSet) annotation (Line(points={{252,56},{160,56},{
-              160,-115},{97,-115}}, color={0,0,127}));
+      connect(swiTes1.u3, uTSet) annotation (Line(points={{252,56},{276,56},{
+              276,-115},{97,-115}}, color={0,0,127}));
       connect(C4Coo.enaDis, swiTes2.u2) annotation (Line(points={{9,-14},{210,
               -14},{210,88},{144,88}}, color={255,0,255}));
       connect(swiTes1.y, swiTes2.u3) annotation (Line(points={{229,64},{182,64},
@@ -7735,10 +7741,13 @@ This is for
               -40},{156,-44},{146,-44}}, color={0,0,127}));
       connect(uTSet, add1.u1) annotation (Line(points={{97,-115},{97,-81.5},{
               134,-81.5},{134,-44}}, color={0,0,127}));
-      connect(add1.y, swiTes2.u1) annotation (Line(points={{140,-21},{144,-21},
-              {144,96}}, color={0,0,127}));
+      connect(add1.y, swiTes2.u1) annotation (Line(points={{140,-21},{170,-21},
+              {170,96},{144,96}},
+                         color={0,0,127}));
       connect(swiTes2.y, C1Coo.TSet)
         annotation (Line(points={{121,88},{-12,88}}, color={0,0,127}));
+      connect(swiTes2.y, yTSet) annotation (Line(points={{121,88},{27.5,88},{
+              27.5,110},{-66,110}}, color={0,0,127}));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{
                 -100,-100},{220,100}})),                             Diagram(
             coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{
@@ -7861,7 +7870,7 @@ This is for
       RTUPCM.Fluid.HeatExchangers.BaseClasses.CoilRegisterFourPort coilRegisterFourPort(
         m1_flow_nominal=mTes_flow_nominal/2,
         m2_flow_nominal=mTes_flow_nominal/2,
-        TStart_pcm=TSol-4,
+        TStart_pcm=TSol-2,
         Design(Tes_nominal=Tes_nominal, PCM(
             k=k,
             c=c,
