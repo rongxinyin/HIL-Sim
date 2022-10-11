@@ -3127,6 +3127,13 @@ This is for
 
   parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
       "Design mass flow rate of secondary loop";
+    parameter Modelica.SIunits.Power QCoo_flow_nominal = 2166.0 "Design cooling capacity" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.Energy CTes_nominal = 27190800.0 "Design cold storage capacity (factor * 1kWh)" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.TemperatureDifference dTCoo = 11-7 "Inlet temperature difference in cold TES rack" annotation(Dialog(group="System Specifications"));
+
+    parameter Modelica.SIunits.DimensionlessRatio CTesScale = CTes_nominal/130000 "Scale factor for cold TES prototype size" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.MassFlowRate mAWHP_flow_nominal = QCoo_flow_nominal/(4201*dTCoo) "Design water flowrate of cooling system" annotation(Dialog(group="System Specifications"));
+    parameter Modelica.SIunits.MassFlowRate mTes_flow_nominal = mAWHP_flow_nominal "Design water flowrate through TES" annotation(Dialog(group="System Specifications"));
 
     Buildings.Fluid.Sources.MassFlowSource_T sec_ret(
       redeclare package Medium = MediumG,
@@ -3220,10 +3227,10 @@ This is for
       TSol=casDat.TSolCoo,
       TLiq=casDat.TLiqCoo,
       LHea=casDat.LHeaCoo,
-      Q_flow_nominal=casDat.QCoo_flow_nominal,
-      mAWHP_flow_nominal=casDat.mAWHP_flow_nominal,
-      mTes_flow_nominal=casDat.mTes_flow_nominal,
-      Tes_nominal=casDat.LTes_nominal,
+      Q_flow_nominal=QCoo_flow_nominal,
+      mAWHP_flow_nominal=mAWHP_flow_nominal,
+      mTes_flow_nominal=mTes_flow_nominal,
+      Tes_nominal=CTes_nominal,
       dp_nominal=casDat.dp_nominal,
       dpFixed_nominal=casDat.dpFixed_nominal,
       dpValve_nominal=casDat.dpValve_nominal) annotation (Placement(
@@ -9703,7 +9710,7 @@ This is for
           offset=1) annotation (Placement(transformation(extent={{-50,-304},{-30,-284}})));
         Modelica.Blocks.Logical.GreaterThreshold greaterThreshold(threshold=0.5)
           annotation (Placement(transformation(extent={{20,-234},{40,-214}})));
-        hil_flexlab_model.Plants.AC_AWHP_PrimaryLoop_addpts_wTES_3SP
+        hil_flexlab_model.Plants.AC_AWHP_PrimaryLoop_addpts_wTES_3SP_noprim
           aC_AWHP_PrimaryLoop_addpts_wTES_no_y_debug
           annotation (Placement(transformation(extent={{100,-190},{146,-154}})));
         Modelica.Blocks.Sources.Ramp T_in(
