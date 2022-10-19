@@ -3129,7 +3129,7 @@ This is for
       "Design mass flow rate of secondary loop";
     parameter Modelica.SIunits.Power QCoo_flow_nominal = 2166.0 "Design cooling capacity" annotation(Dialog(group="Climate Data"));
     parameter Modelica.SIunits.Energy CTes_nominal = 27190800.0 "Design cold storage capacity (factor * 1kWh)" annotation(Dialog(group="Climate Data"));
-    parameter Modelica.SIunits.TemperatureDifference dTCoo = 11-7 "Inlet temperature difference in cold TES rack" annotation(Dialog(group="System Specifications"));
+    parameter Modelica.SIunits.TemperatureDifference dTCoo = 11-5 "Inlet temperature difference in cold TES rack" annotation(Dialog(group="System Specifications"));
 
     parameter Modelica.SIunits.DimensionlessRatio CTesScale = CTes_nominal/130000 "Scale factor for cold TES prototype size" annotation(Dialog(group="Climate Data"));
     parameter Modelica.SIunits.MassFlowRate mAWHP_flow_nominal = QCoo_flow_nominal/(4201*dTCoo) "Design water flowrate of cooling system" annotation(Dialog(group="System Specifications"));
@@ -3276,6 +3276,14 @@ This is for
           extent={{-22,-22},{22,22}},
           rotation=270,
           origin={234,-440})));
+    Modelica.Blocks.Interfaces.RealOutput y_TSet annotation (Placement(
+          transformation(
+          extent={{-22,-22},{22,22}},
+          rotation=180,
+          origin={78,-380}), iconTransformation(
+          extent={{-22,-22},{22,22}},
+          rotation=270,
+          origin={234,-440})));
   equation
 
     connect(m_flow_sec, sec_ret.m_flow_in) annotation (Line(points={{120,38},{120,
@@ -3344,6 +3352,8 @@ This is for
     connect(plaCon.yTSet, coo.TSetASHP) annotation (Line(points={{257.525,
             -288.7},{221.762,-288.7},{221.762,-264},{193.846,-264}}, color={0,0,
             127}));
+    connect(plaCon.yTSet, y_TSet) annotation (Line(points={{257.525,-288.7},{178.762,
+            -288.7},{178.762,-380},{78,-380}}, color={0,0,127}));
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{100,-420},
               {580,20}}),         graphics={Line(points={{310,404}}, color={28,
                 108,200}), Line(

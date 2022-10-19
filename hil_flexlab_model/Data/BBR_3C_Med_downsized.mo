@@ -15,12 +15,12 @@ extends hil_flexlab_model.Data.BaseClasses.MAPR(
  dPCMCoo = 1125,
  kPCMCoo = 0.2);
 extends hil_flexlab_model.Data.BaseClasses.OPCO(
- TSetSupCW = 277.15,
+ TSetSupCW = 281.15,
  TSetSupHW = 325.15,
  TSetSupAirCoo = 285.95,
  TSetSupAirHea = 313.15);
 extends hil_flexlab_model.Data.BaseClasses.DELO(
- QCoo_flow_nominal = 2166.0,
+ QCoo_flow_nominal = 4058.0,
  QHea_flow_nominal = 106850.0,
  dTCoo = 4,
  mAir_flow_nominal = 3.479,
