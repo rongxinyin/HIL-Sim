@@ -22,7 +22,7 @@ extends hil_flexlab_model.Data.BaseClasses.OPCO(
 extends hil_flexlab_model.Data.BaseClasses.DELO(
  QCoo_flow_nominal = 4058.0,
  QHea_flow_nominal = 106850.0,
- dTCoo = 4,
+ dTCoo = 2,
  mAir_flow_nominal = 3.479,
  LTes_nominal = 35500000.0,
  CTes_nominal = 27190800.0,
