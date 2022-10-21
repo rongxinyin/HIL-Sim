@@ -4268,8 +4268,8 @@ This is for
       dt=(casDat.chargeEndNight_CTes - casDat.chargeStartNight_CTes) + (casDat.chargeEndMorn_CTes
            - casDat.chargeStartMorn_CTes)) "Charge controller for cooling"
       annotation (Placement(transformation(extent={{336,-268},{316,-248}})));
-    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium
-        = Buildings.Media.Water, m_flow_nominal=mSec_flow_nominal)
+    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium =
+          Buildings.Media.Water, m_flow_nominal=mSec_flow_nominal)
       annotation (Placement(transformation(extent={{-10,-10},{10,10}},
           rotation=270,
           origin={396,-32})));
@@ -7665,7 +7665,7 @@ This is for
             extent={{-10,-10},{10,10}},
             rotation=90,
             origin={112,24})));
-      Modelica.Blocks.Sources.Constant conTesChaTemp(k=0)
+      Modelica.Blocks.Sources.Constant conTesChaTemp(k=-4)
         "Constant for cold TES discharge limit"
         annotation (Placement(transformation(extent={{10,-10},{-10,10}},
             rotation=180,
@@ -7680,7 +7680,7 @@ This is for
         annotation (Placement(transformation(extent={{10,-10},{-10,10}},
             rotation=0,
             origin={132,88})));
-      Modelica.Blocks.Sources.Constant conTesDisTemp(k=3)
+      Modelica.Blocks.Sources.Constant conTesDisTemp(k=0)
         "Constant for cold TES discharge limit"
         annotation (Placement(transformation(extent={{186,-50},{166,-30}})));
       Modelica.Blocks.Math.Add add1 annotation (Placement(transformation(
