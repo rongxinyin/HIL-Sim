@@ -3217,7 +3217,7 @@ This is for
           extent={{-22,-22},{22,22}},
           rotation=270,
           origin={234,-440})));
-    hil_flexlab_model.Plants.Baseclasses_WH.BaseCoolingVarCOP_3SP coo( m_flow_nominal=casDat.mAWHP_flow_nominal + casDat.mTes_flow_nominal,
+    hil_flexlab_model.Plants.Baseclasses_WH.BaseCoolingVarCOP_3SP coo( m_flow_nominal=mAWHP_flow_nominal + mTes_flow_nominal,
       k=casDat.kPCMCoo,
       c=casDat.cPCMCoo,
       d=casDat.dPCMCoo,
@@ -3237,9 +3237,6 @@ This is for
           origin={224,-240})));
     hil_flexlab_model.Plants.Baseclasses_WH.Plant_Controller_3SP plaCon(TSolCoo=casDat.TSolCoo, TLiqCoo=casDat.TLiqCoo)
       annotation (Placement(transformation(extent={{252,-316},{304,-290}})));
-    Modelica.Blocks.Math.BooleanToReal booToInt(final realTrue=m_flow)
-                                "Boolean to integer conversion"
-      annotation (Placement(transformation(extent={{252,-188},{262,-178}})));
     RTUPCM.HVAC.Plants.BaseClasses.ChargeControlSOC
                                         chaConCoo(
       QTes=casDat.CTes_nominal,
@@ -3317,8 +3314,6 @@ This is for
     connect(coo.PEle, chi_P) annotation (Line(points={{168,-218},{132,-218},{
             132,-264},{76,-264}},
                         color={0,0,127}));
-    connect(plaCon.yPum,booToInt. u) annotation (Line(points={{263.7,-288.7},{263.7,
-            -243.25},{251,-243.25},{251,-183}},        color={255,0,255}));
     connect(coo.COP_HP, chi_COP) annotation (Line(points={{173.6,-218},{134,
             -218},{134,-296},{78,-296}},
                                    color={0,0,127}));
@@ -4626,6 +4621,15 @@ This is for
     parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
       "Design mass flow rate of secondary loop";
 
+    parameter Modelica.SIunits.Power QCoo_flow_nominal = 2166.0 "Design cooling capacity" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.Energy CTes_nominal = 27190800.0 "Design cold storage capacity (factor * 1kWh)" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.TemperatureDifference dTCoo = 11-9 "Inlet temperature difference in cold TES rack" annotation(Dialog(group="System Specifications"));
+
+    parameter Modelica.SIunits.DimensionlessRatio CTesScale = CTes_nominal/130000 "Scale factor for cold TES prototype size" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.MassFlowRate mAWHP_flow_nominal = QCoo_flow_nominal/(4201*dTCoo) "Design water flowrate of cooling system" annotation(Dialog(group="System Specifications"));
+    parameter Modelica.SIunits.MassFlowRate mTes_flow_nominal = mAWHP_flow_nominal "Design water flowrate through TES" annotation(Dialog(group="System Specifications"));
+
+
     parameter Modelica.SIunits.ThermalConductivity k=0.584 "Thermal conductivity of PCM";
     parameter Modelica.SIunits.SpecificHeatCapacity c=2910 "Specific heat capacity of PCM";
     parameter Modelica.SIunits.Density d=1500 "Mass density of PCM";
@@ -4653,17 +4657,17 @@ This is for
       annotation (Placement(transformation(extent={{270,-222},{322,-192}})));
     hil_flexlab_model.Plants.Baseclasses_WH.BaseCoolingVarCOP_weiping_062822
       coo(
-      m_flow_nominal=casDat.mAWHP_flow_nominal + casDat.mTes_flow_nominal,
+      m_flow_nominal=mAWHP_flow_nominal + mTes_flow_nominal,
       k=casDat.kPCMCoo,
       c=casDat.cPCMCoo,
       d=casDat.dPCMCoo,
       TSol=casDat.TSolCoo,
       TLiq=casDat.TLiqCoo,
       LHea=casDat.LHeaCoo,
-      Q_flow_nominal=casDat.QCoo_flow_nominal,
-      mAWHP_flow_nominal=casDat.mAWHP_flow_nominal,
-      mTes_flow_nominal=casDat.mTes_flow_nominal,
-      Tes_nominal=casDat.CTes_nominal,
+      Q_flow_nominal=QCoo_flow_nominal,
+      mAWHP_flow_nominal=mAWHP_flow_nominal,
+      mTes_flow_nominal=mTes_flow_nominal,
+      Tes_nominal=CTes_nominal,
       dp_nominal=casDat.dp_nominal,
       dpFixed_nominal=casDat.dpFixed_nominal,
       dpValve_nominal=casDat.dpValve_nominal) annotation (Placement(
