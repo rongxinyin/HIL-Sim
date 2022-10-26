@@ -3239,8 +3239,8 @@ This is for
       annotation (Placement(transformation(extent={{252,-316},{304,-290}})));
     RTUPCM.HVAC.Plants.BaseClasses.ChargeControlSOC
                                         chaConCoo(
-      QTes=casDat.CTes_nominal,
-      m_flow_nominal=casDat.mTes_flow_nominal,
+      QTes=CTes_nominal,
+      m_flow_nominal=mTes_flow_nominal,
       TSup=casDat.TSolCoo - 4,
       TTes=casDat.TSolCoo,
       dt=(casDat.chargeEndNight_CTes - casDat.chargeStartNight_CTes) + (casDat.chargeEndMorn_CTes
@@ -3295,8 +3295,6 @@ This is for
                                  color={0,0,127}));
     connect(chi_P, chi_P)
       annotation (Line(points={{76,-264},{76,-264}}, color={0,0,127}));
-    connect(sen_retTem.port_b, coo.port_b) annotation (Line(points={{169,-192},
-            {208,-192},{208,-220},{216.246,-220}},color={0,127,255}));
     connect(coo.uTDryBul, T_air_in) annotation (Line(points={{172.738,-264},{
             169.584,-264},{169.584,-320},{598,-320}}, color={0,0,127}));
     connect(plaCon.yTES, coo.uTes) annotation (Line(points={{253.625,-288.7},{
@@ -3339,13 +3337,15 @@ This is for
             162,-338},{78,-338}}, color={0,0,127}));
     connect(sec_ret.ports[1], sen_retTem.port_a) annotation (Line(points={{168,
             -100},{168,-170},{169,-170}},            color={0,127,255}));
-    connect(coo.port_a, senTem.port_a) annotation (Line(points={{236.923,-220},
-            {236.923,-131},{348,-131},{348,-96}}, color={0,127,255}));
     connect(plaCon.yTSet, coo.TSetASHP) annotation (Line(points={{257.525,
             -288.7},{221.762,-288.7},{221.762,-264},{193.846,-264}}, color={0,0,
             127}));
     connect(plaCon.yTSet, y_TSet) annotation (Line(points={{257.525,-288.7},{178.762,
             -288.7},{178.762,-380},{78,-380}}, color={0,0,127}));
+    connect(sen_retTem.port_b, coo.port_a) annotation (Line(points={{169,-192},
+            {203.5,-192},{203.5,-220},{236.923,-220}}, color={0,127,255}));
+    connect(senTem.port_a, coo.port_b) annotation (Line(points={{348,-96},{282,
+            -96},{282,-220},{216.246,-220}}, color={0,127,255}));
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{100,-420},
               {580,20}}),         graphics={Line(points={{310,404}}, color={28,
                 108,200}), Line(
@@ -4613,6 +4613,7 @@ This is for
 
     package MediumA = Buildings.Media.Air "Medium model for air";
     package MediumW = Buildings.Media.Water "Medium model for water";
+    package MediumG = Buildings.Media.Antifreeze.PropyleneGlycolWater(property_T=283.15, X_a=0.09) "Medium model for 9% prop glycol mix with water";
 
     parameter Modelica.SIunits.Temperature TSupChi_nominal=281.15;
     parameter Modelica.SIunits.Temperature TSetSupAir=286.15;
@@ -4621,8 +4622,8 @@ This is for
     parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
       "Design mass flow rate of secondary loop";
 
-    parameter Modelica.SIunits.Power QCoo_flow_nominal = 2166.0 "Design cooling capacity" annotation(Dialog(group="Climate Data"));
-    parameter Modelica.SIunits.Energy CTes_nominal = 27190800.0 "Design cold storage capacity (factor * 1kWh)" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.Power QCoo_flow_nominal = 3040.0 "Design cooling capacity" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.Energy CTes_nominal = 52344000.0 "Design cold storage capacity (factor * 1kWh)" annotation(Dialog(group="Climate Data"));
     parameter Modelica.SIunits.TemperatureDifference dTCoo = 11-9 "Inlet temperature difference in cold TES rack" annotation(Dialog(group="System Specifications"));
 
     parameter Modelica.SIunits.DimensionlessRatio CTesScale = CTes_nominal/130000 "Scale factor for cold TES prototype size" annotation(Dialog(group="Climate Data"));
@@ -4684,7 +4685,7 @@ This is for
       "Set point for chiller temperature"
       annotation (Placement(transformation(extent={{248,-262},{260,-250}})));
     Buildings.Fluid.Sensors.TemperatureTwoPort sen_retTem(redeclare package
-        Medium = Buildings.Media.Water, m_flow_nominal=m_flow)
+        Medium = MediumG, m_flow_nominal=m_flow)
       annotation (Placement(transformation(extent={{-11,13},{11,-13}},
           rotation=270,
           origin={167,-99})));
@@ -4696,11 +4697,11 @@ This is for
           rotation=0,
           origin={76,-214})));
     Modelica.Fluid.Interfaces.FluidPort_b port_b(redeclare package Medium =
-          MediumW) "Fluid connector b (supply from source)"
+          MediumG) "Fluid connector b (supply from source)"
       annotation (Placement(transformation(extent={{366,-30},{416,20}}),
           iconTransformation(extent={{366,-30},{416,20}})));
     Modelica.Fluid.Interfaces.FluidPort_a port_a(redeclare package Medium =
-          MediumW) "Fluid connector a (return to source)"
+          MediumG) "Fluid connector a (return to source)"
       annotation (Placement(transformation(extent={{146,4},{196,50}}),
           iconTransformation(extent={{218,-30},{270,20}})));
       Modelica.Blocks.Sources.CombiTimeTable SchTes(
@@ -4715,15 +4716,15 @@ This is for
 
     RTUPCM.HVAC.Plants.BaseClasses.ChargeControlSOC
                                         chaConCoo(
-      QTes=casDat.CTes_nominal,
-      m_flow_nominal=casDat.mTes_flow_nominal,
+      QTes=CTes_nominal,
+      m_flow_nominal=mTes_flow_nominal,
       TSup=casDat.TSolCoo - 4,
       TTes=casDat.TSolCoo,
       dt=(casDat.chargeEndNight_CTes - casDat.chargeStartNight_CTes) + (casDat.chargeEndMorn_CTes
            - casDat.chargeStartMorn_CTes)) "Charge controller for cooling"
       annotation (Placement(transformation(extent={{336,-268},{316,-248}})));
     Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium =
-          Buildings.Media.Water, m_flow_nominal=mSec_flow_nominal)
+          MediumG, m_flow_nominal=mSec_flow_nominal)
       annotation (Placement(transformation(extent={{-10,-10},{10,10}},
           rotation=270,
           origin={368,-88})));
@@ -6076,8 +6077,8 @@ This is for
         annotation (Placement(transformation(extent={{20,-120},{40,-100}})));
       Buildings.Controls.Continuous.LimPID conPI(
         controllerType=Modelica.Blocks.Types.SimpleController.PI,
-        k=0.01,
-        Ti=60,
+        k=0.1,
+        Ti=120,
         reset=Buildings.Types.Reset.Parameter,
         reverseActing=not (true)) "Feedback controller"
         annotation (Placement(transformation(extent={{-64,-16},{-44,4}})));
@@ -8104,7 +8105,7 @@ This is for
 
     model BaseCoolingVarCOP_weiping_062822
       "Basic cooling plant with variable COP components"
-      extends hil_flexlab_model.Plants.BaseClasses.partialPlant(m_flow_nominal=
+      extends hil_flexlab_model.Plants.BaseClasses.partialPlant_glycol(m_flow_nominal=
             mAWHP_flow_nominal + mTes_flow_nominal, senTemRet);
       parameter Modelica.SIunits.MassFlowRate mAWHP_flow_nominal = 1e-15 "Nominal mass flowrate of air-to-water heat pump";
       parameter Modelica.SIunits.MassFlowRate mTes_flow_nominal = 1e-15 "Nominal mass flowrate of tes";
@@ -9721,14 +9722,14 @@ This is for
           aC_AWHP_PrimaryLoop_addpts_wTES_no_y_debug
           annotation (Placement(transformation(extent={{100,-190},{146,-154}})));
         Modelica.Blocks.Sources.Ramp T_in(
-          height=15,
+          height=5,
           duration=86400/2,
           offset=273 + 10) "return water temperature from the cooling coil"
           annotation (Placement(transformation(extent={{68,-72},{88,-52}})));
-        Modelica.Blocks.Sources.Constant m_in(k=0.15)
+        Modelica.Blocks.Sources.Constant m_in(k=0.16)
           annotation (Placement(transformation(extent={{32,-116},{52,-96}})));
         Modelica.Blocks.Sources.Constant ChaMode(k=2) annotation (Placement(
-              transformation(extent={{162,-158},{182,-138}})));
+              transformation(extent={{164,-158},{184,-138}})));
       equation
         connect(dynamic_on_signal.y, greaterThreshold.u) annotation (Line(points={{-29,
                 -294},{-6,-294},{-6,-224},{18,-224}},
@@ -9750,13 +9751,13 @@ This is for
                 -152.364}},
               color={0,0,127}));
         connect(ChaMode.y, aC_AWHP_PrimaryLoop_addpts_wTES_no_y_debug.TES_Mode)
-          annotation (Line(points={{183,-148},{168,-148},{168,-182.964},{148.3,
+          annotation (Line(points={{185,-148},{168,-148},{168,-182.964},{148.3,
                 -182.964}}, color={0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-420},
                   {480,100}})),                                        Diagram(
               coordinateSystem(preserveAspectRatio=false, extent={{-100,-420},{480,100}})),
           experiment(
-            StopTime=3600,
+            StopTime=86400,
             Interval=60,
             __Dymola_Algorithm="Dassl"));
       end AC_full_model_basic_u_test;
@@ -11063,7 +11064,7 @@ This is for
         AWHP(
         mSou_flow_nominal=mAWHP_flow_nominal,
         Q_flow_nominal=Q_flow_nominal)
-         annotation (Placement(transformation(extent={{-52,140},{-32,160}})));
+         annotation (Placement(transformation(extent={{-50,140},{-30,160}})));
 
       Modelica.Blocks.Interfaces.RealOutput COP_HP(unit="-") "COP of HP"
         annotation (Placement(transformation(extent={{100,224},{120,244}})));
@@ -11107,23 +11108,27 @@ This is for
               {0,-240},{80,-240},{80,-220},{110,-220}}, color={0,0,127}));
       connect(senTemRetSwe.port_a, spl5.port_2)
         annotation (Line(points={{20,-238},{20,-130}}, color={0,127,255}));
-      connect(AWHP.TSetSou, TSetASHP) annotation (Line(points={{-54,153},{-70,153},{
-              -70,140},{-120,140}}, color={0,0,127}));
-      connect(AWHP.TDryBul, uTDryBul) annotation (Line(points={{-54,158.8},{-70,158.8},
-              {-70,240},{-120,240},{-120,238}},
+      connect(AWHP.TSetSou, TSetASHP) annotation (Line(points={{-52,153},{-70,
+              153},{-70,140},{-120,140}},
+                                    color={0,0,127}));
+      connect(AWHP.TDryBul, uTDryBul) annotation (Line(points={{-52,158.8},{-70,
+              158.8},{-70,240},{-120,240},{-120,238}},
                            color={0,0,127}));
-      connect(AWHP.uPum, uASHP) annotation (Line(points={{-54,156},{-64,156},{-64,200},
-              {-120,200}},
+      connect(AWHP.uPum, uASHP) annotation (Line(points={{-52,156},{-64,156},{
+              -64,200},{-120,200}},
                      color={0,0,127}));
-      connect(AWHP.port_a, spl1.port_3) annotation (Line(points={{-32,156},{0,156},{
-              0,174},{10,174}}, color={0,127,255}));
-      connect(AWHP.port_b, spl2.port_3) annotation (Line(points={{-32,144},{-14,144},
-              {-14,126},{10,126}}, color={0,127,255}));
+      connect(AWHP.port_a, spl1.port_3) annotation (Line(points={{-30,156},{0,
+              156},{0,174},{10,174}},
+                                color={0,127,255}));
+      connect(AWHP.port_b, spl2.port_3) annotation (Line(points={{-30,144},{-14,
+              144},{-14,126},{10,126}},
+                                   color={0,127,255}));
       connect(AWHP.TSup, TASHP)
-        annotation (Line(points={{-31,148},{110,148}}, color={0,0,127}));
-      connect(PEle, AWHP.PEle) annotation (Line(points={{110,260},{42,260},{42,160},
-              {-31,160}}, color={0,0,127}));
-      connect(AWHP.COP, COP_HP) annotation (Line(points={{-31,158.4},{36.5,
+        annotation (Line(points={{-29,148},{110,148}}, color={0,0,127}));
+      connect(PEle, AWHP.PEle) annotation (Line(points={{110,260},{42,260},{42,
+              160},{-29,160}},
+                          color={0,0,127}));
+      connect(AWHP.COP, COP_HP) annotation (Line(points={{-29,158.4},{36.5,
               158.4},{36.5,234},{110,234}}, color={0,0,127}));
     end BaseCoolingVarCOP_3SP;
   end Baseclasses_WH;
