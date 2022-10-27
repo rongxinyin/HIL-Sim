@@ -8,12 +8,12 @@ extends hil_flexlab_model.Data.BaseClasses.BBR(
  chargeStartNight_CTes = 82800,
  chargeEndNight_CTes = 86400);
 extends hil_flexlab_model.Data.BaseClasses.MAPR(
- TSolCoo = 280.15,
- TLiqCoo = 282.15,
- LHeaCoo = 126000,
- cPCMCoo = 2050,
- dPCMCoo = 1125,
- kPCMCoo = 0.2);
+ TSolCoo = 273.15+5,
+ TLiqCoo = 273.15+8,
+ LHeaCoo = 142500,
+ cPCMCoo = 1950,
+ dPCMCoo = 1400,
+ kPCMCoo = 0.5);
 extends hil_flexlab_model.Data.BaseClasses.OPCO(
  TSetSupCW = 281.15,
  TSetSupHW = 325.15,
