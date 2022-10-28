@@ -3110,7 +3110,7 @@ This is for
           Rectangle(extent={{108,-4},{566,-362}}, lineColor={135,135,135})}));
   end AC_AWHP_PrimaryLoop_addpts_wTES_3SP;
 
-  model AC_AWHP_PrimaryLoop_addpts_wTES_3SP_noprim
+  model AC_AWHP_PrimaryLoop_wTES_1A
     "Validated Partial model of variable air volume flow system with terminal reheat and 3 VAV zones at flexlab x1a"
 
     package MediumA = Buildings.Media.Air "Medium model for air";
@@ -3146,8 +3146,8 @@ This is for
           extent={{-10,-10},{10,10}},
           rotation=180,
           origin={408,-136})));
-    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium =
-          MediumG, m_flow_nominal=mSec_flow_nominal)
+    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium
+        = MediumG, m_flow_nominal=mSec_flow_nominal)
       annotation (Placement(transformation(extent={{348,-106},{368,-86}})));
     Modelica.Blocks.Interfaces.BooleanInput chiOn "On signal for chiller plant"
       annotation (Placement(transformation(extent={{-20,-20},{20,20}},
@@ -3235,8 +3235,8 @@ This is for
           transformation(
           extent={{-23,63},{23,-63}},
           rotation=90,
-          origin={229,-241})));
-    hil_flexlab_model.Plants.Baseclasses_WH.Plant_Controller_3SP plaCon(TSolCoo=casDat.TSolCoo, TLiqCoo=casDat.TLiqCoo)
+          origin={227,-239})));
+    hil_flexlab_model.Plants.Baseclasses_WH.Plant_Controller_3SP plaCon(TSolCoo=casDat.TSolCoo, TLiqCoo=casDat.TLi)
       annotation (Placement(transformation(extent={{252,-316},{304,-290}})));
     RTUPCM.HVAC.Plants.BaseClasses.ChargeControlSOC
                                         chaConCoo(
@@ -3312,13 +3312,13 @@ This is for
                                  color={0,0,127}));
     connect(chi_P, chi_P)
       annotation (Line(points={{76,-206},{76,-206}}, color={0,0,127}));
-    connect(coo.uTDryBul, T_air_in) annotation (Line(points={{286.669,-268.6},{
-            169.584,-268.6},{169.584,-320},{598,-320}},
+    connect(coo.uTDryBul, T_air_in) annotation (Line(points={{284.669,-266.6},{
+            169.584,-266.6},{169.584,-320},{598,-320}},
                                                       color={0,0,127}));
     connect(plaCon.yTES, coo.uTes) annotation (Line(points={{253.625,-288.7},{191.64,
-            -288.7},{191.64,-268.6},{229,-268.6}},     color={0,0,127}));
+            -288.7},{191.64,-266.6},{227,-266.6}},     color={0,0,127}));
     connect(plaCon.yASHP, coo.uASHP) annotation (Line(points={{260.45,-288.7},{
-            177.76,-288.7},{177.76,-268.6},{277.462,-268.6}},
+            177.76,-288.7},{177.76,-266.6},{275.462,-266.6}},
                                                            color={0,0,127}));
     connect(plaCon.enaChi, chiOn) annotation (Line(points={{262.4,-318.08},{262.4,
             -314},{354,-314},{354,-160},{246,-160},{246,36}},          color={255,
@@ -3328,14 +3328,14 @@ This is for
                                                            color={0,0,127}));
     connect(senTem.T, plaCon.uTMea) annotation (Line(points={{358,-85},{358,-204},
             {322,-204},{322,-262},{273.45,-262},{273.45,-318.08}}, color={0,0,127}));
-    connect(coo.PEle, chi_P) annotation (Line(points={{292,-215.7},{132,-215.7},{132,
+    connect(coo.PEle, chi_P) annotation (Line(points={{290,-213.7},{132,-213.7},{132,
             -206},{76,-206}},
                         color={0,0,127}));
-    connect(coo.COP_HP, chi_COP) annotation (Line(points={{285.7,-215.7},{134,-215.7},
+    connect(coo.COP_HP, chi_COP) annotation (Line(points={{283.7,-213.7},{134,-213.7},
             {134,-244},{78,-244}}, color={0,0,127}));
     connect(plaCon.uChaCon,chaConCoo. y) annotation (Line(points={{267.925,-318.08},
             {267.925,-390},{521,-390}},        color={0,0,127}));
-    connect(coo.SOC,chaConCoo. SOC) annotation (Line(points={{229,-215.7},{229,-278},
+    connect(coo.SOC,chaConCoo. SOC) annotation (Line(points={{227,-213.7},{227,-278},
             {578,-278},{578,-390},{544,-390}},       color={0,0,127}));
     connect(plaCon.uTSet,TSetSupChiConst1. y) annotation (Line(points={{283.85,-318.08},
             {283.85,-368.04},{466.6,-368.04},{466.6,-388}},          color={0,0,
@@ -3345,31 +3345,31 @@ This is for
                                               color={0,0,127}));
     connect(plaCon.yenaCha, chaConCoo.enaCha) annotation (Line(points={{266.625,-288.7},
             {407.312,-288.7},{407.312,-382},{544,-382}}, color={255,0,255}));
-    connect(coo.TRet, plaCon.uTRet) annotation (Line(points={{244.508,-215.7},{
-            244,-215.7},{244,-318.08},{278.65,-318.08}},
+    connect(coo.TRet, plaCon.uTRet) annotation (Line(points={{242.508,-213.7},{
+            244,-213.7},{244,-318.08},{278.65,-318.08}},
                                              color={0,0,127}));
-    connect(coo.TTes, plaCon.uTTes) annotation (Line(points={{253.231,-215.7},{
-            240,-215.7},{240,-318.08},{278.65,-318.08}},
+    connect(coo.TTes, plaCon.uTTes) annotation (Line(points={{251.231,-213.7},{
+            240,-213.7},{240,-318.08},{278.65,-318.08}},
                                              color={0,0,127}));
-    connect(coo.SOC, tes_SOC) annotation (Line(points={{229,-215.7},{162,-215.7},{
+    connect(coo.SOC, tes_SOC) annotation (Line(points={{227,-213.7},{162,-213.7},{
             162,-280},{78,-280}}, color={0,0,127}));
     connect(sec_ret.ports[1], sen_retTem.port_a) annotation (Line(points={{168,
             -100},{168,-170},{169,-170}},            color={0,127,255}));
     connect(plaCon.yTSet, coo.TSetASHP) annotation (Line(points={{257.525,
-            -288.7},{221.762,-288.7},{221.762,-268.6},{262.923,-268.6}},
+            -288.7},{221.762,-288.7},{221.762,-266.6},{260.923,-266.6}},
                                                                      color={0,0,
             127}));
     connect(plaCon.yTSet, y_TSet) annotation (Line(points={{257.525,-288.7},{178.762,
             -288.7},{178.762,-310},{78,-310}}, color={0,0,127}));
     connect(sen_retTem.port_b, coo.port_a) annotation (Line(points={{169,-192},
-            {203.5,-192},{203.5,-218},{214.462,-218}}, color={0,127,255}));
+            {203.5,-192},{203.5,-216},{212.462,-216}}, color={0,127,255}));
     connect(senTem.port_a, coo.port_b) annotation (Line(points={{348,-96},{284,
-            -96},{284,-218},{237.723,-218}}, color={0,127,255}));
+            -96},{284,-216},{235.723,-216}}, color={0,127,255}));
     connect(tes_uPCM, coo.out_uPCM) annotation (Line(points={{78,-344},{154,
-            -344},{154,-215.7},{225.608,-215.7}},
+            -344},{154,-213.7},{223.608,-213.7}},
                                             color={0,0,127}));
-    connect(coo.out_mPCM, tes_mPCM) annotation (Line(points={{221.731,-215.7},{
-            221.731,-377.85},{78,-377.85},{78,-378}},
+    connect(coo.out_mPCM, tes_mPCM) annotation (Line(points={{219.731,-213.7},{
+            219.731,-377.85},{78,-377.85},{78,-378}},
                                               color={0,0,127}));
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{100,-420},
               {580,20}}),         graphics={Line(points={{310,404}}, color={28,
@@ -3646,7 +3646,545 @@ This is for
             fillColor={0,0,0},
             fillPattern=FillPattern.Solid),
           Rectangle(extent={{108,-4},{566,-362}}, lineColor={135,135,135})}));
-  end AC_AWHP_PrimaryLoop_addpts_wTES_3SP_noprim;
+  end AC_AWHP_PrimaryLoop_wTES_1A;
+
+  model AC_AWHP_PrimaryLoop_wTES_1B
+    "Validated Partial model of variable air volume flow system with terminal reheat and 3 VAV zones at flexlab x1a"
+
+    package MediumA = Buildings.Media.Air "Medium model for air";
+    package MediumW = Buildings.Media.Water "Medium model for water";
+    package MediumG = Buildings.Media.Antifreeze.PropyleneGlycolWater(property_T=283.15, X_a=0.09) "Medium model for 9% prop glycol mix with water";
+      constant Modelica.SIunits.MassFlowRate m_flow=0.4
+      "Nominal mass flow rate";
+
+    parameter Modelica.SIunits.Temperature TSupChi_nominal=281.15;
+    parameter Modelica.SIunits.Temperature TSetSupAir=286.15;
+
+  parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
+      "Design mass flow rate of secondary loop";
+    parameter Modelica.SIunits.Power QCoo_flow_nominal = 2166.0 "Design cooling capacity" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.Energy CTes_nominal = 27190800.0 "Design cold storage capacity (factor * 1kWh)" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.TemperatureDifference dTCoo = 11-9 "Inlet temperature difference in cold TES rack" annotation(Dialog(group="System Specifications"));
+
+    parameter Modelica.SIunits.DimensionlessRatio CTesScale = CTes_nominal/130000 "Scale factor for cold TES prototype size" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.MassFlowRate mAWHP_flow_nominal = QCoo_flow_nominal/(4201*dTCoo) "Design water flowrate of cooling system" annotation(Dialog(group="System Specifications"));
+    parameter Modelica.SIunits.MassFlowRate mTes_flow_nominal = mAWHP_flow_nominal "Design water flowrate through TES" annotation(Dialog(group="System Specifications"));
+    parameter Modelica.SIunits.Temperature T_start_pcm = casDat.TSolCoo - 2 "start temp to calc SOC";
+    Buildings.Fluid.Sources.MassFlowSource_T sec_ret(
+      redeclare package Medium = MediumG,
+      use_m_flow_in=true,
+      use_T_in=true,
+      nPorts=1) annotation (Placement(transformation(
+          extent={{-10,-10},{10,10}},
+          rotation=270,
+          origin={168,-90})));
+    Buildings.Fluid.Sources.Boundary_pT bou(redeclare package Medium = MediumG,
+        nPorts=1)                                                                                    annotation (Placement(
+          transformation(
+          extent={{-10,-10},{10,10}},
+          rotation=180,
+          origin={408,-136})));
+    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium
+        = MediumG, m_flow_nominal=mSec_flow_nominal)
+      annotation (Placement(transformation(extent={{348,-106},{368,-86}})));
+    Modelica.Blocks.Interfaces.BooleanInput chiOn "On signal for chiller plant"
+      annotation (Placement(transformation(extent={{-20,-20},{20,20}},
+          rotation=270,
+          origin={246,36}),   iconTransformation(
+          extent={{-20,-20},{20,20}},
+          rotation=0,
+          origin={80,-292})));
+    Modelica.Blocks.Interfaces.RealInput T_chw_in annotation (Placement(
+          transformation(
+          extent={{-20,-20},{20,20}},
+          rotation=270,
+          origin={194,36}),  iconTransformation(
+          extent={{-20,-20},{20,20}},
+          rotation=270,
+          origin={228,40})));
+    Modelica.Blocks.Interfaces.RealInput m_flow_sec annotation (Placement(
+          transformation(
+          extent={{-20,-20},{20,20}},
+          rotation=270,
+          origin={120,38}),  iconTransformation(
+          extent={{-20,-20},{20,20}},
+          rotation=270,
+          origin={152,40})));
+    Modelica.Blocks.Interfaces.RealOutput T_chw_out annotation (Placement(
+          transformation(
+          extent={{-20,-20},{20,20}},
+          rotation=90,
+          origin={360,40}),  iconTransformation(
+          extent={{-20,-20},{20,20}},
+          rotation=90,
+          origin={390,40})));
+    Modelica.Blocks.Interfaces.RealInput T_air_in annotation (Placement(
+          transformation(
+          extent={{-20,-20},{20,20}},
+          rotation=180,
+          origin={598,-320}), iconTransformation(
+          extent={{-20,-20},{20,20}},
+          rotation=180,
+          origin={602,-390})));
+    Modelica.Blocks.Interfaces.RealOutput chi_P annotation (Placement(
+          transformation(
+          extent={{-22,-22},{22,22}},
+          rotation=180,
+          origin={76,-206}),  iconTransformation(
+          extent={{-22,-22},{22,22}},
+          rotation=270,
+          origin={162,-446})));
+    Buildings.Fluid.Sensors.TemperatureTwoPort sen_retTem(redeclare package
+        Medium = Buildings.Media.Water, m_flow_nominal=m_flow)
+      annotation (Placement(transformation(extent={{-11,13},{11,-13}},
+          rotation=270,
+          origin={169,-181})));
+    Modelica.Blocks.Interfaces.RealOutput T_pch_in annotation (Placement(
+          transformation(
+          extent={{-24,-24},{24,24}},
+          rotation=180,
+          origin={76,-162}), iconTransformation(
+          extent={{-20,-20},{20,20}},
+          rotation=180,
+          origin={78,-186})));
+    Modelica.Blocks.Interfaces.RealOutput chi_COP annotation (Placement(
+          transformation(
+          extent={{-22,-22},{22,22}},
+          rotation=180,
+          origin={78,-244}), iconTransformation(
+          extent={{-22,-22},{22,22}},
+          rotation=270,
+          origin={234,-440})));
+    hil_flexlab_model.Plants.Baseclasses_WH.BaseCoolingVarCOP_3SP coo( m_flow_nominal=mAWHP_flow_nominal + mTes_flow_nominal,
+      k=casDat.kPCMCoo,
+      c=casDat.cPCMCoo,
+      d=casDat.dPCMCoo,
+      TSol=casDat.TSolCoo,
+      TLiq=casDat.TLiqCoo,
+      LHea=casDat.LHeaCoo,
+      Q_flow_nominal=QCoo_flow_nominal,
+      mAWHP_flow_nominal=mAWHP_flow_nominal,
+      mTes_flow_nominal=mTes_flow_nominal,
+      Tes_nominal=CTes_nominal,
+      dp_nominal=casDat.dp_nominal,
+      dpFixed_nominal=casDat.dpFixed_nominal,
+      dpValve_nominal=casDat.dpValve_nominal,
+      T_start=T_start_pcm) annotation (Placement(
+          transformation(
+          extent={{-23,63},{23,-63}},
+          rotation=90,
+          origin={227,-239})));
+    hil_flexlab_model.Plants.Baseclasses_WH.Plant_Controller_3SP plaCon(TSolCoo=casDat.TSolCoo, TLiqCoo=casDat.TLi)
+      annotation (Placement(transformation(extent={{252,-316},{304,-290}})));
+    RTUPCM.HVAC.Plants.BaseClasses.ChargeControlSOC
+                                        chaConCoo(
+      QTes=CTes_nominal,
+      m_flow_nominal=mTes_flow_nominal,
+      TSup=casDat.TSolCoo - 4,
+      TTes=casDat.TSolCoo,
+      dt=(casDat.chargeEndNight_CTes - casDat.chargeStartNight_CTes) + (casDat.chargeEndMorn_CTes
+           - casDat.chargeStartMorn_CTes)) "Charge controller for cooling"
+      annotation (Placement(transformation(extent={{542,-400},{522,-380}})));
+    Modelica.Blocks.Sources.Constant TSetSupChiConst1(final k=273.15 + 8)
+      "Set point for chiller temperature"
+      annotation (Placement(transformation(extent={{454,-394},{466,-382}})));
+    Modelica.Blocks.Interfaces.RealInput TES_Mode annotation (Placement(
+          transformation(
+          extent={{-20,-20},{20,20}},
+          rotation=180,
+          origin={602,-406}), iconTransformation(
+          extent={{-20,-20},{20,20}},
+          rotation=180,
+          origin={604,-334})));
+
+     hil_flexlab_model.Data.BBR_3C_Med_downsized casDat
+      "Case study data"
+      annotation (Placement(transformation(extent={{110,-250},{134,-274}})));
+
+    Modelica.Blocks.Interfaces.RealOutput tes_SOC annotation (Placement(
+          transformation(
+          extent={{-22,-22},{22,22}},
+          rotation=180,
+          origin={78,-280}), iconTransformation(
+          extent={{-22,-22},{22,22}},
+          rotation=270,
+          origin={234,-440})));
+    Modelica.Blocks.Interfaces.RealOutput y_TSet annotation (Placement(
+          transformation(
+          extent={{-22,-22},{22,22}},
+          rotation=180,
+          origin={78,-310}), iconTransformation(
+          extent={{-22,-22},{22,22}},
+          rotation=270,
+          origin={234,-440})));
+    Modelica.Blocks.Interfaces.RealOutput tes_uPCM annotation (Placement(
+          transformation(
+          extent={{-22,-22},{22,22}},
+          rotation=180,
+          origin={78,-344}), iconTransformation(
+          extent={{-22,-22},{22,22}},
+          rotation=270,
+          origin={234,-440})));
+    Modelica.Blocks.Interfaces.RealOutput tes_mPCM annotation (Placement(
+          transformation(
+          extent={{-22,-22},{22,22}},
+          rotation=180,
+          origin={78,-378}), iconTransformation(
+          extent={{-22,-22},{22,22}},
+          rotation=270,
+          origin={234,-440})));
+  equation
+
+    connect(m_flow_sec, sec_ret.m_flow_in) annotation (Line(points={{120,38},{120,
+            -78},{176,-78}},       color={0,0,127}));
+    connect(T_chw_in, sec_ret.T_in) annotation (Line(points={{194,36},{194,-78},{
+            172,-78}},  color={0,0,127}));
+    connect(senTem.port_b,bou. ports[1]) annotation (Line(points={{368,-96},{384,-96},
+            {384,-136},{398,-136}},       color={0,127,255}));
+    connect(senTem.T, T_chw_out) annotation (Line(points={{358,-85},{358,-22},{360,
+            -22},{360,40}},       color={0,0,127}));
+    connect(sen_retTem.T, T_pch_in)
+      annotation (Line(points={{154.7,-181},{116,-181},{116,-162},{76,-162}},
+                                                      color={0,0,127}));
+    connect(T_chw_out, T_chw_out) annotation (Line(points={{360,40},{360,40}},
+                                 color={0,0,127}));
+    connect(chi_P, chi_P)
+      annotation (Line(points={{76,-206},{76,-206}}, color={0,0,127}));
+    connect(coo.uTDryBul, T_air_in) annotation (Line(points={{284.669,-266.6},{
+            169.584,-266.6},{169.584,-320},{598,-320}},
+                                                      color={0,0,127}));
+    connect(plaCon.yTES, coo.uTes) annotation (Line(points={{253.625,-288.7},{191.64,
+            -288.7},{191.64,-266.6},{227,-266.6}},     color={0,0,127}));
+    connect(plaCon.yASHP, coo.uASHP) annotation (Line(points={{260.45,-288.7},{
+            177.76,-288.7},{177.76,-266.6},{275.462,-266.6}},
+                                                           color={0,0,127}));
+    connect(plaCon.enaChi, chiOn) annotation (Line(points={{262.4,-318.08},{262.4,
+            -314},{354,-314},{354,-160},{246,-160},{246,36}},          color={255,
+            0,255}));
+    connect(senTem.T, plaCon.uTMea) annotation (Line(points={{358,-85},{358,-204},
+            {322,-204},{322,-262},{273.45,-262},{273.45,-318.08}},
+                                                           color={0,0,127}));
+    connect(senTem.T, plaCon.uTMea) annotation (Line(points={{358,-85},{358,-204},
+            {322,-204},{322,-262},{273.45,-262},{273.45,-318.08}}, color={0,0,127}));
+    connect(coo.PEle, chi_P) annotation (Line(points={{290,-213.7},{132,-213.7},{132,
+            -206},{76,-206}},
+                        color={0,0,127}));
+    connect(coo.COP_HP, chi_COP) annotation (Line(points={{283.7,-213.7},{134,-213.7},
+            {134,-244},{78,-244}}, color={0,0,127}));
+    connect(plaCon.uChaCon,chaConCoo. y) annotation (Line(points={{267.925,-318.08},
+            {267.925,-390},{521,-390}},        color={0,0,127}));
+    connect(coo.SOC,chaConCoo. SOC) annotation (Line(points={{227,-213.7},{227,-278},
+            {578,-278},{578,-390},{544,-390}},       color={0,0,127}));
+    connect(plaCon.uTSet,TSetSupChiConst1. y) annotation (Line(points={{283.85,-318.08},
+            {283.85,-368.04},{466.6,-368.04},{466.6,-388}},          color={0,0,
+            127}));
+    connect(TES_Mode, plaCon.uSch) annotation (Line(points={{602,-406},{458,
+            -406},{458,-312.62},{306.925,-312.62}},
+                                              color={0,0,127}));
+    connect(plaCon.yenaCha, chaConCoo.enaCha) annotation (Line(points={{266.625,-288.7},
+            {407.312,-288.7},{407.312,-382},{544,-382}}, color={255,0,255}));
+    connect(coo.TRet, plaCon.uTRet) annotation (Line(points={{242.508,-213.7},{
+            244,-213.7},{244,-318.08},{278.65,-318.08}},
+                                             color={0,0,127}));
+    connect(coo.TTes, plaCon.uTTes) annotation (Line(points={{251.231,-213.7},{
+            240,-213.7},{240,-318.08},{278.65,-318.08}},
+                                             color={0,0,127}));
+    connect(coo.SOC, tes_SOC) annotation (Line(points={{227,-213.7},{162,-213.7},{
+            162,-280},{78,-280}}, color={0,0,127}));
+    connect(sec_ret.ports[1], sen_retTem.port_a) annotation (Line(points={{168,
+            -100},{168,-170},{169,-170}},            color={0,127,255}));
+    connect(plaCon.yTSet, coo.TSetASHP) annotation (Line(points={{257.525,
+            -288.7},{221.762,-288.7},{221.762,-266.6},{260.923,-266.6}},
+                                                                     color={0,0,
+            127}));
+    connect(plaCon.yTSet, y_TSet) annotation (Line(points={{257.525,-288.7},{178.762,
+            -288.7},{178.762,-310},{78,-310}}, color={0,0,127}));
+    connect(sen_retTem.port_b, coo.port_a) annotation (Line(points={{169,-192},
+            {203.5,-192},{203.5,-216},{212.462,-216}}, color={0,127,255}));
+    connect(senTem.port_a, coo.port_b) annotation (Line(points={{348,-96},{284,
+            -96},{284,-216},{235.723,-216}}, color={0,127,255}));
+    connect(tes_uPCM, coo.out_uPCM) annotation (Line(points={{78,-344},{154,
+            -344},{154,-213.7},{223.608,-213.7}},
+                                            color={0,0,127}));
+    connect(coo.out_mPCM, tes_mPCM) annotation (Line(points={{219.731,-213.7},{
+            219.731,-377.85},{78,-377.85},{78,-378}},
+                                              color={0,0,127}));
+    annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{100,-420},
+              {580,20}}),         graphics={Line(points={{310,404}}, color={28,
+                108,200}), Line(
+            points={{34,406}},
+            color={0,127,255},
+            smooth=Smooth.Bezier),
+          Text(
+            textString="Edit Here",
+            extent={{192,-226},{260,-248}},
+            lineColor={28,108,200})}),
+                                   Documentation(info="<html>
+<p>
+This model consist of an HVAC system, a building envelope model and a model
+for air flow through building leakage and through open doors.
+</p>
+<p>
+The HVAC system is a variable air volume (VAV) flow system with economizer
+and a heating and cooling coil in the air handler unit. There is also a
+reheat coil and an air damper in each of the five zone inlet branches.
+The figure below shows the schematic diagram of the HVAC system
+</p>
+<p align=\"center\">
+<img alt=\"image\" src=\"modelica://Buildings/Resources/Images/Examples/VAVReheat/vavSchematics.png\" border=\"1\"/>
+</p>
+<p>
+Most of the HVAC control in this model is open loop.
+Two models that extend this model, namely
+<a href=\"modelica://Buildings.Examples.VAVReheat.ASHRAE2006\">
+Buildings.Examples.VAVReheat.ASHRAE2006</a>
+and
+<a href=\"modelica://Buildings.Examples.VAVReheat.Guideline36\">
+Buildings.Examples.VAVReheat.Guideline36</a>
+add closed loop control. See these models for a description of
+the control sequence.
+</p>
+<p>
+To model the heat transfer through the building envelope,
+a model of five interconnected rooms is used.
+The five room model is representative of one floor of the
+new construction medium office building for Chicago, IL,
+as described in the set of DOE Commercial Building Benchmarks
+(Deru et al, 2009). There are four perimeter zones and one core zone.
+The envelope thermal properties meet ASHRAE Standard 90.1-2004.
+The thermal room model computes transient heat conduction through
+walls, floors and ceilings and long-wave radiative heat exchange between
+surfaces. The convective heat transfer coefficient is computed based
+on the temperature difference between the surface and the room air.
+There is also a layer-by-layer short-wave radiation,
+long-wave radiation, convection and conduction heat transfer model for the
+windows. The model is similar to the
+Window 5 model and described in TARCOG 2006.
+</p>
+<p>
+Each thermal zone can have air flow from the HVAC system, through leakages of the building envelope (except for the core zone) and through bi-directional air exchange through open doors that connect adjacent zones. The bi-directional air exchange is modeled based on the differences in static pressure between adjacent rooms at a reference height plus the difference in static pressure across the door height as a function of the difference in air density.
+Infiltration is a function of the
+flow imbalance of the HVAC system.
+</p>
+<h4>References</h4>
+<p>
+Deru M., K. Field, D. Studer, K. Benne, B. Griffith, P. Torcellini,
+ M. Halverson, D. Winiarski, B. Liu, M. Rosenberg, J. Huang, M. Yazdanian, and D. Crawley.
+<i>DOE commercial building research benchmarks for commercial buildings</i>.
+Technical report, U.S. Department of Energy, Energy Efficiency and
+Renewable Energy, Office of Building Technologies, Washington, DC, 2009.
+</p>
+<p>
+TARCOG 2006: Carli, Inc., TARCOG: Mathematical models for calculation
+of thermal performance of glazing systems with our without
+shading devices, Technical Report, Oct. 17, 2006.
+</p>
+</html>",   revisions="<html>
+<ul>
+<li>
+September 26, 2017, by Michael Wetter:<br/>
+Separated physical model from control to facilitate implementation of alternate control
+sequences.
+</li>
+<li>
+May 19, 2016, by Michael Wetter:<br/>
+Changed chilled water supply temperature to <i>6&circ;C</i>.
+This is
+for <a href=\"https://github.com/ibpsa/modelica-ibpsa/issues/509\">#509</a>.
+</li>
+<li>
+April 26, 2016, by Michael Wetter:<br/>
+Changed controller for freeze protection as the old implementation closed
+the outdoor air damper during summer.
+This is
+for <a href=\"https://github.com/ibpsa/modelica-ibpsa/issues/511\">#511</a>.
+</li>
+<li>
+January 22, 2016, by Michael Wetter:<br/>
+Corrected type declaration of pressure difference.
+This is
+for <a href=\"https://github.com/ibpsa/modelica-ibpsa/issues/404\">#404</a>.
+</li>
+<li>
+September 24, 2015 by Michael Wetter:<br/>
+Set default temperature for medium to avoid conflicting
+start values for alias variables of the temperature
+of the building and the ambient air.
+This is for
+<a href=\"https://github.com/lbl-srg/modelica-buildings/issues/426\">issue 426</a>.
+</li>
+</ul>
+</html>"),
+      Icon(coordinateSystem(extent={{100,-420},{580,20}}),  graphics={
+          Rectangle(
+            extent={{-70,80},{70,-80}},
+            lineColor={0,0,255},
+            pattern=LinePattern.None,
+            fillColor={95,95,95},
+            fillPattern=FillPattern.Solid,
+            origin={208,-152},
+            rotation=360),
+          Rectangle(
+            extent={{-100.5,5},{100.5,-5}},
+            lineColor={0,0,255},
+            pattern=LinePattern.None,
+            fillColor={0,0,0},
+            fillPattern=FillPattern.Solid,
+            origin={209.5,-93},
+            rotation=360),
+          Rectangle(
+            extent={{-100.5,5},{100.5,-5}},
+            lineColor={0,0,255},
+            pattern=LinePattern.None,
+            fillColor={0,0,0},
+            fillPattern=FillPattern.Solid,
+            origin={209.5,-213},
+            rotation=360),
+          Rectangle(
+            extent={{-57,9},{57,-9}},
+            lineColor={0,0,0},
+            fillColor={255,255,255},
+            fillPattern=FillPattern.Solid,
+            origin={209,-93},
+            rotation=360),
+          Rectangle(
+            extent={{-57,9},{57,-9}},
+            lineColor={0,0,0},
+            fillColor={255,255,255},
+            fillPattern=FillPattern.Solid,
+            origin={209,-213},
+            rotation=360),
+          Rectangle(
+            extent={{-100.5,5},{100.5,-5}},
+            lineColor={0,0,255},
+            pattern=LinePattern.None,
+            fillColor={0,0,255},
+            fillPattern=FillPattern.Solid,
+            origin={203.5,-93},
+            rotation=360),
+          Rectangle(
+            extent={{-100.5,5},{100.5,-5}},
+            lineColor={0,0,255},
+            pattern=LinePattern.None,
+            fillColor={0,0,255},
+            fillPattern=FillPattern.Solid,
+            origin={209.5,-211},
+            rotation=360),
+          Rectangle(
+            extent={{-50,-5},{50,5}},
+            lineColor={0,0,127},
+            pattern=LinePattern.None,
+            fillColor={0,0,127},
+            fillPattern=FillPattern.Solid,
+            origin={264,-95},
+            rotation=360),
+          Polygon(
+            points={{0,6},{-10,-6},{10,-6},{0,6}},
+            lineColor={0,0,0},
+            smooth=Smooth.None,
+            fillColor={255,255,255},
+            fillPattern=FillPattern.Solid,
+            origin={248,-154},
+            rotation=360),
+          Polygon(
+            points={{0,-5},{-10,5},{10,5},{0,-5}},
+            lineColor={0,0,0},
+            smooth=Smooth.None,
+            fillColor={255,255,255},
+            fillPattern=FillPattern.Solid,
+            origin={248,-141},
+            rotation=360),
+          Rectangle(
+            extent={{-2,20},{2,-20}},
+            lineColor={0,0,0},
+            fillColor={255,255,255},
+            fillPattern=FillPattern.Solid,
+            origin={166,-122},
+            rotation=360),
+          Rectangle(
+            extent={{-2,20},{2,-20}},
+            lineColor={0,0,0},
+            fillColor={255,255,255},
+            fillPattern=FillPattern.Solid,
+            origin={166,-184},
+            rotation=360),
+          Rectangle(
+            extent={{-2,51},{2,-51}},
+            lineColor={0,0,0},
+            fillColor={255,255,255},
+            fillPattern=FillPattern.Solid,
+            origin={248,-153},
+            rotation=360),
+          Ellipse(
+            extent={{-16,16},{16,-16}},
+            lineColor={0,0,0},
+            fillColor={255,255,255},
+            fillPattern=FillPattern.Solid,
+            origin={166,-152},
+            rotation=180),
+          Polygon(
+            points={{0,8},{-16,-8},{16,-8},{0,8}},
+            lineColor={0,0,0},
+            fillColor={0,0,0},
+            fillPattern=FillPattern.Solid,
+            origin={166,-152},
+            rotation=180),
+          Rectangle(
+            extent={{-50,-5},{50,5}},
+            lineColor={0,0,255},
+            pattern=LinePattern.None,
+            fillColor={255,0,0},
+            fillPattern=FillPattern.Solid,
+            origin={166,-213},
+            rotation=360),
+          Rectangle(
+            extent={{318,-136},{328,-178}},
+            lineColor={135,135,135},
+            fillColor={135,135,135},
+            fillPattern=FillPattern.Solid),
+          Rectangle(
+            extent={{302,-152},{344,-160}},
+            lineColor={135,135,135},
+            fillColor={135,135,135},
+            fillPattern=FillPattern.Solid),
+          Rectangle(
+            extent={{386,-76},{526,-236}},
+            lineColor={0,0,255},
+            pattern=LinePattern.None,
+            fillColor={95,95,95},
+            fillPattern=FillPattern.Solid),
+          Rectangle(
+            extent={{356,-151},{557,-161}},
+            lineColor={0,0,255},
+            pattern=LinePattern.None,
+            fillColor={0,0,0},
+            fillPattern=FillPattern.Solid),
+          Rectangle(
+            extent={{492,-72},{496,-232}},
+            lineColor={0,0,255},
+            pattern=LinePattern.None,
+            fillColor={0,0,0},
+            fillPattern=FillPattern.Solid),
+          Rectangle(
+            extent={{416,-72},{420,-232}},
+            lineColor={0,0,255},
+            pattern=LinePattern.None,
+            fillColor={0,0,0},
+            fillPattern=FillPattern.Solid),
+          Rectangle(
+            extent={{454,-76},{458,-236}},
+            lineColor={0,0,255},
+            pattern=LinePattern.None,
+            fillColor={0,0,0},
+            fillPattern=FillPattern.Solid),
+          Rectangle(
+            extent={{386,-152},{526,-158}},
+            lineColor={0,0,255},
+            pattern=LinePattern.None,
+            fillColor={0,0,0},
+            fillPattern=FillPattern.Solid),
+          Rectangle(extent={{108,-4},{566,-362}}, lineColor={135,135,135})}));
+  end AC_AWHP_PrimaryLoop_wTES_1B;
 
   model AC_AWHP_wTES_ports
     "Validated Partial model of variable air volume flow system with terminal reheat and 3 VAV zones at flexlab x1a"
@@ -10059,9 +10597,9 @@ This is for
           offset=1) annotation (Placement(transformation(extent={{-50,-304},{-30,-284}})));
         Modelica.Blocks.Logical.GreaterThreshold greaterThreshold(threshold=0.5)
           annotation (Placement(transformation(extent={{20,-234},{40,-214}})));
-        hil_flexlab_model.Plants.AC_AWHP_PrimaryLoop_addpts_wTES_3SP_noprim
-          aC_AWHP_PrimaryLoop_addpts_wTES_no_y_debug
-          annotation (Placement(transformation(extent={{100,-190},{146,-154}})));
+        hil_flexlab_model.Plants.AC_AWHP_PrimaryLoop_wTES_1A
+          aC_AWHP_PrimaryLoop_addpts_wTES_no_y_debug annotation (Placement(
+              transformation(extent={{100,-190},{146,-154}})));
         Modelica.Blocks.Sources.Ramp T_in(
           height=5,
           duration=86400/2,
