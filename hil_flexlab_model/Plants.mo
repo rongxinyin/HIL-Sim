@@ -6408,8 +6408,8 @@ First implementation.
         annotation (Placement(transformation(extent={{20,-120},{40,-100}})));
       Buildings.Controls.Continuous.LimPID conPI(
         controllerType=Modelica.Blocks.Types.SimpleController.PI,
-        k=0.1,
-        Ti=120,
+        k=0.01,
+        Ti=60,
         reset=Buildings.Types.Reset.Parameter,
         reverseActing=not (true)) "Feedback controller"
         annotation (Placement(transformation(extent={{-64,-16},{-44,4}})));
