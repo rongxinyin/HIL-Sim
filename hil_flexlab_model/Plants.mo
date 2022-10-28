@@ -3146,8 +3146,8 @@ This is for
           extent={{-10,-10},{10,10}},
           rotation=180,
           origin={408,-136})));
-    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium
-        = MediumG, m_flow_nominal=mSec_flow_nominal)
+    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium =
+          MediumG, m_flow_nominal=mSec_flow_nominal)
       annotation (Placement(transformation(extent={{348,-106},{368,-86}})));
     Modelica.Blocks.Interfaces.BooleanInput chiOn "On signal for chiller plant"
       annotation (Placement(transformation(extent={{-20,-20},{20,20}},
@@ -3236,7 +3236,7 @@ This is for
           extent={{-23,63},{23,-63}},
           rotation=90,
           origin={227,-239})));
-    hil_flexlab_model.Plants.Baseclasses_WH.Plant_Controller_3SP plaCon(TSolCoo=casDat.TSolCoo, TLiqCoo=casDat.TLi)
+    hil_flexlab_model.Plants.Baseclasses_WH.Plant_Controller_3SP plaCon(TSolCoo=casDat.TSolCoo, TLiqCoo=casDat.TLiqCoo)
       annotation (Placement(transformation(extent={{252,-316},{304,-290}})));
     RTUPCM.HVAC.Plants.BaseClasses.ChargeControlSOC
                                         chaConCoo(
@@ -3684,8 +3684,8 @@ This is for
           extent={{-10,-10},{10,10}},
           rotation=180,
           origin={408,-136})));
-    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium
-        = MediumG, m_flow_nominal=mSec_flow_nominal)
+    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium =
+          MediumG, m_flow_nominal=mSec_flow_nominal)
       annotation (Placement(transformation(extent={{348,-106},{368,-86}})));
     Modelica.Blocks.Interfaces.BooleanInput chiOn "On signal for chiller plant"
       annotation (Placement(transformation(extent={{-20,-20},{20,20}},
@@ -3774,7 +3774,7 @@ This is for
           extent={{-23,63},{23,-63}},
           rotation=90,
           origin={227,-239})));
-    hil_flexlab_model.Plants.Baseclasses_WH.Plant_Controller_3SP plaCon(TSolCoo=casDat.TSolCoo, TLiqCoo=casDat.TLi)
+    hil_flexlab_model.Plants.Baseclasses_WH.Plant_Controller_3SP plaCon(TSolCoo=casDat.TSolCoo, TLiqCoo=casDat.TLiqCoo)
       annotation (Placement(transformation(extent={{252,-316},{304,-290}})));
     RTUPCM.HVAC.Plants.BaseClasses.ChargeControlSOC
                                         chaConCoo(
