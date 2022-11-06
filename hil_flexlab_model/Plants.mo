@@ -3124,9 +3124,9 @@ This is for
 
   parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
       "Design mass flow rate of secondary loop";
+    parameter Real scaFac = 0.3040 "scaling factor for plant capacity";
     parameter Modelica.SIunits.Power QCoo_flow_nominal = 10000.0*scaFac "Design cooling capacity" annotation(Dialog(group="Climate Data"));
-    parameter Real scaFac = 1 "scaling factor for plant capacity";
-    parameter Modelica.SIunits.Energy CTes_nominal = 27190800.0 "Design cold storage capacity (factor * 1kWh)" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.Energy CTes_nominal = 52344000.0 "Design cold storage capacity (factor * 1kWh)" annotation(Dialog(group="Climate Data"));
     parameter Modelica.SIunits.TemperatureDifference dTCoo = 11-9 "Inlet temperature difference in cold TES rack" annotation(Dialog(group="System Specifications"));
 
     parameter Modelica.SIunits.DimensionlessRatio CTesScale = CTes_nominal/130000 "Scale factor for cold TES prototype size" annotation(Dialog(group="Climate Data"));
@@ -3147,8 +3147,8 @@ This is for
           extent={{-10,-10},{10,10}},
           rotation=180,
           origin={408,-136})));
-    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium
-        = MediumG, m_flow_nominal=mSec_flow_nominal)
+    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium =
+          MediumG, m_flow_nominal=mSec_flow_nominal)
       annotation (Placement(transformation(extent={{348,-106},{368,-86}})));
     Modelica.Blocks.Interfaces.BooleanInput chiOn "On signal for chiller plant"
       annotation (Placement(transformation(extent={{-20,-20},{20,20}},
@@ -3667,9 +3667,9 @@ This is for
 
   parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
       "Design mass flow rate of secondary loop";
+    parameter Real scaFac = 0.4060 "scaling factor for plant capacity";
     parameter Modelica.SIunits.Power QCoo_flow_nominal = 10000.0*scaFac "Design cooling capacity" annotation(Dialog(group="Climate Data"));
-    parameter Real scaFac = 1 "scaling factor for plant capacity";
-    parameter Modelica.SIunits.Energy CTes_nominal = 27190800.0 "Design cold storage capacity (factor * 1kWh)" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.Energy CTes_nominal = 52646400.0 "Design cold storage capacity (factor * 1kWh)" annotation(Dialog(group="Climate Data"));
     parameter Modelica.SIunits.TemperatureDifference dTCoo = 11-9 "Inlet temperature difference in cold TES rack" annotation(Dialog(group="System Specifications"));
 
     parameter Modelica.SIunits.DimensionlessRatio CTesScale = CTes_nominal/130000 "Scale factor for cold TES prototype size" annotation(Dialog(group="Climate Data"));
@@ -3690,8 +3690,8 @@ This is for
           extent={{-10,-10},{10,10}},
           rotation=180,
           origin={408,-136})));
-    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium
-        = MediumG, m_flow_nominal=mSec_flow_nominal)
+    Buildings.Fluid.Sensors.TemperatureTwoPort senTem(redeclare package Medium =
+          MediumG, m_flow_nominal=mSec_flow_nominal)
       annotation (Placement(transformation(extent={{348,-106},{368,-86}})));
     Modelica.Blocks.Interfaces.BooleanInput chiOn "On signal for chiller plant"
       annotation (Placement(transformation(extent={{-20,-20},{20,20}},
@@ -10930,8 +10930,8 @@ This is for
             Line(points={{146.4,-243.4},{146.4,-196.7},{185,-196.7},{185,-148}},
               color={0,0,127}));
         connect(OAT.y, aC_AWHP_PrimaryLoop_wTES_1A.T_air_in) annotation (Line(
-              points={{357,-340},{250.5,-340},{250.5,-249},{146.2,-249}}, color
-              ={0,0,127}));
+              points={{357,-340},{250.5,-340},{250.5,-249},{146.2,-249}}, color=
+               {0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-420},
                   {480,100}})),                                        Diagram(
               coordinateSystem(preserveAspectRatio=false, extent={{-100,-420},{480,100}})),
