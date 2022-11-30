@@ -3125,9 +3125,9 @@ This is for
 
   parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
       "Design mass flow rate of secondary loop";
+    parameter Real scaFac = 0.3040 "scaling factor for plant capacity";
     parameter Modelica.SIunits.Power QCoo_flow_nominal = 10000.0*scaFac "Design cooling capacity" annotation(Dialog(group="Climate Data"));
-    parameter Real scaFac = 1 "scaling factor for plant capacity";
-    parameter Modelica.SIunits.Energy CTes_nominal = 27190800.0 "Design cold storage capacity (factor * 1kWh)" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.Energy CTes_nominal = 52344000.0 "Design cold storage capacity (factor * 1kWh)" annotation(Dialog(group="Climate Data"));
     parameter Modelica.SIunits.TemperatureDifference dTCoo = 11-9 "Inlet temperature difference in cold TES rack" annotation(Dialog(group="System Specifications"));
 
     parameter Modelica.SIunits.DimensionlessRatio CTesScale = CTes_nominal/130000 "Scale factor for cold TES prototype size" annotation(Dialog(group="Climate Data"));
@@ -3675,9 +3675,9 @@ This is for
 
   parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
       "Design mass flow rate of secondary loop";
+    parameter Real scaFac = 0.3040 "scaling factor for plant capacity";
     parameter Modelica.SIunits.Power QCoo_flow_nominal = 10000.0*scaFac "Design cooling capacity" annotation(Dialog(group="Climate Data"));
-    parameter Real scaFac = 1 "scaling factor for plant capacity";
-    parameter Modelica.SIunits.Energy CTes_nominal = 27190800.0 "Design cold storage capacity (factor * 1kWh)" annotation(Dialog(group="Climate Data"));
+    parameter Modelica.SIunits.Energy CTes_nominal = 52344000.0 "Design cold storage capacity (factor * 1kWh)" annotation(Dialog(group="Climate Data"));
     parameter Modelica.SIunits.TemperatureDifference dTCoo = 11-9 "Inlet temperature difference in cold TES rack" annotation(Dialog(group="System Specifications"));
 
     parameter Modelica.SIunits.DimensionlessRatio CTesScale = CTes_nominal/130000 "Scale factor for cold TES prototype size" annotation(Dialog(group="Climate Data"));
