@@ -57,7 +57,7 @@ model FlexlabX1A0831 "Model of a flexlab x1a"
          til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling},
          azi = {Buildings.Types.Azimuth.E, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.S}),
     mSenFac=8,
-    nPorts=5,
+    nPorts=4,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
@@ -243,14 +243,6 @@ model FlexlabX1A0831 "Model of a flexlab x1a"
     annotation (Placement(transformation(extent={{-40,170},{-20,190}})));
   Buildings.BoundaryConditions.WeatherData.Bus weaBus "Weather bus"
     annotation (Placement(transformation(extent={{200,224},{220,244}})));
-  Buildings.Examples.VAVReheat.ThermalZones.RoomLeakage leaSou(
-    redeclare package Medium = Medium,
-    VRoo=6.49*3.05*3.6576/5,
-    s=6.49/3.05,
-    azi=Buildings.Types.Azimuth.S,
-    final use_windPressure=true)
-    "Model for air infiltration through the envelope"
-    annotation (Placement(transformation(extent={{-56,400},{-20,440}})));
   Buildings.Examples.VAVReheat.ThermalZones.RoomLeakage leaPle(
     redeclare package Medium = Medium,
     VRoo=6.49*(3.05 + 3.05 + 3.23)*1.625,
@@ -440,6 +432,8 @@ model FlexlabX1A0831 "Model of a flexlab x1a"
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "internal heat gain from lights"
     annotation (Placement(transformation(extent={{-138,-62},{-118,-42}})));
+  BaseClasses.RoomLeakage leaSou
+    annotation (Placement(transformation(extent={{-72,384},{-6,450}})));
 equation
   connect(sou.surf_conBou[2], cor.surf_conBou[3]) annotation (Line(
       points={{170,-40},{170,-54},{200,-54},{200,20},{170,20},{170,40.25}},
@@ -494,11 +488,6 @@ equation
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
-  connect(weaBus, leaSou.weaBus) annotation (Line(
-      points={{210,234},{-80,234},{-80,420},{-56,420}},
-      color={255,204,51},
-      thickness=0.5,
-      smooth=Smooth.None));
   connect(weaBus, leaPle.weaBus) annotation (Line(
       points={{210,234},{-80,234},{-80,362},{-56,362}},
       color={255,204,51},
@@ -536,11 +525,11 @@ equation
       color={191,0,0},
       smooth=Smooth.None));
   connect(sou.ports[1], portsSou[1]) annotation (Line(
-      points={{149,-37.2},{114,-37.2},{114,-34},{80,-34}},
+      points={{149,-37},{114,-37},{114,-34},{80,-34}},
       color={0,127,255},
       smooth=Smooth.None));
   connect(sou.ports[2], portsSou[2]) annotation (Line(
-      points={{149,-35.6},{124,-35.6},{124,-34},{100,-34}},
+      points={{149,-35},{124,-35},{124,-34},{100,-34}},
       color={0,127,255},
       smooth=Smooth.None));
   connect(ple.ports[1],portsPle [1]) annotation (Line(
@@ -569,11 +558,6 @@ equation
       points={{149,43.2},{124,43.2},{124,46},{100,46}},
       color={0,127,255},
       smooth=Smooth.None));
-  connect(leaSou.port_b, sou.ports[3]) annotation (Line(
-      points={{-20,420},{-2,420},{-2,-72},{134,-72},{134,-34},{149,-34}},
-      color={0,127,255},
-      smooth=Smooth.None,
-      thickness=0.5));
   connect(leaPle.port_b, ple.ports[3]) annotation (Line(
       points={{-20,362},{246,362},{246,70},{363,70}},
       color={0,127,255},
@@ -594,13 +578,13 @@ equation
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
-  connect(opeSouCor.port_a1, sou.ports[4]) annotation (Line(
-      points={{84,16},{74,16},{74,-20},{134,-20},{134,-32.4},{149,-32.4}},
+  connect(opeSouCor.port_a1, sou.ports[3]) annotation (Line(
+      points={{84,16},{74,16},{74,-20},{134,-20},{134,-33},{149,-33}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
-  connect(opeSouCor.port_b2, sou.ports[5]) annotation (Line(
-      points={{84,4},{74,4},{74,-20},{134,-20},{134,-30.8},{149,-30.8}},
+  connect(opeSouCor.port_b2, sou.ports[4]) annotation (Line(
+      points={{84,4},{74,4},{74,-20},{134,-20},{134,-31},{149,-31}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
