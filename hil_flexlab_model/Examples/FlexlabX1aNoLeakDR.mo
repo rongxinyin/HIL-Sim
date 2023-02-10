@@ -269,8 +269,9 @@ equation
         color={0,0,127}));
   connect(gaiHeaCoi.u, swiHeaCoi.y)
     annotation (Line(points={{98,-210},{82,-210},{82,-210}}, color={0,0,127}));
-  connect(gaiCooCoi.u, swiCooCoi.y) annotation (Line(points={{98,-248},{88,-248},
-          {88,-248},{82,-248}}, color={0,0,127}));
+  connect(gaiCooCoi.u, swiCooCoi.y) annotation (Line(points={{142,-248},{88,
+          -248},{88,-248},{82,-248}},
+                                color={0,0,127}));
   connect(eco.yExh, conEco.yOA) annotation (Line(
       points={{-3,-34},{-2,-34},{-2,152},{-59.3333,152}},
       color={0,0,127},

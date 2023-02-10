@@ -1,5 +1,5 @@
 within hil_flexlab_model.ThermalZones;
-model FlexlabX1A0831 "Model of a flexlab x1a"
+model FlexlabX1A013123 "Model of a flexlab x1a"
   replaceable package Medium = Modelica.Media.Interfaces.PartialMedium
     "Medium model for air" annotation (choicesAllMatching=true);
 
@@ -838,4 +838,4 @@ to be parameters does not imply that the whole record has the variability of a p
       StopTime=19612800,
       Interval=300,
       __Dymola_Algorithm="Dassl"));
-end FlexlabX1A0831;
+end FlexlabX1A013123;
