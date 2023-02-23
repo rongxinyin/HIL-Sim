@@ -88,14 +88,14 @@ model FlexlabX1aNoLeakBaseline_G36paper
   Modelica.Blocks.Math.Add add1
     annotation (Placement(transformation(extent={{784,-182},{764,-162}})));
   Modelica.Blocks.Sources.CombiTimeTable heaSetDR(
-    table=[0,15.6; 5,15.6; 5,17.8; 6,17.8; 6,19.4; 7,19.4; 7,21.1; 22,21.1; 22,
-        15.6; 24,15.6],
+    table=[0,15.5556; 5,15.5556; 5,17.7778; 6,17.7778; 6,19.4444; 7,19.4444; 7,
+        21.1111; 22,21.1111; 22,15.5556; 24,15.5556],
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic,
     timeScale=3600) "heating schedule for demand response"
     annotation (Placement(transformation(extent={{674,-224},{694,-204}})));
   Modelica.Blocks.Sources.CombiTimeTable cooSetDR(
-    table=[0,26.7; 5,26.7; 5,25.6; 6,25.6; 6,25; 7,25; 7,23.3; 22,23.3; 22,26.7;
-        24,26.7],
+    table=[0,26.6667; 5,26.6667; 5,25.5556; 6,25.5556; 6,25; 7,25; 7,23.3333;
+        22,23.3333; 22,26.6667; 24,26.6667],
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic,
     timeScale=3600) "cooling schedule for demand response"
     annotation (Placement(transformation(extent={{674,-272},{694,-252}})));
