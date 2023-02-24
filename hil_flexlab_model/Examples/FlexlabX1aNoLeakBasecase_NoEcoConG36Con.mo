@@ -25,8 +25,8 @@ model FlexlabX1aNoLeakBasecase_NoEcoConG36Con
     AFlo=AFloNor,
     final samplePeriod=samplePeriod,
     kDam=0.5,
-    VDisSetMin_flow=0.3*mNor_flow_nominal/1.2,
-    VDisConMin_flow=0.2*mNor_flow_nominal/1.2,
+    VDisSetMin_flow=0.289*mNor_flow_nominal,
+    VDisConMin_flow=0.289*mNor_flow_nominal,
     dTDisZonSetMax=5,
     TDisMin=285.95)                  "Controller for terminal unit north zone"
     annotation (Placement(transformation(extent={{654,4},{674,24}})));
@@ -34,8 +34,8 @@ model FlexlabX1aNoLeakBasecase_NoEcoConG36Con
     V_flow_nominal=mCor_flow_nominal/1.2,
     AFlo=AFloCor,
     final samplePeriod=samplePeriod,
-    VDisSetMin_flow=0.3*mCor_flow_nominal/1.2,
-    VDisConMin_flow=0.2*mCor_flow_nominal/1.2,
+    VDisSetMin_flow=0.289*mCor_flow_nominal,
+    VDisConMin_flow=0.289*mCor_flow_nominal,
     dTDisZonSetMax=5,
     TDisMin=285.95)                  "Controller for terminal unit mid zone"
     annotation (Placement(transformation(extent={{778,104},{798,124}})));
@@ -43,8 +43,8 @@ model FlexlabX1aNoLeakBasecase_NoEcoConG36Con
     V_flow_nominal=mSou_flow_nominal/1.2,
     AFlo=AFloSou,
     final samplePeriod=samplePeriod,
-    VDisSetMin_flow=0.2625*mSou_flow_nominal/1.2,
-    VDisConMin_flow=0.2625*mSou_flow_nominal/1.2,
+    VDisSetMin_flow=0.2625*mSou_flow_nominal,
+    VDisConMin_flow=0.2625*mSou_flow_nominal,
     dTDisZonSetMax=5,
     TDisMin=285.95)   "Controller for terminal unit south zone"
     annotation (Placement(transformation(extent={{1020,32},{1040,52}})));

@@ -25,14 +25,14 @@ partial model PartialOpenLoopX1aV020123
   final parameter Modelica.SIunits.Area ATot=sum(AFlo) "Total floor area";
 
   constant Real conv=1.2/3600 "Conversion factor for nominal mass flow rate";
-    parameter Modelica.SIunits.MassFlowRate mCor_flow_nominal=0.106*1.2
-    "Design mass flow rate core";
-  parameter Modelica.SIunits.MassFlowRate mSou_flow_nominal=0.189*1.2
-    "Design mass flow rate perimeter 1";
+    parameter Modelica.SIunits.MassFlowRate mCor_flow_nominal=0.0866
+                                                                    "*1.2Design mass flow rate core";
+  parameter Modelica.SIunits.MassFlowRate mSou_flow_nominal=0.154
+                                                                 "*1.2Design mass flow rate perimeter 1";
   parameter Modelica.SIunits.MassFlowRate mPle_flow_nominal=0.03*1.2
     "Design mass flow rate perimeter 2";
-  parameter Modelica.SIunits.MassFlowRate mNor_flow_nominal=0.106*1.2
-    "Design mass flow rate perimeter 3";
+  parameter Modelica.SIunits.MassFlowRate mNor_flow_nominal=0.0866
+                                                                  "*1.2Design mass flow rate perimeter 3";
  // parameter Modelica.SIunits.MassFlowRate mCor_flow_nominal=6*VRooCor*conv
  //   "Design mass flow rate core";
  // parameter Modelica.SIunits.MassFlowRate mSou_flow_nominal=6*VRooSou*conv
@@ -42,7 +42,7 @@ partial model PartialOpenLoopX1aV020123
  // parameter Modelica.SIunits.MassFlowRate mNor_flow_nominal=6*VRooNor*conv
  //   "Design mass flow rate perimeter 3";
   parameter Modelica.SIunits.MassFlowRate m_flow_nominal=1.0*(mCor_flow_nominal
-       + mSou_flow_nominal + mPle_flow_nominal + mNor_flow_nominal) "Nominal mass flow rate";
+       + mSou_flow_nominal + mNor_flow_nominal) "Nominal mass flow rate";
   parameter Modelica.SIunits.Angle lat=37.87*3.14159/180 "Latitude";
 
   parameter Modelica.SIunits.Temperature THeaOn=293.15
