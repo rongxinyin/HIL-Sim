@@ -42,7 +42,7 @@ partial model PartialOpenLoopX1aV020123
  // parameter Modelica.SIunits.MassFlowRate mNor_flow_nominal=6*VRooNor*conv
  //   "Design mass flow rate perimeter 3";
   parameter Modelica.SIunits.MassFlowRate m_flow_nominal=1.0*(mCor_flow_nominal
-       + mSou_flow_nominal + mPle_flow_nominal + mNor_flow_nominal) "Nominal mass flow rate";
+       + mSou_flow_nominal + mNor_flow_nominal) "Nominal mass flow rate";
   parameter Modelica.SIunits.Angle lat=37.87*3.14159/180 "Latitude";
 
   parameter Modelica.SIunits.Temperature THeaOn=293.15
