@@ -1,51 +1,49 @@
 within hil_flexlab_model.Examples;
-model FlexlabX1aNoLeakBasecase_NoEcoConG36Con
-  "adjust the overnight cooling issue"
+model FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shed
+  "DR mode - Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
-  extends BaseClasses.PartialOpenLoopX1aV020123(occSch(
+  extends hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV020123(occSch(
       occupancy={0,86399},
       firstEntryOccupied=true,
       period=86400), fanSup(per(use_powerCharacteristic=true, power(V_flow={
-              0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4}, P={367,396,425,454,483,512,
-              541,570}))));
+              0.05,0.4}, P=1*{167,370}))));
 //  extends BaseClasses.PartialOpenLoopX1aV1(min(nin=3),
 //      ave(nin=3));
 
-  parameter Modelica.SIunits.VolumeFlowRate VPriSysMax_flow=m_flow_nominal
+  parameter Modelica.SIunits.VolumeFlowRate VPriSysMax_flow=m_flow_nominal/1.2
     "Maximum expected system primary airflow rate at design stage";
   parameter Modelica.SIunits.VolumeFlowRate minZonPriFlo[numZon]={
-      mCor_flow_nominal,mSou_flow_nominal,mNor_flow_nominal}
-                                                            "Minimum expected zone primary flow rate";
+      mCor_flow_nominal,mSou_flow_nominal,mNor_flow_nominal}/1.2 "Minimum expected zone primary flow rate";
   parameter Modelica.SIunits.Time samplePeriod=120
     "Sample period of component, set to the same value as the trim and respond that process yPreSetReq";
   parameter Modelica.SIunits.PressureDifference dpDisRetMax=40
     "Maximum return fan discharge static pressure setpoint";
 
   Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Controller conVAVNor(
-    V_flow_nominal=mNor_flow_nominal,
+    V_flow_nominal=mNor_flow_nominal/1.2,
     AFlo=AFloNor,
     final samplePeriod=samplePeriod,
     kDam=0.5,
-    VDisSetMin_flow=0.3*mNor_flow_nominal,
-    VDisConMin_flow=0.3*mNor_flow_nominal,
+    VDisSetMin_flow=0.3*mNor_flow_nominal/1.2,
+    VDisConMin_flow=0.2*mNor_flow_nominal/1.2,
     dTDisZonSetMax=5,
     TDisMin=285.95)                  "Controller for terminal unit north zone"
     annotation (Placement(transformation(extent={{654,4},{674,24}})));
   Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Controller conVAVCor(
-    V_flow_nominal=mCor_flow_nominal,
+    V_flow_nominal=mCor_flow_nominal/1.2,
     AFlo=AFloCor,
     final samplePeriod=samplePeriod,
-    VDisSetMin_flow=0.3*mCor_flow_nominal,
-    VDisConMin_flow=0.3*mCor_flow_nominal,
+    VDisSetMin_flow=0.3*mCor_flow_nominal/1.2,
+    VDisConMin_flow=0.2*mCor_flow_nominal/1.2,
     dTDisZonSetMax=5,
     TDisMin=285.95)                  "Controller for terminal unit mid zone"
     annotation (Placement(transformation(extent={{778,104},{798,124}})));
   Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Controller conVAVSou(
-    V_flow_nominal=mSou_flow_nominal,
+    V_flow_nominal=mSou_flow_nominal/1.2,
     AFlo=AFloSou,
     final samplePeriod=samplePeriod,
-    VDisSetMin_flow=0.2625*mSou_flow_nominal,
-    VDisConMin_flow=0.2625*mSou_flow_nominal,
+    VDisSetMin_flow=0.2625*mSou_flow_nominal/1.2,
+    VDisConMin_flow=0.2625*mSou_flow_nominal/1.2,
     dTDisZonSetMax=5,
     TDisMin=285.95)   "Controller for terminal unit south zone"
     annotation (Placement(transformation(extent={{1020,32},{1040,52}})));
@@ -77,7 +75,7 @@ model FlexlabX1aNoLeakBasecase_NoEcoConG36Con
     annotation (Placement(transformation(extent={{-144,350},{-124,370}})));
   Buildings.Controls.OBC.CDL.Routing.BooleanReplicator booRep(final nout=numZon)
     "Replicate boolean input"
-    annotation (Placement(transformation(extent={{-144,316},{-124,336}})));
+    annotation (Placement(transformation(extent={{-146,316},{-126,336}})));
   Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.ModeAndSetPoints TZonSet[numZon](
     final TZonHeaOn=fill(273.15 + 21.1, numZon),
     final TZonHeaOff=fill(THeaOff, numZon),
@@ -106,36 +104,32 @@ model FlexlabX1aNoLeakBasecase_NoEcoConG36Con
   Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.Controller conAHU(
     retDamPhyPosMax=0.7,
     outDamPhyPosMin=0.3,
-    pIniSet=125,
-    pMinSet=25,
+    pMinSet=250,
     final pMaxSet=250,
-    pNumIgnReq=0,
-    pTriAmo=-12,
-    pResAmo=15,
+    pTriAmo=0,
+    pResAmo=0,
     final yFanMin=yFanMin,
     final VPriSysMax_flow=VPriSysMax_flow,
     final peaSysPop=2*sum({0.05*AFlo[i] for i in 1:numZon}),
-    TSupSetMin=284.55,
-    TSupSetMax=284.55,
-    TSupSetDes=284.55,
-    TOutMin=289.15,
+    TSupSetMin=285.95,
+    TSupSetMax=285.95,
+    TSupSetDes=285.95,
     numIgnReqSupTem=0,
-    triAmoSupTem=0.1,
-    resAmoSupTem=-0.2,
-    maxResSupTem=-0.6)                                         "AHU controller"
+    triAmoSupTem=0,
+    resAmoSupTem=0)                                            "AHU controller"
     annotation (Placement(transformation(extent={{360,418},{440,546}})));
   Modelica.Blocks.Math.Add add
     annotation (Placement(transformation(extent={{-124,446},{-144,466}})));
   Modelica.Blocks.Sources.CombiTimeTable cooSetDR(
-    table=[0,3.3667; 5,3.3667; 5,2.2556; 6,2.2556; 6,1.7; 7,1.7; 7,0.033300000000001;
-        14,0.033300000000001; 14,2.2556; 18,2.2556; 18,0.033300000000001; 22,0.033300000000001;
-        22,3.3667; 24,3.3667],
+    table=[0,3.3667; 5,3.3667; 5,2.2556; 6,2.2556; 6,1.7; 7,1.7; 7,
+        0.033300000000001; 14,0.033300000000001; 14,2.2556; 18,2.2556; 18,
+        0.033300000000001; 22,0.033300000000001; 22,3.3667; 24,3.3667],
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic,
     timeScale=3600) "cooling schedule for demand response"
     annotation (Placement(transformation(extent={{-142,400},{-122,420}})));
   Modelica.Blocks.Sources.CombiTimeTable heaSetDR(
-    table=[0,-5.5444; 5,-5.5444; 5,-3.3222; 6,-3.3222; 6,-1.6556; 7,-1.6556; 7,0.011099999999999;
-        22,0.011099999999999; 22,-5.5444; 24,-5.5444],
+    table=[0,-5.5444; 5,-5.5444; 5,-3.3222; 6,-3.3222; 6,-1.6556; 7,-1.6556; 7,
+        0.011099999999999; 22,0.011099999999999; 22,-5.5444; 24,-5.5444],
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic,
     timeScale=3600) "heating schedule for demand response"
     annotation (Placement(transformation(extent={{-140,222},{-120,242}})));
@@ -202,9 +196,8 @@ equation
   connect(TSup.T,conVAVNor. TSupAHU) annotation (Line(points={{340,-29},{340,
           -20},{546,-20},{546,6},{652,6}},
                                         color={0,0,127}));
-  connect(TSup.T, conVAVCor.TSupAHU) annotation (Line(points={{340,-29},{340,
-          -20},{764,-20},{764,106},{776,106}},
-                                             color={0,0,127}));
+  connect(TSup.T, conVAVCor.TSupAHU) annotation (Line(points={{340,-29},{340,-20},
+          {764,-20},{764,106},{776,106}},    color={0,0,127}));
   connect(TSup.T, conVAVSou.TSupAHU) annotation (Line(points={{340,-29},{340,-20},
           {678,-20},{678,34},{1018,34}},   color={0,0,127}));
   connect(yOutDam.y, eco.yExh)
@@ -218,10 +211,10 @@ equation
   connect(occSch.tNexNonOcc, reaRep.u) annotation (Line(points={{-297,-210},{-236,
           -210},{-236,360},{-146,360}}, color={0,0,127}));
   connect(occSch.occupied, booRep.u) annotation (Line(points={{-297,-216},{-232,
-          -216},{-232,326},{-146,326}}, color={255,0,255}));
+          -216},{-232,326},{-148,326}}, color={255,0,255}));
   connect(reaRep.y, TZonSet.tNexOcc) annotation (Line(points={{-122,360},{-78,360},
           {-78,341},{-34,341}}, color={0,0,127}));
-  connect(booRep.y, TZonSet.uOcc) annotation (Line(points={{-122,326},{-80,326},
+  connect(booRep.y, TZonSet.uOcc) annotation (Line(points={{-124,326},{-80,326},
           {-80,338.025},{-34,338.025}}, color={255,0,255}));
   connect(conVAVSou.uOpeMod, TZonSet[1].yOpeMod) annotation (Line(points={{1018,32},
           {502,32},{502,325},{-10,325}},       color={255,127,0}));
@@ -337,8 +330,8 @@ equation
           -162,456},{-162,50},{1018,50}}, color={0,0,127}));
   connect(add.y, conVAVNor.TZonCooSet) annotation (Line(points={{-145,456},{
           -162,456},{-162,22},{652,22}}, color={0,0,127}));
-  connect(add.y, conVAVCor.TZonCooSet) annotation (Line(points={{-145,456},{
-          -162,456},{-162,122},{776,122}}, color={0,0,127}));
+  connect(add.y, conVAVCor.TZonCooSet) annotation (Line(points={{-145,456},{-162,
+          456},{-162,122},{776,122}},      color={0,0,127}));
   connect(VSupCor_flow.V_flow, VDis_flow.u2[1]) annotation (Line(points={{823,132},
           {154,132},{154,252},{174,252}},      color={0,0,127}));
   connect(TSupCor.T, TDis.u2[1]) annotation (Line(points={{823,94},{80,94},{80,
@@ -362,8 +355,8 @@ equation
           {-66,274},{-120,274}}, color={0,0,127}));
   connect(add1.y, conVAVNor.TZonHeaSet) annotation (Line(points={{-143,280},{
           -182,280},{-182,24},{652,24}}, color={0,0,127}));
-  connect(add1.y, conVAVCor.TZonHeaSet) annotation (Line(points={{-143,280},{
-          -182,280},{-182,110},{298,110},{298,124},{776,124}}, color={0,0,127}));
+  connect(add1.y, conVAVCor.TZonHeaSet) annotation (Line(points={{-143,280},{-182,
+          280},{-182,110},{298,110},{298,124},{776,124}},      color={0,0,127}));
   connect(add1.y, conVAVSou.TZonHeaSet) annotation (Line(points={{-143,280},{
           -182,280},{-182,52},{1018,52}}, color={0,0,127}));
   connect(ecoHigCut.y, conAHU.TOutCut) annotation (Line(points={{88,482},{224,
@@ -449,9 +442,9 @@ This is for
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/Guideline36.mos"
         "Simulate and plot"),
     experiment(
-      StartTime=21081600,
-      StopTime=21600000,
+      StartTime=19353600,
+      StopTime=23068800,
       Interval=299.999808,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
-end FlexlabX1aNoLeakBasecase_NoEcoConG36Con;
+end FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shed;

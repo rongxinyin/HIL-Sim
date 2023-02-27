@@ -441,9 +441,9 @@ This is for
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/Guideline36.mos"
         "Simulate and plot"),
     experiment(
-      StartTime=19180800,
-      StopTime=19612800,
-      Interval=300,
+      StartTime=21081600,
+      StopTime=21600000,
+      Interval=299.999808,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end FlexlabX1aNoLeakBaseline0901;
