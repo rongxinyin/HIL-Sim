@@ -101,7 +101,7 @@ model FlexlabX1aNoLeakBaseline_Calib_G36Paper
   Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow.SumZone
     zonToSys(final numZon=numZon) "Sum up zone calculation output"
     annotation (Placement(transformation(extent={{274,420},{294,440}})));
-  Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.Controller conAHU(
+  hil_flexlab_model.BaseClasses.Controls.Controller_G36 conAHU(
     retDamPhyPosMax=0.7,
     outDamPhyPosMin=0.3,
     pMinSet=250,
@@ -136,6 +136,13 @@ model FlexlabX1aNoLeakBaseline_Calib_G36Paper
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant ecoHigCut(k=273.15 + 18)
     "economizer high cut off temp"
     annotation (Placement(transformation(extent={{66,472},{86,492}})));
+  Modelica.Blocks.Math.Add add2(k1=-1, k2=+1)
+    annotation (Placement(transformation(extent={{-192,432},{-212,452}})));
+  Modelica.Blocks.Logical.Greater greater_unocc
+    annotation (Placement(transformation(extent={{-266,436},{-286,456}})));
+  Buildings.Controls.OBC.CDL.Continuous.Sources.Constant ecoHigCut1(k=11)
+    "economizer high cut off temp"
+    annotation (Placement(transformation(extent={{-218,384},{-242,408}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,0},{320,-10},{320,-10}},
@@ -250,70 +257,71 @@ equation
   connect(zonOutAirSet.VPriAir_flow, zonToSys.VPriAir_flow) annotation (Line(
         points={{250,421},{262,421},{262,422},{272,422}}, color={0,0,127}));
   connect(zonToSys.ySumDesZonPop, conAHU.sumDesZonPop) annotation (Line(points={{296,439},
-          {296,522},{356,522},{356,515.778}},           color={0,0,127}));
+          {296,522},{356,522},{356,521.529}},           color={0,0,127}));
   connect(zonToSys.VSumDesPopBreZon_flow, conAHU.VSumDesPopBreZon_flow)
-    annotation (Line(points={{296,436},{298,436},{298,510.444},{356,510.444}},
+    annotation (Line(points={{296,436},{298,436},{298,515.882},{356,515.882}},
         color={0,0,127}));
   connect(zonToSys.VSumDesAreBreZon_flow, conAHU.VSumDesAreBreZon_flow)
-    annotation (Line(points={{296,433},{300,433},{300,505.111},{356,505.111}},
+    annotation (Line(points={{296,433},{300,433},{300,510.235},{356,510.235}},
         color={0,0,127}));
   connect(zonToSys.yDesSysVenEff, conAHU.uDesSysVenEff) annotation (Line(points={{296,430},
-          {302,430},{302,499.778},{356,499.778}},           color={0,0,127}));
+          {302,430},{302,504.588},{356,504.588}},           color={0,0,127}));
   connect(zonToSys.VSumUncOutAir_flow, conAHU.VSumUncOutAir_flow) annotation (
-      Line(points={{296,427},{303,427},{303,494.444},{356,494.444}}, color={0,0,
+      Line(points={{296,427},{303,427},{303,498.941},{356,498.941}}, color={0,0,
           127}));
   connect(zonToSys.uOutAirFra_max, conAHU.uOutAirFra_max) annotation (Line(
-        points={{296,424},{302,424},{302,483.778},{356,483.778}}, color={0,0,127}));
+        points={{296,424},{302,424},{302,487.647},{356,487.647}}, color={0,0,127}));
   connect(zonToSys.VSumSysPriAir_flow, conAHU.VSumSysPriAir_flow) annotation (
-      Line(points={{296,421},{304,421},{304,489.111},{356,489.111}}, color={0,0,
+      Line(points={{296,421},{304,421},{304,493.294},{356,493.294}}, color={0,0,
           127}));
   connect(TOut.y, conAHU.TOut) annotation (Line(points={{-279,180},{18.5,180},{
-          18.5,531.778},{356,531.778}},
+          18.5,538.471},{356,538.471}},
                                    color={0,0,127}));
   connect(dpDisSupFan.p_rel, conAHU.ducStaPre) annotation (Line(points={{311,0},
-          {140,0},{140,526.444},{356,526.444}}, color={0,0,127}));
+          {140,0},{140,532.824},{356,532.824}}, color={0,0,127}));
   connect(TSup.T, conAHU.TSup) annotation (Line(points={{340,-29},{198,-29},{
-          198,472},{356,472},{356,473.111}},
+          198,472},{356,472},{356,476.353}},
                                          color={0,0,127}));
   connect(VOut1.V_flow, conAHU.VOut_flow) annotation (Line(points={{-61,-20.9},
-          {-61,218},{-18,218},{-18,454},{356,454},{356,451.778}},color={0,0,127}));
-  connect(TMix.T, conAHU.TMix) annotation (Line(points={{40,-29},{40,444.667},{
-          356,444.667}},
+          {-61,218},{-18,218},{-18,454},{356,454},{356,453.765}},color={0,0,127}));
+  connect(TMix.T, conAHU.TMix) annotation (Line(points={{40,-29},{40,446.235},{
+          356,446.235}},
                      color={0,0,127}));
   connect(TZonSet[1].yOpeMod, conAHU.uOpeMod) annotation (Line(points={{-10,325},
-          {158,325},{158,437.556},{356,437.556}}, color={255,127,0}));
+          {158,325},{158,438.706},{356,438.706}}, color={255,127,0}));
   connect(TZonResReq.y, conAHU.uZonTemResReq) annotation (Line(points={{320,298},
-          {322,298},{322,432.222},{356,432.222}}, color={255,127,0}));
+          {322,298},{322,433.059},{356,433.059}}, color={255,127,0}));
   connect(PZonResReq.y, conAHU.uZonPreResReq) annotation (Line(points={{322,264},
-          {324,264},{324,426.889},{356,426.889}}, color={255,127,0}));
-  connect(conAHU.ySupFanSpe, fanSup.y) annotation (Line(points={{444,524.667},{
-          472,524.667},{472,-12},{310,-12},{310,-28}},
+          {324,264},{324,427.412},{356,427.412}}, color={255,127,0}));
+  connect(conAHU.ySupFanSpe, fanSup.y) annotation (Line(points={{444,530.941},{
+          472,530.941},{472,-12},{310,-12},{310,-28}},
                                                    color={0,0,127}));
   connect(conAHU.VDesUncOutAir_flow, reaRep1.u) annotation (Line(points={{444,
-          503.333},{447,503.333},{447,488},{478,488}},
+          508.353},{447,508.353},{447,488},{478,488}},
                                               color={0,0,127}));
-  connect(conAHU.yReqOutAir, booRep1.u) annotation (Line(points={{444,471.333},
+  connect(conAHU.yReqOutAir, booRep1.u) annotation (Line(points={{444,474.471},
           {444,448},{478,448}},color={255,0,255}));
   connect(conAHU.yAveOutAirFraPlu, zonToSys.yAveOutAirFraPlu) annotation (Line(
-        points={{444,492.667},{430,492.667},{430,414},{266,414},{266,432},{272,
+        points={{444,497.059},{430,497.059},{430,414},{266,414},{266,432},{272,
           432}},
         color={0,0,127}));
-  connect(conAHU.yHea, swiFreSta.u3) annotation (Line(points={{444,460.667},{
+  connect(conAHU.yHea, swiFreSta.u3) annotation (Line(points={{444,463.176},{
           444,-240},{40,-240},{40,-200},{58,-200}},
                                                 color={0,0,127}));
-  connect(conAHU.yCoo, gaiCooCoi.u) annotation (Line(points={{444,450},{460,450},
-          {460,-272},{80,-272},{80,-248},{98,-248}}, color={0,0,127}));
-  connect(conAHU.yRetDamPos, eco.yRet) annotation (Line(points={{444,439.333},{
+  connect(conAHU.yCoo, gaiCooCoi.u) annotation (Line(points={{444,451.882},{460,
+          451.882},{460,-272},{80,-272},{80,-248},{98,-248}},
+                                                     color={0,0,127}));
+  connect(conAHU.yRetDamPos, eco.yRet) annotation (Line(points={{444,440.588},{
           444,442},{422,442},{422,202},{-16.8,202},{-16.8,-34}},
                                                              color={0,0,127}));
-  connect(conAHU.yOutDamPos, eco.yOut) annotation (Line(points={{444,428.667},{
-          416,428.667},{416,430},{420,430},{420,168},{-10,168},{-10,-34}},
+  connect(conAHU.yOutDamPos, eco.yOut) annotation (Line(points={{444,429.294},{
+          416,429.294},{416,430},{420,430},{420,168},{-10,168},{-10,-34}},
                                                                        color={0,
           0,127}));
   connect(TZonSet[1].TZonCooSet, conAHU.TZonCooSet) annotation (Line(points={{-10,339},
-          {174,339},{174,537.111},{356,537.111}},      color={0,0,127}));
+          {174,339},{174,544.118},{356,544.118}},      color={0,0,127}));
   connect(TZonSet[1].TZonHeaSet, conAHU.TZonHeaSet) annotation (Line(points={{-10,332},
-          {174,332},{174,542.444},{356,542.444}},      color={0,0,127}));
+          {174,332},{174,549.765},{356,549.765}},      color={0,0,127}));
   connect(conVAVNor.yDam_actual, nor.y_actual) annotation (Line(points={{652,10},
           {642,10},{642,72},{746,72},{746,56},{738,56}}, color={0,0,127}));
   connect(conVAVCor.yDam_actual, cor.y_actual) annotation (Line(points={{776,110},
@@ -358,8 +366,18 @@ equation
   connect(add1.y, conVAVSou.TZonHeaSet) annotation (Line(points={{-143,280},{
           -182,280},{-182,52},{1018,52}}, color={0,0,127}));
   connect(ecoHigCut.y, conAHU.TOutCut) annotation (Line(points={{88,482},{224,
-          482},{224,467.778},{356,467.778}},
+          482},{224,470.706},{356,470.706}},
                                         color={0,0,127}));
+  connect(add2.y, greater_unocc.u1) annotation (Line(points={{-213,442},{-248,
+          442},{-248,446},{-264,446}}, color={0,0,127}));
+  connect(ecoHigCut1.y, greater_unocc.u2) annotation (Line(points={{-244.4,396},
+          {-268,396},{-268,438},{-264,438}}, color={0,0,127}));
+  connect(conAHU.u_UnOcc, greater_unocc.y) annotation (Line(points={{355.6,
+          415.741},{33.8,415.741},{33.8,446},{-287,446}}, color={255,0,255}));
+  connect(add.y, add2.u2) annotation (Line(points={{-145,456},{-168,456},{-168,
+          436},{-190,436}}, color={0,0,127}));
+  connect(add2.u1, add1.y) annotation (Line(points={{-190,448},{-166,448},{-166,
+          280},{-143,280}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-320},{1400,
             640}}), graphics={Line(
@@ -441,7 +459,7 @@ This is for
         "Simulate and plot"),
     experiment(
       StartTime=19353600,
-      StopTime=23068800,
+      StopTime=19526400,
       Interval=299.999808,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
