@@ -6,7 +6,7 @@
 
 # GENERAL PACKAGE IMPORT
 # ----------------------
-from db_interface import DB_Interface
+#from db_interface import DB_Interface
 import requests
 import numpy as np
 import json
@@ -53,7 +53,7 @@ def energy_plot(data, list_1, list_2, title, y_label):
     width = .2
     
     ax.bar(x-width*.5, list_1, width = width, label='Baseline Control', color = 'grey')
-    ax.bar(x+width*.5, list_2, width = width, label='Test Control', color = 'indianred')
+    ax.bar(x+width*.5, list_2, width = width, label='G36 Control', color = 'indianred')
     #ax.bar(x+width*.5, en_g36, width = width, label='G36 Control', color = 'rosybrown')
     #ax.bar(x+width*1.5, en_g36_dr, width = width, label='G36 Control + DR', color = 'indianred')
     ax.set_xticks(range(len(labels)))

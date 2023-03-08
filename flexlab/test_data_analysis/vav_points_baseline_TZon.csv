@@ -1,0 +1,36 @@
+points,keys,factor,offset,
+VAV: North Zone Airflow Rate,VSupNor_flow.V_flow,2118.88,0,1A-VAV1-DischargeAirflow
+VAV: Core Zone Airflow Rate,VSupCor_flow.V_flow,2118.88,0,1A-VAV2-DischargeAirflow
+VAV: South Zone Airflow Rate,VSupSou_flow.V_flow,2118.88,0,1A-VAV3-DischargeAirflow
+VAV: North Zone Discharge Air Temperature,TSupNor.T,1.8,32,1A-VAV1-DischargeAirTemp
+VAV: Core Zone Discharge Air Temperature,TSupCor.T,1.8,32,1A-VAV2-DischargeAirTemp
+VAV: South Zone Discharge Air Temperature,TSupSou.T,1.8,32,1A-VAV3-DischargeAirTemp
+VAV: North Zone Reheat Control Signal,conVAVNor.conHeaLoo.y,1,0,
+VAV: Core Zone Reheat Control Signal,conVAVCor.conHeaLoo.y,1,0,
+VAV: South Zone Reheat Control Signal,conVAVSou.conHeaLoo.y,1,0,
+VAV: North Zone Damper Control Signal,conVAVNor.yDam,1,0,
+VAV: Core Zone Damper Control Signal,conVAVCor.yDam,1,0,
+VAV: South Zone Damper Control Signal,conVAVSou.yDam,1,0,
+AHU: Cooling Coil Load,cooCoi.Q1_flow,1,0,TH load
+AHU: Supply Fan Power,fanSup.P,1,0,1A-El-AHU
+VAV: South Zone Room Air Temperature,conVAVSou.TZon,1.8,32,1A-VAV3-Zn_Temp
+VAV: Core Zone Room Air Temperature,conVAVCor.TZon,1.8,32,1A-VAV2-Zn_Temp
+VAV: North Zone Room Air Temperature,conVAVNor.TZon,1.8,32,1A-VAV1-Zn_Temp
+Outdoor Air Temperature,amb.weaBus.TDryBul,1.8,32,
+AHU: RAT,TRet.T,1.8,32,
+AHU: MAT,TMix.T,1.8,32,
+VAV:North zone Q,nor.terHea.Q1_flow,1,0,
+VAV:Core zone Q,cor.terHea.Q1_flow,1,0,
+VAV:South zone Q,sou.terHea.Q1_flow,1,0,
+Tcool_SP,conVAVNor.TZonCooSet,1.8,32,
+Theat_SP,conVAVNor.TZonHeaSet,1.8,32,
+AHU: Supply Fan Airflow Rate,fanSup.m_flow,1729.7,0,1A-ASAM-1
+AHU: Supply Air Temperature,conAHU.TSup,1.8,32,1A-SAT-1
+AHU: Outdoor Air Damper Position,conAHU.eco.yOutDamPos,1,0,1A-OADA-1-POSN
+AHU: Return Air Damper Position,conAHU.yRetDamPos,1,0,1A-RADA-1-POSN
+1A-VAV3-OccupiedCoolingSetpt,conVAVSou.TZonCooSet,1.8,32,
+1A-VAV3-OccupiedHeatingSetpt,conVAVSou.TZonHeaSet,1.8,32,
+1A-VAV2-OccupiedCoolingSetpt,conVAVCor.TZonCooSet,1.8,32,
+1A-VAV2-OccupiedHeatingSetpt,conVAVCor.TZonHeaSet,1.8,32,
+1A-VAV1-OccupiedCoolingSetpt,conVAVNor.TZonCooSet,1.8,32,
+1A-VAV1-OccupiedHeatingSetpt,conVAVNor.TZonHeaSet,1.8,32,
