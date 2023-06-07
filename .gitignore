@@ -1,3 +1,4 @@
 *.pyc
 *.yaml
 !controllers/boiler_controller_config.yaml
+**/.DS_Store
