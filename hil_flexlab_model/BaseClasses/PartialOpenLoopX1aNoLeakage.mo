@@ -172,8 +172,8 @@ partial model PartialOpenLoopX1aNoLeakage
     m_flow_nominal=m_flow_nominal,
     allowFlowReversal=allowFlowReversal)
     annotation (Placement(transformation(extent={{330,-50},{350,-30}})));
-  Buildings.Fluid.Sensors.RelativePressure dpDisSupFan(redeclare package Medium
-      = MediumA) "Supply fan static discharge pressure" annotation (Placement(
+  Buildings.Fluid.Sensors.RelativePressure dpDisSupFan(redeclare package Medium =
+        MediumA) "Supply fan static discharge pressure" annotation (Placement(
         transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
@@ -181,10 +181,10 @@ partial model PartialOpenLoopX1aNoLeakage
   Buildings.Controls.SetPoints.OccupancySchedule occSch(occupancy=3600*{6,19})
     "Occupancy schedule"
     annotation (Placement(transformation(extent={{-318,-220},{-298,-200}})));
-  Buildings.Types.Utilities.Math.Min min(nin=3)
+  Buildings.Utilities.Math.Min       min(nin=3)
     "Computes lowest room temperature"
-    annotation (Placement(transformation(extent={{1200,440},{1220,460}})));
-  Buildings.Types.Utilities.Math.Average ave(nin=3)
+    annotation (Placement(transformation(extent={{1198,440},{1218,460}})));
+  Buildings.Utilities.Math.Average       ave(nin=3)
     "Compute average of room temperatures"
     annotation (Placement(transformation(extent={{1200,410},{1220,430}})));
   Buildings.Fluid.Sources.MassFlowSource_T souCoo(
@@ -508,7 +508,7 @@ equation
       thickness=0.5,
       smooth=Smooth.None));
   connect(flo.TRooAir, min.u) annotation (Line(
-      points={{1028.86,494.94},{1164.7,494.94},{1164.7,450},{1198,450}},
+      points={{1028.86,494.94},{1164.7,494.94},{1164.7,450},{1196,450}},
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));

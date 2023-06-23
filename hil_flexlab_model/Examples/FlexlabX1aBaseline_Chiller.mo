@@ -415,8 +415,9 @@ This is for
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/ASHRAE2006.mos"
         "Simulate and plot"),
     experiment(
-      StopTime=86400,
-      __Dymola_NumberOfIntervals=60,
+      StartTime=21427200,
+      StopTime=21513600,
+      Interval=300,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end FlexlabX1aBaseline_Chiller;
