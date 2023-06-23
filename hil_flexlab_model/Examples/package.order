@@ -37,3 +37,5 @@ FlexlabX1aBaseline_tes_weiping_062822
 FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule
 TestZoneModel
 DamperValvesTest
+Controller
+ExhaustDamperPositionBlock

@@ -3,13 +3,13 @@ model
   FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule
   "DR mode - Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
-  extends hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV020123(occSch(
+  extends hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV020123_weipingTest(occSch(
       occupancy={0,86399},
       firstEntryOccupied=true,
       period=86400), fanSup(per(use_powerCharacteristic=true, power(V_flow={
               0.05,0.4}, P=1*{167,370}))),
     flo(occSch(table=[0,0; 8,0; 8,0.5; 9,0.5; 9,1; 13,1; 13,0.5; 14,0.5; 14,1;
-            18,1; 18,0.5; 19,0.5; 19,0.0; 24,0.0])));
+            18,1; 18,0.5; 19,0.5; 19,0; 24,0])));
 //  extends BaseClasses.PartialOpenLoopX1aV1(min(nin=3),
 //      ave(nin=3));
 
@@ -41,14 +41,16 @@ model
     dTDisZonSetMax=5,
     TDisMin=285.95)                  "Controller for terminal unit mid zone"
     annotation (Placement(transformation(extent={{778,104},{798,124}})));
-  Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Controller conVAVSou(
+  Controller                                                     conVAVSou(
     V_flow_nominal=mSou_flow_nominal/1.2,
     AFlo=AFloSou,
     final samplePeriod=samplePeriod,
     VDisSetMin_flow=0.2625*mSou_flow_nominal/1.2,
     VDisConMin_flow=0.2625*mSou_flow_nominal/1.2,
     dTDisZonSetMax=5,
-    TDisMin=285.95)   "Controller for terminal unit south zone"
+    TDisMin=285.95,
+    damVal(truDel4(delayTime=0)))
+                      "Controller for terminal unit south zone"
     annotation (Placement(transformation(extent={{1020,32},{1040,52}})));
   Modelica.Blocks.Routing.Multiplex3 TDis "Discharge air temperatures"
     annotation (Placement(transformation(extent={{110,276},{130,296}})));
@@ -148,6 +150,9 @@ model
     annotation (Placement(transformation(extent={{-230,396},{-254,420}})));
   Modelica.Blocks.Math.Add add2(k1=-1, k2=+1)
     annotation (Placement(transformation(extent={{-204,444},{-224,464}})));
+  Buildings.Fluid.Sensors.Temperature southZoneReturnAirTemperature(redeclare
+      package Medium = Buildings.Media.Air)
+    annotation (Placement(transformation(extent={{1182,250},{1202,270}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,0},{320,-10},{320,-10}},
@@ -347,8 +352,8 @@ equation
           {154,132},{154,252},{174,252}},      color={0,0,127}));
   connect(TSupCor.T, TDis.u2[1]) annotation (Line(points={{823,94},{80,94},{80,
           286},{108,286}}, color={0,0,127}));
-  connect(conVAVSou.TZon, TRooAir.y1[1]) annotation (Line(points={{1018,42},{
-          980,42},{980,177},{511,177}}, color={0,0,127}));
+  connect(conVAVSou.TZon, TRooAir.y1[1]) annotation (Line(points={{1018,42},{980,
+          42},{980,177},{511,177}},     color={0,0,127}));
   connect(conVAVNor.TZon, TRooAir.y3[1]) annotation (Line(points={{652,14},{646,
           14},{646,163},{511,163}}, color={0,0,127}));
   connect(TSupSou.T, TDis.u1[1]) annotation (Line(points={{1069,90},{72,90},{72,
@@ -383,6 +388,9 @@ equation
           454},{-251.5,458},{-276,458}}, color={0,0,127}));
   connect(conAHU.u_UnOcc, greater_unocc.y) annotation (Line(points={{355.6,
           415.741},{27.8,415.741},{27.8,458},{-299,458}}, color={255,0,255}));
+  connect(splRetCor.port_2, southZoneReturnAirTemperature.port) annotation (
+      Line(points={{962,0},{1156,0},{1156,238},{1174,238},{1174,250},{1192,250}},
+        color={0,127,255}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-320},{1400,
             640}}), graphics={Line(

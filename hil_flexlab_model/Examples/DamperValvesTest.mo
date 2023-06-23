@@ -283,11 +283,9 @@ protected
     final p=2.8)
     "Zone temperature pluTZonSets 2.8 degC"
     annotation (Placement(transformation(extent={{-260,-260},{-240,-240}})));
-  Buildings.Controls.OBC.CDL.Continuous.Hysteresis hys2(
-    final uHigh=0.05,
-    final uLow=0.01)
+  Buildings.Controls.OBC.CDL.Continuous.Hysteresis hys2(uHigh=0.002, uLow=0.001)
     "Check if cooling control signal is greater than zero"
-    annotation (Placement(transformation(extent={{-280,220},{-260,240}})));
+    annotation (Placement(transformation(extent={{-280,222},{-260,242}})));
   Buildings.Controls.OBC.CDL.Continuous.Hysteresis hys3(
     final uHigh=0.05,
     final uLow=0.01)
@@ -320,7 +318,7 @@ protected
   Buildings.Controls.OBC.CDL.Logical.TrueDelay truDel3(delayTime=600)
     "Check if the true input holds for certain time"
     annotation (Placement(transformation(extent={{-160,120},{-140,140}})));
-  Buildings.Controls.OBC.CDL.Logical.TrueDelay truDel4(delayTime=600)
+  Buildings.Controls.OBC.CDL.Logical.TrueDelay truDel4(delayTime=0)
     "Check if the true input holds for certain time"
     annotation (Placement(transformation(extent={{-240,220},{-220,240}})));
   Buildings.Controls.OBC.CDL.Integers.Equal isUno "Output true if the operation mode is unoccupied"
@@ -390,7 +388,7 @@ equation
     annotation (Line(points={{-340,200},{-180,200},{-180,272},{-162,272}},
       color={0,0,127}));
   connect(uCoo, hys2.u)
-    annotation (Line(points={{-340,280},{-290,280},{-290,230},{-282,230}},
+    annotation (Line(points={{-340,280},{-290,280},{-290,232},{-282,232}},
       color={0,0,127}));
   connect(conZer1.y, swi.u3)
     annotation (Line(points={{122,250},{130,250},{130,262},{138,262}},
@@ -497,7 +495,8 @@ equation
     annotation (Line(points={{-200,-210},{120,-210},{120,-250},{138,-250}},
       color={255,0,255}));
   connect(hys2.y, truDel4.u)
-    annotation (Line(points={{-258,230},{-242,230}}, color={255,0,255}));
+    annotation (Line(points={{-258,232},{-250,232},{-250,230},{-242,230}},
+                                                     color={255,0,255}));
   connect(truDel4.y, and4.u1)
     annotation (Line(points={{-218,230},{-80,230},{-80,210},{-62,210}},
       color={255,0,255}));

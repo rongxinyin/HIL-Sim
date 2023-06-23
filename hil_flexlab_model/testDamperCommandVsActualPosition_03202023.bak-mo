@@ -1,0 +1,49 @@
+within hil_flexlab_model;
+model testDamperCommandVsActualPosition_03202023
+  Buildings.Fluid.Actuators.Dampers.PressureIndependent damPreInd(
+    redeclare package Medium = Buildings.Media.Air,
+    m_flow_nominal=0.27,
+    dpDamper_nominal=240)
+    annotation (Placement(transformation(extent={{-4,-34},{16,-14}})));
+  Modelica.Blocks.Sources.Constant const(k=0.4)
+    annotation (Placement(transformation(extent={{-42,20},{-22,40}})));
+  Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(filNam=
+        ModelicaServices.ExternalReferences.loadResource(
+        "modelica://hil_flexlab_model/Resources/weatherdata/US_Berkeley_2021_0822.mos"))
+    annotation (Placement(transformation(extent={{-88,62},{-68,82}})));
+  Buildings.Fluid.Sources.Outside out1(redeclare package Medium =
+        Buildings.Media.Air, nPorts=1)
+    annotation (Placement(transformation(extent={{32,-62},{52,-42}})));
+  Buildings.Fluid.Sources.MassFlowSource_WeatherData bou(
+    redeclare package Medium = Buildings.Media.Air,
+    m_flow=0.15,
+    nPorts=1)
+    annotation (Placement(transformation(extent={{-92,-40},{-72,-20}})));
+  Modelica.Blocks.Sources.Ramp ramp(
+    height=0.6,
+    duration=72000,
+    offset=0.2,
+    startTime=7200)
+    annotation (Placement(transformation(extent={{16,60},{36,80}})));
+equation
+  connect(weaDat.weaBus, out1.weaBus) annotation (Line(
+      points={{-68,72},{-60,72},{-60,-62},{32,-62},{32,-51.8}},
+      color={255,204,51},
+      thickness=0.5));
+  connect(out1.ports[1], damPreInd.port_b) annotation (Line(points={{52,-52},{
+          64,-52},{64,-24},{16,-24}}, color={0,127,255}));
+  connect(weaDat.weaBus, bou.weaBus) annotation (Line(
+      points={{-68,72},{-80,72},{-80,-29.8},{-92,-29.8}},
+      color={255,204,51},
+      thickness=0.5));
+  connect(bou.ports[1], damPreInd.port_a) annotation (Line(points={{-72,-30},{
+          -38,-30},{-38,-24},{-4,-24}}, color={0,127,255}));
+  connect(ramp.y, damPreInd.y) annotation (Line(points={{37,70},{22,70},{22,-12},
+          {6,-12}}, color={0,0,127}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+        coordinateSystem(preserveAspectRatio=false)),
+    experiment(
+      StopTime=86400,
+      Interval=60,
+      __Dymola_Algorithm="Dassl"));
+end testDamperCommandVsActualPosition_03202023;
