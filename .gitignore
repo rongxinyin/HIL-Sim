@@ -2,3 +2,9 @@
 *.yaml
 !controllers/boiler_controller_config.yaml
 **/.DS_Store
+**/dymosim
+**/dsmodel.c
+**/dslog.txt
+**/dsfinal.txt
+**/dsin.txt
+*.mat
