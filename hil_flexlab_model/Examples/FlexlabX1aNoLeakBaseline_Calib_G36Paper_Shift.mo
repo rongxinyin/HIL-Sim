@@ -58,9 +58,6 @@ model FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift
   Buildings.Controls.OBC.CDL.Integers.MultiSum PZonResReq(nin=3)
     "Number of zone pressure requests"
     annotation (Placement(transformation(extent={{300,254},{320,274}})));
-  Buildings.Controls.OBC.CDL.Continuous.Sources.Constant yOutDam(k=1)
-    "Outdoor air damper control signal"
-    annotation (Placement(transformation(extent={{-40,-20},{-20,0}})));
 
   Buildings.Controls.OBC.CDL.Logical.Switch swiFreSta "Switch for freeze stat"
     annotation (Placement(transformation(extent={{60,-202},{80,-182}})));
@@ -145,6 +142,8 @@ model FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift
     annotation (Placement(transformation(extent={{-230,396},{-254,420}})));
   Modelica.Blocks.Math.Add add2(k1=-1, k2=+1)
     annotation (Placement(transformation(extent={{-204,444},{-224,464}})));
+  ExhaustDamperPositionBlock exhaustDamperPositionBlock
+    annotation (Placement(transformation(extent={{-88,-108},{-68,-88}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,0},{320,-10},{320,-10}},
@@ -207,8 +206,6 @@ equation
           {764,-20},{764,106},{776,106}},    color={0,0,127}));
   connect(TSup.T, conVAVSou.TSupAHU) annotation (Line(points={{340,-29},{340,-20},
           {678,-20},{678,34},{1018,34}},   color={0,0,127}));
-  connect(yOutDam.y, eco.yExh)
-    annotation (Line(points={{-18,-10},{-3,-10},{-3,-34}}, color={0,0,127}));
   connect(swiFreSta.y, gaiHeaCoi.u) annotation (Line(points={{82,-192},{88,-192},
           {88,-210},{98,-210}}, color={0,0,127}));
   connect(freSta.y, swiFreSta.u2) annotation (Line(points={{22,-92},{40,-92},{40,
@@ -380,6 +377,12 @@ equation
           454},{-251.5,458},{-276,458}}, color={0,0,127}));
   connect(conAHU.u_UnOcc, greater_unocc.y) annotation (Line(points={{355.6,
           415.741},{27.8,415.741},{27.8,458},{-299,458}}, color={255,0,255}));
+  connect(conAHU.yRetDamPos, exhaustDamperPositionBlock.ReturnDamperPosition)
+    annotation (Line(points={{444,440.588},{452,440.588},{452,168},{-116,168},{
+          -116,-98},{-90,-98}}, color={0,0,127}));
+  connect(exhaustDamperPositionBlock.ExhaustDamperPosition, eco.yExh)
+    annotation (Line(points={{-67,-98},{-42,-98},{-42,-12},{-3,-12},{-3,-34}},
+        color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-320},{1400,
             640}}), graphics={Line(
