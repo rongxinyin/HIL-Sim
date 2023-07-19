@@ -11,7 +11,7 @@ model TestZoneModel
     lat=0.69813170079773,
     AFlo=6.49*3.05,
     hRoo=3.6576)
-    annotation (Placement(transformation(extent={{-60,-68},{-20,-28}})));
+    annotation (Placement(transformation(extent={{-62,-68},{-22,-28}})));
   Modelica.Blocks.Sources.CombiTimeTable ligSch(
     table=[0,0; 7,0; 7,0.5; 8,0.5; 8,0.9; 17,0.9; 17,0.5; 21,0.5; 21,0; 24,0],
     timeScale=3600,
@@ -87,9 +87,9 @@ equation
   connect(add3_3.y,multiplex3_1. u3[1]) annotation (Line(points={{43,12},{50,12},
           {50,39},{58,39}},          color={0,0,127}));
   connect(multiplex3_1.y, mixedAir.qGai_flow) annotation (Line(points={{81,46},
-          {86,46},{86,-14},{-84,-14},{-84,-40},{-61.6,-40}}, color={0,0,127}));
+          {86,46},{86,-14},{-84,-14},{-84,-40},{-63.6,-40}}, color={0,0,127}));
   connect(weaDat.weaBus, mixedAir.weaBus) annotation (Line(
-      points={{34,-40},{42,-40},{42,-20},{-22.1,-20},{-22.1,-30.1}},
+      points={{34,-40},{42,-40},{42,-20},{-24.1,-20},{-24.1,-30.1}},
       color={255,204,51},
       thickness=0.5));
   annotation (

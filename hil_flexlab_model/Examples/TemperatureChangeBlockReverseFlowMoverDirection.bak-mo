@@ -1,0 +1,74 @@
+within hil_flexlab_model.Examples;
+model TemperatureChangeBlockReverseFlowMoverDirection
+  package MediumA = Buildings.Media.Air "Medium model for air";
+
+      parameter Modelica.SIunits.MassFlowRate mCor_flow_nominal=0.130*1.2 "*1.2Design mass flow rate core";
+  parameter Modelica.SIunits.MassFlowRate mSou_flow_nominal=0.2313*1.2
+                                                                 "*1.2Design mass flow rate perimeter 1";
+  parameter Modelica.SIunits.MassFlowRate mPle_flow_nominal=0.03*1.2
+    "Design mass flow rate perimeter 2";
+  parameter Modelica.SIunits.MassFlowRate mNor_flow_nominal=0.130*1.2 "*1.2Design mass flow rate perimeter 3";
+ // parameter Modelica.SIunits.MassFlowRate mCor_flow_nominal=6*VRooCor*conv
+ //   "Design mass flow rate core";
+ // parameter Modelica.SIunits.MassFlowRate mSou_flow_nominal=6*VRooSou*conv
+ //   "Design mass flow rate perimeter 1";
+ // parameter Modelica.SIunits.MassFlowRate mPle_flow_nominal=9*VRooPle*conv
+ //   "Design mass flow rate perimeter 2";
+ // parameter Modelica.SIunits.MassFlowRate mNor_flow_nominal=6*VRooNor*conv
+ //   "Design mass flow rate perimeter 3";
+  parameter Modelica.SIunits.MassFlowRate m_flow_nominal=1.0*(mCor_flow_nominal
+       + mSou_flow_nominal + mNor_flow_nominal+mPle_flow_nominal) "Nominal mass flow rate";
+
+  Buildings.Fluid.Sensors.TemperatureTwoPort TSup(
+    redeclare package Medium = MediumA,
+    m_flow_nominal=m_flow_nominal)
+    annotation (Placement(transformation(extent={{36,0},{56,20}})));
+  Buildings.Fluid.Sources.Boundary_pT sinCoo1(redeclare package Medium =
+        MediumA, nPorts=1)
+              "Sink for cooling coil" annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-74,-52})));
+  Buildings.Fluid.Sensors.MassFlowRate senMasFlo(redeclare package Medium =
+        MediumA)
+    annotation (Placement(transformation(extent={{-80,-8},{-60,12}})));
+  Modelica.Fluid.Interfaces.FluidPort_a port_a(redeclare package Medium =
+        MediumA)
+    annotation (Placement(transformation(extent={{-112,-10},{-92,10}})));
+  Modelica.Fluid.Interfaces.FluidPort_b port_b(redeclare package Medium =
+        MediumA)
+    annotation (Placement(transformation(extent={{92,-10},{112,10}})));
+  Modelica.Blocks.Interfaces.RealInput T_in
+    annotation (Placement(transformation(extent={{-102,90},{-62,130}})));
+  Buildings.Fluid.Movers.FlowControlled_m_flow fan(redeclare package Medium =
+        MediumA, m_flow_nominal=m_flow_nominal)
+    annotation (Placement(transformation(extent={{6,0},{26,20}})));
+  Buildings.Fluid.Sources.Boundary_pT sinCoo2(
+    redeclare package Medium = MediumA,
+    use_T_in=true,
+    nPorts=1) "Sink for cooling coil" annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-14,-38})));
+equation
+  connect(TSup.port_b, port_b) annotation (Line(points={{56,10},{80,10},{80,0},
+          {102,0}}, color={0,127,255}));
+  connect(senMasFlo.m_flow, fan.m_flow_in) annotation (Line(points={{-70,13},{
+          -70,22},{16,22}},       color={0,0,127}));
+  connect(T_in, sinCoo2.T_in) annotation (Line(points={{-82,110},{-62,110},{-62,
+          112},{-34,112},{-34,-50},{-18,-50}}, color={0,0,127}));
+  connect(fan.port_b, TSup.port_a)
+    annotation (Line(points={{26,10},{36,10}}, color={0,127,255}));
+  connect(sinCoo2.ports[1], fan.port_a) annotation (Line(points={{-14,-28},{-4,
+          -28},{-4,10},{6,10}}, color={0,127,255}));
+  connect(port_a, senMasFlo.port_a) annotation (Line(points={{-102,0},{-92,0},{
+          -92,2},{-80,2}}, color={0,127,255}));
+  connect(senMasFlo.port_b, sinCoo1.ports[1]) annotation (Line(points={{-60,2},
+          {-58,2},{-58,-34},{-74,-34},{-74,-42}}, color={0,127,255}));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+        coordinateSystem(preserveAspectRatio=false)),
+    experiment(
+      StopTime=60,
+      Interval=1,
+      __Dymola_Algorithm="Dassl"));
+end TemperatureChangeBlockReverseFlowMoverDirection;

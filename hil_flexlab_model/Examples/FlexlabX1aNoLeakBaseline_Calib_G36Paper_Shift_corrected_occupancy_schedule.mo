@@ -3,13 +3,19 @@ model
   FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule
   "DR mode - Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
-  extends hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV020123_weipingTest(occSch(
+  extends hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV020123_modifyVav(occSch(
       occupancy={0,86399},
       firstEntryOccupied=true,
       period=86400), fanSup(per(use_powerCharacteristic=true, power(V_flow={
               0.05,0.4}, P=1*{167,370}))),
     flo(occSch(table=[0,0; 8,0; 8,0.5; 9,0.5; 9,1; 13,1; 13,0.5; 14,0.5; 14,1;
-            18,1; 18,0.5; 19,0.5; 19,0; 24,0])));
+            18,1; 18,0.5; 19,0.5; 19,0; 24,0]),
+      ele(T_start=294.96),
+      clo(T_start=294.96),
+      nor(T_start=294.96),
+      cor(T_start=294.96),
+      sou(T_start=294.96),
+      ple(T_start=294.96)));
 //  extends BaseClasses.PartialOpenLoopX1aV1(min(nin=3),
 //      ave(nin=3));
 
@@ -22,29 +28,35 @@ model
   parameter Modelica.SIunits.PressureDifference dpDisRetMax=40
     "Maximum return fan discharge static pressure setpoint";
 
-  Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Controller conVAVNor(
+  Controller_modifyHeatingSequence                               conVAVNor(
     V_flow_nominal=mNor_flow_nominal/1.2,
     AFlo=AFloNor,
     final samplePeriod=samplePeriod,
+    TiCoo=60,
+    TiHea=60,
     kDam=0.5,
     VDisSetMin_flow=0.3*mNor_flow_nominal/1.2,
     VDisConMin_flow=0.2*mNor_flow_nominal/1.2,
     dTDisZonSetMax=5,
     TDisMin=285.95)                  "Controller for terminal unit north zone"
     annotation (Placement(transformation(extent={{654,4},{674,24}})));
-  Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Controller conVAVCor(
+  Controller_modifyHeatingSequence                               conVAVCor(
     V_flow_nominal=mCor_flow_nominal/1.2,
     AFlo=AFloCor,
     final samplePeriod=samplePeriod,
+    TiCoo=60,
+    TiHea=60,
     VDisSetMin_flow=0.3*mCor_flow_nominal/1.2,
     VDisConMin_flow=0.2*mCor_flow_nominal/1.2,
     dTDisZonSetMax=5,
     TDisMin=285.95)                  "Controller for terminal unit mid zone"
     annotation (Placement(transformation(extent={{778,104},{798,124}})));
-  Controller                                                     conVAVSou(
+  Controller_modifyHeatingSequence                               conVAVSou(
     V_flow_nominal=mSou_flow_nominal/1.2,
     AFlo=AFloSou,
     final samplePeriod=samplePeriod,
+    TiCoo=60,
+    TiHea=60,
     VDisSetMin_flow=0.2625*mSou_flow_nominal/1.2,
     VDisConMin_flow=0.2625*mSou_flow_nominal/1.2,
     dTDisZonSetMax=5,
@@ -63,9 +75,6 @@ model
   Buildings.Controls.OBC.CDL.Integers.MultiSum PZonResReq(nin=3)
     "Number of zone pressure requests"
     annotation (Placement(transformation(extent={{300,254},{320,274}})));
-  Buildings.Controls.OBC.CDL.Continuous.Sources.Constant yOutDam(k=1)
-    "Outdoor air damper control signal"
-    annotation (Placement(transformation(extent={{-40,-20},{-20,0}})));
 
   Buildings.Controls.OBC.CDL.Logical.Switch swiFreSta "Switch for freeze stat"
     annotation (Placement(transformation(extent={{60,-202},{80,-182}})));
@@ -153,6 +162,8 @@ model
   Buildings.Fluid.Sensors.Temperature southZoneReturnAirTemperature(redeclare
       package Medium = Buildings.Media.Air)
     annotation (Placement(transformation(extent={{1182,250},{1202,270}})));
+  ExhaustDamperPositionBlock          exhaustDamperPositionBlock
+    annotation (Placement(transformation(extent={{-88,-92},{-68,-72}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,0},{320,-10},{320,-10}},
@@ -215,8 +226,6 @@ equation
           {764,-20},{764,106},{776,106}},    color={0,0,127}));
   connect(TSup.T, conVAVSou.TSupAHU) annotation (Line(points={{340,-29},{340,-20},
           {678,-20},{678,34},{1018,34}},   color={0,0,127}));
-  connect(yOutDam.y, eco.yExh)
-    annotation (Line(points={{-18,-10},{-3,-10},{-3,-34}}, color={0,0,127}));
   connect(swiFreSta.y, gaiHeaCoi.u) annotation (Line(points={{82,-192},{88,-192},
           {88,-210},{98,-210}}, color={0,0,127}));
   connect(freSta.y, swiFreSta.u2) annotation (Line(points={{22,-92},{40,-92},{40,
@@ -391,6 +400,13 @@ equation
   connect(splRetCor.port_2, southZoneReturnAirTemperature.port) annotation (
       Line(points={{962,0},{1156,0},{1156,238},{1174,238},{1174,250},{1192,250}},
         color={0,127,255}));
+  connect(eco.yExh, exhaustDamperPositionBlock.ExhaustDamperPosition)
+    annotation (Line(points={{-3,-34},{-3,-10},{-56,-10},{-56,-82},{-67,-82}},
+        color={0,0,127}));
+  connect(conAHU.yRetDamPos, exhaustDamperPositionBlock.ReturnDamperPosition)
+    annotation (Line(points={{444,440.588},{448,440.588},{448,172},{-104,172},{
+          -104,-82},{-90,-82}},
+                           color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-320},{1400,
             640}}), graphics={Line(

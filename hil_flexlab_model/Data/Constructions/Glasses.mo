@@ -10,7 +10,7 @@ package Glasses "Package with thermophysical properties for window glas"
       rhoSol_b={0.07},
       tauIR=0,
       absIR_a=0.58,
-      absIR_b=0.58)
+      absIR_b=0.84)
     "Generic Clear Glass 3.048mm with plexi film. Manufacturer: Generic. Original 3mm clear glass: absIR_a=0.58,
       absIR_b=0.84"
     annotation (
