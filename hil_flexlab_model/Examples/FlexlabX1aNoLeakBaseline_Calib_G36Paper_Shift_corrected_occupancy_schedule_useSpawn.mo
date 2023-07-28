@@ -1,12 +1,18 @@
 within hil_flexlab_model.Examples;
-model FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift
+model
+  FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule_useSpawn
   "DR mode - Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
-  extends hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV020123(occSch(
+  extends hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV020123_modifyVav_useSpawn(occSch(
       occupancy={0,86399},
       firstEntryOccupied=true,
       period=86400), fanSup(per(use_powerCharacteristic=true, power(V_flow={
-              0.05,0.4}, P=1*{167,370}))));
+              0.05,0.4}, P=1*{167,370}))),
+    flo(
+      nor(T_start=294.96),
+      cor(T_start=294.96),
+      sou(T_start=294.96)));  //,
+    //  ple(T_start=294.96)));
 //  extends BaseClasses.PartialOpenLoopX1aV1(min(nin=3),
 //      ave(nin=3));
 
@@ -20,33 +26,40 @@ model FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift
   parameter Modelica.Units.SI.PressureDifference dpDisRetMax=40
     "Maximum return fan discharge static pressure setpoint";
 
-  Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Controller conVAVNor(
+  Plants.Controls.Controller_modifyHeatingSequence conVAVNor(
     V_flow_nominal=mNor_flow_nominal/1.2,
     AFlo=AFloNor,
     final samplePeriod=samplePeriod,
+    TiCoo=60,
+    TiHea=60,
     kDam=0.5,
     VDisSetMin_flow=0.3*mNor_flow_nominal/1.2,
     VDisConMin_flow=0.2*mNor_flow_nominal/1.2,
     dTDisZonSetMax=5,
-    TDisMin=285.95)                  "Controller for terminal unit north zone"
+    TDisMin=285.95) "Controller for terminal unit north zone"
     annotation (Placement(transformation(extent={{654,4},{674,24}})));
-  Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Controller conVAVCor(
+  Plants.Controls.Controller_modifyHeatingSequence conVAVCor(
     V_flow_nominal=mCor_flow_nominal/1.2,
     AFlo=AFloCor,
     final samplePeriod=samplePeriod,
+    TiCoo=60,
+    TiHea=60,
     VDisSetMin_flow=0.3*mCor_flow_nominal/1.2,
     VDisConMin_flow=0.2*mCor_flow_nominal/1.2,
     dTDisZonSetMax=5,
-    TDisMin=285.95)                  "Controller for terminal unit mid zone"
+    TDisMin=285.95) "Controller for terminal unit mid zone"
     annotation (Placement(transformation(extent={{778,104},{798,124}})));
-  Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Controller conVAVSou(
+  Plants.Controls.Controller_modifyHeatingSequence conVAVSou(
     V_flow_nominal=mSou_flow_nominal/1.2,
     AFlo=AFloSou,
     final samplePeriod=samplePeriod,
+    TiCoo=60,
+    TiHea=60,
     VDisSetMin_flow=0.2625*mSou_flow_nominal/1.2,
     VDisConMin_flow=0.2625*mSou_flow_nominal/1.2,
     dTDisZonSetMax=5,
-    TDisMin=285.95)   "Controller for terminal unit south zone"
+    TDisMin=285.95,
+    damVal(truDel4(delayTime=0))) "Controller for terminal unit south zone"
     annotation (Placement(transformation(extent={{1020,32},{1040,52}})));
   Modelica.Blocks.Routing.Multiplex3 TDis "Discharge air temperatures"
     annotation (Placement(transformation(extent={{110,276},{130,296}})));
@@ -75,7 +88,7 @@ model FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift
   Buildings.Controls.OBC.CDL.Routing.BooleanScalarReplicator booRep(final nout=
         numZon) "Replicate boolean input"
     annotation (Placement(transformation(extent={{-146,316},{-126,336}})));
-  Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.ModeAndSetPoints TZonSet[numZon](
+  BaseClasses.ModeAndSetPoints                                  TZonSet[numZon](
     final TZonHeaOn=fill(273.15 + 21.1, numZon),
     final TZonHeaOff=fill(THeaOff, numZon),
     TZonCooOn=fill(273.15 + 23.3, numZon),
@@ -143,8 +156,11 @@ model FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift
     annotation (Placement(transformation(extent={{-230,396},{-254,420}})));
   Modelica.Blocks.Math.Add add2(k1=-1, k2=+1)
     annotation (Placement(transformation(extent={{-204,444},{-224,464}})));
-  ExhaustDamperPositionBlock exhaustDamperPositionBlock
-    annotation (Placement(transformation(extent={{-88,-108},{-68,-88}})));
+  Buildings.Fluid.Sensors.Temperature southZoneReturnAirTemperature(redeclare
+      package Medium = Buildings.Media.Air)
+    annotation (Placement(transformation(extent={{1182,250},{1202,270}})));
+  ExhaustDamperPositionBlock          exhaustDamperPositionBlock
+    annotation (Placement(transformation(extent={{-88,-92},{-68,-72}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,0},{320,-10},{320,-10}},
@@ -156,12 +172,12 @@ equation
       color={0,0,127},
       pattern=LinePattern.Dash));
   connect(TSupNor.T, conVAVNor.TDis) annotation (Line(points={{695,92},{638,92},
-          {638,9},{652,9}},   color={0,0,127}));
+          {638,8},{652,8}},   color={0,0,127}));
   connect(TSupCor.T, conVAVCor.TDis) annotation (Line(points={{823,94},{762,94},
-          {762,109},{776,109}},
+          {762,108},{776,108}},
                               color={0,0,127}));
-  connect(TSupSou.T, conVAVSou.TDis) annotation (Line(points={{1069,90},{1002,
-          90},{1002,37},{1018,37}}, color={0,0,127}));
+  connect(TSupSou.T, conVAVSou.TDis) annotation (Line(points={{1069,90},{1002,90},
+          {1002,36},{1018,36}},     color={0,0,127}));
   connect(conVAVNor.yDam,nor.yVAV)  annotation (Line(points={{676,20},{688,20},
           {688,48},{692,48}},color={0,0,127}));
   connect(conVAVNor.yVal,nor.yVal)  annotation (Line(points={{676,15},{684,15},
@@ -176,47 +192,37 @@ equation
           {1056,40},{1056,28},{1066,28}},
                                       color={0,0,127}));
 
-  connect(conVAVNor.yZonTemResReq, TZonResReq.u[1]) annotation (Line(points={{676,
-          15.6667},{750,15.6667},{750,224},{270,224},{270,302.667},{296,302.667}},
-                                                                         color=
+  connect(conVAVNor.yZonTemResReq, TZonResReq.u[1]) annotation (Line(points={{676,10},
+          {750,10},{750,224},{270,224},{270,302.667},{296,302.667}},     color=
           {255,127,0}));
-  connect(conVAVCor.yZonTemResReq, TZonResReq.u[2]) annotation (Line(points={{800,
-          115.667},{808,115.667},{808,240},{274,240},{274,298},{296,298}},
-                                                                     color={255,
+  connect(conVAVCor.yZonTemResReq, TZonResReq.u[2]) annotation (Line(points={{800,110},
+          {808,110},{808,240},{274,240},{274,298},{296,298}},        color={255,
           127,0}));
-  connect(conVAVSou.yZonTemResReq, TZonResReq.u[3]) annotation (Line(points={{1042,
-          43.6667},{1054,43.6667},{1054,216},{278,216},{278,293.333},{296,
-          293.333}},
+  connect(conVAVSou.yZonTemResReq, TZonResReq.u[3]) annotation (Line(points={{1042,38},
+          {1054,38},{1054,216},{278,216},{278,293.333},{296,293.333}},
         color={255,127,0}));
-  connect(conVAVNor.yZonPreResReq, PZonResReq.u[1]) annotation (Line(points={{676,
-          12.3333},{758,12.3333},{758,236},{284,236},{284,268.667},{298,268.667}},
-                                                                         color=
+  connect(conVAVNor.yZonPreResReq, PZonResReq.u[1]) annotation (Line(points={{676,6},
+          {758,6},{758,236},{284,236},{284,268.667},{298,268.667}},      color=
           {255,127,0}));
-  connect(conVAVCor.yZonPreResReq, PZonResReq.u[2]) annotation (Line(points={{800,
-          112.333},{814,112.333},{814,246},{288,246},{288,264},{298,264}},
-                                                                     color={255,
+  connect(conVAVCor.yZonPreResReq, PZonResReq.u[2]) annotation (Line(points={{800,106},
+          {814,106},{814,246},{288,246},{288,264},{298,264}},        color={255,
           127,0}));
-  connect(conVAVSou.yZonPreResReq, PZonResReq.u[3]) annotation (Line(points={{1042,
-          40.3333},{1060,40.3333},{1060,224},{292,224},{292,259.333},{298,
-          259.333}},
+  connect(conVAVSou.yZonPreResReq, PZonResReq.u[3]) annotation (Line(points={{1042,34},
+          {1060,34},{1060,224},{292,224},{292,259.333},{298,259.333}},
         color={255,127,0}));
   connect(VSupNor_flow.V_flow,conVAVNor. VDis_flow) annotation (Line(points={{695,130},
-          {632,130},{632,12.3333},{652,12.3333}},
-                                             color={0,0,127}));
+          {632,130},{632,12},{652,12}},      color={0,0,127}));
   connect(VSupCor_flow.V_flow, conVAVCor.VDis_flow) annotation (Line(points={{823,132},
-          {764,132},{764,112.333},{776,112.333}},color={0,0,127}));
+          {764,132},{764,112},{776,112}},        color={0,0,127}));
   connect(VSupSou_flow.V_flow, conVAVSou.VDis_flow) annotation (Line(points={{1069,
-          128},{1008,128},{1008,40.3333},{1018,40.3333}},
-                                                     color={0,0,127}));
+          128},{1008,128},{1008,40},{1018,40}},      color={0,0,127}));
   connect(TSup.T,conVAVNor. TSupAHU) annotation (Line(points={{340,-29},{340,
-          -20},{546,-20},{546,7.33333},{652,7.33333}},
+          -20},{546,-20},{546,6},{652,6}},
                                         color={0,0,127}));
-  connect(TSup.T, conVAVCor.TSupAHU) annotation (Line(points={{340,-29},{340,
-          -20},{764,-20},{764,107.333},{776,107.333}},
-                                             color={0,0,127}));
-  connect(TSup.T, conVAVSou.TSupAHU) annotation (Line(points={{340,-29},{340,
-          -20},{678,-20},{678,35.3333},{1018,35.3333}},
-                                           color={0,0,127}));
+  connect(TSup.T, conVAVCor.TSupAHU) annotation (Line(points={{340,-29},{340,-20},
+          {764,-20},{764,106},{776,106}},    color={0,0,127}));
+  connect(TSup.T, conVAVSou.TSupAHU) annotation (Line(points={{340,-29},{340,-20},
+          {678,-20},{678,34},{1018,34}},   color={0,0,127}));
   connect(swiFreSta.y, gaiHeaCoi.u) annotation (Line(points={{82,-192},{88,-192},
           {88,-210},{98,-210}}, color={0,0,127}));
   connect(freSta.y, swiFreSta.u2) annotation (Line(points={{22,-92},{40,-92},{40,
@@ -237,8 +243,8 @@ equation
           {34,104},{34,325},{-10,325}},color={255,127,0}));
   connect(conVAVNor.uOpeMod, TZonSet[1].yOpeMod) annotation (Line(points={{652,4},
           {54,4},{54,325},{-10,325}},  color={255,127,0}));
-  connect(flo.TRooAir, TZonSet.TZon) annotation (Line(points={{1028.86,494.94},
-          {1096,494.94},{1096,604},{-54,604},{-54,335},{-34,335}},color={0,0,127}));
+  connect(flo.TRooAir, TZonSet.TZon) annotation (Line(points={{1114.83,473},{
+          1096,473},{1096,604},{-54,604},{-54,335},{-34,335}},    color={0,0,127}));
   connect(TDis.y, zonOutAirSet.TDis) annotation (Line(points={{131,286},{132,286},
           {132,427},{226,427}}, color={0,0,127}));
   connect(VDis_flow.y, zonOutAirSet.VDis_flow) annotation (Line(points={{197,252},
@@ -248,9 +254,8 @@ equation
           0,127}));
   connect(zonOutAirSet.uReqOutAir, booRep1.y) annotation (Line(points={{226,433},
           {204,433},{204,352},{510,352},{510,448},{502,448}}, color={255,0,255}));
-  connect(flo.TRooAir, zonOutAirSet.TZon) annotation (Line(points={{1028.86,
-          494.94},{1072,494.94},{1072,620},{210,620},{210,430},{226,430}},
-                                                                   color={0,0,127}));
+  connect(flo.TRooAir, zonOutAirSet.TZon) annotation (Line(points={{1114.83,473},
+          {1072,473},{1072,620},{210,620},{210,430},{226,430}},    color={0,0,127}));
   connect(zonOutAirSet.yDesZonPeaOcc, zonToSys.uDesZonPeaOcc) annotation (Line(
         points={{250,439},{262,439},{262,438},{272,438}}, color={0,0,127}));
   connect(zonOutAirSet.VDesPopBreZon_flow, zonToSys.VDesPopBreZon_flow)
@@ -343,20 +348,17 @@ equation
   connect(TZonSet[1].TZonCooSet, add.u1) annotation (Line(points={{-10,339},{8,
           339},{8,462},{-122,462}}, color={0,0,127}));
   connect(add.y, conVAVSou.TZonCooSet) annotation (Line(points={{-145,456},{
-          -162,456},{-162,48.6667},{1018,48.6667}},
-                                          color={0,0,127}));
+          -162,456},{-162,50},{1018,50}}, color={0,0,127}));
   connect(add.y, conVAVNor.TZonCooSet) annotation (Line(points={{-145,456},{
-          -162,456},{-162,20.6667},{652,20.6667}},
-                                         color={0,0,127}));
-  connect(add.y, conVAVCor.TZonCooSet) annotation (Line(points={{-145,456},{
-          -162,456},{-162,120.667},{776,120.667}},
-                                           color={0,0,127}));
+          -162,456},{-162,22},{652,22}}, color={0,0,127}));
+  connect(add.y, conVAVCor.TZonCooSet) annotation (Line(points={{-145,456},{-162,
+          456},{-162,122},{776,122}},      color={0,0,127}));
   connect(VSupCor_flow.V_flow, VDis_flow.u2[1]) annotation (Line(points={{823,132},
           {154,132},{154,252},{174,252}},      color={0,0,127}));
   connect(TSupCor.T, TDis.u2[1]) annotation (Line(points={{823,94},{80,94},{80,
           286},{108,286}}, color={0,0,127}));
-  connect(conVAVSou.TZon, TRooAir.y1[1]) annotation (Line(points={{1018,42},{
-          980,42},{980,177},{511,177}}, color={0,0,127}));
+  connect(conVAVSou.TZon, TRooAir.y1[1]) annotation (Line(points={{1018,42},{980,
+          42},{980,177},{511,177}},     color={0,0,127}));
   connect(conVAVNor.TZon, TRooAir.y3[1]) annotation (Line(points={{652,14},{646,
           14},{646,163},{511,163}}, color={0,0,127}));
   connect(TSupSou.T, TDis.u1[1]) annotation (Line(points={{1069,90},{72,90},{72,
@@ -373,14 +375,11 @@ equation
   connect(heaSetDR.y[1], add1.u2) annotation (Line(points={{-119,232},{-66,232},
           {-66,274},{-120,274}}, color={0,0,127}));
   connect(add1.y, conVAVNor.TZonHeaSet) annotation (Line(points={{-143,280},{
-          -182,280},{-182,22.3333},{652,22.3333}},
-                                         color={0,0,127}));
-  connect(add1.y, conVAVCor.TZonHeaSet) annotation (Line(points={{-143,280},{
-          -182,280},{-182,110},{298,110},{298,122.333},{776,122.333}},
-                                                               color={0,0,127}));
+          -182,280},{-182,24},{652,24}}, color={0,0,127}));
+  connect(add1.y, conVAVCor.TZonHeaSet) annotation (Line(points={{-143,280},{-182,
+          280},{-182,110},{298,110},{298,124},{776,124}},      color={0,0,127}));
   connect(add1.y, conVAVSou.TZonHeaSet) annotation (Line(points={{-143,280},{
-          -182,280},{-182,50.3333},{1018,50.3333}},
-                                          color={0,0,127}));
+          -182,280},{-182,52},{1018,52}}, color={0,0,127}));
   connect(ecoHigCut.y, conAHU.TOutCut) annotation (Line(points={{88,482},{224,
           482},{224,470.706},{356,470.706}},
                                         color={0,0,127}));
@@ -394,12 +393,16 @@ equation
           454},{-251.5,458},{-276,458}}, color={0,0,127}));
   connect(conAHU.u_UnOcc, greater_unocc.y) annotation (Line(points={{355.6,
           415.741},{27.8,415.741},{27.8,458},{-299,458}}, color={255,0,255}));
-  connect(conAHU.yRetDamPos, exhaustDamperPositionBlock.ReturnDamperPosition)
-    annotation (Line(points={{444,440.588},{452,440.588},{452,168},{-116,168},{
-          -116,-98},{-90,-98}}, color={0,0,127}));
-  connect(exhaustDamperPositionBlock.ExhaustDamperPosition, eco.yExh)
-    annotation (Line(points={{-67,-98},{-42,-98},{-42,-12},{-3,-12},{-3,-34}},
+  connect(splRetCor.port_2, southZoneReturnAirTemperature.port) annotation (
+      Line(points={{962,0},{1156,0},{1156,238},{1174,238},{1174,250},{1192,250}},
+        color={0,127,255}));
+  connect(eco.yExh, exhaustDamperPositionBlock.ExhaustDamperPosition)
+    annotation (Line(points={{-3,-34},{-3,-10},{-56,-10},{-56,-82},{-67,-82}},
         color={0,0,127}));
+  connect(conAHU.yRetDamPos, exhaustDamperPositionBlock.ReturnDamperPosition)
+    annotation (Line(points={{444,440.588},{448,440.588},{448,172},{-104,172},{
+          -104,-82},{-90,-82}},
+                           color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-320},{1400,
             640}}), graphics={Line(
@@ -480,9 +483,10 @@ This is for
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/Guideline36.mos"
         "Simulate and plot"),
     experiment(
-      StartTime=19353600,
-      StopTime=22464000,
+      StartTime=21427200,
+      StopTime=21435840,
       Interval=299.999808,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
-end FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift;
+end
+  FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule_useSpawn;

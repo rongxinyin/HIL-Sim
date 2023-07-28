@@ -1,5 +1,5 @@
 within hil_flexlab_model.BaseClasses;
-partial model PartialOpenLoopX1aV020123_modifyVav
+partial model PartialOpenLoopX1aV020123_modifyVav_useSpawn
   "Validated Partial model of variable air volume flow system with terminal reheat and 3 VAV zones at flexlab x1a"
 
   package MediumA = Buildings.Media.Air "Medium model for air";
@@ -7,19 +7,19 @@ partial model PartialOpenLoopX1aV020123_modifyVav
 
   constant Integer numZon=3 "Total number of served VAV boxes";
   constant Real leakageFrac=0.2 "Leakage fraction of AHU upstream duct";
-  parameter Modelica.Units.SI.Volume VRooCor=AFloCor*flo.hRoo
+  parameter Modelica.Units.SI.Volume VRooCor=flo.VRooCor
     "Room volume core";
-  parameter Modelica.Units.SI.Volume VRooSou=AFloSou*flo.hRoo
+  parameter Modelica.Units.SI.Volume VRooSou=flo.VRooSou
     "Room volume south";
-  parameter Modelica.Units.SI.Volume VRooNor=AFloNor*flo.hRoo
+  parameter Modelica.Units.SI.Volume VRooNor=flo.VRooNor
     "Room volume north";
-  parameter Modelica.Units.SI.Volume VRooPle=AFloPle*flo.hRoo
-    "Room volume plenum";
+  //parameter Modelica.Units.SI.Volume VRooPle=flo.VRooPle
+  //  "Room volume plenum";
 
   parameter Modelica.Units.SI.Area AFloCor=flo.cor.AFlo "Floor area core";
   parameter Modelica.Units.SI.Area AFloSou=flo.sou.AFlo "Floor area south";
   parameter Modelica.Units.SI.Area AFloNor=flo.nor.AFlo "Floor area north";
-  parameter Modelica.Units.SI.Area AFloPle=flo.ple.AFlo "Floor area plenum";
+  //parameter Modelica.Units.SI.Area AFloPle=flo.ple.AFlo "Floor area plenum";
 
   parameter Modelica.Units.SI.Area AFlo[numZon]={flo.cor.AFlo,flo.sou.AFlo,flo.nor.AFlo}
     "Floor area of each zone";
@@ -345,13 +345,18 @@ partial model PartialOpenLoopX1aV020123_modifyVav
   Buildings.BoundaryConditions.WeatherData.Bus weaBus "Weather Data Bus"
     annotation (Placement(transformation(extent={{-330,170},{-310,190}}),
         iconTransformation(extent={{-360,170},{-340,190}})));
-  ThermalZones.FlexlabX1A013123_weipingCopy
+  ThermalZones.Floor_spawnExperiment
                                 flo(
     redeclare final package Medium = MediumA,
     final use_windPressure=use_windPressure,
-    lat=lat)
+    idfName=
+        "modelica://hil_flexlab_model/Resources/energyPlusFiles/RefBldgSmallOfficeNew2004_Chicago.idf",
+    epwName=
+        "modelica://hil_flexlab_model/Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw",
+    weaName="modelica://hil_flexlab_model/Resources/weatherdata/Chicago.mos")
     "Model of a floor of the building that is served by this VAV system"
-    annotation (Placement(transformation(extent={{794,384},{1072,682}})));
+    annotation (Placement(transformation(extent={{794,384},{1108,562}})));
+
   Modelica.Blocks.Routing.DeMultiplex3 TRooAir(u(each unit="K", each
         displayUnit="degC")) "Demultiplex for room air temperature"
     annotation (Placement(transformation(extent={{490,160},{510,180}})));
@@ -431,7 +436,6 @@ partial model PartialOpenLoopX1aV020123_modifyVav
     PCooLat=cooCoi.QLat2_flow) "Results of the simulation";
   /*fanRet*/
 
-
 protected
   model Results "Model to store the results of the simulation"
     parameter Modelica.Units.SI.Area A "Floor area";
@@ -507,6 +511,11 @@ public
     allowFlowReversal=allowFlowReversal,
     dp_nominal=40) "Pressure drop for return duct"
     annotation (Placement(transformation(extent={{562,38},{542,58}})));
+  Buildings.Fluid.FixedResistances.PressureDrop res1(
+    redeclare package Medium = MediumA,
+    m_flow_nominal=mPle_flow_nominal,
+    dp_nominal=50)
+    annotation (Placement(transformation(extent={{588,164},{608,184}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,-10}},
@@ -578,23 +587,22 @@ equation
       thickness=0.5,
       smooth=Smooth.None));
   connect(weaBus, flo.weaBus) annotation (Line(
-      points={{-320,180},{-320,549.887},{977.679,549.887}},
+      points={{-320,180},{-320,589.385},{991.957,589.385}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
   connect(flo.TRooAir, min.u) annotation (Line(
-      points={{1066.04,512.14},{1164.7,512.14},{1164.7,450},{1198,450}},
+      points={{1114.83,473},{1164.7,473},{1164.7,450},{1198,450}},
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
   connect(flo.TRooAir, ave.u) annotation (Line(
-      points={{1066.04,512.14},{1166,512.14},{1166,420},{1198,420}},
+      points={{1114.83,473},{1166,473},{1166,420},{1198,420}},
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
   connect(TRooAir.u, flo.TRooAir) annotation (Line(
-      points={{488,170},{480,170},{480,538},{1164,538},{1164,512.14},{1066.04,
-          512.14}},
+      points={{488,170},{480,170},{480,538},{1164,538},{1164,473},{1114.83,473}},
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
@@ -691,37 +699,33 @@ equation
           -40},{844,-40}}, color={0,127,255}));
   connect(TSupPle.port_b, VSupPle_flow.port_a)
     annotation (Line(points={{578,96},{578,118}}, color={0,127,255}));
-  connect(VSupPle_flow.port_b, flo.portsPle[1]) annotation (Line(points={{578,138},
-          {578,566},{1004,566},{1004,451.547},{1034.27,451.547}},
-                                                                color={0,127,255}));
   connect(VSupNor_flow.port_b, flo.portsNor[1]) annotation (Line(points={{706,140},
-          {706,496.247},{913.143,496.247}},
+          {706,523.662},{908.678,523.662}},
                                           color={0,127,255}));
   connect(VSupCor_flow.port_b, flo.portsCor[1]) annotation (Line(points={{834,142},
-          {834,302},{802,302},{802,446},{858,446},{858,456.513},{913.143,
-          456.513}},
+          {834,302},{802,302},{802,446},{858,446},{858,477.108},{908.678,
+          477.108}},
         color={0,127,255}));
   connect(VSupSou_flow.port_b, flo.portsSou[1]) annotation (Line(points={{1080,
-          138},{1080,378},{898,378},{898,416.78},{913.143,416.78}},
+          138},{1080,378},{898,378},{898,422.338},{908.678,422.338}},
                                                                color={0,127,255}));
   connect(splRetCor.port_2, flo.portsSou[2]) annotation (Line(points={{962,0},{
-          1156,0},{1156,416.78},{923.071,416.78}},
+          1156,0},{1156,422.338},{922.33,422.338}},
                                               color={0,127,255}));
   connect(splRetCor.port_3, flo.portsCor[2]) annotation (Line(points={{952,10},
-          {952,304},{864,304},{864,428},{906,428},{906,456.513},{923.071,
-          456.513}},
+          {952,304},{864,304},{864,428},{906,428},{906,477.108},{922.33,477.108}},
         color={0,127,255}));
   connect(splRetNor.port_3, flo.portsNor[2]) annotation (Line(points={{774,10},
-          {774,458},{908,458},{908,482},{923.071,482},{923.071,496.247}},
-                                                                        color={0,
+          {774,458},{908,458},{908,482},{922.33,482},{922.33,523.662}}, color={0,
           127,255}));
   connect(splSupRoo.port_3, dpRetDuc1.port_b) annotation (Line(points={{580,-30},
           {516,-30},{516,48},{542,48}}, color={0,127,255}));
   connect(dpRetDuc1.port_a, TSupPle.port_a) annotation (Line(points={{562,48},{570,
           48},{570,76},{578,76}}, color={0,127,255}));
-  connect(splRetRoo1.port_3, flo.portsPle[2]) annotation (Line(points={{620,10},
-          {620,451.547},{1044.2,451.547}},
-                                       color={0,127,255}));
+  connect(VSupPle_flow.port_b, res1.port_a) annotation (Line(points={{578,138},{
+          580,138},{580,174},{588,174}}, color={0,127,255}));
+  connect(res1.port_b, splRetRoo1.port_3) annotation (Line(points={{608,174},{618,
+          174},{618,10},{620,10}}, color={0,127,255}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-380,
             -400},{1420,600}}), graphics={Line(points={{310,404}}, color={28,
               108,200}), Line(
@@ -824,4 +828,4 @@ This is for
 </li>
 </ul>
 </html>"));
-end PartialOpenLoopX1aV020123_modifyVav;
+end PartialOpenLoopX1aV020123_modifyVav_useSpawn;

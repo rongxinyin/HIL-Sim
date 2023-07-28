@@ -1,5 +1,5 @@
 within hil_flexlab_model.ThermalZones;
-model FlexlabX1A013123 "Model of a flexlab x1a"
+model FlexlabX1A013123_weipingCopy "Model of a flexlab x1a"
   replaceable package Medium = Modelica.Media.Interfaces.PartialMedium
     "Medium model for air" annotation (choicesAllMatching=true);
 
@@ -25,7 +25,6 @@ model FlexlabX1A013123 "Model of a flexlab x1a"
 
   Buildings.Occupants.ThermalZones.Detailed.MixedAir sou(
     redeclare package Medium = Medium,
-    lat=lat,
     AFlo=6.49*3.05,
     nConPar=0,
     nConBou=3,
@@ -66,7 +65,6 @@ model FlexlabX1A013123 "Model of a flexlab x1a"
 
   Buildings.Occupants.ThermalZones.Detailed.MixedAir ple(
     redeclare package Medium = Medium,
-    lat=lat,
     AFlo=6.49*(3.05 + 3.05 + 3.23),
     hRoo=1.625,
     nSurBou=0,
@@ -97,7 +95,6 @@ model FlexlabX1A013123 "Model of a flexlab x1a"
 
   Buildings.Occupants.ThermalZones.Detailed.MixedAir nor(
     redeclare package Medium = Medium,
-    lat=lat,
     AFlo=6.49*3.23,
     hRoo=3.6576,
     nConPar=0,
@@ -133,7 +130,6 @@ model FlexlabX1A013123 "Model of a flexlab x1a"
 
   Buildings.Occupants.ThermalZones.Detailed.MixedAir cor(
     redeclare package Medium = Medium,
-    lat=lat,
     AFlo=6.49*3.05,
     hRoo=3.6576,
     nConExt=1,
@@ -169,7 +165,6 @@ model FlexlabX1A013123 "Model of a flexlab x1a"
     redeclare package Medium = Medium,
     hRoo=3.6576,
     AFlo=3.93,
-    lat=0.66098585832754,
     nConExt=2,
     nConBou=3,
     nSurBou=2,
@@ -202,7 +197,6 @@ model FlexlabX1A013123 "Model of a flexlab x1a"
     redeclare package Medium = Medium,
     hRoo=3.6576,
     AFlo=2.39,
-    lat=0.66098585832754,
     nSurBou=2,
     nConExt=4,
     nConExtWin=0,
@@ -866,4 +860,4 @@ to be parameters does not imply that the whole record has the variability of a p
       StopTime=19612800,
       Interval=300,
       __Dymola_Algorithm="Dassl"));
-end FlexlabX1A013123;
+end FlexlabX1A013123_weipingCopy;

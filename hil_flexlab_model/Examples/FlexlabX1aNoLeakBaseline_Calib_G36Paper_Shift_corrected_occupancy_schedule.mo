@@ -243,8 +243,8 @@ equation
           {34,104},{34,325},{-10,325}},color={255,127,0}));
   connect(conVAVNor.uOpeMod, TZonSet[1].yOpeMod) annotation (Line(points={{652,4},
           {54,4},{54,325},{-10,325}},  color={255,127,0}));
-  connect(flo.TRooAir, TZonSet.TZon) annotation (Line(points={{1092.35,467},{
-          1096,467},{1096,604},{-54,604},{-54,335},{-34,335}},    color={0,0,127}));
+  connect(flo.TRooAir, TZonSet.TZon) annotation (Line(points={{1066.04,512.14},
+          {1096,512.14},{1096,604},{-54,604},{-54,335},{-34,335}},color={0,0,127}));
   connect(TDis.y, zonOutAirSet.TDis) annotation (Line(points={{131,286},{132,286},
           {132,427},{226,427}}, color={0,0,127}));
   connect(VDis_flow.y, zonOutAirSet.VDis_flow) annotation (Line(points={{197,252},
@@ -254,8 +254,9 @@ equation
           0,127}));
   connect(zonOutAirSet.uReqOutAir, booRep1.y) annotation (Line(points={{226,433},
           {204,433},{204,352},{510,352},{510,448},{502,448}}, color={255,0,255}));
-  connect(flo.TRooAir, zonOutAirSet.TZon) annotation (Line(points={{1092.35,467},
-          {1072,467},{1072,620},{210,620},{210,430},{226,430}},    color={0,0,127}));
+  connect(flo.TRooAir, zonOutAirSet.TZon) annotation (Line(points={{1066.04,
+          512.14},{1072,512.14},{1072,620},{210,620},{210,430},{226,430}},
+                                                                   color={0,0,127}));
   connect(zonOutAirSet.yDesZonPeaOcc, zonToSys.uDesZonPeaOcc) annotation (Line(
         points={{250,439},{262,439},{262,438},{272,438}}, color={0,0,127}));
   connect(zonOutAirSet.VDesPopBreZon_flow, zonToSys.VDesPopBreZon_flow)

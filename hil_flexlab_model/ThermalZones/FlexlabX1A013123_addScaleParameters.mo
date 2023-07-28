@@ -527,7 +527,7 @@ equation
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
   connect(temAirSou.T, multiplex3.u1[1]) annotation (Line(
-      points={{310,350},{328,350},{328,297},{338,297}},
+      points={{311,350},{328,350},{328,297},{338,297}},
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
@@ -712,10 +712,10 @@ equation
       horizontalAlignment=TextAlignment.Left));
   connect(intGaiEle.y, ele.qGai_flow) annotation (Line(points={{103,412},{128.5,
           412},{128.5,400},{152.4,400}}, color={0,0,127}));
-  connect(temAirNor.T, multiplex3.u3[1]) annotation (Line(points={{316,252},{
+  connect(temAirNor.T, multiplex3.u3[1]) annotation (Line(points={{317,252},{
           326,252},{326,283},{338,283}}, color={0,0,127}));
   connect(temAirCor.T, multiplex3.u2[1])
-    annotation (Line(points={{314,290},{338,290}}, color={0,0,127}));
+    annotation (Line(points={{315,290},{338,290}}, color={0,0,127}));
   connect(ligGai.y[1], add3_1.u1) annotation (Line(points={{305,476},{320,476},{
           320,484},{330,484}}, color={0,0,127}));
   connect(plgGai.y[1], add3_1.u2) annotation (Line(points={{305,438},{320,438},{
