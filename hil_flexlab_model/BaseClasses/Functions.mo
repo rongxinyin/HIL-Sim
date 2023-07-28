@@ -2,8 +2,10 @@
 package Functions "Contains functions for plants"
   function COP_ASHP
     "This function calculates the COP of an air source heat pump as a function of temperature difference"
-    input Modelica.SIunits.TemperatureDifference dT "Temperature difference between condenser and evaporator";
-    output Modelica.SIunits.DimensionlessRatio COP "Coefficient of performance";
+    input Modelica.Units.SI.TemperatureDifference dT
+      "Temperature difference between condenser and evaporator";
+    output Modelica.Units.SI.DimensionlessRatio COP
+      "Coefficient of performance";
   protected
     Real deltax = 1 "Delta x parameter for splice function";
     Real y1 "Intermediate variable";
@@ -55,9 +57,10 @@ Yrjölä, Jukka et al. <i>Domestic Hot Water Production with Ground Source Heat 
 
   function Evap_Effectiveness
     "Calculates the evaporative effectiveness of media as a function of wetbulb depression"
-    input Modelica.SIunits.Temperature TDry "Drybulb temperature";
-    input Modelica.SIunits.Temperature TWet "Wetbulb temperature";
-    output Modelica.SIunits.DimensionlessRatio eff "Coefficient of performance";
+    input Modelica.Units.SI.Temperature TDry "Drybulb temperature";
+    input Modelica.Units.SI.Temperature TWet "Wetbulb temperature";
+    output Modelica.Units.SI.DimensionlessRatio eff
+      "Coefficient of performance";
   protected
     Real dep "Wetbulb depression";
   algorithm

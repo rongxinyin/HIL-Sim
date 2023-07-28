@@ -1,0 +1,5 @@
+within hil_flexlab_model.BaseClasses;
+model eco
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+        coordinateSystem(preserveAspectRatio=false)));
+end eco;

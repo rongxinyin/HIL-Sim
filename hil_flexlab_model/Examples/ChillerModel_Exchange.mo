@@ -16,9 +16,8 @@ model ChillerModel_Exchange
     annotation (Placement(transformation(extent={{-6,28},{14,48}})));
   Modelica.Blocks.Sources.Sine OAT(
     amplitude=10,
-    freqHz=0.0000115,
-    offset=273 + 23)
-                annotation (Placement(transformation(
+    f=0.0000115,
+    offset=273 + 23) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={22,-54})));

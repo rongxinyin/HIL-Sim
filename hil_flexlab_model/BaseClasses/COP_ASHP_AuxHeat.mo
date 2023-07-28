@@ -1,7 +1,8 @@
 within hil_flexlab_model.BaseClasses;
 model COP_ASHP_AuxHeat
   "Calculates COP of an air-source heat pump including an auxiliary electric heater that provides a portion of the heating load"
-  parameter Modelica.SIunits.Power QHeaPum_flow_nominal "Nominal heat capacity of the heat pump";
+  parameter Modelica.Units.SI.Power QHeaPum_flow_nominal
+    "Nominal heat capacity of the heat pump";
   Modelica.Blocks.Interfaces.RealInput Q_flow "Load on heat pump"
     annotation (Placement(transformation(extent={{-140,60},{-100,100}})));
   Modelica.Blocks.Math.Division powHeaPum "Power of heat pump portion"

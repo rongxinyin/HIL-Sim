@@ -1,19 +1,29 @@
 within hil_flexlab_model;
 model Tes_weiping_062822 "Tes storage implementation"
   replaceable package Medium = Buildings.Media.Water "Medium for water flow";
-  parameter Modelica.SIunits.MassFlowRate mTes_flow_nominal "Nominal mass flow rate through TES device";
-  parameter Modelica.SIunits.ThermalConductivity k=0.584 "Thermal conductivity of PCM";
-  parameter Modelica.SIunits.SpecificHeatCapacity c=2910 "Specific heat capacity of PCM";
-  parameter Modelica.SIunits.Density d(displayUnit="kg/m3") = 1500 "Mass density of PCM";
-  parameter Modelica.SIunits.Temperature TSol=273.15+29.5 "Solidus temperature of PCM.";
-  parameter Modelica.SIunits.Temperature TLiq=273.15+29.66 "Liquidus temperature of PCM";
-  parameter Modelica.SIunits.SpecificInternalEnergy LHea=278140 "Latent heat of phase change";
-  parameter Modelica.SIunits.Energy Tes_nominal=Tes_nominal "Design capacity (factor * 1kWh)";
-  parameter Modelica.SIunits.PressureDifference dpFixed_nominal(displayUnit="Pa", min=0)
+  parameter Modelica.Units.SI.MassFlowRate mTes_flow_nominal
+    "Nominal mass flow rate through TES device";
+  parameter Modelica.Units.SI.ThermalConductivity k=0.584
+    "Thermal conductivity of PCM";
+  parameter Modelica.Units.SI.SpecificHeatCapacity c=2910
+    "Specific heat capacity of PCM";
+  parameter Modelica.Units.SI.Density d(displayUnit="kg/m3") = 1500
+    "Mass density of PCM";
+  parameter Modelica.Units.SI.Temperature TSol=273.15 + 29.5
+    "Solidus temperature of PCM.";
+  parameter Modelica.Units.SI.Temperature TLiq=273.15 + 29.66
+    "Liquidus temperature of PCM";
+  parameter Modelica.Units.SI.SpecificInternalEnergy LHea=278140
+    "Latent heat of phase change";
+  parameter Modelica.Units.SI.Energy Tes_nominal=Tes_nominal
+    "Design capacity (factor * 1kWh)";
+  parameter Modelica.Units.SI.PressureDifference dpFixed_nominal(displayUnit=
+        "Pa", min=0)
     "Pressure drop of pipe and other resistances that are in series";
-  parameter Modelica.SIunits.PressureDifference dpValve_nominal(displayUnit="Pa", min=0)
-    "Nominal pressure drop of fully open valve";
-  parameter Modelica.SIunits.PressureDifference dp_nominal(min=0, displayUnit="Pa")
+  parameter Modelica.Units.SI.PressureDifference dpValve_nominal(displayUnit=
+        "Pa", min=0) "Nominal pressure drop of fully open valve";
+  parameter Modelica.Units.SI.PressureDifference dp_nominal(min=0, displayUnit=
+        "Pa")
     "Nominal pressure raise, used for default pressure curve if not specified in record per";
 
 

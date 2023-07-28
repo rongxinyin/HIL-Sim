@@ -2,24 +2,25 @@ within hil_flexlab_model.ThermalZones;
 model RoomMultiFluid
   "BESTest Case 600 with fluid ports for air HVAC and internal load"
   replaceable package MediumA = Buildings.Media.Air "Medium model";
-  parameter Modelica.SIunits.DimensionlessRatio occ_density "Occupant density in ppl/m^2";
-  parameter Modelica.SIunits.MassFlowRate mAir_flow_nominal
+  parameter Modelica.Units.SI.DimensionlessRatio occ_density
+    "Occupant density in ppl/m^2";
+  parameter Modelica.Units.SI.MassFlowRate mAir_flow_nominal
     "Design airflow rate of system";
-  parameter Modelica.SIunits.Angle lat "Building latitude";
-  parameter Modelica.SIunits.Angle S_=
-    Buildings.Types.Azimuth.S "Azimuth for south walls";
-  parameter Modelica.SIunits.Angle E_=
-    Buildings.Types.Azimuth.E "Azimuth for east walls";
-  parameter Modelica.SIunits.Angle W_=
-    Buildings.Types.Azimuth.W "Azimuth for west walls";
-  parameter Modelica.SIunits.Angle N_=
-    Buildings.Types.Azimuth.N "Azimuth for north walls";
-  parameter Modelica.SIunits.Angle C_=
-    Buildings.Types.Tilt.Ceiling "Tilt for ceiling";
-  parameter Modelica.SIunits.Angle F_=
-    Buildings.Types.Tilt.Floor "Tilt for floor";
-  parameter Modelica.SIunits.Angle Z_=
-    Buildings.Types.Tilt.Wall "Tilt for wall";
+  parameter Modelica.Units.SI.Angle lat "Building latitude";
+  parameter Modelica.Units.SI.Angle S_=Buildings.Types.Azimuth.S
+    "Azimuth for south walls";
+  parameter Modelica.Units.SI.Angle E_=Buildings.Types.Azimuth.E
+    "Azimuth for east walls";
+  parameter Modelica.Units.SI.Angle W_=Buildings.Types.Azimuth.W
+    "Azimuth for west walls";
+  parameter Modelica.Units.SI.Angle N_=Buildings.Types.Azimuth.N
+    "Azimuth for north walls";
+  parameter Modelica.Units.SI.Angle C_=Buildings.Types.Tilt.Ceiling
+    "Tilt for ceiling";
+  parameter Modelica.Units.SI.Angle F_=Buildings.Types.Tilt.Floor
+    "Tilt for floor";
+  parameter Modelica.Units.SI.Angle Z_=Buildings.Types.Tilt.Wall
+    "Tilt for wall";
   parameter Integer nConExtWin = 2 "Number of constructions with a window";
   parameter Integer nConBou = 1
     "Number of surface that are connected to constructions that are modeled inside the room";
@@ -29,46 +30,44 @@ model RoomMultiFluid
     absIR_b=0.9,
     absSol_a=0.7,
     absSol_b=0.7,
-    material={
-      Buildings.HeatTransfer.Data.Solids.Generic(
+    material={Buildings.HeatTransfer.Data.Solids.Generic(
         x=0.0100,
         k=0.1100,
         c=1210.00,
         d=544.62,
-        nStaRef=Buildings.ThermalZones.Detailed.Validation.BESTEST.nStaRef),
-      Buildings.HeatTransfer.Data.Solids.Generic(
+        nStaRef=Buildings.Occupants.ThermalZones.Detailed.Validation.BESTEST.nStaRef),
+        Buildings.HeatTransfer.Data.Solids.Generic(
         x=0.0539,
         k=0.0490,
         c=836.80,
         d=265.00,
-        nStaRef=Buildings.ThermalZones.Detailed.Validation.BESTEST.nStaRef),
-      Buildings.HeatTransfer.Data.Solids.Generic(
+        nStaRef=Buildings.Occupants.ThermalZones.Detailed.Validation.BESTEST.nStaRef),
+        Buildings.HeatTransfer.Data.Solids.Generic(
         x=0.0127,
         k=0.1600,
         c=830.00,
         d=784.90,
-        nStaRef=Buildings.ThermalZones.Detailed.Validation.BESTEST.nStaRef)})
+        nStaRef=Buildings.Occupants.ThermalZones.Detailed.Validation.BESTEST.nStaRef)})
     "Steel Frame Non-Res Exterior Wall: 1. Wood Siding + 2. Steel Frame Non-Res Wall Insulation + 3. 1/2 in Gypsum"
     annotation (Placement(transformation(extent={{100,80},{114,94}})));
   parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic matFlo(
-    final nLay= 2,
+    final nLay=2,
     absIR_a=0.9,
     absIR_b=0.9,
     absSol_a=0.7,
     absSol_b=0.7,
-    material={
-      Buildings.HeatTransfer.Data.Solids.Generic(
+    material={Buildings.HeatTransfer.Data.Solids.Generic(
         x=0.0300,
         k=0.1386,
         c=0.00,
         d=0.00,
-        nStaRef=Buildings.ThermalZones.Detailed.Validation.BESTEST.nStaRef),
-      Buildings.HeatTransfer.Data.Solids.Generic(
+        nStaRef=Buildings.Occupants.ThermalZones.Detailed.Validation.BESTEST.nStaRef),
+        Buildings.HeatTransfer.Data.Solids.Generic(
         x=0.1016,
         k=1.3110,
         c=836.80,
         d=2240.00,
-        nStaRef=Buildings.ThermalZones.Detailed.Validation.BESTEST.nStaRef)})
+        nStaRef=Buildings.Occupants.ThermalZones.Detailed.Validation.BESTEST.nStaRef)})
     "Slab on Grade Floor: 1. CP02 Carpet Pad + 2. HW Concrete"
     annotation (Placement(transformation(extent={{160,80},{174,94}})));
   parameter Buildings.HeatTransfer.Data.Solids.Generic soil(
@@ -83,28 +82,29 @@ model RoomMultiFluid
     absIR_b=0.9,
     absSol_a=0.7,
     absSol_b=0.7,
-    material={
-      Buildings.HeatTransfer.Data.Solids.Generic(
+    material={Buildings.HeatTransfer.Data.Solids.Generic(
         x=0.0095,
         k=0.1600,
         c=1460.00,
         d=1121.29,
-        nStaRef=Buildings.ThermalZones.Detailed.Validation.BESTEST.nStaRef),
-     Buildings.HeatTransfer.Data.Solids.Generic(
+        nStaRef=Buildings.Occupants.ThermalZones.Detailed.Validation.BESTEST.nStaRef),
+        Buildings.HeatTransfer.Data.Solids.Generic(
         x=0.1247,
         k=0.0490,
         c=836.80,
         d=265.00,
-        nStaRef=Buildings.ThermalZones.Detailed.Validation.BESTEST.nStaRef),
-     Buildings.HeatTransfer.Data.Solids.Generic(
+        nStaRef=Buildings.Occupants.ThermalZones.Detailed.Validation.BESTEST.nStaRef),
+        Buildings.HeatTransfer.Data.Solids.Generic(
         x=0.0015,
         k=45.0060,
         c=418.40,
         d=7680.00,
-        nStaRef=Buildings.ThermalZones.Detailed.Validation.BESTEST.nStaRef)})
+        nStaRef=Buildings.Occupants.ThermalZones.Detailed.Validation.BESTEST.nStaRef)})
     "IEAD Non-Res Roof: 1. Roof Membrane + 2. IEAD Non-Res Roof Insulation + 3. Metal Decking"
     annotation (Placement(transformation(extent={{140,80},{154,94}})));
-  parameter Buildings.ThermalZones.Detailed.Validation.BESTEST.Data.Win600 window600(
+  parameter
+    Buildings.Occupants.ThermalZones.Detailed.Validation.BESTEST.Data.Win600
+    window600(
     UFra=3.2365,
     haveExteriorShade=false,
     haveInteriorShade=false) "Window"
@@ -134,7 +134,7 @@ model RoomMultiFluid
     "Room air temperature"
     annotation (Placement(transformation(extent={{200,-10},{220,10}}),
         iconTransformation(extent={{200,-10},{220,10}})));
-  Buildings.ThermalZones.Detailed.MixedAir roo(
+  Buildings.Occupants.ThermalZones.Detailed.MixedAir roo(
     redeclare package Medium = MediumA,
     hRoo=4,
     nConExtWin=2,
@@ -391,13 +391,13 @@ model RoomMultiFluid
         k=0.1600,
         c=830.00,
         d=784.90,
-        nStaRef=Buildings.ThermalZones.Detailed.Validation.BESTEST.nStaRef),
+        nStaRef=Buildings.Occupants.ThermalZones.Detailed.Validation.BESTEST.nStaRef),
         Buildings.HeatTransfer.Data.Solids.Generic(
         x=0.0127,
         k=0.1600,
         c=830.00,
         d=784.90,
-        nStaRef=Buildings.ThermalZones.Detailed.Validation.BESTEST.nStaRef)})
+        nStaRef=Buildings.Occupants.ThermalZones.Detailed.Validation.BESTEST.nStaRef)})
     "Steel Frame Non-Res Exterior Wall: 1. 1/2 in Gypsum + 2. 1/2 in Gypsum"
     annotation (Placement(transformation(extent={{87,80},{101,94}})));
   Modelica.Thermal.HeatTransfer.Sources.FixedHeatFlow QFro(Q_flow=0)
@@ -406,7 +406,7 @@ model RoomMultiFluid
   Modelica.Thermal.HeatTransfer.Sources.FixedHeatFlow QFro1(Q_flow=0)
     "Boundary condition for adjacent zones"
     annotation (Placement(transformation(extent={{10,-90},{30,-70}})));
-  parameter Modelica.SIunits.Area AFlo=99 "Floor area";
+  parameter Modelica.Units.SI.Area AFlo=99 "Floor area";
 protected
   Modelica.Blocks.Math.Product proOcc "Product for internal gain"
     annotation (Placement(transformation(extent={{-240,188},{-220,208}})));

@@ -1,7 +1,7 @@
 within hil_flexlab_model.Examples;
 model TestZoneModel
   replaceable package Medium=Buildings.Media.Air "Air medium";
-  Buildings.ThermalZones.Detailed.MixedAir mixedAir(
+  Buildings.Occupants.ThermalZones.Detailed.MixedAir mixedAir(
     nConExt=1,
     nConExtWin=1,
     nConPar=0,

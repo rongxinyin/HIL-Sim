@@ -1,32 +1,27 @@
 within hil_flexlab_model.Examples;
 model MixedAir_weiping "Model of a room in which the air is completely mixed"
-  extends Buildings.ThermalZones.Detailed.BaseClasses.RoomHeatMassBalance(
-  redeclare Buildings.ThermalZones.Detailed.BaseClasses.MixedAirHeatMassBalance air(
-    final energyDynamics=energyDynamics,
-    final massDynamics = massDynamics,
-    final p_start=p_start,
-    final T_start=T_start,
-    final X_start=X_start,
-    final C_start=C_start,
-    final C_nominal=C_nominal,
-    final mSenFac=mSenFac,
-    final m_flow_nominal=m_flow_nominal,
-    final homotopyInitialization=homotopyInitialization,
-    final conMod=intConMod,
-    final hFixed=hIntFixed,
-    final use_C_flow = use_C_flow),
-    datConExt(
-      each T_a_start = T_start,
-      each T_b_start = T_start),
-    datConExtWin(
-      each T_a_start = T_start,
-      each T_b_start = T_start),
-    datConBou(
-      each T_a_start = T_start,
-      each T_b_start = T_start),
-    datConPar(
-      each T_a_start = T_start,
-      each T_b_start = T_start));
+  extends
+    Buildings.Occupants.ThermalZones.Detailed.BaseClasses.RoomHeatMassBalance(
+    redeclare
+      Buildings.Occupants.ThermalZones.Detailed.BaseClasses.MixedAirHeatMassBalance
+      air(
+      final energyDynamics=energyDynamics,
+      final massDynamics=massDynamics,
+      final p_start=p_start,
+      final T_start=T_start,
+      final X_start=X_start,
+      final C_start=C_start,
+      final C_nominal=C_nominal,
+      final mSenFac=mSenFac,
+      final m_flow_nominal=m_flow_nominal,
+      final homotopyInitialization=homotopyInitialization,
+      final conMod=intConMod,
+      final hFixed=hIntFixed,
+      final use_C_flow=use_C_flow),
+    datConExt(each T_a_start=T_start, each T_b_start=T_start),
+    datConExtWin(each T_a_start=T_start, each T_b_start=T_start),
+    datConBou(each T_a_start=T_start, each T_b_start=T_start),
+    datConPar(each T_a_start=T_start, each T_b_start=T_start));
 
   ////////////////////////////////////////////////////////////////////////////
   // Media declaration. This is identical to

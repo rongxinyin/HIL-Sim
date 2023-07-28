@@ -4,15 +4,14 @@ model AC_AWHP_PrimaryLoop_addpts
 
   package MediumA = Buildings.Media.Air "Medium model for air";
   package MediumW = Buildings.Media.Water "Medium model for water";
-    constant Modelica.SIunits.MassFlowRate m_flow=0.4
-    "Nominal mass flow rate";
+  constant Modelica.Units.SI.MassFlowRate m_flow=0.4 "Nominal mass flow rate";
 
 
-  parameter Modelica.SIunits.Temperature TSupChi_nominal=281.15;
-  parameter Modelica.SIunits.Temperature TSetSupAir=286.15;
+  parameter Modelica.Units.SI.Temperature TSupChi_nominal=281.15;
+  parameter Modelica.Units.SI.Temperature TSetSupAir=286.15;
 
 
-parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
+  parameter Modelica.Units.SI.MassFlowRate mSec_flow_nominal=0.33
     "Design mass flow rate of secondary loop";
 
   Modelica.Blocks.Sources.Constant TSetSupChiConst(final k=TSupChi_nominal)

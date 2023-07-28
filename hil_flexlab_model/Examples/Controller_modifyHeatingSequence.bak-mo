@@ -338,7 +338,7 @@ block Controller_modifyHeatingSequence "Controller for room VAV box"
     final durTimDisAir=durTimDisAir)
     "Number of system requests"
     annotation (Placement(transformation(extent={{80,-100},{100,-80}})));
-  Buildings.Controls.OBC.CDL.Continuous.LimPID conHeaLoo(
+  Buildings.Controls.Continuous.LimPID         conHeaLoo(
     final controllerType=controllerTypeHea,
     final k=kHea,
     final Ti=TiHea,
@@ -347,14 +347,13 @@ block Controller_modifyHeatingSequence "Controller for room VAV box"
     final yMin=0,
     reset=Buildings.Controls.OBC.CDL.Types.Reset.Parameter) "Heating loop signal"
     annotation (Placement(transformation(extent={{-110,150},{-90,170}})));
-  Buildings.Controls.OBC.CDL.Continuous.LimPID conCooLoo(
+  Buildings.Controls.Continuous.LimPID         conCooLoo(
     final controllerType=controllerTypeCoo,
     final k=kCoo,
     final Ti=TiCoo,
     final Td=TdCoo,
     final yMax=1,
     final yMin=0,
-    reverseAction=true,
     reset=Buildings.Controls.OBC.CDL.Types.Reset.Parameter) "Cooling loop signal"
     annotation (Placement(transformation(extent={{-110,110},{-90,130}})));
 
@@ -464,13 +463,13 @@ equation
     annotation (Line(points={{-160,-14},{-122,-14},{-122,100},{-100,100},{-100,108}},
                    color={0,0,127}));
   connect(conCooLoo.y, damVal.uCoo)
-    annotation (Line(points={{-88,120},{8,120},{8,0},{18,0}},
+    annotation (Line(points={{-89,120},{8,120},{8,0},{18,0}},
       color={0,0,127}));
   connect(conHeaLoo.y, damVal.uHea)
-    annotation (Line(points={{-88,160},{12,160},{12,-12},{18,-12}},
+    annotation (Line(points={{-89,160},{12,160},{12,-12},{18,-12}},
       color={0,0,127}));
   connect(conCooLoo.y, sysReq.uCoo)
-    annotation (Line(points={{-88,120},{8,120},{8,-86},{78,-86}},
+    annotation (Line(points={{-89,120},{8,120},{8,-86},{78,-86}},
       color={0,0,127}));
   connect(damVal.uOpeMod, uOpeMod) annotation (Line(points={{18,-20},{-112,-20},
           {-112,-170},{-160,-170}},
@@ -481,11 +480,13 @@ equation
           -32,-158},{-20,-158}}, color={255,127,0}));
   connect(isUnOcc.y, isNotUn.u)
     annotation (Line(points={{4,-150},{18,-150}},   color={255,0,255}));
-  connect(isNotUn.y, conCooLoo.trigger) annotation (Line(points={{42,-150},{60,-150},
-          {60,-120},{-116,-120},{-116,104},{-106,104},{-106,108}}, color={255,0,
+  connect(isNotUn.y, conCooLoo.trigger) annotation (Line(points={{42,-150},{60,
+          -150},{60,-120},{-116,-120},{-116,104},{-108,104},{-108,108}},
+                                                                   color={255,0,
           255}));
-  connect(isNotUn.y, conHeaLoo.trigger) annotation (Line(points={{42,-150},{60,-150},
-          {60,-120},{-116,-120},{-116,142},{-106,142},{-106,148}}, color={255,0,
+  connect(isNotUn.y, conHeaLoo.trigger) annotation (Line(points={{42,-150},{60,
+          -150},{60,-120},{-116,-120},{-116,142},{-108,142},{-108,148}},
+                                                                   color={255,0,
           255}));
   connect(sysReq.yDam_actual,yDam_actual)  annotation (Line(points={{78,-92},{-124,
           -92},{-124,-80},{-160,-80}}, color={0,0,127}));

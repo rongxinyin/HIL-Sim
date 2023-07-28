@@ -13,12 +13,12 @@ model AC_Chiller_PrimaryLoop_addpts
     "constant Real mChiEva_flow_nominal=per.mEva_flow_nominal";
     constant Real mChiCon_flow_nominal=per.mCon_flow_nominal;
 
-  parameter Modelica.SIunits.Temperature TSupChi_nominal=281.15;
-  parameter Modelica.SIunits.Temperature TSetSupAir=286.15;
+  parameter Modelica.Units.SI.Temperature TSupChi_nominal=281.15;
+  parameter Modelica.Units.SI.Temperature TSetSupAir=286.15;
 
-parameter Modelica.SIunits.MassFlowRate mChiEva_flow_nominal=per.mEva_flow_nominal
+  parameter Modelica.Units.SI.MassFlowRate mChiEva_flow_nominal=per.mEva_flow_nominal
     "Design mass flow rate of chiller";
-parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
+  parameter Modelica.Units.SI.MassFlowRate mSec_flow_nominal=0.33
     "Design mass flow rate of secondary loop";
 
   Modelica.Blocks.Sources.Constant TSetSupChiConst(final k=TSupChi_nominal)

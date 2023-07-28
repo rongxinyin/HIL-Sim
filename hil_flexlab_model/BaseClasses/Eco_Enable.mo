@@ -107,20 +107,21 @@ protected
   final parameter Real hOutHigLimCutLow = hOutHigLimCutHig - delEntHis
     "Hysteresis block low limit cutoff";
 
-  Buildings.Controls.OBC.CDL.Continuous.Add add1(
-    final k2=-1) "Add block determines difference between TOut and TOutCut"
+  Buildings.Obsolete.Controls.OBC.CDL.Continuous.Add add1(final k2=-1)
+    "Add block determines difference between TOut and TOutCut"
     annotation (Placement(transformation(extent={{-140,240},{-120,260}})));
   Buildings.Controls.OBC.CDL.Continuous.Hysteresis hysOutTem(
     final uLow=TOutHigLimCutLow,
     final uHigh=TOutHigLimCutHig)
     "Outdoor air temperature hysteresis for both fixed and differential dry bulb temperature cutoff conditions"
     annotation (Placement(transformation(extent={{-98,240},{-78,260}})));
-  Buildings.Controls.OBC.CDL.Logical.Switch outDamSwitch
+  Buildings.Controls.OBC.CDL.Continuous.Switch outDamSwitch
     "Set maximum OA damper position to minimum at disable (after a given time delay)"
     annotation (Placement(transformation(extent={{62,-60},{82,-40}})));
-  Buildings.Controls.OBC.CDL.Logical.Switch retDamSwitch "Set minimum RA damper position to maximum at disable"
+  Buildings.Controls.OBC.CDL.Continuous.Switch retDamSwitch
+    "Set minimum RA damper position to maximum at disable"
     annotation (Placement(transformation(extent={{-40,-162},{-20,-142}})));
-  Buildings.Controls.OBC.CDL.Logical.Switch minRetDamSwitch
+  Buildings.Controls.OBC.CDL.Continuous.Switch minRetDamSwitch
     "Keep minimum RA damper position at physical maximum for a short time period after disable"
     annotation (Placement(transformation(extent={{40,-160},{60,-140}})));
   Buildings.Controls.OBC.CDL.Logical.Not not2 "Logical not that starts the timer at disable signal "

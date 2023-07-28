@@ -8,10 +8,7 @@ model
       firstEntryOccupied=true,
       period=86400), fanSup(per(use_powerCharacteristic=true, power(V_flow={
               0.05,0.4}, P=1*{167,370}))),
-    flo(occSch(table=[0,0; 8,0; 8,0.5; 9,0.5; 9,1; 13,1; 13,0.5; 14,0.5; 14,1;
-            18,1; 18,0.5; 19,0.5; 19,0; 24,0]),
-      ele(T_start=294.96),
-      clo(T_start=294.96),
+    flo(
       nor(T_start=294.96),
       cor(T_start=294.96),
       sou(T_start=294.96),
@@ -19,16 +16,17 @@ model
 //  extends BaseClasses.PartialOpenLoopX1aV1(min(nin=3),
 //      ave(nin=3));
 
-  parameter Modelica.SIunits.VolumeFlowRate VPriSysMax_flow=m_flow_nominal/1.2
+  parameter Modelica.Units.SI.VolumeFlowRate VPriSysMax_flow=m_flow_nominal/1.2
     "Maximum expected system primary airflow rate at design stage";
-  parameter Modelica.SIunits.VolumeFlowRate minZonPriFlo[numZon]={
-      mCor_flow_nominal,mSou_flow_nominal,mNor_flow_nominal}/1.2 "Minimum expected zone primary flow rate";
-  parameter Modelica.SIunits.Time samplePeriod=120
+  parameter Modelica.Units.SI.VolumeFlowRate minZonPriFlo[numZon]={
+      mCor_flow_nominal,mSou_flow_nominal,mNor_flow_nominal}/1.2
+    "Minimum expected zone primary flow rate";
+  parameter Modelica.Units.SI.Time samplePeriod=120
     "Sample period of component, set to the same value as the trim and respond that process yPreSetReq";
-  parameter Modelica.SIunits.PressureDifference dpDisRetMax=40
+  parameter Modelica.Units.SI.PressureDifference dpDisRetMax=40
     "Maximum return fan discharge static pressure setpoint";
 
-  Controller_modifyHeatingSequence                               conVAVNor(
+  Plants.Controls.Controller_modifyHeatingSequence conVAVNor(
     V_flow_nominal=mNor_flow_nominal/1.2,
     AFlo=AFloNor,
     final samplePeriod=samplePeriod,
@@ -38,9 +36,9 @@ model
     VDisSetMin_flow=0.3*mNor_flow_nominal/1.2,
     VDisConMin_flow=0.2*mNor_flow_nominal/1.2,
     dTDisZonSetMax=5,
-    TDisMin=285.95)                  "Controller for terminal unit north zone"
+    TDisMin=285.95) "Controller for terminal unit north zone"
     annotation (Placement(transformation(extent={{654,4},{674,24}})));
-  Controller_modifyHeatingSequence                               conVAVCor(
+  Plants.Controls.Controller_modifyHeatingSequence conVAVCor(
     V_flow_nominal=mCor_flow_nominal/1.2,
     AFlo=AFloCor,
     final samplePeriod=samplePeriod,
@@ -49,9 +47,9 @@ model
     VDisSetMin_flow=0.3*mCor_flow_nominal/1.2,
     VDisConMin_flow=0.2*mCor_flow_nominal/1.2,
     dTDisZonSetMax=5,
-    TDisMin=285.95)                  "Controller for terminal unit mid zone"
+    TDisMin=285.95) "Controller for terminal unit mid zone"
     annotation (Placement(transformation(extent={{778,104},{798,124}})));
-  Controller_modifyHeatingSequence                               conVAVSou(
+  Plants.Controls.Controller_modifyHeatingSequence conVAVSou(
     V_flow_nominal=mSou_flow_nominal/1.2,
     AFlo=AFloSou,
     final samplePeriod=samplePeriod,
@@ -61,8 +59,7 @@ model
     VDisConMin_flow=0.2625*mSou_flow_nominal/1.2,
     dTDisZonSetMax=5,
     TDisMin=285.95,
-    damVal(truDel4(delayTime=0)))
-                      "Controller for terminal unit south zone"
+    damVal(truDel4(delayTime=0))) "Controller for terminal unit south zone"
     annotation (Placement(transformation(extent={{1020,32},{1040,52}})));
   Modelica.Blocks.Routing.Multiplex3 TDis "Discharge air temperatures"
     annotation (Placement(transformation(extent={{110,276},{130,296}})));
@@ -76,7 +73,8 @@ model
     "Number of zone pressure requests"
     annotation (Placement(transformation(extent={{300,254},{320,274}})));
 
-  Buildings.Controls.OBC.CDL.Logical.Switch swiFreSta "Switch for freeze stat"
+  Buildings.Controls.OBC.CDL.Continuous.Switch swiFreSta
+    "Switch for freeze stat"
     annotation (Placement(transformation(extent={{60,-202},{80,-182}})));
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant freStaSetPoi1(k=273.15
          + 3) "Freeze stat for heating coil"
@@ -84,13 +82,13 @@ model
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant yFreHeaCoi(final k=1)
     "Flow rate signal for heating coil when freeze stat is on"
     annotation (Placement(transformation(extent={{0,-192},{20,-172}})));
-  Buildings.Controls.OBC.CDL.Routing.RealReplicator reaRep(final nout=numZon)
-    "Replicate real input"
+  Buildings.Controls.OBC.CDL.Routing.RealScalarReplicator reaRep(final nout=
+        numZon) "Replicate real input"
     annotation (Placement(transformation(extent={{-144,350},{-124,370}})));
-  Buildings.Controls.OBC.CDL.Routing.BooleanReplicator booRep(final nout=numZon)
-    "Replicate boolean input"
+  Buildings.Controls.OBC.CDL.Routing.BooleanScalarReplicator booRep(final nout=
+        numZon) "Replicate boolean input"
     annotation (Placement(transformation(extent={{-146,316},{-126,336}})));
-  Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.ModeAndSetPoints TZonSet[numZon](
+  BaseClasses.ModeAndSetPoints                                  TZonSet[numZon](
     final TZonHeaOn=fill(273.15 + 21.1, numZon),
     final TZonHeaOff=fill(THeaOff, numZon),
     TZonCooOn=fill(273.15 + 23.3, numZon),
@@ -105,12 +103,11 @@ model
     final minZonPriFlo=minZonPriFlo)
     "Zone level calculation of the minimum outdoor airflow setpoint"
     annotation (Placement(transformation(extent={{228,420},{248,440}})));
-  Buildings.Controls.OBC.CDL.Routing.RealReplicator reaRep1(final nout=numZon)
-    "Replicate design uncorrected minimum outdoor airflow setpoint"
+  Buildings.Controls.OBC.CDL.Routing.RealScalarReplicator reaRep1(final nout=
+        numZon) "Replicate design uncorrected minimum outdoor airflow setpoint"
     annotation (Placement(transformation(extent={{480,478},{500,498}})));
-  Buildings.Controls.OBC.CDL.Routing.BooleanReplicator booRep1(final nout=
-        numZon)
-    "Replicate signal whether the outdoor airflow is required"
+  Buildings.Controls.OBC.CDL.Routing.BooleanScalarReplicator booRep1(final nout=
+       numZon) "Replicate signal whether the outdoor airflow is required"
     annotation (Placement(transformation(extent={{480,438},{500,458}})));
   Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow.SumZone
     zonToSys(final numZon=numZon) "Sum up zone calculation output"
@@ -246,8 +243,8 @@ equation
           {34,104},{34,325},{-10,325}},color={255,127,0}));
   connect(conVAVNor.uOpeMod, TZonSet[1].yOpeMod) annotation (Line(points={{652,4},
           {54,4},{54,325},{-10,325}},  color={255,127,0}));
-  connect(flo.TRooAir, TZonSet.TZon) annotation (Line(points={{1028.86,494.94},
-          {1096,494.94},{1096,604},{-54,604},{-54,335},{-34,335}},color={0,0,127}));
+  connect(flo.TRooAir, TZonSet.TZon) annotation (Line(points={{1092.35,467},{
+          1096,467},{1096,604},{-54,604},{-54,335},{-34,335}},    color={0,0,127}));
   connect(TDis.y, zonOutAirSet.TDis) annotation (Line(points={{131,286},{132,286},
           {132,427},{226,427}}, color={0,0,127}));
   connect(VDis_flow.y, zonOutAirSet.VDis_flow) annotation (Line(points={{197,252},
@@ -257,9 +254,8 @@ equation
           0,127}));
   connect(zonOutAirSet.uReqOutAir, booRep1.y) annotation (Line(points={{226,433},
           {204,433},{204,352},{510,352},{510,448},{502,448}}, color={255,0,255}));
-  connect(flo.TRooAir, zonOutAirSet.TZon) annotation (Line(points={{1028.86,
-          494.94},{1072,494.94},{1072,620},{210,620},{210,430},{226,430}},
-                                                                   color={0,0,127}));
+  connect(flo.TRooAir, zonOutAirSet.TZon) annotation (Line(points={{1092.35,467},
+          {1072,467},{1072,620},{210,620},{210,430},{226,430}},    color={0,0,127}));
   connect(zonOutAirSet.yDesZonPeaOcc, zonToSys.uDesZonPeaOcc) annotation (Line(
         points={{250,439},{262,439},{262,438},{272,438}}, color={0,0,127}));
   connect(zonOutAirSet.VDesPopBreZon_flow, zonToSys.VDesPopBreZon_flow)

@@ -3,8 +3,10 @@ model HeatRecoveryIEC
   "Heat recovery with optional indirect evaporative cooling"
   replaceable package Medium1 = Buildings.Media.Air "Medium model for air";
   replaceable package Medium2 = Buildings.Media.Air "Medium model for air";
-  parameter Modelica.SIunits.MassFlowRate m1_flow_nominal "Design flow rate of system for Medium 1";
-  parameter Modelica.SIunits.MassFlowRate m2_flow_nominal "Design flow rate of system for Medium 2";
+  parameter Modelica.Units.SI.MassFlowRate m1_flow_nominal
+    "Design flow rate of system for Medium 1";
+  parameter Modelica.Units.SI.MassFlowRate m2_flow_nominal
+    "Design flow rate of system for Medium 2";
   IDEAS.Fluid.HeatExchangers.IndirectEvaporativeHex iec(
     redeclare package Medium1 = Medium1,
     redeclare package Medium2 = Medium2,

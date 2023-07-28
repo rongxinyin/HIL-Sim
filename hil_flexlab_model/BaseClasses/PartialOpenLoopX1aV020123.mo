@@ -7,30 +7,33 @@ partial model PartialOpenLoopX1aV020123
 
   constant Integer numZon=3 "Total number of served VAV boxes";
   constant Real leakageFrac=0.2 "Leakage fraction of AHU upstream duct";
-  parameter Modelica.SIunits.Volume VRooCor=AFloCor*flo.hRoo
+  parameter Modelica.Units.SI.Volume VRooCor=AFloCor*flo.hRoo
     "Room volume core";
-  parameter Modelica.SIunits.Volume VRooSou=AFloSou*flo.hRoo
+  parameter Modelica.Units.SI.Volume VRooSou=AFloSou*flo.hRoo
     "Room volume south";
-  parameter Modelica.SIunits.Volume VRooNor=AFloNor*flo.hRoo
+  parameter Modelica.Units.SI.Volume VRooNor=AFloNor*flo.hRoo
     "Room volume north";
-  parameter Modelica.SIunits.Volume VRooPle=AFloPle*flo.hRoo "Room volume plenum";
+  parameter Modelica.Units.SI.Volume VRooPle=AFloPle*flo.hRoo
+    "Room volume plenum";
 
-  parameter Modelica.SIunits.Area AFloCor=flo.cor.AFlo "Floor area core";
-  parameter Modelica.SIunits.Area AFloSou=flo.sou.AFlo "Floor area south";
-  parameter Modelica.SIunits.Area AFloNor=flo.nor.AFlo "Floor area north";
-  parameter Modelica.SIunits.Area AFloPle=flo.ple.AFlo "Floor area plenum";
+  parameter Modelica.Units.SI.Area AFloCor=flo.cor.AFlo "Floor area core";
+  parameter Modelica.Units.SI.Area AFloSou=flo.sou.AFlo "Floor area south";
+  parameter Modelica.Units.SI.Area AFloNor=flo.nor.AFlo "Floor area north";
+  parameter Modelica.Units.SI.Area AFloPle=flo.ple.AFlo "Floor area plenum";
 
-  parameter Modelica.SIunits.Area AFlo[numZon]={flo.cor.AFlo,flo.sou.AFlo,
-      flo.nor.AFlo} "Floor area of each zone";
-  final parameter Modelica.SIunits.Area ATot=sum(AFlo) "Total floor area";
+  parameter Modelica.Units.SI.Area AFlo[numZon]={flo.cor.AFlo,flo.sou.AFlo,flo.nor.AFlo}
+    "Floor area of each zone";
+  final parameter Modelica.Units.SI.Area ATot=sum(AFlo) "Total floor area";
 
   constant Real conv=1.2/3600 "Conversion factor for nominal mass flow rate";
-    parameter Modelica.SIunits.MassFlowRate mCor_flow_nominal=0.130*1.2 "*1.2Design mass flow rate core";
-  parameter Modelica.SIunits.MassFlowRate mSou_flow_nominal=0.2313*1.2
-                                                                 "*1.2Design mass flow rate perimeter 1";
-  parameter Modelica.SIunits.MassFlowRate mPle_flow_nominal=0.03*1.2
+  parameter Modelica.Units.SI.MassFlowRate mCor_flow_nominal=0.130*1.2
+    "*1.2Design mass flow rate core";
+  parameter Modelica.Units.SI.MassFlowRate mSou_flow_nominal=0.2313*1.2
+    "*1.2Design mass flow rate perimeter 1";
+  parameter Modelica.Units.SI.MassFlowRate mPle_flow_nominal=0.03*1.2
     "Design mass flow rate perimeter 2";
-  parameter Modelica.SIunits.MassFlowRate mNor_flow_nominal=0.130*1.2 "*1.2Design mass flow rate perimeter 3";
+  parameter Modelica.Units.SI.MassFlowRate mNor_flow_nominal=0.130*1.2
+    "*1.2Design mass flow rate perimeter 3";
  // parameter Modelica.SIunits.MassFlowRate mCor_flow_nominal=6*VRooCor*conv
  //   "Design mass flow rate core";
  // parameter Modelica.SIunits.MassFlowRate mSou_flow_nominal=6*VRooSou*conv
@@ -39,19 +42,20 @@ partial model PartialOpenLoopX1aV020123
  //   "Design mass flow rate perimeter 2";
  // parameter Modelica.SIunits.MassFlowRate mNor_flow_nominal=6*VRooNor*conv
  //   "Design mass flow rate perimeter 3";
-  parameter Modelica.SIunits.MassFlowRate m_flow_nominal=1.0*(mCor_flow_nominal
-       + mSou_flow_nominal + mNor_flow_nominal+mPle_flow_nominal) "Nominal mass flow rate";
-  parameter Modelica.SIunits.Angle lat=37.87*3.14159/180 "Latitude";
+  parameter Modelica.Units.SI.MassFlowRate m_flow_nominal=1.0*(
+      mCor_flow_nominal + mSou_flow_nominal + mNor_flow_nominal +
+      mPle_flow_nominal) "Nominal mass flow rate";
+  parameter Modelica.Units.SI.Angle lat=37.87*3.14159/180 "Latitude";
 
-  parameter Modelica.SIunits.Temperature THeaOn=293.15
+  parameter Modelica.Units.SI.Temperature THeaOn=293.15
     "Heating setpoint during on";
-  parameter Modelica.SIunits.Temperature THeaOff=285.15
+  parameter Modelica.Units.SI.Temperature THeaOff=285.15
     "Heating setpoint during off";
-  parameter Modelica.SIunits.Temperature TCooOn=273.15+23.3
+  parameter Modelica.Units.SI.Temperature TCooOn=273.15 + 23.3
     "Cooling setpoint during on";
-  parameter Modelica.SIunits.Temperature TCooOff=303.15
+  parameter Modelica.Units.SI.Temperature TCooOff=303.15
     "Cooling setpoint during off";
-  parameter Modelica.SIunits.PressureDifference dpBuiStaSet(min=0) = 12
+  parameter Modelica.Units.SI.PressureDifference dpBuiStaSet(min=0) = 12
     "Building static pressure";
   parameter Real yFanMin = 0.1 "Minimum fan speed";
 
@@ -429,11 +433,11 @@ partial model PartialOpenLoopX1aV020123
 
 protected
   model Results "Model to store the results of the simulation"
-    parameter Modelica.SIunits.Area A "Floor area";
-    input Modelica.SIunits.Power PFan "Fan energy";
-    input Modelica.SIunits.Power PHea "Heating energy";
-    input Modelica.SIunits.Power PCooSen "Sensible cooling energy";
-    input Modelica.SIunits.Power PCooLat "Latent cooling energy";
+    parameter Modelica.Units.SI.Area A "Floor area";
+    input Modelica.Units.SI.Power PFan "Fan energy";
+    input Modelica.Units.SI.Power PHea "Heating energy";
+    input Modelica.Units.SI.Power PCooSen "Sensible cooling energy";
+    input Modelica.Units.SI.Power PCooLat "Latent cooling energy";
 
     Real EFan(
       unit="J/m2",
@@ -466,11 +470,11 @@ protected
 
   end Results;
 public
-  Buildings.Controls.OBC.CDL.Continuous.Gain gaiHeaCoi(k=m_flow_nominal*1000*40
-        /4200/10) "Gain for heating coil mass flow rate"
+  Buildings.Controls.OBC.CDL.Continuous.MultiplyByParameter gaiHeaCoi(k=
+        m_flow_nominal*1000*40/4200/10) "Gain for heating coil mass flow rate"
     annotation (Placement(transformation(extent={{100,-220},{120,-200}})));
-  Buildings.Controls.OBC.CDL.Continuous.Gain gaiCooCoi(k=m_flow_nominal*1000*15
-        /4200/10) "Gain for cooling coil mass flow rate"
+  Buildings.Controls.OBC.CDL.Continuous.MultiplyByParameter gaiCooCoi(k=
+        m_flow_nominal*1000*15/4200/10) "Gain for cooling coil mass flow rate"
     annotation (Placement(transformation(extent={{100,-258},{120,-238}})));
   Buildings.Controls.OBC.CDL.Logical.OnOffController freSta(bandwidth=1)
     "Freeze stat for heating coil"

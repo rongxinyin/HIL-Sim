@@ -71,10 +71,10 @@ model FlexlabX1aNoLeakBaseline1124
     Ti=600,
     k=0.1) "Controller for cooling coil"
     annotation (Placement(transformation(extent={{-174,-250},{-154,-230}})));
-  Buildings.Controls.OBC.CDL.Logical.Switch swiHeaCoi
+  Buildings.Controls.OBC.CDL.Continuous.Switch swiHeaCoi
     "Switch to switch off heating coil"
     annotation (Placement(transformation(extent={{-134,-220},{-114,-200}})));
-  Buildings.Controls.OBC.CDL.Logical.Switch swiCooCoi
+  Buildings.Controls.OBC.CDL.Continuous.Switch swiCooCoi
     "Switch to switch off cooling coil"
     annotation (Placement(transformation(extent={{-116,-258},{-96,-238}})));
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant coiOff(k=0)
@@ -120,7 +120,7 @@ model FlexlabX1aNoLeakBaseline1124
         273.15 + 18.3)
     "Flow rate signal for heating coil when freeze stat is on"
     annotation (Placement(transformation(extent={{-110,-332},{-90,-312}})));
-  Buildings.Controls.OBC.CDL.Logical.Switch swiCooCoi1
+  Buildings.Controls.OBC.CDL.Continuous.Switch swiCooCoi1
     "Switch to switch off cooling coil"
     annotation (Placement(transformation(extent={{-214,-292},{-194,-272}})));
   BaseClasses.Eco_Enable enaDis(use_enthalpy=false)

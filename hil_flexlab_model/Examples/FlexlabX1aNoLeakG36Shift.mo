@@ -6,13 +6,14 @@ model FlexlabX1aNoLeakG36Shift
 //  extends BaseClasses.PartialOpenLoopX1aV1(min(nin=3),
 //      ave(nin=3));
 
-  parameter Modelica.SIunits.VolumeFlowRate VPriSysMax_flow=m_flow_nominal/1.2
+  parameter Modelica.Units.SI.VolumeFlowRate VPriSysMax_flow=m_flow_nominal/1.2
     "Maximum expected system primary airflow rate at design stage";
-  parameter Modelica.SIunits.VolumeFlowRate minZonPriFlo[numZon]={
-      mCor_flow_nominal,mSou_flow_nominal,mNor_flow_nominal}/1.2 "Minimum expected zone primary flow rate";
-  parameter Modelica.SIunits.Time samplePeriod=120
+  parameter Modelica.Units.SI.VolumeFlowRate minZonPriFlo[numZon]={
+      mCor_flow_nominal,mSou_flow_nominal,mNor_flow_nominal}/1.2
+    "Minimum expected zone primary flow rate";
+  parameter Modelica.Units.SI.Time samplePeriod=120
     "Sample period of component, set to the same value as the trim and respond that process yPreSetReq";
-  parameter Modelica.SIunits.PressureDifference dpDisRetMax=40
+  parameter Modelica.Units.SI.PressureDifference dpDisRetMax=40
     "Maximum return fan discharge static pressure setpoint";
 
   Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Controller conVAVNor(
@@ -45,7 +46,8 @@ model FlexlabX1aNoLeakG36Shift
     "Outdoor air damper control signal"
     annotation (Placement(transformation(extent={{-40,-20},{-20,0}})));
 
-  Buildings.Controls.OBC.CDL.Logical.Switch swiFreSta "Switch for freeze stat"
+  Buildings.Controls.OBC.CDL.Continuous.Switch swiFreSta
+    "Switch for freeze stat"
     annotation (Placement(transformation(extent={{60,-202},{80,-182}})));
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant freStaSetPoi1(k=273.15
          + 3) "Freeze stat for heating coil"
@@ -53,11 +55,11 @@ model FlexlabX1aNoLeakG36Shift
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant yFreHeaCoi(final k=1)
     "Flow rate signal for heating coil when freeze stat is on"
     annotation (Placement(transformation(extent={{0,-192},{20,-172}})));
-  Buildings.Controls.OBC.CDL.Routing.RealReplicator reaRep(final nout=numZon)
-    "Replicate real input"
+  Buildings.Controls.OBC.CDL.Routing.RealScalarReplicator reaRep(final nout=
+        numZon) "Replicate real input"
     annotation (Placement(transformation(extent={{-144,350},{-124,370}})));
-  Buildings.Controls.OBC.CDL.Routing.BooleanReplicator booRep(final nout=numZon)
-    "Replicate boolean input"
+  Buildings.Controls.OBC.CDL.Routing.BooleanScalarReplicator booRep(final nout=
+        numZon) "Replicate boolean input"
     annotation (Placement(transformation(extent={{-146,316},{-126,336}})));
   Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.ModeAndSetPoints TZonSet[numZon](
     final TZonHeaOn=fill(273.15 + 21.1, numZon),
@@ -74,12 +76,11 @@ model FlexlabX1aNoLeakG36Shift
     final minZonPriFlo=minZonPriFlo)
     "Zone level calculation of the minimum outdoor airflow setpoint"
     annotation (Placement(transformation(extent={{228,420},{248,440}})));
-  Buildings.Controls.OBC.CDL.Routing.RealReplicator reaRep1(final nout=numZon)
-    "Replicate design uncorrected minimum outdoor airflow setpoint"
+  Buildings.Controls.OBC.CDL.Routing.RealScalarReplicator reaRep1(final nout=
+        numZon) "Replicate design uncorrected minimum outdoor airflow setpoint"
     annotation (Placement(transformation(extent={{480,478},{500,498}})));
-  Buildings.Controls.OBC.CDL.Routing.BooleanReplicator booRep1(final nout=
-        numZon)
-    "Replicate signal whether the outdoor airflow is required"
+  Buildings.Controls.OBC.CDL.Routing.BooleanScalarReplicator booRep1(final nout=
+       numZon) "Replicate signal whether the outdoor airflow is required"
     annotation (Placement(transformation(extent={{480,438},{500,458}})));
   Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow.SumZone
     zonToSys(final numZon=numZon) "Sum up zone calculation output"

@@ -8,14 +8,14 @@ model FlexlabXRA "Model of a flexlab xra"
 
   parameter Buildings.HeatTransfer.Types.InteriorConvection intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature
     "Convective heat transfer model for room-facing surfaces of opaque constructions";
-  parameter Modelica.SIunits.Angle lat "Latitude";
+  parameter Modelica.Units.SI.Angle lat "Latitude";
   parameter Real winWalRat(
     min=0.01,
     max=0.99) = 0.33 "Window to wall ratio for exterior walls";
-  parameter Modelica.SIunits.Length hWin = 1.5 "Height of windows";
+  parameter Modelica.Units.SI.Length hWin=1.5 "Height of windows";
   parameter Real kIntNor(min=0, max=1) = 1
     "Gain factor to scale internal heat gain in north zone";
-  constant Modelica.SIunits.Height hRoo=2.74 "Room height";
+  constant Modelica.Units.SI.Height hRoo=2.74 "Room height";
 
   parameter Boolean sampleModel = false
     "Set to true to time-sample the model, which can give shorter simulation time if there is already time sampling in the system model"
@@ -23,10 +23,10 @@ model FlexlabXRA "Model of a flexlab xra"
       Evaluate=true,
       Dialog(tab="Experimental (may be changed in future releases)"));
 
-  Buildings.ThermalZones.Detailed.MixedAir ple(
+  Buildings.Occupants.ThermalZones.Detailed.MixedAir ple(
     redeclare package Medium = Medium,
     lat=lat,
-    AFlo=6.49*(3.05+3.05+3.23),
+    AFlo=6.49*(3.05 + 3.05 + 3.23),
     hRoo=1.625,
     nSurBou=0,
     nConPar=0,
@@ -34,21 +34,22 @@ model FlexlabXRA "Model of a flexlab xra"
     nConExt=4,
     nConExtWin=0,
     datConExt(
-         layers={WestExt,
-         SouthExt,
-         NorthExt,
-         R20Wal},
-         A={9.33*1.63, 6.49*1.75, 2.68*1.5, 6.49*9.33},
-         til={Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling},
-         azi={Buildings.Types.Azimuth.W,Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.S}),
+      layers={WestExt,SouthExt,NorthExt,R20Wal},
+      A={9.33*1.63,6.49*1.75,2.68*1.5,6.49*9.33},
+      til={Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall,
+          Buildings.Types.Tilt.Ceiling},
+      azi={Buildings.Types.Azimuth.W,Buildings.Types.Azimuth.S,Buildings.Types.Azimuth.N,
+          Buildings.Types.Azimuth.S}),
     datConBou(
-         layers = {celDiv, parCon, parCon, ceiling, ceiling, ceiling},
-         A = {9.33*1.63, 1.26*1.5, 2.55*1.5, 6.49*3.23, 6.49*3.05, 6.49*3.05},
-         til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Floor, Buildings.Types.Tilt.Floor, Buildings.Types.Tilt.Floor},
-         azi = {Buildings.Types.Azimuth.E, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.S}),
+      layers={celDiv,parCon,parCon,ceiling,ceiling,ceiling},
+      A={9.33*1.63,1.26*1.5,2.55*1.5,6.49*3.23,6.49*3.05,6.49*3.05},
+      til={Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall,
+          Buildings.Types.Tilt.Floor,Buildings.Types.Tilt.Floor,Buildings.Types.Tilt.Floor},
+      azi={Buildings.Types.Azimuth.E,Buildings.Types.Azimuth.N,Buildings.Types.Azimuth.N,
+          Buildings.Types.Azimuth.S,Buildings.Types.Azimuth.S,Buildings.Types.Azimuth.S}),
     nPorts=2,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
-      extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
+    extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     final sampleModel=sampleModel) "Ceiling plenum"
     annotation (Placement(transformation(extent={{108,-14},{148,26}})));

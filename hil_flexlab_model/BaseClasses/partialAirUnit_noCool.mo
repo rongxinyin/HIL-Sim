@@ -5,21 +5,24 @@ partial model partialAirUnit_noCool "Partial model for an air supply unit"
   replaceable package MediumW = Buildings.Media.Water "Medium model for water"
       annotation (choicesAllMatching = true);
 
-  parameter Modelica.SIunits.MassFlowRate mAir_flow_nominal "Design airflow rate of system"
-    annotation(Dialog(group="Air design"));
+  parameter Modelica.Units.SI.MassFlowRate mAir_flow_nominal
+    "Design airflow rate of system" annotation (Dialog(group="Air design"));
 
-  parameter Modelica.SIunits.MassFlowRate mAir_flow_minOA "Minimum outdoor airflow rate of system"
-    annotation(Dialog(group="Air design"));
+  parameter Modelica.Units.SI.MassFlowRate mAir_flow_minOA
+    "Minimum outdoor airflow rate of system"
+    annotation (Dialog(group="Air design"));
 
-  parameter Modelica.SIunits.Power QHea_flow_nominal(min=0) "Design heating capacity of heating coil"
-    annotation(Dialog(group="Heating design"));
+  parameter Modelica.Units.SI.Power QHea_flow_nominal(min=0)
+    "Design heating capacity of heating coil"
+    annotation (Dialog(group="Heating design"));
 
-  parameter Modelica.SIunits.Power QCoo_flow_nominal(min=0) "Design cooling capacity of cooling coil"
-    annotation(Dialog(group="Cooling design"));
+  parameter Modelica.Units.SI.Power QCoo_flow_nominal(min=0)
+    "Design cooling capacity of cooling coil"
+    annotation (Dialog(group="Cooling design"));
 
-  parameter Modelica.SIunits.PressureDifference dp_nominal(displayUnit="Pa") = 500
-    "Design pressure drop of flow leg with fan"
-    annotation(Dialog(group="Air design"));
+  parameter Modelica.Units.SI.PressureDifference dp_nominal(displayUnit="Pa")=
+       500 "Design pressure drop of flow leg with fan"
+    annotation (Dialog(group="Air design"));
 
   Modelica.Blocks.Interfaces.RealInput uFan(
     final unit="1") "Fan control signal"
@@ -154,8 +157,10 @@ partial model partialAirUnit_noCool "Partial model for an air supply unit"
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-94,18})));
-  parameter Modelica.SIunits.DimensionlessRatio hydraulicEfficiency = 0.7 "Supply fan hydraulic efficiency";
-  parameter Modelica.SIunits.DimensionlessRatio motorEfficiency = 0.7 "Supply fan motor efficiency";
+  parameter Modelica.Units.SI.DimensionlessRatio hydraulicEfficiency=0.7
+    "Supply fan hydraulic efficiency";
+  parameter Modelica.Units.SI.DimensionlessRatio motorEfficiency=0.7
+    "Supply fan motor efficiency";
   Modelica.Blocks.Interfaces.RealOutput QHea(final unit="W")
     "Thermal load on heating coil" annotation (Placement(transformation(extent=
             {{200,-70},{220,-50}}), iconTransformation(extent={{200,-70},{220,

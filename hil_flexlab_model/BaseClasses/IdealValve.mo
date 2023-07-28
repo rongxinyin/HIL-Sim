@@ -5,7 +5,7 @@ model IdealValve "Ideal three-way valve"
   replaceable package Medium = Modelica.Media.Interfaces.PartialMedium "Medium in the component"
       annotation (choicesAllMatching = true);
 
-  parameter Modelica.SIunits.MassFlowRate m_flow_nominal
+  parameter Modelica.Units.SI.MassFlowRate m_flow_nominal
     "Design chilled water supply flow";
   parameter Boolean port_3_fraction = true "True for fraction of port 2 flow, False for fraction of m_flow_nominal";
   Modelica.Fluid.Interfaces.FluidPort_a port_1(redeclare package Medium =

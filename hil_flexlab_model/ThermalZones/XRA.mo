@@ -3,7 +3,7 @@ package XRA "Models of rooms in test cell XRA"
 extends Modelica.Icons.Package;
 
   model Closet "Model of the closet connected to test cell X3A"
-    extends Buildings.ThermalZones.Detailed.MixedAir(
+    extends Buildings.Occupants.ThermalZones.Detailed.MixedAir(
     hRoo = 3.6576,
     AFlo = 3.93,
     lat = 0.66098585832754,
@@ -30,16 +30,16 @@ extends Modelica.Icons.Package;
       stateAtSurface_a = {true, false, false}));
 
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
       higIns
       "High insulation wall. Between X3A closet and exterior, X3A closet and electrical room"
       annotation (Placement(transformation(extent={{430,-208},{450,-188}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestCellDividngWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestCellDividngWall
       celDiv "Wall dividing the X3A closet and the X3B closet"
       annotation (Placement(transformation(extent={{430,-178},{450,-158}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_2010Roof
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_2010Roof
       roo "Construction of the roof of the closet in X3A"
       annotation (Placement(transformation(extent={{430,-148},{450,-128}})));
 
@@ -208,7 +208,7 @@ extends Modelica.Icons.Package;
 
   model ClosetFullBed
     "Model of the closet connected to test cell X3A intended to be connected to ThermalZones.Detailed.FLEXLAB.Rooms.X3B.Closet"
-    extends Buildings.ThermalZones.Detailed.MixedAir(
+    extends Buildings.Occupants.ThermalZones.Detailed.MixedAir(
     hRoo = 3.6576,
     AFlo = 3.93,
     lat = 0.66098585832754,
@@ -235,16 +235,16 @@ extends Modelica.Icons.Package;
       stateAtSurface_a = {true, false}));
 
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
       higIns
       "High insulation wall. Between X3A closet and exterior, X3A closet and electrical room"
       annotation (Placement(transformation(extent={{430,-208},{450,-188}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestCellDividngWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestCellDividngWall
       celDiv "Wall dividing the X3A closet and the X3B closet"
       annotation (Placement(transformation(extent={{430,-178},{450,-158}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_2010Roof
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_2010Roof
       roo "Construction of the roof of the closet in X3A"
       annotation (Placement(transformation(extent={{430,-148},{450,-128}})));
 
@@ -396,7 +396,7 @@ extends Modelica.Icons.Package;
   end ClosetFullBed;
 
   model Electrical "Model of the electrical room attached to test cell X3A"
-    extends Buildings.ThermalZones.Detailed.MixedAir(
+    extends Buildings.Occupants.ThermalZones.Detailed.MixedAir(
     hRoo = 3.6576,
     AFlo = 2.39,
     lat = 0.66098585832754,
@@ -422,16 +422,16 @@ extends Modelica.Icons.Package;
        azi = {Buildings.Types.Azimuth.N},
        each stateAtSurface_a = false));
     replaceable
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction3
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction3
       eleExt
       "Construction describing the exterior walls in the electrical room"
       annotation (Placement(transformation(extent={{430,-210},{450,-190}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorUninsulated
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorUninsulated
       extDooUn "Construction describing the door in the electrical room"
       annotation (Placement(transformation(extent={{430,-178},{450,-158}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_2010Roof
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_2010Roof
       roo "Construction describing the roof of the electrical room"
       annotation (Placement(transformation(extent={{430,-148},{450,-128}})));
     parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic slaCon(nLay=3,
@@ -585,7 +585,8 @@ extends Modelica.Icons.Package;
   end Electrical;
 
   model TestCell "Model of LBNL User Test Facility Cell XRA"
-    extends Buildings.ThermalZones.Detailed.MixedAir(AFlo=60.97,
+    extends Buildings.Occupants.ThermalZones.Detailed.MixedAir(
+                                                     AFlo=60.97,
         nSurBou=4,
         nConPar=0,
         nConBou=5,
@@ -624,36 +625,36 @@ extends Modelica.Icons.Package;
         lat=0.66098585832754);
 
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction10and23
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction10and23
       R16p8Wal
       annotation (Placement(transformation(extent={{410,-168},{430,-148}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
       R52Wal
       annotation (Placement(transformation(extent={{410,-192},{430,-172}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_2010Roof
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_2010Roof
       R20Wal
       annotation (Placement(transformation(extent={{410,-216},{430,-196}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionWall
       parCon
       annotation (Placement(transformation(extent={{436,-216},{456,-196}})));
 
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestCellDividngWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestCellDividngWall
       celDiv "Construction of wall connecting to cell UF90X3B"
       annotation (Placement(transformation(extent={{410,-144},{430,-124}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestBedDividingWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestBedDividingWall
       bedDiv "Construction of wall connecting to cell UF90X2B"
       annotation (Placement(transformation(extent={{410,-120},{430,-100}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionDoor
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionDoor
       parDoo "Door used in partition walls in FLEXLAB test cells"
       annotation (Placement(transformation(extent={{410,-96},{430,-76}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorInsulated
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorInsulated
       extDoo "Construction of an exterior door"
       annotation (Placement(transformation(extent={{410,-72},{430,-52}})));
     parameter
@@ -840,7 +841,8 @@ extends Modelica.Icons.Package;
 
   model TestCellFullBed
     "Model of LBNL User Test Facility Cell X3A intended for connection with ThermalZones.Detailed.FLEXLAB.Rooms.X3B.TestCell"
-    extends Buildings.ThermalZones.Detailed.MixedAir(AFlo=60.97,
+    extends Buildings.Occupants.ThermalZones.Detailed.MixedAir(
+                                                     AFlo=60.97,
         nSurBou=5,
         nConPar=0,
         nConBou=4,
@@ -879,40 +881,40 @@ extends Modelica.Icons.Package;
         lat=0.66098585832754);
 
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction10and23
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction10and23
       R16p8Wal
       annotation (Placement(transformation(extent={{410,-168},{430,-148}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
       R52Wal
       annotation (Placement(transformation(extent={{410,-192},{430,-172}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_2010Roof
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_2010Roof
       R20Wal
       annotation (Placement(transformation(extent={{410,-216},{430,-196}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.GlazingSystems.ASHRAE901Gla
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.GlazingSystems.ASHRAE901Gla
       glaSys
       annotation (Placement(transformation(extent={{436,-192},{456,-172}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionWall
       parCon
       annotation (Placement(transformation(extent={{436,-216},{456,-196}})));
 
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestCellDividngWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestCellDividngWall
       celDiv "Construction of wall connecting to cell UF90X3B"
       annotation (Placement(transformation(extent={{410,-144},{430,-124}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestBedDividingWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestBedDividingWall
       bedDiv "Construction of wall connecting to cell UF90X2B"
       annotation (Placement(transformation(extent={{410,-120},{430,-100}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionDoor
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionDoor
       parDoo "Door used in partition walls in FLEXLAB test cells"
       annotation (Placement(transformation(extent={{410,-96},{430,-76}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorInsulated
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorInsulated
       extDoo "Construction of an exterior door"
       annotation (Placement(transformation(extent={{410,-72},{430,-52}})));
     annotation(Documentation(info="<html>
@@ -1067,7 +1069,8 @@ extends Modelica.Icons.Package;
       parameter Real tauFra = 0.92
       "Uncertainty factor to scale glass solar gain";
 
-    extends Buildings.ThermalZones.Detailed.MixedAir(AFlo=60.97,
+    extends Buildings.Occupants.ThermalZones.Detailed.MixedAir(
+                                                     AFlo=60.97,
         nSurBou=4,
         nConPar=0,
         nConBou=5,
@@ -1106,36 +1109,36 @@ extends Modelica.Icons.Package;
         lat=0.66098585832754);
 
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction10and23
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction10and23
       R16p8Wal
       annotation (Placement(transformation(extent={{410,-168},{430,-148}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
       R52Wal
       annotation (Placement(transformation(extent={{410,-192},{430,-172}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_2010Roof
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_2010Roof
       R20Wal
       annotation (Placement(transformation(extent={{410,-216},{430,-196}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionWall
       parCon
       annotation (Placement(transformation(extent={{436,-216},{456,-196}})));
 
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestCellDividngWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestCellDividngWall
       celDiv "Construction of wall connecting to cell UF90X3B"
       annotation (Placement(transformation(extent={{410,-144},{430,-124}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestBedDividingWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestBedDividingWall
       bedDiv "Construction of wall connecting to cell UF90X2B"
       annotation (Placement(transformation(extent={{410,-120},{430,-100}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionDoor
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionDoor
       parDoo "Door used in partition walls in FLEXLAB test cells"
       annotation (Placement(transformation(extent={{410,-96},{430,-76}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorInsulated
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorInsulated
       extDoo "Construction of an exterior door"
       annotation (Placement(transformation(extent={{410,-72},{430,-52}})));
     parameter
@@ -1328,7 +1331,8 @@ extends Modelica.Icons.Package;
       parameter Real tauFra = 2
       "Uncertainty factor to scale glass solar gain, originally 0.92";
 
-    extends Buildings.ThermalZones.Detailed.MixedAir(AFlo=60.97,
+    extends Buildings.Occupants.ThermalZones.Detailed.MixedAir(
+                                                     AFlo=60.97,
         nSurBou=4,
         nConPar=0,
         nConBou=3,
@@ -1367,36 +1371,36 @@ extends Modelica.Icons.Package;
         lat=0.66098585832754);
 
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction10and23
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction10and23
       R16p8Wal
       annotation (Placement(transformation(extent={{410,-168},{430,-148}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
       R52Wal
       annotation (Placement(transformation(extent={{410,-192},{430,-172}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_2010Roof
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_2010Roof
       R20Wal
       annotation (Placement(transformation(extent={{410,-216},{430,-196}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionWall
       parCon
       annotation (Placement(transformation(extent={{436,-216},{456,-196}})));
 
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestCellDividngWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestCellDividngWall
       celDiv "Construction of wall connecting to cell UF90X3B"
       annotation (Placement(transformation(extent={{410,-144},{430,-124}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestBedDividingWall
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.DividingWalls.TestBedDividingWall
       bedDiv "Construction of wall connecting to cell UF90X2B"
       annotation (Placement(transformation(extent={{410,-120},{430,-100}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionDoor
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionDoor
       parDoo "Door used in partition walls in FLEXLAB test cells"
       annotation (Placement(transformation(extent={{410,-96},{430,-76}})));
     replaceable parameter
-      Buildings.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorInsulated
+      Buildings.Occupants.ThermalZones.Detailed.FLEXLAB.Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorInsulated
       extDoo "Construction of an exterior door"
       annotation (Placement(transformation(extent={{410,-72},{430,-52}})));
     parameter

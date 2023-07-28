@@ -31,12 +31,11 @@ partial model partialInterface "Interface for examples"
     lat=weaDat.lat,
     AFlo=casDat.AFlo,
     nPorts=2) annotation (Placement(transformation(extent={{26,-22},{66,18}})));
-  Buildings.Electrical.AC.OnePhase.Sources.PVSimpleOriented pv(A=roo.roo.AFlo,
+  Buildings.Electrical.AC.OnePhase.Sources.PVSimpleOriented pv(
+    A=roo.roo.AFlo,
     til=0,
-    lat=weaDat.lat,
     azi=0,
-    V_nominal=110)
-           "PV panels"
+    V_nominal=110) "PV panels"
     annotation (Placement(transformation(extent={{40,40},{60,60}})));
   Buildings.Electrical.AC.OnePhase.Sources.FixedVoltage fixVol(f=60, V=120)
     "Fixed voltage source"

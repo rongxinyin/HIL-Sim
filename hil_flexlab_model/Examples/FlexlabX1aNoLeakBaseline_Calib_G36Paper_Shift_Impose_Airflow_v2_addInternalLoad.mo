@@ -22,13 +22,14 @@ model
 //  extends BaseClasses.PartialOpenLoopX1aV1(min(nin=3),
 //      ave(nin=3));
 
-  parameter Modelica.SIunits.VolumeFlowRate VPriSysMax_flow=m_flow_nominal/1.2
+  parameter Modelica.Units.SI.VolumeFlowRate VPriSysMax_flow=m_flow_nominal/1.2
     "Maximum expected system primary airflow rate at design stage";
-  parameter Modelica.SIunits.VolumeFlowRate minZonPriFlo[numZon]={
-      mCor_flow_nominal,mSou_flow_nominal,mNor_flow_nominal}/1.2 "Minimum expected zone primary flow rate";
-  parameter Modelica.SIunits.Time samplePeriod=120
+  parameter Modelica.Units.SI.VolumeFlowRate minZonPriFlo[numZon]={
+      mCor_flow_nominal,mSou_flow_nominal,mNor_flow_nominal}/1.2
+    "Minimum expected zone primary flow rate";
+  parameter Modelica.Units.SI.Time samplePeriod=120
     "Sample period of component, set to the same value as the trim and respond that process yPreSetReq";
-  parameter Modelica.SIunits.PressureDifference dpDisRetMax=40
+  parameter Modelica.Units.SI.PressureDifference dpDisRetMax=40
     "Maximum return fan discharge static pressure setpoint";
 
   Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Controller conVAVNor(
@@ -71,7 +72,8 @@ model
     "Number of zone pressure requests"
     annotation (Placement(transformation(extent={{300,254},{320,274}})));
 
-  Buildings.Controls.OBC.CDL.Logical.Switch swiFreSta "Switch for freeze stat"
+  Buildings.Controls.OBC.CDL.Continuous.Switch swiFreSta
+    "Switch for freeze stat"
     annotation (Placement(transformation(extent={{60,-202},{80,-182}})));
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant freStaSetPoi1(k=273.15
          + 3) "Freeze stat for heating coil"
@@ -79,11 +81,11 @@ model
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant yFreHeaCoi(final k=1)
     "Flow rate signal for heating coil when freeze stat is on"
     annotation (Placement(transformation(extent={{0,-192},{20,-172}})));
-  Buildings.Controls.OBC.CDL.Routing.RealReplicator reaRep(final nout=numZon)
-    "Replicate real input"
+  Buildings.Controls.OBC.CDL.Routing.RealScalarReplicator reaRep(final nout=
+        numZon) "Replicate real input"
     annotation (Placement(transformation(extent={{-144,350},{-124,370}})));
-  Buildings.Controls.OBC.CDL.Routing.BooleanReplicator booRep(final nout=numZon)
-    "Replicate boolean input"
+  Buildings.Controls.OBC.CDL.Routing.BooleanScalarReplicator booRep(final nout=
+        numZon) "Replicate boolean input"
     annotation (Placement(transformation(extent={{-146,316},{-126,336}})));
   Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.ModeAndSetPoints TZonSet[numZon](
     final TZonHeaOn=fill(273.15 + 21.1, numZon),
@@ -100,12 +102,11 @@ model
     final minZonPriFlo=minZonPriFlo)
     "Zone level calculation of the minimum outdoor airflow setpoint"
     annotation (Placement(transformation(extent={{228,420},{248,440}})));
-  Buildings.Controls.OBC.CDL.Routing.RealReplicator reaRep1(final nout=numZon)
-    "Replicate design uncorrected minimum outdoor airflow setpoint"
+  Buildings.Controls.OBC.CDL.Routing.RealScalarReplicator reaRep1(final nout=
+        numZon) "Replicate design uncorrected minimum outdoor airflow setpoint"
     annotation (Placement(transformation(extent={{480,478},{500,498}})));
-  Buildings.Controls.OBC.CDL.Routing.BooleanReplicator booRep1(final nout=
-        numZon)
-    "Replicate signal whether the outdoor airflow is required"
+  Buildings.Controls.OBC.CDL.Routing.BooleanScalarReplicator booRep1(final nout=
+       numZon) "Replicate signal whether the outdoor airflow is required"
     annotation (Placement(transformation(extent={{480,438},{500,458}})));
   Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow.SumZone
     zonToSys(final numZon=numZon) "Sum up zone calculation output"
@@ -2521,13 +2522,13 @@ equation
       color={0,0,127},
       pattern=LinePattern.Dash));
   connect(TSupNor.T, conVAVNor.TDis) annotation (Line(points={{695,176},{638,
-          176},{638,8},{652,8}},
+          176},{638,9},{652,9}},
                               color={0,0,127}));
   connect(TSupCor.T, conVAVCor.TDis) annotation (Line(points={{823,178},{762,
-          178},{762,108},{776,108}},
+          178},{762,109},{776,109}},
                               color={0,0,127}));
   connect(TSupSou.T, conVAVSou.TDis) annotation (Line(points={{1069,174},{1002,
-          174},{1002,36},{1018,36}},color={0,0,127}));
+          174},{1002,37},{1018,37}},color={0,0,127}));
   connect(conVAVNor.yDam,nor.yVAV)  annotation (Line(points={{676,20},{688,20},
           {688,48},{692,48}},color={0,0,127}));
   connect(conVAVNor.yVal,nor.yVal)  annotation (Line(points={{676,15},{684,15},
@@ -2542,37 +2543,47 @@ equation
           {1056,40},{1056,28},{1066,28}},
                                       color={0,0,127}));
 
-  connect(conVAVNor.yZonTemResReq, TZonResReq.u[1]) annotation (Line(points={{676,10},
-          {750,10},{750,224},{270,224},{270,302.667},{296,302.667}},     color=
+  connect(conVAVNor.yZonTemResReq, TZonResReq.u[1]) annotation (Line(points={{676,
+          15.6667},{750,15.6667},{750,224},{270,224},{270,302.667},{296,302.667}},
+                                                                         color=
           {255,127,0}));
-  connect(conVAVCor.yZonTemResReq, TZonResReq.u[2]) annotation (Line(points={{800,110},
-          {808,110},{808,240},{274,240},{274,298},{296,298}},        color={255,
+  connect(conVAVCor.yZonTemResReq, TZonResReq.u[2]) annotation (Line(points={{800,
+          115.667},{808,115.667},{808,240},{274,240},{274,298},{296,298}},
+                                                                     color={255,
           127,0}));
-  connect(conVAVSou.yZonTemResReq, TZonResReq.u[3]) annotation (Line(points={{1042,38},
-          {1054,38},{1054,216},{278,216},{278,293.333},{296,293.333}},
+  connect(conVAVSou.yZonTemResReq, TZonResReq.u[3]) annotation (Line(points={{1042,
+          43.6667},{1054,43.6667},{1054,216},{278,216},{278,293.333},{296,
+          293.333}},
         color={255,127,0}));
-  connect(conVAVNor.yZonPreResReq, PZonResReq.u[1]) annotation (Line(points={{676,6},
-          {758,6},{758,236},{284,236},{284,268.667},{298,268.667}},      color=
+  connect(conVAVNor.yZonPreResReq, PZonResReq.u[1]) annotation (Line(points={{676,
+          12.3333},{758,12.3333},{758,236},{284,236},{284,268.667},{298,268.667}},
+                                                                         color=
           {255,127,0}));
-  connect(conVAVCor.yZonPreResReq, PZonResReq.u[2]) annotation (Line(points={{800,106},
-          {814,106},{814,246},{288,246},{288,264},{298,264}},        color={255,
+  connect(conVAVCor.yZonPreResReq, PZonResReq.u[2]) annotation (Line(points={{800,
+          112.333},{814,112.333},{814,246},{288,246},{288,264},{298,264}},
+                                                                     color={255,
           127,0}));
-  connect(conVAVSou.yZonPreResReq, PZonResReq.u[3]) annotation (Line(points={{1042,34},
-          {1060,34},{1060,224},{292,224},{292,259.333},{298,259.333}},
+  connect(conVAVSou.yZonPreResReq, PZonResReq.u[3]) annotation (Line(points={{1042,
+          40.3333},{1060,40.3333},{1060,224},{292,224},{292,259.333},{298,
+          259.333}},
         color={255,127,0}));
   connect(VSupNor_flow.V_flow,conVAVNor. VDis_flow) annotation (Line(points={{695,240},
-          {632,240},{632,12},{652,12}},      color={0,0,127}));
+          {632,240},{632,12.3333},{652,12.3333}},
+                                             color={0,0,127}));
   connect(VSupCor_flow.V_flow, conVAVCor.VDis_flow) annotation (Line(points={{823,242},
-          {764,242},{764,112},{776,112}},        color={0,0,127}));
+          {764,242},{764,112.333},{776,112.333}},color={0,0,127}));
   connect(VSupSou_flow.V_flow, conVAVSou.VDis_flow) annotation (Line(points={{1069,
-          238},{1008,238},{1008,40},{1018,40}},      color={0,0,127}));
+          238},{1008,238},{1008,40.3333},{1018,40.3333}},
+                                                     color={0,0,127}));
   connect(TSup.T,conVAVNor. TSupAHU) annotation (Line(points={{340,-29},{340,
-          -20},{546,-20},{546,6},{652,6}},
+          -20},{546,-20},{546,7.33333},{652,7.33333}},
                                         color={0,0,127}));
-  connect(TSup.T, conVAVCor.TSupAHU) annotation (Line(points={{340,-29},{340,-20},
-          {764,-20},{764,106},{776,106}},    color={0,0,127}));
-  connect(TSup.T, conVAVSou.TSupAHU) annotation (Line(points={{340,-29},{340,-20},
-          {678,-20},{678,34},{1018,34}},   color={0,0,127}));
+  connect(TSup.T, conVAVCor.TSupAHU) annotation (Line(points={{340,-29},{340,
+          -20},{764,-20},{764,107.333},{776,107.333}},
+                                             color={0,0,127}));
+  connect(TSup.T, conVAVSou.TSupAHU) annotation (Line(points={{340,-29},{340,
+          -20},{678,-20},{678,35.3333},{1018,35.3333}},
+                                           color={0,0,127}));
   connect(swiFreSta.y, gaiHeaCoi.u) annotation (Line(points={{82,-192},{88,-192},
           {88,-210},{98,-210}}, color={0,0,127}));
   connect(freSta.y, swiFreSta.u2) annotation (Line(points={{22,-92},{40,-92},{40,
@@ -2689,11 +2700,14 @@ equation
   connect(TZonSet[1].TZonCooSet, add.u1) annotation (Line(points={{-10,339},{8,
           339},{8,462},{-122,462}}, color={0,0,127}));
   connect(add.y, conVAVSou.TZonCooSet) annotation (Line(points={{-145,456},{
-          -162,456},{-162,50},{1018,50}}, color={0,0,127}));
+          -162,456},{-162,48.6667},{1018,48.6667}},
+                                          color={0,0,127}));
   connect(add.y, conVAVNor.TZonCooSet) annotation (Line(points={{-145,456},{
-          -162,456},{-162,22},{652,22}}, color={0,0,127}));
-  connect(add.y, conVAVCor.TZonCooSet) annotation (Line(points={{-145,456},{-162,
-          456},{-162,122},{776,122}},      color={0,0,127}));
+          -162,456},{-162,20.6667},{652,20.6667}},
+                                         color={0,0,127}));
+  connect(add.y, conVAVCor.TZonCooSet) annotation (Line(points={{-145,456},{
+          -162,456},{-162,120.667},{776,120.667}},
+                                           color={0,0,127}));
   connect(VSupCor_flow.V_flow, VDis_flow.u2[1]) annotation (Line(points={{823,242},
           {154,242},{154,252},{174,252}},      color={0,0,127}));
   connect(TSupCor.T, TDis.u2[1]) annotation (Line(points={{823,178},{80,178},{
@@ -2719,11 +2733,14 @@ equation
   connect(heaSetDR.y[1], add1.u2) annotation (Line(points={{-119,232},{-66,232},
           {-66,274},{-120,274}}, color={0,0,127}));
   connect(add1.y, conVAVNor.TZonHeaSet) annotation (Line(points={{-143,280},{
-          -182,280},{-182,24},{652,24}}, color={0,0,127}));
-  connect(add1.y, conVAVCor.TZonHeaSet) annotation (Line(points={{-143,280},{-182,
-          280},{-182,110},{298,110},{298,124},{776,124}},      color={0,0,127}));
+          -182,280},{-182,22.3333},{652,22.3333}},
+                                         color={0,0,127}));
+  connect(add1.y, conVAVCor.TZonHeaSet) annotation (Line(points={{-143,280},{
+          -182,280},{-182,110},{298,110},{298,122.333},{776,122.333}},
+                                                               color={0,0,127}));
   connect(add1.y, conVAVSou.TZonHeaSet) annotation (Line(points={{-143,280},{
-          -182,280},{-182,52},{1018,52}}, color={0,0,127}));
+          -182,280},{-182,50.3333},{1018,50.3333}},
+                                          color={0,0,127}));
   connect(ecoHigCut.y, conAHU.TOutCut) annotation (Line(points={{88,482},{224,
           482},{224,470.706},{356,470.706}},
                                         color={0,0,127}));

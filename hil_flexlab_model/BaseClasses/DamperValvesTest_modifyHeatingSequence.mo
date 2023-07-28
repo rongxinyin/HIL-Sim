@@ -1,4 +1,4 @@
-within hil_flexlab_model.Examples;
+within hil_flexlab_model.BaseClasses;
 block DamperValvesTest_modifyHeatingSequence
   "Output signals for controlling VAV reheat box damper and valve position"
 
@@ -209,7 +209,7 @@ block DamperValvesTest_modifyHeatingSequence
   Buildings.Controls.OBC.CDL.Continuous.Line lin3
     "Active airflow setpoint for heating"
     annotation (Placement(transformation(extent={{-80,-310},{-60,-290}})));
-  Buildings.Controls.OBC.CDL.Continuous.LimPID conVal(
+  Buildings.Controls.Continuous.LimPID         conVal(
     final controllerType=controllerTypeVal,
     final k=kVal,
     final Ti=TiVal,
@@ -218,10 +218,10 @@ block DamperValvesTest_modifyHeatingSequence
     final yMin=0,
     u_s(final unit="K", displayUnit="degC"),
     u_m(final unit="K", displayUnit="degC"),
-    reset=Buildings.Controls.OBC.CDL.Types.Reset.Parameter)
+    reset=Buildings.Types.Reset.Parameter)
     "Hot water valve controller"
     annotation (Placement(transformation(extent={{34,-90},{54,-70}})));
-  Buildings.Controls.OBC.CDL.Continuous.LimPID conDam(
+  Buildings.Controls.Continuous.LimPID         conDam(
     final controllerType=controllerTypeDam,
     final k=kDam,
     final Ti=TiDam,
@@ -232,17 +232,20 @@ block DamperValvesTest_modifyHeatingSequence
     final y_reset=0) if not have_pressureIndependentDamper
     "Damper position controller"
     annotation (Placement(transformation(extent={{280,220},{300,240}})));
-  Buildings.Controls.OBC.CDL.Logical.Switch swi
+  Buildings.Controls.OBC.CDL.Continuous.Switch swi
     "Output active cooling airflow according to cooling control signal"
     annotation (Placement(transformation(extent={{140,260},{160,280}})));
-  Buildings.Controls.OBC.CDL.Logical.Switch swi1 "Output active airflow when it is in deadband state"
+  Buildings.Controls.OBC.CDL.Continuous.Switch swi1
+    "Output active airflow when it is in deadband state"
     annotation (Placement(transformation(extent={{132,40},{152,60}})));
-  Buildings.Controls.OBC.CDL.Logical.Switch swi2 "Acitive heating airflow rate"
+  Buildings.Controls.OBC.CDL.Continuous.Switch swi2
+    "Acitive heating airflow rate"
     annotation (Placement(transformation(extent={{80,-260},{100,-240}})));
-  Buildings.Controls.OBC.CDL.Logical.Switch swi4
+  Buildings.Controls.OBC.CDL.Continuous.Switch swi4
     "Output active heating airflow according to heating control signal"
     annotation (Placement(transformation(extent={{140,-260},{160,-240}})));
-  Buildings.Controls.OBC.CDL.Logical.Switch swi5 "Output active cooling airflow "
+  Buildings.Controls.OBC.CDL.Continuous.Switch swi5
+    "Output active cooling airflow "
     annotation (Placement(transformation(extent={{60,200},{80,220}})));
 
 protected
@@ -273,15 +276,11 @@ protected
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant conHal1(
     final k=0.5) "Constant real value"
     annotation (Placement(transformation(extent={{-260,-340},{-240,-320}})));
-  Buildings.Controls.OBC.CDL.Continuous.AddParameter addPar(
-    final p=dTDisZonSetMax,
-    final k=1)
-    "Maximum heating discharge temperature"
+  Buildings.Obsolete.Controls.OBC.CDL.Continuous.AddParameter addPar(final p=
+        dTDisZonSetMax, final k=1) "Maximum heating discharge temperature"
     annotation (Placement(transformation(extent={{-260,-70},{-240,-50}})));
-  Buildings.Controls.OBC.CDL.Continuous.AddParameter addPar1(
-    final k=1,
-    final p=2.8)
-    "Zone temperature pluTZonSets 2.8 degC"
+  Buildings.Obsolete.Controls.OBC.CDL.Continuous.AddParameter addPar1(final k=1,
+      final p=2.8) "Zone temperature pluTZonSets 2.8 degC"
     annotation (Placement(transformation(extent={{-260,-260},{-240,-240}})));
   Buildings.Controls.OBC.CDL.Continuous.Hysteresis hys2(uHigh=0.002, uLow=0.001)
     "Check if cooling control signal is greater than zero"
@@ -306,10 +305,10 @@ protected
     final uHigh=0.1)
     "Check if discharge air temperature is greater than room temperature plus 2.8 degC"
     annotation (Placement(transformation(extent={{-80,-260},{-60,-240}})));
-  Buildings.Controls.OBC.CDL.Continuous.Add add1(final k2=-1)
+  Buildings.Obsolete.Controls.OBC.CDL.Continuous.Add add1(final k2=-1)
     "Calculate temperature difference between discharge air and room plus 2.8 degC"
     annotation (Placement(transformation(extent={{-120,-260},{-100,-240}})));
-  Buildings.Controls.OBC.CDL.Continuous.Add add2(final k2=-1)
+  Buildings.Obsolete.Controls.OBC.CDL.Continuous.Add add2(final k2=-1)
     "Calculate temperature difference between AHU supply air and room "
     annotation (Placement(transformation(extent={{-160,190},{-140,210}})));
   Buildings.Controls.OBC.CDL.Logical.TrueHoldWithReset truHol2(duration=600)
@@ -327,9 +326,11 @@ protected
     final k=Buildings.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.unoccupied)
     "Constant signal for unoccupied mode"
     annotation (Placement(transformation(extent={{170,-322},{190,-302}})));
-  Buildings.Controls.OBC.CDL.Logical.Switch watValPosUno "Output hot water valve position"
+  Buildings.Controls.OBC.CDL.Continuous.Switch watValPosUno
+    "Output hot water valve position"
     annotation (Placement(transformation(extent={{280,-30},{300,-10}})));
-  Buildings.Controls.OBC.CDL.Logical.Switch damPosUno "Output damper position"
+  Buildings.Controls.OBC.CDL.Continuous.Switch damPosUno
+    "Output damper position"
     annotation (Placement(transformation(extent={{280,60},{300,80}})));
   Buildings.Controls.OBC.CDL.Logical.Not not5 "Negation of input signal"
     annotation (Placement(transformation(extent={{200,-260},{220,-240}})));
@@ -337,14 +338,14 @@ protected
     final k=TDisMin)
     "Lowest allowed discharge air temperature"
     annotation (Placement(transformation(extent={{-68,-108},{-48,-88}})));
-  Buildings.Controls.OBC.CDL.Logical.Switch swi6
+  Buildings.Controls.OBC.CDL.Continuous.Switch swi6
     "Output hot water valve position in case of low discharge air temperature"
     annotation (Placement(transformation(extent={{-30,-90},{-10,-70}})));
   Buildings.Controls.OBC.CDL.Logical.Or or2 "Logical not"
     annotation (Placement(transformation(extent={{-68,-64},{-48,-44}})));
   Buildings.Controls.OBC.CDL.Logical.Not not3 "Logical not"
     annotation (Placement(transformation(extent={{-120,120},{-100,140}})));
-  Buildings.Controls.OBC.CDL.Logical.Switch swi3
+  Buildings.Controls.OBC.CDL.Continuous.Switch swi3
     "Output hot water valve position in case of low discharge air temperature"
     annotation (Placement(transformation(extent={{104,-82},{124,-62}})));
   Buildings.Controls.OBC.CDL.Logical.Not not6 "Negation of input signal"
@@ -352,11 +353,13 @@ protected
   Buildings.Controls.OBC.CDL.Logical.And and1
     "Check if it is not in heating mode and the discharge temperature is not too low"
     annotation (Placement(transformation(extent={{20,-56},{40,-36}})));
-  Buildings.Controls.OBC.CDL.Continuous.Add add3 "Active airflow setpoint"
+  Buildings.Obsolete.Controls.OBC.CDL.Continuous.Add add3
+    "Active airflow setpoint"
     annotation (Placement(transformation(extent={{200,250},{220,270}})));
-  Buildings.Controls.OBC.CDL.Continuous.Add add4 "Active airflow set point"
+  Buildings.Obsolete.Controls.OBC.CDL.Continuous.Add add4
+    "Active airflow set point"
     annotation (Placement(transformation(extent={{180,40},{200,60}})));
-  Buildings.Controls.OBC.CDL.Continuous.Division VDis_flowNor if
+  Buildings.Controls.OBC.CDL.Continuous.Divide VDis_flowNor if
        not have_pressureIndependentDamper
     "Normalized discharge volume flow rate"
     annotation (Placement(transformation(extent={{240,150},{260,170}})));
@@ -364,11 +367,11 @@ protected
     final k=V_flow_nominal)
     "Nominal volume flow rate"
     annotation (Placement(transformation(extent={{200,200},{220,220}})));
-  Buildings.Controls.OBC.CDL.Continuous.Division VDisSet_flowNor
+  Buildings.Controls.OBC.CDL.Continuous.Divide VDisSet_flowNor
     "Normalized setpoint for discharge volume flow rate"
     annotation (Placement(transformation(extent={{240,220},{260,240}})));
-  Buildings.Controls.OBC.CDL.Continuous.Gain gai(
-    final k=1) if have_pressureIndependentDamper
+  Buildings.Controls.OBC.CDL.Continuous.MultiplyByParameter gai(final k=1) if
+                  have_pressureIndependentDamper
     "Block that can be disabled so remove the connection"
     annotation (Placement(transformation(extent={{220,120},{240,140}})));
 
@@ -527,8 +530,8 @@ equation
     annotation (Line(points={{302,-20},{340,-20}}, color={0,0,127}));
   connect(conZer2.y, damPosUno.u1) annotation (Line(points={{-58,8},{-20,8},{-20,
           -12},{250,-12},{250,78},{278,78}}, color={0,0,127}));
-  connect(conDam.y, damPosUno.u3) annotation (Line(points={{302,230},{310,230},{
-          310,100},{272,100},{272,62},{278,62}}, color={0,0,127}));
+  connect(conDam.y, damPosUno.u3) annotation (Line(points={{301,230},{310,230},
+          {310,100},{272,100},{272,62},{278,62}},color={0,0,127}));
   connect(damPosUno.y, yDam) annotation (Line(points={{302,70},{308,70},{308,40},
           {340,40}}, color={0,0,127}));
   connect(isUno.y, damPosUno.u2) annotation (Line(points={{242,-312},{266,-312},
@@ -536,7 +539,7 @@ equation
   connect(isUno.y, not5.u) annotation (Line(points={{242,-312},{266,-312},{266,-280},
           {180,-280},{180,-250},{198,-250}}, color={255,0,255}));
   connect(not5.y, conDam.trigger) annotation (Line(points={{222,-250},{232,-250},
-          {232,170},{284,170},{284,218}}, color={255,0,255}));
+          {232,170},{282,170},{282,218}}, color={255,0,255}));
   connect(truHol2.y, or2.u2) annotation (Line(points={{-200,-210},{-88,-210},{-88,
           -62},{-70,-62}},     color={255,0,255}));
   connect(truDel3.y, not3.u)
@@ -558,7 +561,7 @@ equation
   connect(and1.y, swi3.u2) annotation (Line(points={{42,-46},{64,-46},{64,-72},{
           102,-72}}, color={255,0,255}));
   connect(conVal.y, swi3.u3)
-    annotation (Line(points={{56,-80},{102,-80}},   color={0,0,127}));
+    annotation (Line(points={{55,-80},{102,-80}},   color={0,0,127}));
   connect(swi3.u1, conZer2.y) annotation (Line(points={{102,-64},{76,-64},{76,-12},
           {-20,-12},{-20,8},{-58,8}}, color={0,0,127}));
   connect(not3.y, and1.u1) annotation (Line(points={{-98,130},{0,130},{0,-46},{18,
@@ -566,7 +569,7 @@ equation
   connect(not4.y, truDel3.u)
     annotation (Line(points={{-180,130},{-162,130}}, color={255,0,255}));
   connect(not5.y, conVal.trigger) annotation (Line(points={{222,-250},{232,-250},
-          {232,-132},{38,-132},{38,-92}},  color={255,0,255}));
+          {232,-132},{36,-132},{36,-92}},  color={255,0,255}));
   connect(swi6.y, conVal.u_s)
     annotation (Line(points={{-8,-80},{32,-80}},   color={0,0,127}));
   connect(swi1.y, add4.u1) annotation (Line(points={{154,50},{168,50},{168,56},{

@@ -3,8 +3,10 @@ package Fluid "HP models are stored here"
   model HeatHeatpumpCoolHeatpumpAuxHea_noIEC
     "Air supply unit model with heatpump heating and cooling and auxiliary electric heater for heating"
     extends hil_flexlab_model.BaseClasses.partialAirUnit;
-    parameter Modelica.SIunits.DimensionlessRatio COP_heating = 3.5 "Coefficient of performance in heating";
-    parameter Modelica.SIunits.DimensionlessRatio COP_cooling = 3.5 "Coefficient of performance in cooling";
+    parameter Modelica.Units.SI.DimensionlessRatio COP_heating=3.5
+      "Coefficient of performance in heating";
+    parameter Modelica.Units.SI.DimensionlessRatio COP_cooling=3.5
+      "Coefficient of performance in cooling";
     Buildings.Fluid.HeatExchangers.HeaterCooler_u heaCoi(
       redeclare package Medium = MediumA,
       m_flow_nominal=mAir_flow_nominal,
@@ -137,8 +139,10 @@ package Fluid "HP models are stored here"
     "Air supply unit model with heatpump heating and cooling and auxiliary electric heater for heating"
     extends hil_flexlab_model.BaseClasses.partialAirUnit;
 
-    parameter Modelica.SIunits.DimensionlessRatio COP_heating = 3.5 "Coefficient of performance in heating";
-    parameter Modelica.SIunits.DimensionlessRatio COP_cooling = 3.5 "Coefficient of performance in cooling";
+    parameter Modelica.Units.SI.DimensionlessRatio COP_heating=3.5
+      "Coefficient of performance in heating";
+    parameter Modelica.Units.SI.DimensionlessRatio COP_cooling=3.5
+      "Coefficient of performance in cooling";
     Buildings.Fluid.HeatExchangers.HeaterCooler_u heaCoi(
       redeclare package Medium = MediumA,
       m_flow_nominal=mAir_flow_nominal,
@@ -273,8 +277,10 @@ package Fluid "HP models are stored here"
   model HeatHeatpumpCoolHeatpumpAuxHea_noIEC_2stage
     "Air supply unit model with heatpump heating and cooling and auxiliary electric heater for heating"
     extends hil_flexlab_model.BaseClasses.partialAirUnit;
-    parameter Modelica.SIunits.DimensionlessRatio COP_heating = 3.5 "Coefficient of performance in heating";
-    parameter Modelica.SIunits.DimensionlessRatio COP_cooling = 3.5 "Coefficient of performance in cooling";
+    parameter Modelica.Units.SI.DimensionlessRatio COP_heating=3.5
+      "Coefficient of performance in heating";
+    parameter Modelica.Units.SI.DimensionlessRatio COP_cooling=3.5
+      "Coefficient of performance in cooling";
     Buildings.Fluid.HeatExchangers.HeaterCooler_u heaCoi(
       redeclare package Medium = MediumA,
       m_flow_nominal=mAir_flow_nominal,
@@ -429,8 +435,10 @@ package Fluid "HP models are stored here"
   model HeatHeatpumpCoolHeatpumpAuxHea_noCool
     "Air supply unit model with heatpump heating and cooling and auxiliary electric heater for heating"
     extends hil_flexlab_model.BaseClasses.partialAirUnit_noCool;
-    parameter Modelica.SIunits.DimensionlessRatio COP_heating = 3.5 "Coefficient of performance in heating";
-    parameter Modelica.SIunits.DimensionlessRatio COP_cooling = 3.5 "Coefficient of performance in cooling";
+    parameter Modelica.Units.SI.DimensionlessRatio COP_heating=3.5
+      "Coefficient of performance in heating";
+    parameter Modelica.Units.SI.DimensionlessRatio COP_cooling=3.5
+      "Coefficient of performance in cooling";
     Buildings.Fluid.HeatExchangers.HeaterCooler_u heaCoi(
       redeclare package Medium = MediumA,
       m_flow_nominal=mAir_flow_nominal,
@@ -772,9 +780,9 @@ package Fluid "HP models are stored here"
           extends Modelica.Icons.Record;
         parameter Real tableQdot_con[:,:] "Heating power table; T in degC; Q_flow in W";
         parameter Real tableP_ele[:,:] "Electrical power table; T in degC; Q_flow in W";
-        parameter Modelica.SIunits.MassFlowRate mFlow_conNom
+        parameter Modelica.Units.SI.MassFlowRate mFlow_conNom
           "Nominal mass flow rate in condenser";
-        parameter Modelica.SIunits.MassFlowRate mFlow_evaNom
+        parameter Modelica.Units.SI.MassFlowRate mFlow_evaNom
           "Nominal mass flow rate in evaporator";
         parameter Real tableUppBou[:,2] "Points to define upper boundary for sink temperature";
 
@@ -1038,8 +1046,10 @@ defined as parameters.
 
         parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
         parameter Real k_hea = 1.25 "Proportional gain of heating controller";
-        parameter Modelica.SIunits.Time Ti_hea = 7000 "Integral time constant of heating controller";
-        parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 311 "max supply air temperature";
+        parameter Modelica.Units.SI.Time Ti_hea=7000
+          "Integral time constant of heating controller";
+        parameter Modelica.Units.SI.ThermodynamicTemperature maxSAT=311
+          "max supply air temperature";
         parameter Real kSta1 = 0.12 "PI center line to activate stage 1";
         parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
         parameter Real banSta1 = 0.01 "PI band to activate stage 1";
@@ -1366,8 +1376,10 @@ defined as parameters.
 
         parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
         parameter Real k_hea=0.33 "Proportional gain of heating controller";
-        parameter Modelica.SIunits.Time Ti_hea=20000 "Integral time constant of heating controller";
-        parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 310 "max supply air temperature";
+        parameter Modelica.Units.SI.Time Ti_hea=20000
+          "Integral time constant of heating controller";
+        parameter Modelica.Units.SI.ThermodynamicTemperature maxSAT=310
+          "max supply air temperature";
         parameter Real uLowSta1 = 0.12 "PI lower bound to activate stage 1";
         parameter Real uUppSta1 = 0.20 "PI upper bound to activate stage 1";
         parameter Real uLowSta2 = 0.35 "PI lower bound to activate stage 2";
@@ -1635,8 +1647,10 @@ defined as parameters.
 
         parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
         parameter Real k_hea = 1.25 "Proportional gain of heating controller";
-        parameter Modelica.SIunits.Time Ti_hea = 7000 "Integral time constant of heating controller";
-        parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 311 "max supply air temperature";
+        parameter Modelica.Units.SI.Time Ti_hea=7000
+          "Integral time constant of heating controller";
+        parameter Modelica.Units.SI.ThermodynamicTemperature maxSAT=311
+          "max supply air temperature";
         parameter Real kSta1 = 0.12 "PI center line to activate stage 1";
         parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
         parameter Real banSta1 = 0.01 "PI band to activate stage 1";
@@ -2742,8 +2756,10 @@ defined as parameters.
   model Aachen_HP_noIEC_2stage
     "Air supply unit model with heatpump heating and cooling and auxiliary electric heater for heating"
     extends hil_flexlab_model.BaseClasses.partialAirUnit;
-    parameter Modelica.SIunits.DimensionlessRatio COP_heating = 3.5 "Coefficient of performance in heating";
-    parameter Modelica.SIunits.DimensionlessRatio COP_cooling = 3.5 "Coefficient of performance in cooling";
+    parameter Modelica.Units.SI.DimensionlessRatio COP_heating=3.5
+      "Coefficient of performance in heating";
+    parameter Modelica.Units.SI.DimensionlessRatio COP_cooling=3.5
+      "Coefficient of performance in cooling";
     Modelica.Blocks.Interfaces.RealOutput PHea
       "Heating thermal power consumption"
       annotation (Placement(transformation(extent={{200,110},{220,130}})));
@@ -2872,8 +2888,10 @@ defined as parameters.
 
     parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
     parameter Real k_hea = 1.25 "Proportional gain of heating controller";
-    parameter Modelica.SIunits.Time Ti_hea = 7000 "Integral time constant of heating controller";
-    parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 311 "max supply air temperature";
+    parameter Modelica.Units.SI.Time Ti_hea=7000
+      "Integral time constant of heating controller";
+    parameter Modelica.Units.SI.ThermodynamicTemperature maxSAT=311
+      "max supply air temperature";
     parameter Real kSta1 = 0.12 "PI center line to activate stage 1";
     parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
     parameter Real banSta1 = 0.01 "PI band to activate stage 1";
@@ -3020,8 +3038,10 @@ defined as parameters.
 
     parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
     parameter Real k_hea = 1.25 "Proportional gain of heating controller";
-    parameter Modelica.SIunits.Time Ti_hea = 7000 "Integral time constant of heating controller";
-    parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 311 "max supply air temperature";
+    parameter Modelica.Units.SI.Time Ti_hea=7000
+      "Integral time constant of heating controller";
+    parameter Modelica.Units.SI.ThermodynamicTemperature maxSAT=311
+      "max supply air temperature";
     parameter Real kSta1 = 0.12 "PI center line to activate stage 1";
     parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
     parameter Real banSta1 = 0.01 "PI band to activate stage 1";
@@ -3213,8 +3233,10 @@ defined as parameters.
 
     parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
     parameter Real k_hea = 1.25 "Proportional gain of heating controller";
-    parameter Modelica.SIunits.Time Ti_hea = 7000 "Integral time constant of heating controller";
-    parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 311 "max supply air temperature";
+    parameter Modelica.Units.SI.Time Ti_hea=7000
+      "Integral time constant of heating controller";
+    parameter Modelica.Units.SI.ThermodynamicTemperature maxSAT=311
+      "max supply air temperature";
     parameter Real kSta1 = 0.12 "PI center line to activate stage 1";
     parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
     parameter Real banSta1 = 0.01 "PI band to activate stage 1";
@@ -3431,8 +3453,10 @@ defined as parameters.
 
     parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
     parameter Real k_hea = 1.25 "Proportional gain of heating controller";
-    parameter Modelica.SIunits.Time Ti_hea = 7000 "Integral time constant of heating controller";
-    parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 311 "max supply air temperature";
+    parameter Modelica.Units.SI.Time Ti_hea=7000
+      "Integral time constant of heating controller";
+    parameter Modelica.Units.SI.ThermodynamicTemperature maxSAT=311
+      "max supply air temperature";
     parameter Real kSta1 = 0.12 "PI center line to activate stage 1";
     parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
     parameter Real banSta1 = 0.01 "PI band to activate stage 1";
@@ -3582,8 +3606,10 @@ defined as parameters.
 
     parameter Real refIneFre = 0.0015 "refrigerant inertia parameter";
     parameter Real k_hea = 1.25 "Proportional gain of heating controller";
-    parameter Modelica.SIunits.Time Ti_hea = 7000 "Integral time constant of heating controller";
-    parameter Modelica.SIunits.ThermodynamicTemperature maxSAT = 311 "max supply air temperature";
+    parameter Modelica.Units.SI.Time Ti_hea=7000
+      "Integral time constant of heating controller";
+    parameter Modelica.Units.SI.ThermodynamicTemperature maxSAT=311
+      "max supply air temperature";
     parameter Real kSta1 = 0.12 "PI center line to activate stage 1";
     parameter Real kSta2 = 0.35 "PI center line to activate stage 2";
     parameter Real banSta1 = 0.01 "PI band to activate stage 1";

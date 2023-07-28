@@ -16,9 +16,8 @@ model AWHP_Model_Exchange
     annotation (Placement(transformation(extent={{64,20},{84,40}})));
   Modelica.Blocks.Sources.Sine OAT(
     amplitude=6.5,
-    freqHz=0.0000116,
-    offset=273 + 20.5)
-                annotation (Placement(transformation(
+    f=0.0000116,
+    offset=273 + 20.5) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={22,-54})));
@@ -38,7 +37,7 @@ model AWHP_Model_Exchange
     offset=291) annotation (Placement(transformation(extent={{-8,48},{12,68}})));
   Modelica.Blocks.Sources.Sine T_in_fluctuate2(
     amplitude=2,
-    freqHz=0.0000116,
+    f=0.0000116,
     phase=3.1415926535898,
     offset=289) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},

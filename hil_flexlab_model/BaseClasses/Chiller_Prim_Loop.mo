@@ -15,8 +15,8 @@ partial model Chiller_Prim_Loop
     constant Real mChiCon_flow_nominal=1.293*5.11;
     constant Real m_chw_in;
 
-  parameter Modelica.SIunits.Temperature TSupChi_nominal=281.15;
-  parameter Modelica.SIunits.Temperature TSetSupAir=286.15;
+  parameter Modelica.Units.SI.Temperature TSupChi_nominal=281.15;
+  parameter Modelica.Units.SI.Temperature TSetSupAir=286.15;
 
 
 

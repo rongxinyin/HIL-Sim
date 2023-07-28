@@ -69,10 +69,10 @@ model FlexlabX1aBaseline
     Ti=600,
     k=0.1) "Controller for cooling coil"
     annotation (Placement(transformation(extent={{-80,-250},{-60,-230}})));
-  Buildings.Controls.OBC.CDL.Logical.Switch swiHeaCoi
+  Buildings.Controls.OBC.CDL.Continuous.Switch swiHeaCoi
     "Switch to switch off heating coil"
     annotation (Placement(transformation(extent={{60,-220},{80,-200}})));
-  Buildings.Controls.OBC.CDL.Logical.Switch swiCooCoi
+  Buildings.Controls.OBC.CDL.Continuous.Switch swiCooCoi
     "Switch to switch off cooling coil"
     annotation (Placement(transformation(extent={{60,-258},{80,-238}})));
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant coiOff(k=0)

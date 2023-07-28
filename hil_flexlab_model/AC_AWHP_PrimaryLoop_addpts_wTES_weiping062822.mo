@@ -5,33 +5,45 @@ model AC_AWHP_PrimaryLoop_addpts_wTES_weiping062822
   package MediumA = Buildings.Media.Air "Medium model for air";
   package MediumW = Buildings.Media.Water "Medium model for water";
 
-  constant Modelica.SIunits.MassFlowRate m_flow=0.4
-    "Nominal mass flow rate";
+  constant Modelica.Units.SI.MassFlowRate m_flow=0.4 "Nominal mass flow rate";
 
-  parameter Modelica.SIunits.Temperature TSupChi_nominal=281.15;
-  parameter Modelica.SIunits.Temperature TSetSupAir=286.15;
+  parameter Modelica.Units.SI.Temperature TSupChi_nominal=281.15;
+  parameter Modelica.Units.SI.Temperature TSetSupAir=286.15;
 
-  parameter Modelica.SIunits.MassFlowRate mSec_flow_nominal=0.33
+  parameter Modelica.Units.SI.MassFlowRate mSec_flow_nominal=0.33
     "Design mass flow rate of secondary loop";
 
-  parameter Modelica.SIunits.Power Q_flow_nominal "Nominal heating or cooling power of plant";
-  parameter Modelica.SIunits.MassFlowRate mAWHP_flow_nominal "Nominal mass flowrate of air-to-water heat pump";
-  parameter Modelica.SIunits.MassFlowRate mSwec_flow_nominal "Nominal mass flowrate of swec";
-  parameter Modelica.SIunits.MassFlowRate mTes_flow_nominal "Nominal mass flowrate of tes";
-  parameter Modelica.SIunits.ThermalConductivity k=0.584 "Thermal conductivity of PCM";
-  parameter Modelica.SIunits.SpecificHeatCapacity c=2910 "Specific heat capacity of PCM";
-  parameter Modelica.SIunits.Density d=1500 "Mass density of PCM";
-  parameter Modelica.SIunits.Temperature TSol=273.15 + 29.5 "Solidus temperature of PCM.";
-  parameter Modelica.SIunits.Temperature TLiq=273.15 + 29.66 "Liquidus temperature of PCM";
-  parameter Modelica.SIunits.SpecificInternalEnergy LHea=278140 "Latent heat of phase change";
-  parameter Modelica.SIunits.Energy Tes_nominal
-    "Design TES capacity";
-  parameter Modelica.SIunits.PressureDifference dp_nominal(min=0, displayUnit="Pa")=0
+  parameter Modelica.Units.SI.Power Q_flow_nominal
+    "Nominal heating or cooling power of plant";
+  parameter Modelica.Units.SI.MassFlowRate mAWHP_flow_nominal
+    "Nominal mass flowrate of air-to-water heat pump";
+  parameter Modelica.Units.SI.MassFlowRate mSwec_flow_nominal
+    "Nominal mass flowrate of swec";
+  parameter Modelica.Units.SI.MassFlowRate mTes_flow_nominal
+    "Nominal mass flowrate of tes";
+  parameter Modelica.Units.SI.ThermalConductivity k=0.584
+    "Thermal conductivity of PCM";
+  parameter Modelica.Units.SI.SpecificHeatCapacity c=2910
+    "Specific heat capacity of PCM";
+  parameter Modelica.Units.SI.Density d=1500 "Mass density of PCM";
+  parameter Modelica.Units.SI.Temperature TSol=273.15 + 29.5
+    "Solidus temperature of PCM.";
+  parameter Modelica.Units.SI.Temperature TLiq=273.15 + 29.66
+    "Liquidus temperature of PCM";
+  parameter Modelica.Units.SI.SpecificInternalEnergy LHea=278140
+    "Latent heat of phase change";
+  parameter Modelica.Units.SI.Energy Tes_nominal "Design TES capacity";
+  parameter Modelica.Units.SI.PressureDifference dp_nominal(
+    min=0,
+    displayUnit="Pa") = 0
     "Nominal pressure raise, used for default pressure curve if not specified in record per";
-  parameter Modelica.SIunits.PressureDifference dpFixed_nominal(displayUnit="Pa", min=0) = 1000
+  parameter Modelica.Units.SI.PressureDifference dpFixed_nominal(
+    displayUnit="Pa",
+    min=0) = 1000
     "Pressure drop of pipe and other resistances that are in series";
-  parameter Modelica.SIunits.PressureDifference dpValve_nominal(displayUnit="Pa", min=0) = 1000
-    "Nominal pressure drop of fully open valve";
+  parameter Modelica.Units.SI.PressureDifference dpValve_nominal(
+    displayUnit="Pa",
+    min=0) = 1000 "Nominal pressure drop of fully open valve";
   parameter Real table[:, :] = [casDat.chargeStartMorn_CTes,0;
     casDat.chargeEndMorn_CTes,2;
     casDat.dischargeStart_CTes,1;

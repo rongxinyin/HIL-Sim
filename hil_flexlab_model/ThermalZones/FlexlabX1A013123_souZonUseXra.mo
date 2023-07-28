@@ -8,14 +8,14 @@ model FlexlabX1A013123_souZonUseXra "Model of a flexlab x1a"
 
   parameter Buildings.HeatTransfer.Types.InteriorConvection intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature
     "Convective heat transfer model for room-facing surfaces of opaque constructions";
-  parameter Modelica.SIunits.Angle lat "Latitude";
+  parameter Modelica.Units.SI.Angle lat "Latitude";
   parameter Real winWalRat(
     min=0.01,
     max=0.99) = 0.33 "Window to wall ratio for exterior walls";
-  parameter Modelica.SIunits.Length hWin = 1.5 "Height of windows";
+  parameter Modelica.Units.SI.Length hWin=1.5 "Height of windows";
   parameter Real kIntNor(min=0, max=1) = 1
     "Gain factor to scale internal heat gain in north zone";
-  constant Modelica.SIunits.Height hRoo=2.74 "Room height";
+  constant Modelica.Units.SI.Height hRoo=2.74 "Room height";
 
   parameter Boolean sampleModel = false
     "Set to true to time-sample the model, which can give shorter simulation time if there is already time sampling in the system model"
@@ -63,10 +63,10 @@ model FlexlabX1A013123_souZonUseXra "Model of a flexlab x1a"
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     final sampleModel=sampleModel) "South zone"
     annotation (Placement(transformation(extent={{144,-44},{184,-4}})));
-  Buildings.ThermalZones.Detailed.MixedAir ple(
+  Buildings.Occupants.ThermalZones.Detailed.MixedAir ple(
     redeclare package Medium = Medium,
     lat=lat,
-    AFlo=6.49*(3.05+3.05+3.23),
+    AFlo=6.49*(3.05 + 3.05 + 3.23),
     hRoo=1.625,
     nSurBou=0,
     nConPar=0,
@@ -74,25 +74,27 @@ model FlexlabX1A013123_souZonUseXra "Model of a flexlab x1a"
     nConExt=4,
     nConExtWin=0,
     datConExt(
-         layers={WestExt,
-         SouthExt,
-         NorthExt,
-         R20Wal},
-         A={9.33*1.63, 6.49*1.75, 2.68*1.5, 6.49*9.33},
-         til={Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling},
-         azi={Buildings.Types.Azimuth.W,Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.S}),
+      layers={WestExt,SouthExt,NorthExt,R20Wal},
+      A={9.33*1.63,6.49*1.75,2.68*1.5,6.49*9.33},
+      til={Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall,
+          Buildings.Types.Tilt.Ceiling},
+      azi={Buildings.Types.Azimuth.W,Buildings.Types.Azimuth.S,Buildings.Types.Azimuth.N,
+          Buildings.Types.Azimuth.S}),
     datConBou(
-         layers = {celDiv, parCon, parCon, ceiling, ceiling, ceiling},
-         A = {9.33*1.63, 1.26*1.5, 2.55*1.5, 6.49*3.23, 6.49*3.05, 6.49*3.05},
-         til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Floor, Buildings.Types.Tilt.Floor, Buildings.Types.Tilt.Floor},
-         azi = {Buildings.Types.Azimuth.E, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.S}),
+      layers={celDiv,parCon,parCon,ceiling,ceiling,ceiling},
+      A={9.33*1.63,1.26*1.5,2.55*1.5,6.49*3.23,6.49*3.05,6.49*3.05},
+      til={Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall,
+          Buildings.Types.Tilt.Floor,Buildings.Types.Tilt.Floor,Buildings.Types.Tilt.Floor},
+      azi={Buildings.Types.Azimuth.E,Buildings.Types.Azimuth.N,Buildings.Types.Azimuth.N,
+          Buildings.Types.Azimuth.S,Buildings.Types.Azimuth.S,Buildings.Types.Azimuth.S}),
     nPorts=5,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
-      extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
+    extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     final sampleModel=sampleModel) "Ceiling plenum"
     annotation (Placement(transformation(extent={{358,60},{398,100}})));
-  Buildings.ThermalZones.Detailed.MixedAir nor(
+
+  Buildings.Occupants.ThermalZones.Detailed.MixedAir nor(
     redeclare package Medium = Medium,
     lat=lat,
     AFlo=6.49*3.23,
@@ -103,22 +105,23 @@ model FlexlabX1A013123_souZonUseXra "Model of a flexlab x1a"
     nConBou=6,
     nSurBou=1,
     surBou(
-        A = {6.49*3.23},
-        each absIR=0.9,
-        each absSol=0.9,
-        each til=Buildings.Types.Tilt.Floor),
+      A={6.49*3.23},
+      each absIR=0.9,
+      each absSol=0.9,
+      each til=Buildings.Types.Tilt.Floor),
     datConExt(
-         layers={WestExt,
-         NorthExt,
-         extDoo},
-         A={3.23*2.74, 2.68*2.74-1.37*2.39, 1.37*2.39},
-         til={Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall},
-         azi={Buildings.Types.Azimuth.W,Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.N}),
+      layers={WestExt,NorthExt,extDoo},
+      A={3.23*2.74,2.68*2.74 - 1.37*2.39,1.37*2.39},
+      til={Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall},
+      azi={Buildings.Types.Azimuth.W,Buildings.Types.Azimuth.N,Buildings.Types.Azimuth.N}),
     datConBou(
-         layers = {celDiv, parCon, parDoo, parCon, zonDiv, ceiling},
-         A = {3.23*2.74, 1.26*2.74, 2.39*1.22, 2.55*2.74-2.39*1.22, 6.49*2.74, 6.49*3.23},
-         til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Ceiling},
-         azi = {Buildings.Types.Azimuth.E, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.S}),
+      layers={celDiv,parCon,parDoo,parCon,zonDiv,ceiling},
+      A={3.23*2.74,1.26*2.74,2.39*1.22,2.55*2.74 - 2.39*1.22,6.49*2.74,6.49*
+          3.23},
+      til={Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall,
+          Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Ceiling},
+      azi={Buildings.Types.Azimuth.E,Buildings.Types.Azimuth.N,Buildings.Types.Azimuth.N,
+          Buildings.Types.Azimuth.N,Buildings.Types.Azimuth.S,Buildings.Types.Azimuth.S}),
     mSenFac=8,
     nPorts=5,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
@@ -126,7 +129,8 @@ model FlexlabX1A013123_souZonUseXra "Model of a flexlab x1a"
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     final sampleModel=sampleModel) "North zone"
     annotation (Placement(transformation(extent={{144,116},{184,156}})));
-  Buildings.ThermalZones.Detailed.MixedAir cor(
+
+  Buildings.Occupants.ThermalZones.Detailed.MixedAir cor(
     redeclare package Medium = Medium,
     lat=lat,
     AFlo=6.49*3.05,
@@ -137,20 +141,22 @@ model FlexlabX1A013123_souZonUseXra "Model of a flexlab x1a"
     nConBou=4,
     nSurBou=1,
     surBou(
-        A = {6.49*3.05},
-        each absIR=0.9,
-        each absSol=0.9,
-        each til=Buildings.Types.Tilt.Floor),
+      A={6.49*3.05},
+      each absIR=0.9,
+      each absSol=0.9,
+      each til=Buildings.Types.Tilt.Floor),
     datConExt(
-         layers={WestExt},
-         A={3.05*2.74},
-         til={Buildings.Types.Tilt.Wall},
-         azi={Buildings.Types.Azimuth.W}),
+      layers={WestExt},
+      A={3.05*2.74},
+      til={Buildings.Types.Tilt.Wall},
+      azi={Buildings.Types.Azimuth.W}),
     datConBou(
-         layers = {celDiv, zonDiv, zonDiv, ceiling},
-         A = {3.05*2.74, 6.49*2.74, 6.49*2.74, 6.49*3.05},
-         til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Ceiling},
-         azi = {Buildings.Types.Azimuth.E, Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.S, Buildings.Types.Azimuth.S}),
+      layers={celDiv,zonDiv,zonDiv,ceiling},
+      A={3.05*2.74,6.49*2.74,6.49*2.74,6.49*3.05},
+      til={Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall,
+          Buildings.Types.Tilt.Ceiling},
+      azi={Buildings.Types.Azimuth.E,Buildings.Types.Azimuth.N,Buildings.Types.Azimuth.S,
+          Buildings.Types.Azimuth.S}),
     mSenFac=8,
     nPorts=10,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
@@ -158,32 +164,32 @@ model FlexlabX1A013123_souZonUseXra "Model of a flexlab x1a"
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     final sampleModel=sampleModel) "Core zone"
     annotation (Placement(transformation(extent={{144,36},{184,76}})));
-  Buildings.ThermalZones.Detailed.MixedAir clo(
+  Buildings.Occupants.ThermalZones.Detailed.MixedAir clo(
     redeclare package Medium = Medium,
-    hRoo = 3.6576,
-    AFlo = 3.93,
-    lat = 0.66098585832754,
-    nConExt = 2,
-    nConBou = 3,
-    nSurBou = 2,
-    nConExtWin = 0,
-    nConPar = 0,
+    hRoo=3.6576,
+    AFlo=3.93,
+    lat=0.66098585832754,
+    nConExt=2,
+    nConBou=3,
+    nSurBou=2,
+    nConExtWin=0,
+    nConPar=0,
     surBou(
-        A = {3.6576 * 2.886075 - 2.39*1.22, 2.39 * 1.22},
-        each absIR = 0.9,
-        each absSol = 0.9,
-        each til=Buildings.Types.Tilt.Wall),
+      A={3.6576*2.886075 - 2.39*1.22,2.39*1.22},
+      each absIR=0.9,
+      each absSol=0.9,
+      each til=Buildings.Types.Tilt.Wall),
     datConExt(
-        layers = {higIns, R20Wal},
-        A = {3.6576 * 1.667, 3.93},
-        til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling},
-        azi = {Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.N}),
+      layers={higIns,R20Wal},
+      A={3.6576*1.667,3.93},
+      til={Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Ceiling},
+      azi={Buildings.Types.Azimuth.N,Buildings.Types.Azimuth.N}),
     datConBou(
-        layers = {higIns, celDiv, slaCon},
-        A = {3.6576*1.524, 3.6576 * 1.524, 3.93},
-        til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Floor},
-        azi = {Buildings.Types.Azimuth.W, Buildings.Types.Azimuth.E, Buildings.Types.Azimuth.N},
-        stateAtSurface_a = {true, false, false}),
+      layers={higIns,celDiv,slaCon},
+      A={3.6576*1.524,3.6576*1.524,3.93},
+      til={Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Floor},
+      azi={Buildings.Types.Azimuth.W,Buildings.Types.Azimuth.E,Buildings.Types.Azimuth.N},
+      stateAtSurface_a={true,false,false}),
     nPorts=4,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
@@ -191,32 +197,34 @@ model FlexlabX1A013123_souZonUseXra "Model of a flexlab x1a"
     final sampleModel=sampleModel) "Closet"
     annotation (Placement(transformation(extent={{154,312},{194,352}})));
 
-  Buildings.ThermalZones.Detailed.MixedAir ele(
+  Buildings.Occupants.ThermalZones.Detailed.MixedAir ele(
     redeclare package Medium = Medium,
-    hRoo = 3.6576,
-    AFlo = 2.39,
-    lat = 0.66098585832754,
-    nSurBou = 2,
+    hRoo=3.6576,
+    AFlo=2.39,
+    lat=0.66098585832754,
+    nSurBou=2,
     nConExt=4,
     nConExtWin=0,
     nConPar=0,
     nConBou=1,
     surBou(
-      A = {3.6576 * 1.2641, 3.6576 * 1.524},
-      each absIR = 0.9,
-      each absSol = 0.9,
-      each til = Buildings.Types.Tilt.Wall),
+      A={3.6576*1.2641,3.6576*1.524},
+      each absIR=0.9,
+      each absSol=0.9,
+      each til=Buildings.Types.Tilt.Wall),
     datConExt(
-      layers = {NorthExt, NorthExt, extDooUn, R20Wal},
-      A = {3.6576 * 1.26413, 3.6576 * 1.524 - 2.38658 * 1.524, 2.38658*1.524, 2.39},
-      til = {Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Wall, Buildings.Types.Tilt.Ceiling},
-      azi = {Buildings.Types.Azimuth.N, Buildings.Types.Azimuth.W, Buildings.Types.Azimuth.W, Buildings.Types.Azimuth.N}),
+      layers={NorthExt,NorthExt,extDooUn,R20Wal},
+      A={3.6576*1.26413,3.6576*1.524 - 2.38658*1.524,2.38658*1.524,2.39},
+      til={Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall,Buildings.Types.Tilt.Wall,
+          Buildings.Types.Tilt.Ceiling},
+      azi={Buildings.Types.Azimuth.N,Buildings.Types.Azimuth.W,Buildings.Types.Azimuth.W,
+          Buildings.Types.Azimuth.N}),
     datConBou(
-     layers = {slaCon},
-     A = {2.39},
-     til = {Buildings.Types.Tilt.Floor},
-     azi = {Buildings.Types.Azimuth.N},
-     each stateAtSurface_a = false),
+      layers={slaCon},
+      A={2.39},
+      til={Buildings.Types.Tilt.Floor},
+      azi={Buildings.Types.Azimuth.N},
+      each stateAtSurface_a=false),
     nPorts=4,
     intConMod=Buildings.HeatTransfer.Types.InteriorConvection.Temperature,
     extConMod=Buildings.HeatTransfer.Types.ExteriorConvection.TemperatureWind,
@@ -243,7 +251,7 @@ model FlexlabX1A013123_souZonUseXra "Model of a flexlab x1a"
     annotation (Placement(transformation(extent={{-40,170},{-20,190}})));
   Buildings.BoundaryConditions.WeatherData.Bus weaBus "Weather bus"
     annotation (Placement(transformation(extent={{200,224},{220,244}})));
-  Buildings.Examples.VAVReheat.ThermalZones.RoomLeakage leaSou(
+  Buildings.Examples.VAVReheat.BaseClasses.RoomLeakage  leaSou(
     redeclare package Medium = Medium,
     VRoo=6.49*3.05*3.6576/5,
     s=6.49/3.05,
@@ -252,7 +260,7 @@ model FlexlabX1A013123_souZonUseXra "Model of a flexlab x1a"
     "Model for air infiltration through the envelope"
     annotation (Placement(transformation(extent={{-56,400},{-20,440}})));
 
-  Buildings.Examples.VAVReheat.ThermalZones.RoomLeakage leaPle(
+  Buildings.Examples.VAVReheat.BaseClasses.RoomLeakage  leaPle(
     redeclare package Medium = Medium,
     VRoo=6.49*(3.05 + 3.05 + 3.23)*1.625,
     s=6.49/9.33,
@@ -260,7 +268,7 @@ model FlexlabX1A013123_souZonUseXra "Model of a flexlab x1a"
     final use_windPressure=use_windPressure)
     "Model for air infiltration through the envelope"
     annotation (Placement(transformation(extent={{-56,342},{-20,382}})));
-  Buildings.Examples.VAVReheat.ThermalZones.RoomLeakage leaNor(
+  Buildings.Examples.VAVReheat.BaseClasses.RoomLeakage  leaNor(
     redeclare package Medium = Medium,
     VRoo=6.49*3.23*3.6576,
     s=6.49/3.23,
@@ -512,7 +520,7 @@ equation
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
   connect(temAirSou.T, multiplex3.u1[1]) annotation (Line(
-      points={{310,350},{328,350},{328,297},{338,297}},
+      points={{311,350},{328,350},{328,297},{338,297}},
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
@@ -697,10 +705,10 @@ equation
       horizontalAlignment=TextAlignment.Left));
   connect(intGaiEle.y, ele.qGai_flow) annotation (Line(points={{103,412},{128.5,
           412},{128.5,400},{152.4,400}}, color={0,0,127}));
-  connect(temAirNor.T, multiplex3.u3[1]) annotation (Line(points={{316,252},{
+  connect(temAirNor.T, multiplex3.u3[1]) annotation (Line(points={{317,252},{
           326,252},{326,283},{338,283}}, color={0,0,127}));
   connect(temAirCor.T, multiplex3.u2[1])
-    annotation (Line(points={{314,290},{338,290}}, color={0,0,127}));
+    annotation (Line(points={{315,290},{338,290}}, color={0,0,127}));
   connect(ligGai.y[1], add3_1.u1) annotation (Line(points={{305,476},{320,476},{
           320,484},{330,484}}, color={0,0,127}));
   connect(plgGai.y[1], add3_1.u2) annotation (Line(points={{305,438},{320,438},{

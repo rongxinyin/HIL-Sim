@@ -1,8 +1,8 @@
 within hil_flexlab_model.BaseClasses;
 model Infiltration "Model for constant infiltration"
   replaceable package Medium = Buildings.Media.Air "Air media package";
-  parameter Modelica.SIunits.DimensionlessRatio ACH "Air changes per hour";
-  parameter Modelica.SIunits.Volume V "Volume of space";
+  parameter Modelica.Units.SI.DimensionlessRatio ACH "Air changes per hour";
+  parameter Modelica.Units.SI.Volume V "Volume of space";
   Modelica.Blocks.Sources.Constant InfiltrationRate(k=ACH*V/3600)
     "Convert ACH to m^3/s"
     annotation (Placement(transformation(extent={{-100,-60},{-80,-40}})));
