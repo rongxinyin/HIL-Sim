@@ -349,11 +349,12 @@ partial model PartialOpenLoopX1aV020123_modifyVav_useSpawn
                                 flo(
     redeclare final package Medium = MediumA,
     final use_windPressure=use_windPressure,
-    idfName=
-        "modelica://hil_flexlab_model/Resources/energyPlusFiles/RefBldgSmallOfficeNew2004_Chicago.idf",
-    epwName=
-        "modelica://hil_flexlab_model/Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw",
-    weaName="modelica://hil_flexlab_model/Resources/weatherdata/Chicago.mos")
+    idfName=Modelica.Utilities.Files.loadResource(
+        "Resources/energyPlusFiles/RefBldgSmallOfficeNew2004_Chicago.idf"),
+    epwName=Modelica.Utilities.Files.loadResource(
+        "Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw"),
+    weaName=Modelica.Utilities.Files.loadResource(
+        "Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.mos"))
     "Model of a floor of the building that is served by this VAV system"
     annotation (Placement(transformation(extent={{794,384},{1108,562}})));
 

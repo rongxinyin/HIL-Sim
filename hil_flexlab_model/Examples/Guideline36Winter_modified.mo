@@ -1,45 +1,27 @@
 within hil_flexlab_model.Examples;
-model Guideline36Winter
+model Guideline36Winter_modified
   "Variable air volume flow system with terminal reheat and five thermal zones controlled using an ASHRAE G36 controller"
   extends Modelica.Icons.Example;
-  extends Buildings.Examples.VAVReheat.BaseClasses.HVACBuilding(
+  extends hil_flexlab_model.BaseClasses.HVACBuilding(
     mCor_flow_nominal=ACHCor*VRooCor*conv,
     mSou_flow_nominal=ACHSou*VRooSou*conv,
-    mEas_flow_nominal=ACHEas*VRooEas*conv,
     mNor_flow_nominal=ACHNor*VRooNor*conv,
-    mWes_flow_nominal=ACHWes*VRooWes*conv,
-    redeclare Buildings.Examples.VAVReheat.BaseClasses.Guideline36 hvac,
-    redeclare
-      ThermalZones.Floor_unmodified
-      flo(
-      idfName=Modelica.Utilities.Files.loadResource(
-          "Resources/energyPlusFiles/RefBldgSmallOfficeNew2004_Chicago.idf"),
-      epwName=Modelica.Utilities.Files.loadResource(
-          "Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw"),
-
-      weaName=Modelica.Utilities.Files.loadResource(
-          "Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.mos")),
-
-    weaDat(filNam=Modelica.Utilities.Files.loadResource(
-          "Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.mos")));
+    redeclare BaseClasses.Guideline36                              hvac,
+    redeclare ThermalZones.Floor_withPlenum                                                   flo);
 
   parameter Real ACHCor(final unit="1/h")=4
     "Design air change per hour core";
   parameter Real ACHSou(final unit="1/h")=4
     "Design air change per hour south";
-  parameter Real ACHEas(final unit="1/h")=6
-    "Design air change per hour east";
   parameter Real ACHNor(final unit="1/h")=4
     "Design air change per hour north";
-  parameter Real ACHWes(final unit="1/h")=6
-    "Design air change per hour west";
 
   annotation (
     __Dymola_Commands(
       file="modelica://Buildings/Resources/Scripts/Dymola/ThermalZones/EnergyPlus_9_6_0/Examples/SmallOffice/Guideline36Winter.mos" "Simulate and plot"),
     experiment(
       StartTime=432000,
-      StopTime=440640,
+      StopTime=518400,
       Interval=300,
       Tolerance=1e-07,
       __Dymola_Algorithm="Dassl"),
@@ -118,4 +100,4 @@ Buildings.Examples.VAVReheat.Guideline36</a> model with an EnergyPlus thermal zo
 </li>
 </ul>
 </html>"));
-end Guideline36Winter;
+end Guideline36Winter_modified;

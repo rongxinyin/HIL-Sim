@@ -1,0 +1,35 @@
+{
+  "version": "0.1",
+  "EnergyPlus": {
+    "idf": "/home/huangwp/git/HIL-Sim/hil_flexlab_model/Resources/energyPlusFiles/RefBldgSmallOfficeNew2004_Chicago.idf",
+    "weather": "/home/huangwp/git/HIL-Sim/hil_flexlab_model/Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw",
+    "relativeSurfaceTolerance": 1.00e-06
+  },
+  "model": {
+    "zones": [
+      {
+        "name": "Core_ZN"
+      },
+      {
+        "name": "Attic"
+      },
+      {
+        "name": "Perimeter_ZN_2"
+      },
+      {
+        "name": "Perimeter_ZN_3"
+      },
+      {
+        "name": "Perimeter_ZN_1"
+      },
+      {
+        "name": "Perimeter_ZN_4"
+      }
+    ]
+  },
+  "fmu": {
+      "name": "/home/huangwp/git/HIL-Sim/hil_flexlab_model/spawn-Guideline36Winter.flo/EnergyPlus.fmu",
+      "version": "2.0",
+      "kind": "ME"
+  }
+}

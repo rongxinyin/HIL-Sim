@@ -2,7 +2,8 @@ within hil_flexlab_model.Examples;
 model Guideline36Summer
   "Variable air volume flow system with terminal reheat and five thermal zones controlled using an ASHRAE G36 controller"
   extends
-    hil_flexlab_model.Examples.Guideline36Winter(flo(
+    hil_flexlab_model.Examples.Guideline36Winter_modified(
+                                                 flo(
       idfName=Modelica.Utilities.Files.loadResource(
           "Resources/energyPlusFiles/RefBldgSmallOfficeNew2004_Chicago.idf"),
       epwName=Modelica.Utilities.Files.loadResource(
