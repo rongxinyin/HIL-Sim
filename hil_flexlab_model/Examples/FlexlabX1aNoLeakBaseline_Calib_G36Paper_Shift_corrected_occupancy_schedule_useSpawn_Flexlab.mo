@@ -1,9 +1,10 @@
 within hil_flexlab_model.Examples;
 model
-  FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule_useSpawn
+  FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule_useSpawn_Flexlab
   "DR mode - Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
-  extends hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV020123_modifyVav_useSpawn(occSch(
+  extends
+    hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab(      occSch(
       occupancy={0,86399},
       firstEntryOccupied=true,
       period=86400), fanSup(per(use_powerCharacteristic=true, power(V_flow={
@@ -12,8 +13,11 @@ model
       nor(T_start=294.96),
       cor(T_start=294.96),
       sou(T_start=294.96),
-      epwName=Modelica.Utilities.Files.loadResource(
-          "hil_flexlab_model://Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw")));
+      idfName=Modelica.Utilities.Files.loadResource(
+          "modelica://Buildings/Resources/Data/ThermalZones/EnergyPlus_9_6_0/Examples/energyPlusFiles/X1_LowMass-2021-V1_v2.idf")),
+
+    weaDat(filNam=Modelica.Utilities.Files.loadResource(
+          "modelica://Buildings/Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.mos")));
 
                               //,
     //  ple(T_start=294.96)));
@@ -493,4 +497,4 @@ This is for
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end
-  FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule_useSpawn;
+  FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule_useSpawn_Flexlab;

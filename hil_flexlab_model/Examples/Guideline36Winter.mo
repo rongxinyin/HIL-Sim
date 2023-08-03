@@ -13,15 +13,13 @@ model Guideline36Winter
       ThermalZones.Floor_unmodified
       flo(
       idfName=Modelica.Utilities.Files.loadResource(
-          "Resources/energyPlusFiles/RefBldgSmallOfficeNew2004_Chicago.idf"),
+          "modelica://Buildings/Resources/Data/ThermalZones/EnergyPlus_9_6_0/Examples/RefBldgSmallOffice/RefBldgSmallOfficeNew2004_Chicago.idf"),
       epwName=Modelica.Utilities.Files.loadResource(
-          "Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw"),
-
+          "modelica://Buildings/Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw"),
       weaName=Modelica.Utilities.Files.loadResource(
-          "Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.mos")),
-
+          "modelica://Buildings/Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.mos")),
     weaDat(filNam=Modelica.Utilities.Files.loadResource(
-          "Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.mos")));
+          "modelica://Buildings/Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.mos")));
 
   parameter Real ACHCor(final unit="1/h")=4
     "Design air change per hour core";

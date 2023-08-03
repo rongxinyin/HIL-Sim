@@ -1,5 +1,5 @@
 within hil_flexlab_model.BaseClasses;
-partial model PartialOpenLoopX1aV020123_modifyVav_useSpawn
+partial model PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab
   "Validated Partial model of variable air volume flow system with terminal reheat and 3 VAV zones at flexlab x1a"
 
   package MediumA = Buildings.Media.Air "Medium model for air";
@@ -345,7 +345,7 @@ partial model PartialOpenLoopX1aV020123_modifyVav_useSpawn
   Buildings.BoundaryConditions.WeatherData.Bus weaBus "Weather Data Bus"
     annotation (Placement(transformation(extent={{-330,170},{-310,190}}),
         iconTransformation(extent={{-360,170},{-340,190}})));
-  ThermalZones.Floor_spawnExperiment
+  ThermalZones.Floor_spawnExperiment_Flexlab
                                 flo(
     redeclare final package Medium = MediumA,
     final use_windPressure=use_windPressure)
@@ -823,4 +823,4 @@ This is for
 </li>
 </ul>
 </html>"));
-end PartialOpenLoopX1aV020123_modifyVav_useSpawn;
+end PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab;
