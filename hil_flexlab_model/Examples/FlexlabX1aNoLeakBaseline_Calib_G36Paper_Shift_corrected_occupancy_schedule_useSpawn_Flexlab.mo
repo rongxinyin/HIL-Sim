@@ -15,10 +15,8 @@ model
       sou(T_start=294.96),
       idfName=Modelica.Utilities.Files.loadResource(
           "modelica://Buildings/Resources/Data/ThermalZones/EnergyPlus_9_6_0/Examples/energyPlusFiles/X1_LowMass-2021-V1_v2.idf"),
-
       epwName=Modelica.Utilities.Files.loadResource(
           "modelica://Buildings/Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw"),
-
       weaName=Modelica.Utilities.Files.loadResource(
           "modelica://Buildings/Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.mos")),
     weaDat(filNam=Modelica.Utilities.Files.loadResource(
@@ -206,22 +204,22 @@ equation
                                       color={0,0,127}));
 
   connect(conVAVNor.yZonTemResReq, TZonResReq.u[1]) annotation (Line(points={{676,10},
-          {750,10},{750,224},{270,224},{270,302.667},{296,302.667}},     color=
+          {750,10},{750,224},{270,224},{270,295.667},{296,295.667}},     color=
           {255,127,0}));
   connect(conVAVCor.yZonTemResReq, TZonResReq.u[2]) annotation (Line(points={{800,110},
           {808,110},{808,240},{274,240},{274,298},{296,298}},        color={255,
           127,0}));
   connect(conVAVSou.yZonTemResReq, TZonResReq.u[3]) annotation (Line(points={{1042,38},
-          {1054,38},{1054,216},{278,216},{278,293.333},{296,293.333}},
+          {1054,38},{1054,216},{278,216},{278,300.333},{296,300.333}},
         color={255,127,0}));
   connect(conVAVNor.yZonPreResReq, PZonResReq.u[1]) annotation (Line(points={{676,6},
-          {758,6},{758,236},{284,236},{284,268.667},{298,268.667}},      color=
+          {758,6},{758,236},{284,236},{284,261.667},{298,261.667}},      color=
           {255,127,0}));
   connect(conVAVCor.yZonPreResReq, PZonResReq.u[2]) annotation (Line(points={{800,106},
           {814,106},{814,246},{288,246},{288,264},{298,264}},        color={255,
           127,0}));
   connect(conVAVSou.yZonPreResReq, PZonResReq.u[3]) annotation (Line(points={{1042,34},
-          {1060,34},{1060,224},{292,224},{292,259.333},{298,259.333}},
+          {1060,34},{1060,224},{292,224},{292,266.333},{298,266.333}},
         color={255,127,0}));
   connect(VSupNor_flow.V_flow,conVAVNor. VDis_flow) annotation (Line(points={{695,130},
           {632,130},{632,12},{652,12}},      color={0,0,127}));
