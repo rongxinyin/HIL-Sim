@@ -1,0 +1,5 @@
+Using CC=cc -Wl,--no-as-needed
+/usr/bin/ld: /tmp/ccQrqQUa.o: in function `ModelicaInternal_temporaryFileName':
+dsmodel.c:(.text+0x1d47a): warning: the use of `tmpnam' is dangerous, better use `mkstemp'
+/usr/bin/ld: /opt/dymola-2023x-x86_64/Modelica/Library/Modelica 4.0.0/Resources/Library/linux64/libModelicaMatIO.a(ModelicaMatIO.o): in function `Mat_VarDelete':
+ModelicaMatIO.c:(.text+0x9b54e): warning: the use of `mktemp' is dangerous, better use `mkstemp' or `mkdtemp'

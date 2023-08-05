@@ -35,22 +35,25 @@ model Floor_spawnExperiment_Flexlab
   Buildings.ThermalZones.EnergyPlus_9_6_0.ThermalZone sou(
     redeclare package Medium = Medium,
     nPorts=5,
-    zoneName="FlexLab-X3-ZoneA-South-Zone Thermal Zone") "South zone"
+        zoneName="Perimeter_ZN_1") "South zone"
     annotation (Placement(transformation(extent={{144,-44},{184,-4}})));
-//    zoneName="Perimeter_ZN_1") "South zone"
+    //    zoneName="FlexLab-X3-ZoneA-South-Zone Thermal Zone") "South zone"
+
   Buildings.ThermalZones.EnergyPlus_9_6_0.ThermalZone nor(
     redeclare package Medium = Medium,
     nPorts=5,
-    zoneName="FlexLab-X3-ZoneA-North-Zone Thermal Zone") "North zone"
+        zoneName="Perimeter_ZN_3") "North zone"
     annotation (Placement(transformation(extent={{144,116},{184,156}})));
-//    zoneName="Perimeter_ZN_3") "North zone"
+    //    zoneName="FlexLab-X3-ZoneA-North-Zone Thermal Zone") "North zone"
+
 
   Buildings.ThermalZones.EnergyPlus_9_6_0.ThermalZone cor(
     redeclare package Medium = Medium,
     nPorts=7,
-    zoneName="FlexLab-X3-ZoneA-Core-Zone Thermal Zone") "Core zone"
+        zoneName="Core_ZN") "Core zone"
     annotation (Placement(transformation(extent={{144,60},{184,100}})));
-//    zoneName="Core_ZN") "Core zone"
+    //    zoneName="FlexLab-X3-ZoneA-Core-Zone Thermal Zone") "Core zone"
+
 
 
   parameter String idfName=Modelica.Utilities.Files.loadResource(
