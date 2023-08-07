@@ -4,17 +4,20 @@ model
   "DR mode - Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
   extends
-    hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab(      occSch(
+    hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab(
+    res1(dp_nominal=0.05),
+    occSch(
       occupancy={0,86399},
       firstEntryOccupied=true,
-      period=86400), fanSup(per(use_powerCharacteristic=true, power(V_flow={
-              0.05,0.4}, P=1*{167,370}))),
+      period=86400),
+    fanSup(per(use_powerCharacteristic=true, power(V_flow={0.05,0.4}, P=1*{167,
+              370}))),
     flo(
       nor(T_start=294.96),
       cor(T_start=294.96),
       sou(T_start=294.96),
       idfName=Modelica.Utilities.Files.loadResource(
-          "modelica://Buildings/Resources/Data/ThermalZones/EnergyPlus_9_6_0/Examples/energyPlusFiles/RefBldgSmallOfficeNew2004_Chicago.idf"),
+          "modelica://Buildings/Resources/Data/ThermalZones/EnergyPlus_9_6_0/Examples/energyPlusFiles/X1_LowMass-2021-V1_v2.idf"),
 
       epwName=Modelica.Utilities.Files.loadResource(
           "modelica://Buildings/Resources/weatherdata/US_Berkeley_2021.epw"),
@@ -173,6 +176,8 @@ model
     annotation (Placement(transformation(extent={{1182,250},{1202,270}})));
   ExhaustDamperPositionBlock          exhaustDamperPositionBlock
     annotation (Placement(transformation(extent={{-88,-92},{-68,-72}})));
+  Modelica.Blocks.Sources.Constant const(k=0)
+    annotation (Placement(transformation(extent={{550,188},{570,208}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,0},{320,-10},{320,-10}},

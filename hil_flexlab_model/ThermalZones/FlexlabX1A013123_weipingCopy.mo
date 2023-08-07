@@ -23,7 +23,7 @@ model FlexlabX1A013123_weipingCopy "Model of a flexlab x1a"
       Evaluate=true,
       Dialog(tab="Experimental (may be changed in future releases)"));
 
-  Buildings.Occupants.ThermalZones.Detailed.MixedAir sou(
+  Buildings.ThermalZones.Detailed.MixedAir           sou(
     redeclare package Medium = Medium,
     AFlo=6.49*3.05,
     nConPar=0,
@@ -63,7 +63,7 @@ model FlexlabX1A013123_weipingCopy "Model of a flexlab x1a"
     final sampleModel=sampleModel) "South zone"
     annotation (Placement(transformation(extent={{144,-44},{184,-4}})));
 
-  Buildings.Occupants.ThermalZones.Detailed.MixedAir ple(
+  Buildings.ThermalZones.Detailed.MixedAir           ple(
     redeclare package Medium = Medium,
     AFlo=6.49*(3.05 + 3.05 + 3.23),
     hRoo=1.625,
@@ -93,7 +93,7 @@ model FlexlabX1A013123_weipingCopy "Model of a flexlab x1a"
     final sampleModel=sampleModel) "Ceiling plenum"
     annotation (Placement(transformation(extent={{358,60},{398,100}})));
 
-  Buildings.Occupants.ThermalZones.Detailed.MixedAir nor(
+  Buildings.ThermalZones.Detailed.MixedAir           nor(
     redeclare package Medium = Medium,
     AFlo=6.49*3.23,
     hRoo=3.6576,
@@ -128,7 +128,7 @@ model FlexlabX1A013123_weipingCopy "Model of a flexlab x1a"
     final sampleModel=sampleModel) "North zone"
     annotation (Placement(transformation(extent={{144,116},{184,156}})));
 
-  Buildings.Occupants.ThermalZones.Detailed.MixedAir cor(
+  Buildings.ThermalZones.Detailed.MixedAir           cor(
     redeclare package Medium = Medium,
     AFlo=6.49*3.05,
     hRoo=3.6576,
@@ -161,7 +161,7 @@ model FlexlabX1A013123_weipingCopy "Model of a flexlab x1a"
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     final sampleModel=sampleModel) "Core zone"
     annotation (Placement(transformation(extent={{144,36},{184,76}})));
-  Buildings.Occupants.ThermalZones.Detailed.MixedAir clo(
+  Buildings.ThermalZones.Detailed.MixedAir           clo(
     redeclare package Medium = Medium,
     hRoo=3.6576,
     AFlo=3.93,
@@ -193,7 +193,7 @@ model FlexlabX1A013123_weipingCopy "Model of a flexlab x1a"
     final sampleModel=sampleModel) "Closet"
     annotation (Placement(transformation(extent={{154,312},{194,352}})));
 
-  Buildings.Occupants.ThermalZones.Detailed.MixedAir ele(
+  Buildings.ThermalZones.Detailed.MixedAir           ele(
     redeclare package Medium = Medium,
     hRoo=3.6576,
     AFlo=2.39,
@@ -447,23 +447,23 @@ model FlexlabX1A013123_weipingCopy "Model of a flexlab x1a"
 
 equation
   connect(sou.surf_conBou[2], cor.surf_conBou[3]) annotation (Line(
-      points={{170,-40},{170,-54},{200,-54},{200,20},{170,20},{170,40.25}},
+      points={{170,-40},{170,-54},{200,-54},{200,20},{170,20},{170,40.125}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(sou.surf_conBou[3], ple.surf_conBou[6]) annotation (Line(
-      points={{170,-39.3333},{170,-54},{384,-54},{384,64.8333}},
+      points={{170,-39.6667},{170,-54},{384,-54},{384,64.4167}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(ple.surf_conBou[5], cor.surf_conBou[4]) annotation (Line(
-      points={{384,64.5},{384,20},{170,20},{170,40.75}},
+      points={{384,64.25},{384,20},{170,20},{170,40.375}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(ple.surf_conBou[4], nor.surf_conBou[6]) annotation (Line(
-      points={{384,64.1667},{384,24},{220,24},{220,100},{170,100},{170,120.833}},
+      points={{384,64.0833},{384,24},{220,24},{220,100},{170,100},{170,120.417}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(nor.surf_conBou[5], cor.surf_conBou[2]) annotation (Line(
-      points={{170,120.5},{170,100},{200,100},{200,26},{170,26},{170,39.75}},
+      points={{170,120.25},{170,100},{200,100},{200,26},{170,26},{170,39.875}},
       color={191,0,0},
       smooth=Smooth.None));
   connect(uSha.y, replicator.u) annotation (Line(
@@ -536,37 +536,37 @@ equation
       color={191,0,0},
       smooth=Smooth.None));
   connect(sou.ports[1], portsSou[1]) annotation (Line(
-      points={{149,-37.2},{114,-37.2},{114,-34},{80,-34}},
+      points={{149,-35.6},{114,-35.6},{114,-34},{85,-34}},
       color={0,127,255},
       smooth=Smooth.None));
   connect(sou.ports[2], portsSou[2]) annotation (Line(
-      points={{149,-35.6},{124,-35.6},{124,-34},{100,-34}},
+      points={{149,-34.8},{124,-34.8},{124,-34},{95,-34}},
       color={0,127,255},
       smooth=Smooth.None));
   connect(ple.ports[1],portsPle [1]) annotation (Line(
-      points={{363,66.8},{300,66.8},{300,36},{324,36}},
+      points={{363,68.4},{300,68.4},{300,36},{329,36}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
   connect(ple.ports[2],portsPle [2]) annotation (Line(
-      points={{363,68.4},{300,68.4},{300,36},{344,36}},
+      points={{363,69.2},{300,69.2},{300,36},{339,36}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
   connect(nor.ports[1], portsNor[1]) annotation (Line(
-      points={{149,122.8},{114,122.8},{114,126},{80,126}},
+      points={{149,124.4},{114,124.4},{114,126},{85,126}},
       color={0,127,255},
       smooth=Smooth.None));
   connect(nor.ports[2], portsNor[2]) annotation (Line(
-      points={{149,124.4},{124,124.4},{124,126},{100,126}},
+      points={{149,125.2},{124,125.2},{124,126},{95,126}},
       color={0,127,255},
       smooth=Smooth.None));
   connect(cor.ports[1], portsCor[1]) annotation (Line(
-      points={{149,42.4},{114,42.4},{114,46},{80,46}},
+      points={{149,44.2},{114,44.2},{114,46},{85,46}},
       color={0,127,255},
       smooth=Smooth.None));
   connect(cor.ports[2], portsCor[2]) annotation (Line(
-      points={{149,43.2},{124,43.2},{124,46},{100,46}},
+      points={{149,44.6},{124,44.6},{124,46},{95,46}},
       color={0,127,255},
       smooth=Smooth.None));
   connect(leaPle.port_b, ple.ports[3]) annotation (Line(
@@ -580,12 +580,12 @@ equation
       smooth=Smooth.None,
       thickness=0.5));
   connect(opeSouCor.port_b1, cor.ports[3]) annotation (Line(
-      points={{104,16},{116,16},{116,44},{149,44}},
+      points={{104,16},{116,16},{116,45},{149,45}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
   connect(opeSouCor.port_a2, cor.ports[4]) annotation (Line(
-      points={{104,4},{116,4},{116,44.8},{149,44.8}},
+      points={{104,4},{116,4},{116,45.4},{149,45.4}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
@@ -595,51 +595,51 @@ equation
       smooth=Smooth.None,
       thickness=0.5));
   connect(opeSouCor.port_b2, sou.ports[4]) annotation (Line(
-      points={{84,4},{74,4},{74,-20},{134,-20},{134,-32.4},{149,-32.4}},
+      points={{84,4},{74,4},{74,-20},{134,-20},{134,-33.2},{149,-33.2}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
   connect(opeEasCor.port_b1, ple.ports[4]) annotation (Line(
-      points={{270,54},{290,54},{290,71.6},{363,71.6}},
+      points={{270,54},{290,54},{290,70.8},{363,70.8}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
   connect(opeEasCor.port_a2, ple.ports[5]) annotation (Line(
-      points={{270,42},{290,42},{290,73.2},{363,73.2}},
+      points={{270,42},{290,42},{290,71.6},{363,71.6}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
   connect(opeEasCor.port_a1, cor.ports[5]) annotation (Line(
-      points={{250,54},{190,54},{190,34},{142,34},{142,45.6},{149,45.6}},
+      points={{250,54},{190,54},{190,34},{142,34},{142,45.8},{149,45.8}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
   connect(opeEasCor.port_b2, cor.ports[6]) annotation (Line(
-      points={{250,42},{190,42},{190,34},{142,34},{142,46.4},{149,46.4}},
+      points={{250,42},{190,42},{190,34},{142,34},{142,46.2},{149,46.2}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
   connect(opeNorCor.port_b1, nor.ports[4]) annotation (Line(
-      points={{102,90},{124,90},{124,127.6},{149,127.6}},
+      points={{102,90},{124,90},{124,126.8},{149,126.8}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
   connect(opeNorCor.port_a2, nor.ports[5]) annotation (Line(
-      points={{102,78},{124,78},{124,129.2},{149,129.2}},
+      points={{102,78},{124,78},{124,127.6},{149,127.6}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
   connect(opeNorCor.port_a1, cor.ports[7]) annotation (Line(
-      points={{82,90},{76,90},{76,60},{142,60},{142,47.2},{149,47.2}},
+      points={{82,90},{76,90},{76,60},{142,60},{142,46.6},{149,46.6}},
       color={0,127,255},
       smooth=Smooth.None));
   connect(opeNorCor.port_b2, cor.ports[8]) annotation (Line(
-      points={{82,78},{76,78},{76,60},{142,60},{142,48},{149,48}},
+      points={{82,78},{76,78},{76,60},{142,60},{142,47},{149,47}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
   connect(cor.ports[10], senRelPre.port_a) annotation (Line(
-      points={{149,49.6},{110,49.6},{110,250},{60,250}},
+      points={{149,47.8},{110,47.8},{110,250},{60,250}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
@@ -680,15 +680,17 @@ equation
 
   connect(intGaiClo.y, clo.qGai_flow) annotation (Line(points={{103,380},{130,380},
           {130,340},{152.4,340}}, color={0,0,127}));
-  connect(clo.ports[1],portsClo[1]) annotation (Line(points={{159,319},{126,319},
-          {126,324},{84,324}},  color={0,127,255}));
-  connect(clo.ports[2],portsClo[2]) annotation (Line(points={{159,321},{128,321},
-          {128,324},{104,324}}, color={0,127,255}));
+  connect(clo.ports[1],portsClo[1]) annotation (Line(points={{159,320.5},{126,
+          320.5},{126,324},{89,324}},
+                                color={0,127,255}));
+  connect(clo.ports[2],portsClo[2]) annotation (Line(points={{159,321.5},{128,
+          321.5},{128,324},{99,324}},
+                                color={0,127,255}));
   connect(ele.surf_surBou[2], clo.surf_conBou[1]) annotation (Line(points={{170.2,
-          378.5},{176,378.5},{176,315.333},{180,315.333}},
+          378.25},{176,378.25},{176,315.667},{180,315.667}},
                                         color={191,0,0}));
   connect(clo.surf_surBou[2], nor.surf_conBou[3]) annotation (Line(points={{170.2,
-          318.5},{170,318.5},{170,119.833}},
+          318.25},{170,318.25},{170,119.917}},
                           color={191,0,0}));
   connect(weaBus, ele.weaBus) annotation (Line(
       points={{210,234},{226,234},{226,409.9},{191.9,409.9}},
@@ -736,8 +738,9 @@ equation
           410,438},{410,-16},{142.4,-16}}, color={0,0,127}));
   connect(ligSchPle.y, gaiPle.u)
     annotation (Line(points={{-117,-52},{-102,-52}}, color={0,0,127}));
-  connect(leaSou.port_b, sou.ports[5]) annotation (Line(points={{-20,420},{-16,420},
-          {-16,-30.8},{149,-30.8}}, color={0,127,255}));
+  connect(leaSou.port_b, sou.ports[5]) annotation (Line(points={{-20,420},{-16,
+          420},{-16,-32.4},{149,-32.4}},
+                                    color={0,127,255}));
   connect(leaSou.weaBus, weaBus) annotation (Line(
       points={{-56,420},{-68,420},{-68,422},{-80,422},{-80,276},{210,276},{210,234}},
       color={255,204,51},

@@ -359,8 +359,8 @@ protected
   Buildings.Obsolete.Controls.OBC.CDL.Continuous.Add add4
     "Active airflow set point"
     annotation (Placement(transformation(extent={{180,40},{200,60}})));
-  Buildings.Controls.OBC.CDL.Continuous.Divide VDis_flowNor if
-       not have_pressureIndependentDamper
+  Buildings.Controls.OBC.CDL.Continuous.Divide VDis_flowNor
+    if not have_pressureIndependentDamper
     "Normalized discharge volume flow rate"
     annotation (Placement(transformation(extent={{240,150},{260,170}})));
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant nomFlow(
@@ -370,8 +370,8 @@ protected
   Buildings.Controls.OBC.CDL.Continuous.Divide VDisSet_flowNor
     "Normalized setpoint for discharge volume flow rate"
     annotation (Placement(transformation(extent={{240,220},{260,240}})));
-  Buildings.Controls.OBC.CDL.Continuous.MultiplyByParameter gai(final k=1) if
-                  have_pressureIndependentDamper
+  Buildings.Controls.OBC.CDL.Continuous.MultiplyByParameter gai(final k=1)
+               if have_pressureIndependentDamper
     "Block that can be disabled so remove the connection"
     annotation (Placement(transformation(extent={{220,120},{240,140}})));
 

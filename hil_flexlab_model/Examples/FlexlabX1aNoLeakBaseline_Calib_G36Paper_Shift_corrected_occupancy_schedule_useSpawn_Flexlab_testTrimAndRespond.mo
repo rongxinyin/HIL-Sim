@@ -1,19 +1,30 @@
 within hil_flexlab_model.Examples;
 model
-  FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule_useSpawn
+  FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule_useSpawn_Flexlab_testTrimAndRespond
   "DR mode - Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
-  extends hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV020123_modifyVav_useSpawn(occSch(
+  extends
+    hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab(
+    res1(dp_nominal=0.05),
+    occSch(
       occupancy={0,86399},
       firstEntryOccupied=true,
-      period=86400), fanSup(per(use_powerCharacteristic=true, power(V_flow={
-              0.05,0.4}, P=1*{167,370}))),
+      period=86400),
+    fanSup(per(use_powerCharacteristic=true, power(V_flow={0.05,0.4}, P=1*{167,
+              370}))),
     flo(
       nor(T_start=294.96),
       cor(T_start=294.96),
       sou(T_start=294.96),
+      idfName=Modelica.Utilities.Files.loadResource(
+          "modelica://Buildings/Resources/Data/ThermalZones/EnergyPlus_9_6_0/Examples/energyPlusFiles/X1_LowMass-2021-V1_v2.idf"),
+
       epwName=Modelica.Utilities.Files.loadResource(
-          "hil_flexlab_model://Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw")));
+          "modelica://Buildings/Resources/weatherdata/US_Berkeley_2021.epw"),
+      weaName=Modelica.Utilities.Files.loadResource(
+          "modelica://Buildings/Resources/weatherdata/US_Berkeley_2021.mos")),
+    weaDat(filNam=Modelica.Utilities.Files.loadResource(
+          "modelica://Buildings/Resources/weatherdata/US_Berkeley_2021.mos")));
 
                               //,
     //  ple(T_start=294.96)));
@@ -165,6 +176,10 @@ model
     annotation (Placement(transformation(extent={{1182,250},{1202,270}})));
   ExhaustDamperPositionBlock          exhaustDamperPositionBlock
     annotation (Placement(transformation(extent={{-88,-92},{-68,-72}})));
+  Modelica.Blocks.Sources.Constant const(k=0)
+    annotation (Placement(transformation(extent={{266,-88},{286,-68}})));
+  Modelica.Blocks.Sources.IntegerExpression integerExpression
+    annotation (Placement(transformation(extent={{324,416},{344,436}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,0},{320,-10},{320,-10}},
@@ -310,11 +325,6 @@ equation
           {158,325},{158,438.706},{356,438.706}}, color={255,127,0}));
   connect(TZonResReq.y, conAHU.uZonTemResReq) annotation (Line(points={{320,298},
           {322,298},{322,433.059},{356,433.059}}, color={255,127,0}));
-  connect(PZonResReq.y, conAHU.uZonPreResReq) annotation (Line(points={{322,264},
-          {324,264},{324,427.412},{356,427.412}}, color={255,127,0}));
-  connect(conAHU.ySupFanSpe, fanSup.y) annotation (Line(points={{444,530.941},{
-          472,530.941},{472,-12},{310,-12},{310,-28}},
-                                                   color={0,0,127}));
   connect(conAHU.VDesUncOutAir_flow, reaRep1.u) annotation (Line(points={{444,
           508.353},{447,508.353},{447,488},{478,488}},
                                               color={0,0,127}));
@@ -407,6 +417,10 @@ equation
     annotation (Line(points={{444,440.588},{448,440.588},{448,172},{-104,172},{
           -104,-82},{-90,-82}},
                            color={0,0,127}));
+  connect(integerExpression.y, conAHU.uZonPreResReq) annotation (Line(points={{
+          345,426},{350.5,426},{350.5,427.412},{356,427.412}}, color={255,127,0}));
+  connect(conAHU.ySupFanSpe, fanSup.y) annotation (Line(points={{444,530.941},{
+          460,530.941},{460,-122},{310,-122},{310,-28}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-320},{1400,
             640}}), graphics={Line(
@@ -493,4 +507,4 @@ This is for
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end
-  FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule_useSpawn;
+  FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule_useSpawn_Flexlab_testTrimAndRespond;
