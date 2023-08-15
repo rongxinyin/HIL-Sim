@@ -523,7 +523,7 @@ equation
       smooth=Smooth.None,
       thickness=0.5));
   connect(amb.ports[1], VOut1.port_a) annotation (Line(
-      points={{-114,-42.0667},{-94,-42.0667},{-94,-33},{-72,-33}},
+      points={{-114,-46.4667},{-94,-46.4667},{-94,-33},{-72,-33}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
@@ -665,7 +665,7 @@ equation
   connect(gaiCooCoi.y, souCoo.m_flow_in) annotation (Line(points={{122,-248},{
           222,-248},{222,-132}}, color={0,0,127}));
   connect(dpDisSupFan.port_b, amb.ports[3]) annotation (Line(
-      points={{320,10},{320,14},{-88,14},{-88,-47.9333},{-114,-47.9333}},
+      points={{320,10},{320,14},{-88,14},{-88,-43.5333},{-114,-43.5333}},
       color={0,0,0},
       pattern=LinePattern.Dot));
   connect(senRetFlo.port_b, TRet.port_a) annotation (Line(points={{340,140},{
@@ -695,23 +695,25 @@ equation
   connect(TSupPle.port_b, VSupPle_flow.port_a)
     annotation (Line(points={{578,96},{578,118}}, color={0,127,255}));
   connect(VSupNor_flow.port_b, flo.portsNor[1]) annotation (Line(points={{706,140},
-          {706,523.662},{908.678,523.662}},
+          {706,523.662},{912.091,523.662}},
                                           color={0,127,255}));
   connect(VSupCor_flow.port_b, flo.portsCor[1]) annotation (Line(points={{834,142},
-          {834,302},{802,302},{802,446},{858,446},{858,477.108},{908.678,
+          {834,302},{802,302},{802,446},{858,446},{858,477.108},{912.091,
           477.108}},
         color={0,127,255}));
   connect(VSupSou_flow.port_b, flo.portsSou[1]) annotation (Line(points={{1080,
-          138},{1080,378},{898,378},{898,422.338},{908.678,422.338}},
+          138},{1080,378},{898,378},{898,422.338},{912.091,422.338}},
                                                                color={0,127,255}));
   connect(splRetCor.port_2, flo.portsSou[2]) annotation (Line(points={{962,0},{
-          1156,0},{1156,422.338},{922.33,422.338}},
+          1156,0},{1156,422.338},{918.917,422.338}},
                                               color={0,127,255}));
   connect(splRetCor.port_3, flo.portsCor[2]) annotation (Line(points={{952,10},
-          {952,304},{864,304},{864,428},{906,428},{906,477.108},{922.33,477.108}},
+          {952,304},{864,304},{864,428},{906,428},{906,477.108},{918.917,
+          477.108}},
         color={0,127,255}));
   connect(splRetNor.port_3, flo.portsNor[2]) annotation (Line(points={{774,10},
-          {774,458},{908,458},{908,482},{922.33,482},{922.33,523.662}}, color={0,
+          {774,458},{908,458},{908,482},{918.917,482},{918.917,523.662}},
+                                                                        color={0,
           127,255}));
   connect(splSupRoo.port_3, dpRetDuc1.port_b) annotation (Line(points={{580,-30},
           {516,-30},{516,48},{542,48}}, color={0,127,255}));

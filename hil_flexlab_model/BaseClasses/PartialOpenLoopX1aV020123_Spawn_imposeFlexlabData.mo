@@ -1,5 +1,5 @@
 within hil_flexlab_model.BaseClasses;
-partial model PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab
+partial model PartialOpenLoopX1aV020123_Spawn_imposeFlexlabData
   "Validated Partial model of variable air volume flow system with terminal reheat and 3 VAV zones at flexlab x1a"
 
   package MediumA = Buildings.Media.Air "Medium model for air";
@@ -132,12 +132,14 @@ partial model PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab
     allowFlowReversal=allowFlowReversal,
     dp_nominal=40) "Pressure drop for return duct"
     annotation (Placement(transformation(extent={{400,130},{380,150}})));
-  Buildings.Fluid.Movers.SpeedControlled_y fanSup(
+  Buildings.Fluid.Movers.FlowControlled_m_flow
+                                           fanSup(
     redeclare package Medium = MediumA,
+    m_flow_nominal=m_flow_nominal,
     per(pressure(V_flow={0,m_flow_nominal/1.2*2}, dp=2*{780 + 10 + dpBuiStaSet,
             0})),
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial) "Supply air fan"
-    annotation (Placement(transformation(extent={{300,-50},{320,-30}})));
+    annotation (Placement(transformation(extent={{236,-50},{256,-30}})));
 
   Buildings.Fluid.Sensors.VolumeFlowRate senSupFlo(redeclare package Medium =
         MediumA, m_flow_nominal=m_flow_nominal)
@@ -176,8 +178,8 @@ partial model PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab
     m_flow_nominal=m_flow_nominal,
     allowFlowReversal=allowFlowReversal)
     annotation (Placement(transformation(extent={{330,-50},{350,-30}})));
-  Buildings.Fluid.Sensors.RelativePressure dpDisSupFan(redeclare package Medium =
-        MediumA) "Supply fan static discharge pressure" annotation (Placement(
+  Buildings.Fluid.Sensors.RelativePressure dpDisSupFan(redeclare package Medium
+      = MediumA) "Supply fan static discharge pressure" annotation (Placement(
         transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
@@ -345,7 +347,7 @@ partial model PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab
   Buildings.BoundaryConditions.WeatherData.Bus weaBus "Weather Data Bus"
     annotation (Placement(transformation(extent={{-330,170},{-310,190}}),
         iconTransformation(extent={{-360,170},{-340,190}})));
-  ThermalZones.Floor_spawnExperiment_Flexlab
+  ThermalZones.Floor_withAuxRooms_noDoor
                                 flo(
     redeclare final package Medium = MediumA,
     final use_windPressure=use_windPressure)
@@ -364,7 +366,7 @@ partial model PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={706,92})));
+        origin={706,150})));
   Buildings.Fluid.Sensors.TemperatureTwoPort TSupCor(
     redeclare package Medium = MediumA,
     initType=Modelica.Blocks.Types.Init.InitialState,
@@ -373,7 +375,7 @@ partial model PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={834,94})));
+        origin={834,152})));
   Buildings.Fluid.Sensors.TemperatureTwoPort TSupSou(
     redeclare package Medium = MediumA,
     initType=Modelica.Blocks.Types.Init.InitialState,
@@ -382,7 +384,7 @@ partial model PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={1080,90})));
+        origin={1080,148})));
   Buildings.Fluid.Sensors.VolumeFlowRate VSupNor_flow(
     redeclare package Medium = MediumA,
     initType=Modelica.Blocks.Types.Init.InitialState,
@@ -391,7 +393,7 @@ partial model PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab
       Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={706,130})));
+        origin={706,188})));
   Buildings.Fluid.Sensors.VolumeFlowRate VSupCor_flow(
     redeclare package Medium = MediumA,
     initType=Modelica.Blocks.Types.Init.InitialState,
@@ -400,7 +402,7 @@ partial model PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab
       Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={834,132})));
+        origin={834,190})));
   Buildings.Fluid.Sensors.VolumeFlowRate VSupSou_flow(
     redeclare package Medium = MediumA,
     initType=Modelica.Blocks.Types.Init.InitialState,
@@ -409,7 +411,7 @@ partial model PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab
       Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={1080,128})));
+        origin={1080,186})));
   MixingBox                                          eco(
     redeclare package Medium = MediumA,
     mOut_flow_nominal=m_flow_nominal,
@@ -506,22 +508,33 @@ public
     allowFlowReversal=allowFlowReversal,
     dp_nominal=40) "Pressure drop for return duct"
     annotation (Placement(transformation(extent={{562,38},{542,58}})));
-  Buildings.Fluid.FixedResistances.PressureDrop res1(
-    redeclare package Medium = MediumA,
-    m_flow_nominal=mPle_flow_nominal,
-    dp_nominal=50)
-    annotation (Placement(transformation(extent={{588,164},{608,184}})));
+  Buildings.Fluid.Sources.PropertySource_T proSou(use_T_in=true, redeclare
+      package Medium = MediumA)
+    annotation (Placement(transformation(extent={{276,-52},{296,-32}})));
+  Buildings.Fluid.Movers.FlowControlled_m_flow fanSupNor(redeclare package
+      Medium = MediumA, m_flow_nominal=mNor_flow_nominal)
+    annotation (Placement(transformation(extent={{722,-32},{742,-12}})));
+  Buildings.Fluid.Movers.FlowControlled_m_flow fanSupCor(redeclare package
+      Medium = MediumA, m_flow_nominal=mCor_flow_nominal)
+    annotation (Placement(transformation(extent={{850,-30},{870,-10}})));
+  Buildings.Fluid.Movers.FlowControlled_m_flow fanSupSou(redeclare package
+      Medium = MediumA, m_flow_nominal=mSou_flow_nominal)
+    annotation (Placement(transformation(extent={{968,-54},{988,-34}})));
+  Buildings.Fluid.Sources.PropertySource_T                 temperatureChangeNor(use_T_in=
+        true, redeclare package Medium = MediumA)
+    annotation (Placement(transformation(extent={{714,92},{734,112}})));
+  Buildings.Fluid.Sources.PropertySource_T                 temperatureChangeCor(use_T_in=
+        true, redeclare package Medium = MediumA)
+    annotation (Placement(transformation(extent={{842,88},{862,108}})));
+  Buildings.Fluid.Sources.PropertySource_T                 temperatureChangeSou(use_T_in=
+        true, redeclare package Medium = MediumA)
+    annotation (Placement(transformation(extent={{1088,84},{1108,104}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
-      points={{320,-40},{320,-10}},
+      points={{256,-40},{256,-26},{320,-26},{320,-10}},
       color={0,0,0},
       smooth=Smooth.None,
       pattern=LinePattern.Dot));
-  connect(TSup.port_a, fanSup.port_b) annotation (Line(
-      points={{330,-40},{320,-40}},
-      color={0,127,255},
-      smooth=Smooth.None,
-      thickness=0.5));
   connect(amb.ports[1], VOut1.port_a) annotation (Line(
       points={{-114,-46.4667},{-94,-46.4667},{-94,-33},{-72,-33}},
       color={0,127,255},
@@ -547,18 +560,8 @@ equation
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
-  connect(splSupNor.port_3,nor. port_a) annotation (Line(
-      points={{706,-30},{706,20}},
-      color={0,127,255},
-      smooth=Smooth.None,
-      thickness=0.5));
   connect(splSupNor.port_2, splSupCor.port_1) annotation (Line(
       points={{716,-40},{824,-40}},
-      color={0,127,255},
-      smooth=Smooth.None,
-      thickness=0.5));
-  connect(splSupCor.port_3, cor.port_a) annotation (Line(
-      points={{834,-30},{834,24}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
@@ -603,34 +606,21 @@ equation
       pattern=LinePattern.Dash));
 
   connect(cooCoi.port_b2, fanSup.port_a) annotation (Line(
-      points={{210,-40},{300,-40}},
+      points={{210,-40},{236,-40}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
 
-  connect(nor.port_b, TSupNor.port_a) annotation (Line(
-      points={{706,60},{706,82}},
-      color={0,127,255},
-      thickness=0.5));
-  connect(cor.port_b,TSupCor. port_a) annotation (Line(
-      points={{834,64},{834,84}},
-      color={0,127,255},
-      thickness=0.5));
-  connect(sou.port_b, TSupSou.port_a) annotation (Line(
-      points={{1080,56},{1080,80}},
-      color={0,127,255},
-      thickness=0.5));
-
   connect(TSupNor.port_b, VSupNor_flow.port_a) annotation (Line(
-      points={{706,102},{706,120}},
+      points={{706,160},{706,178}},
       color={0,127,255},
       thickness=0.5));
   connect(TSupCor.port_b,VSupCor_flow. port_a) annotation (Line(
-      points={{834,104},{834,122}},
+      points={{834,162},{834,180}},
       color={0,127,255},
       thickness=0.5));
   connect(TSupSou.port_b, VSupSou_flow.port_a) annotation (Line(
-      points={{1080,100},{1080,118}},
+      points={{1080,158},{1080,176}},
       color={0,127,255},
       thickness=0.5));
 
@@ -690,19 +680,17 @@ equation
       points={{98,-52},{80,-52},{80,-112}},
       color={28,108,200},
       thickness=0.5));
-  connect(sou.port_a, splSupCor.port_2) annotation (Line(points={{1080,16},{1080,
-          -40},{844,-40}}, color={0,127,255}));
   connect(TSupPle.port_b, VSupPle_flow.port_a)
     annotation (Line(points={{578,96},{578,118}}, color={0,127,255}));
-  connect(VSupNor_flow.port_b, flo.portsNor[1]) annotation (Line(points={{706,140},
+  connect(VSupNor_flow.port_b, flo.portsNor[1]) annotation (Line(points={{706,198},
           {706,523.662},{912.091,523.662}},
                                           color={0,127,255}));
-  connect(VSupCor_flow.port_b, flo.portsCor[1]) annotation (Line(points={{834,142},
+  connect(VSupCor_flow.port_b, flo.portsCor[1]) annotation (Line(points={{834,200},
           {834,302},{802,302},{802,446},{858,446},{858,477.108},{912.091,
           477.108}},
         color={0,127,255}));
   connect(VSupSou_flow.port_b, flo.portsSou[1]) annotation (Line(points={{1080,
-          138},{1080,378},{898,378},{898,422.338},{912.091,422.338}},
+          196},{1080,378},{898,378},{898,422.338},{912.091,422.338}},
                                                                color={0,127,255}));
   connect(splRetCor.port_2, flo.portsSou[2]) annotation (Line(points={{962,0},{
           1156,0},{1156,422.338},{918.917,422.338}},
@@ -719,10 +707,41 @@ equation
           {516,-30},{516,48},{542,48}}, color={0,127,255}));
   connect(dpRetDuc1.port_a, TSupPle.port_a) annotation (Line(points={{562,48},{570,
           48},{570,76},{578,76}}, color={0,127,255}));
-  connect(VSupPle_flow.port_b, res1.port_a) annotation (Line(points={{578,138},
-          {580,138},{580,174},{588,174}}, color={0,127,255}));
-  connect(res1.port_b, splRetRoo1.port_3) annotation (Line(points={{608,174},{
-          618,174},{618,10},{620,10}}, color={0,127,255}));
+  connect(VSupPle_flow.port_b, flo.portsEas[1]) annotation (Line(points={{578,138},
+          {580,138},{580,342},{1067.73,342},{1067.73,477.108}},      color={0,
+          127,255}));
+  connect(splRetRoo1.port_3, flo.portsEas[2]) annotation (Line(points={{620,10},
+          {620,368},{1066,368},{1066,477.108},{1074.55,477.108}}, color={0,127,
+          255}));
+  connect(fanSup.port_b, proSou.port_a) annotation (Line(points={{256,-40},{266,
+          -40},{266,-42},{276,-42}}, color={0,127,255}));
+  connect(proSou.port_b, TSup.port_a) annotation (Line(points={{296,-42},{313,
+          -42},{313,-40},{330,-40}}, color={0,127,255}));
+  connect(fanSupNor.port_a, splSupNor.port_3) annotation (Line(points={{722,-22},
+          {722,-30},{706,-30}}, color={0,127,255}));
+  connect(fanSupNor.port_b, nor.port_a) annotation (Line(points={{742,-22},{754,
+          -22},{754,10},{706,10},{706,20}}, color={0,127,255}));
+  connect(splSupCor.port_3, fanSupCor.port_a) annotation (Line(points={{834,-30},
+          {850,-30},{850,-20}}, color={0,127,255}));
+  connect(fanSupCor.port_b, cor.port_a) annotation (Line(points={{870,-20},{882,
+          -20},{882,12},{834,12},{834,24}}, color={0,127,255}));
+  connect(splSupCor.port_2, fanSupSou.port_a) annotation (Line(points={{844,-40},
+          {844,-64},{944,-64},{944,-44},{968,-44}}, color={0,127,255}));
+  connect(fanSupSou.port_b, sou.port_a) annotation (Line(points={{988,-44},{
+          1040,-44},{1040,-36},{1080,-36},{1080,16}}, color={0,127,255}));
+  connect(nor.port_b, temperatureChangeNor.port_a) annotation (Line(points={{
+          706,60},{706,88},{714,88},{714,102}}, color={0,127,255}));
+  connect(temperatureChangeNor.port_b, TSupNor.port_a) annotation (Line(points=
+          {{734,102},{742,102},{742,130},{706,130},{706,140}}, color={0,127,255}));
+  connect(cor.port_b, temperatureChangeCor.port_a) annotation (Line(points={{
+          834,64},{834,80},{842,80},{842,98}}, color={0,127,255}));
+  connect(temperatureChangeCor.port_b, TSupCor.port_a) annotation (Line(points=
+          {{862,98},{866,98},{866,128},{834,128},{834,142}}, color={0,127,255}));
+  connect(sou.port_b, temperatureChangeSou.port_a) annotation (Line(points={{
+          1080,56},{1080,94},{1088,94}}, color={0,127,255}));
+  connect(temperatureChangeSou.port_b, TSupSou.port_a) annotation (Line(points=
+          {{1108,94},{1118,94},{1118,118},{1080,118},{1080,138}}, color={0,127,
+          255}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-380,
             -400},{1420,600}}), graphics={Line(points={{310,404}}, color={28,
               108,200}), Line(
@@ -825,4 +844,4 @@ This is for
 </li>
 </ul>
 </html>"));
-end PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab;
+end PartialOpenLoopX1aV020123_Spawn_imposeFlexlabData;

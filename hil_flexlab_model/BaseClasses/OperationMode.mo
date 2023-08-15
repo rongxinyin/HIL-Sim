@@ -307,8 +307,8 @@ protected
   Buildings.Controls.OBC.CDL.Logical.Not not1 if have_winSen "Logical not"
     annotation (Placement(transformation(extent={{300,40},{320,60}})));
   Buildings.Controls.OBC.CDL.Utilities.Assert winOpe(
-    final message="Level 4 alarm: window open during modes other than occupied mode") if
-       have_winSen
+    final message="Level 4 alarm: window open during modes other than occupied mode")
+    if have_winSen
     "Generate alarm message when window open during modes other than occupied mode"
     annotation (Placement(transformation(extent={{340,40},{360,60}})));
 

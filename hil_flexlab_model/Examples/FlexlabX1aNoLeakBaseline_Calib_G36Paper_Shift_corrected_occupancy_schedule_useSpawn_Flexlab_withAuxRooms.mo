@@ -1,10 +1,10 @@
 within hil_flexlab_model.Examples;
 model
-  FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule_useSpawn_Flexlab
+  FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule_useSpawn_Flexlab_withAuxRooms
   "DR mode - Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
   extends
-    hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab(
+    hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab_withAuxRooms(
     occSch(
       occupancy={0,86399},
       firstEntryOccupied=true,
@@ -16,14 +16,16 @@ model
       cor(T_start=294.96),
       sou(T_start=294.96),
       idfName=Modelica.Utilities.Files.loadResource(
-          "modelica://Buildings/Resources/Data/ThermalZones/EnergyPlus_9_6_0/Examples/energyPlusFiles/X1-2021-V8_v2.idf"),
+          "modelica://Buildings/Resources/Data/ThermalZones/EnergyPlus_9_6_0/Examples/energyPlusFiles/X1-2021-V8_v2_correctedInternalGain.idf"),
       epwName=Modelica.Utilities.Files.loadResource(
           "modelica://Buildings/Resources/weatherdata/US_Berkeley_2021.epw"),
       weaName=Modelica.Utilities.Files.loadResource(
-          "modelica://Buildings/Resources/weatherdata/US_Berkeley_2021.mos")),
+          "modelica://Buildings/Resources/weatherdata/US_Berkeley_2021.mos"),
+      ele(T_start=294.96),
+      clo(T_start=294.96),
+      ple(T_start=294.96)),
     weaDat(filNam=Modelica.Utilities.Files.loadResource(
-          "modelica://Buildings/Resources/weatherdata/US_Berkeley_2021.mos")),
-    res1(dp_nominal=0.05));
+          "modelica://Buildings/Resources/weatherdata/US_Berkeley_2021.mos")));
 
                               //,
     //  ple(T_start=294.96)));
@@ -500,9 +502,9 @@ This is for
         "Simulate and plot"),
     experiment(
       StartTime=21427200,
-      StopTime=21435840,
-      Interval=299.999808,
+      StopTime=21517200,
+      Interval=300,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end
-  FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule_useSpawn_Flexlab;
+  FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule_useSpawn_Flexlab_withAuxRooms;

@@ -1183,6 +1183,7 @@ package Plants
         final Td=TdCoo,
         final yMax=1,
         final yMin=0,
+        reverseActing=false,
         reset=Buildings.Types.Reset.Parameter)                  "Cooling loop signal"
         annotation (Placement(transformation(extent={{-110,110},{-90,130}})));
 

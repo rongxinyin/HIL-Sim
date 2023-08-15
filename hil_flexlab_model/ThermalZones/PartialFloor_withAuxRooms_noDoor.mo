@@ -1,5 +1,6 @@
 within hil_flexlab_model.ThermalZones;
-partial model PartialFloor "Interface for a model of a floor of a building"
+partial model PartialFloor_withAuxRooms_noDoor
+  "Interface for a model of a floor of a building"
 
   replaceable package Medium = Modelica.Media.Interfaces.PartialMedium
     "Medium model for air" annotation (choicesAllMatching=true);
@@ -13,20 +14,36 @@ partial model PartialFloor "Interface for a model of a floor of a building"
   parameter Modelica.Units.SI.Volume VRooCor "Room volume corridor";
   parameter Modelica.Units.SI.Volume VRooSou "Room volume south";
   parameter Modelica.Units.SI.Volume VRooNor "Room volume north";
+  parameter Modelica.Units.SI.Volume VRooEas "Room volume east";
+  parameter Modelica.Units.SI.Volume VRooWes "Room volume west";
+  parameter Modelica.Units.SI.Volume VRooEle "Room volume electrical room";
 
   parameter Modelica.Units.SI.Area AFloCor "Floor area corridor";
   parameter Modelica.Units.SI.Area AFloSou "Floor area south";
   parameter Modelica.Units.SI.Area AFloNor "Floor area north";
+  parameter Modelica.Units.SI.Area AFloEas "Floor area east";
+  parameter Modelica.Units.SI.Area AFloWes "Floor area west";
+  parameter Modelica.Units.SI.Area AFloEle "Floor area electrical room";
 
   Modelica.Fluid.Vessels.BaseClasses.VesselFluidPorts_b portsSou[2](
       redeclare package Medium = Medium) "Fluid inlets and outlets"
     annotation (Placement(transformation(extent={{70,-44},{110,-28}}),
         iconTransformation(extent={{78,-32},{118,-16}})));
 
+  Modelica.Fluid.Vessels.BaseClasses.VesselFluidPorts_b portsEas[2](
+      redeclare package Medium = Medium) "Fluid inlets and outlets"
+    annotation (Placement(transformation(extent={{310,28},{350,44}}),
+        iconTransformation(extent={{306,48},{346,64}})));
+
   Modelica.Fluid.Vessels.BaseClasses.VesselFluidPorts_b portsNor[2](
       redeclare package Medium = Medium) "Fluid inlets and outlets"
     annotation (Placement(transformation(extent={{70,116},{110,132}}),
         iconTransformation(extent={{78,116},{118,132}})));
+
+  Modelica.Fluid.Vessels.BaseClasses.VesselFluidPorts_b portsWes[2](
+      redeclare package Medium = Medium) "Fluid inlets and outlets"
+    annotation (Placement(transformation(extent={{-50,36},{-10,52}}),
+        iconTransformation(extent={{-46,48},{-6,64}})));
 
   Modelica.Fluid.Vessels.BaseClasses.VesselFluidPorts_b portsCor[2](
       redeclare package Medium = Medium) "Fluid inlets and outlets"
@@ -61,6 +78,14 @@ partial model PartialFloor "Interface for a model of a floor of a building"
     final use_windPressure=use_windPressure)
     "Model for air infiltration through the envelope"
     annotation (Placement(transformation(extent={{-58,380},{-22,420}})));
+  Buildings.Examples.VAVReheat.BaseClasses.RoomLeakage leaPle(
+    redeclare package Medium = Medium,
+    VRoo=VRooEas,
+    s=33.27/49.91,
+    azi=Buildings.Types.Azimuth.E,
+    final use_windPressure=use_windPressure)
+    "Model for air infiltration through the envelope"
+    annotation (Placement(transformation(extent={{-58,340},{-22,380}})));
 
   Buildings.Examples.VAVReheat.BaseClasses.RoomLeakage leaNor(
     redeclare package Medium = Medium,
@@ -74,30 +99,38 @@ partial model PartialFloor "Interface for a model of a floor of a building"
   Modelica.Thermal.HeatTransfer.Sensors.TemperatureSensor temAirSou
     "Air temperature sensor"
     annotation (Placement(transformation(extent={{290,340},{310,360}})));
+  Modelica.Thermal.HeatTransfer.Sensors.TemperatureSensor temAirPle
+    "Air temperature sensor"
+    annotation (Placement(transformation(extent={{292,310},{312,330}})));
   Modelica.Thermal.HeatTransfer.Sensors.TemperatureSensor temAirNor
     "Air temperature sensor"
     annotation (Placement(transformation(extent={{292,280},{312,300}})));
+  Modelica.Thermal.HeatTransfer.Sensors.TemperatureSensor temAirWes
+    "Air temperature sensor"
+    annotation (Placement(transformation(extent={{292,248},{312,268}})));
   Modelica.Thermal.HeatTransfer.Sensors.TemperatureSensor temAirCor
     "Air temperature sensor"
     annotation (Placement(transformation(extent={{294,218},{314,238}})));
-  Modelica.Blocks.Routing.Multiplex3 multiplex3_1
+  Modelica.Blocks.Routing.Multiplex5 multiplex5_1
     annotation (Placement(transformation(extent={{340,280},{360,300}})));
 
-  Buildings.Airflow.Multizone.DoorOpen opeSouCor(redeclare package Medium =
-        Medium, wOpe=10) "Opening between perimeter1 and core"
-    annotation (Placement(transformation(extent={{84,0},{104,20}})));
-  Buildings.Airflow.Multizone.DoorOpen opeNorCor(redeclare package Medium =
-        Medium, wOpe=10) "Opening between perimeter3 and core"
-    annotation (Placement(transformation(extent={{80,74},{100,94}})));
-  Buildings.Fluid.Sensors.RelativePressure senRelPre(redeclare package Medium = Medium)
+  Buildings.Fluid.Sensors.RelativePressure senRelPre(redeclare package Medium
+      =                                                                         Medium)
     "Building pressure measurement"
     annotation (Placement(transformation(extent={{60,240},{40,260}})));
   Buildings.Fluid.Sources.Outside out(nPorts=1, redeclare package Medium = Medium)
     annotation (Placement(transformation(extent={{-58,240},{-38,260}})));
 
+  Modelica.Blocks.Routing.Multiplex3 multiplex3_1
+    annotation (Placement(transformation(extent={{342,338},{362,358}})));
 equation
   connect(weaBus, leaSou.weaBus) annotation (Line(
       points={{210,200},{-80,200},{-80,400},{-58,400}},
+      color={255,204,51},
+      thickness=0.5,
+      smooth=Smooth.None));
+  connect(weaBus,leaPle. weaBus) annotation (Line(
+      points={{210,200},{-80,200},{-80,360},{-58,360}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
@@ -114,13 +147,28 @@ equation
       string="%second",
       index=1,
       extent={{6,3},{6,3}}));
-  connect(multiplex3_1.y, TRooAir) annotation (Line(
-      points={{361,290},{372,290},{372,160},{390,160}},
+  connect(temAirSou.T, multiplex5_1.u1[1]) annotation (Line(
+      points={{311,350},{328,350},{328,300},{338,300}},
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
-  connect(temAirSou.T,multiplex3_1. u1[1]) annotation (Line(
-      points={{311,350},{328,350},{328,297},{338,297}},
+  connect(temAirPle.T, multiplex5_1.u2[1]) annotation (Line(
+      points={{313,320},{324,320},{324,295},{338,295}},
+      color={0,0,127},
+      smooth=Smooth.None,
+      pattern=LinePattern.Dash));
+  connect(temAirNor.T, multiplex5_1.u3[1]) annotation (Line(
+      points={{313,290},{338,290}},
+      color={0,0,127},
+      smooth=Smooth.None,
+      pattern=LinePattern.Dash));
+  connect(temAirWes.T, multiplex5_1.u4[1]) annotation (Line(
+      points={{313,258},{324,258},{324,285},{338,285}},
+      color={0,0,127},
+      smooth=Smooth.None,
+      pattern=LinePattern.Dash));
+  connect(temAirCor.T, multiplex5_1.u5[1]) annotation (Line(
+      points={{315,228},{322,228},{322,228},{332,228},{332,280},{338,280}},
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
@@ -134,10 +182,14 @@ equation
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
-  connect(temAirNor.T, multiplex3_1.u3[1])
-    annotation (Line(points={{313,290},{313,283},{338,283}}, color={0,0,127}));
-  connect(temAirCor.T, multiplex3_1.u2[1]) annotation (Line(points={{315,228},{
-          328,228},{328,290},{338,290}}, color={0,0,127}));
+  connect(temAirSou.T, multiplex3_1.u1[1])
+    annotation (Line(points={{311,350},{311,355},{340,355}}, color={0,0,127}));
+  connect(multiplex3_1.y, TRooAir) annotation (Line(points={{363,348},{370,348},
+          {370,160},{390,160}}, color={0,0,127}));
+  connect(temAirNor.T, multiplex3_1.u3[1]) annotation (Line(points={{313,290},{328,
+          290},{328,304},{340,304},{340,341}}, color={0,0,127}));
+  connect(temAirCor.T, multiplex3_1.u2[1]) annotation (Line(points={{315,228},{320,
+          228},{320,240},{340,240},{340,348}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=true,
         extent={{-160,-100},{380,500}},
         initialScale=0.1)),   Icon(coordinateSystem(extent={{-80,-80},{380,160}},
@@ -171,4 +223,4 @@ First implementation.
 </li>
 </ul>
 </html>"));
-end PartialFloor;
+end PartialFloor_withAuxRooms_noDoor;

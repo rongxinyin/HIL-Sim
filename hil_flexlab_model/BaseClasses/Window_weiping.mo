@@ -59,8 +59,8 @@ model Window_weiping "Model for a window"
     final A=AGla,
     final til=til,
     final linearize=linearize,
-    final homotopyInitialization=homotopyInitialization) if
-       haveShade "Model for shaded center of glass"
+    final homotopyInitialization=homotopyInitialization)
+    if haveShade "Model for shaded center of glass"
     annotation (Placement(transformation(extent={{-10,-30},{10,-10}})));
 
   Modelica.Thermal.HeatTransfer.Components.ThermalConductor frame(G=AFra*
@@ -90,8 +90,8 @@ model Window_weiping "Model for a window"
     "Heat port at frame of room-facing surface"
      annotation (Placement(transformation(extent={{192,
             -170},{212,-150}})));
-  Modelica.Blocks.Interfaces.RealInput uSha(min=0, max=1) if
-       haveShade
+  Modelica.Blocks.Interfaces.RealInput uSha(min=0, max=1)
+    if haveShade
     "Control signal for the shading device. 0: unshaded; 1: fully shaded (removed if no shade is present)"
     annotation (Placement(transformation(extent={{-240,140},{-200,180}})));
 
@@ -122,16 +122,16 @@ model Window_weiping "Model for a window"
     final haveShade=glaSys.haveExteriorShade or glaSys.haveInteriorShade,
     C=AGla*glaSys.glass[1].x*matGla.d*matGla.c,
     der_TUns(fixed=true),
-    der_TSha(fixed=glaSys.haveExteriorShade or glaSys.haveInteriorShade)) if
-         not steadyState
+    der_TSha(fixed=glaSys.haveExteriorShade or glaSys.haveInteriorShade))
+      if not steadyState
     "Heat capacity of glass on room-side, used to reduce nonlinear system of equations"
     annotation (Placement(transformation(extent={{130,38},{150,58}})));
   // We assume the frame is made of wood. Data are used for Plywood, as
   // this is an order of magnitude estimate for the heat capacity of the frame,
   // which is only used to avoid algebraic loops in the room model.
   Modelica.Thermal.HeatTransfer.Components.HeatCapacitor capFra(
-    der_T(fixed=true), C=AFra*matFra.x*matFra.d*matFra.c) if
-         not steadyState
+    der_T(fixed=true), C=AFra*matFra.x*matFra.d*matFra.c)
+      if not steadyState
     "Heat capacity of frame on room-side, used to reduce nonlinear system of equations"
     annotation (Placement(transformation(extent={{130,-142},{150,-122}})));
 

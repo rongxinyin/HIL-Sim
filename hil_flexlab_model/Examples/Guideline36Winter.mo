@@ -9,9 +9,7 @@ model Guideline36Winter
     mNor_flow_nominal=ACHNor*VRooNor*conv,
     mWes_flow_nominal=ACHWes*VRooWes*conv,
     redeclare Buildings.Examples.VAVReheat.BaseClasses.Guideline36 hvac,
-    redeclare
-      ThermalZones.Floor_unmodified
-      flo(
+    redeclare ThermalZones.Floor_withAuxRooms flo(
       idfName=Modelica.Utilities.Files.loadResource(
           "modelica://Buildings/Resources/Data/ThermalZones/EnergyPlus_9_6_0/Examples/RefBldgSmallOffice/RefBldgSmallOfficeNew2004_Chicago.idf"),
       epwName=Modelica.Utilities.Files.loadResource(

@@ -77,8 +77,8 @@ model MixedAir_weiping "Model of a room in which the air is completely mixed"
 
   ////////////////////////////////////////////////////////////////////////////
   // Input connectors
-  Modelica.Blocks.Interfaces.RealInput uSha[nConExtWin](each min=0, each max=1) if
-       haveShade
+  Modelica.Blocks.Interfaces.RealInput uSha[nConExtWin](each min=0, each max=1)
+    if haveShade
     "Control signal for the shading device (removed if no shade is present)"
     annotation (Placement(transformation(extent={{-300,160},{-260,200}}),
         iconTransformation(extent={{-232,164},{-200,196}})));

@@ -1,5 +1,5 @@
 within hil_flexlab_model.BaseClasses;
-partial model PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab
+partial model PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab_withAuxRooms
   "Validated Partial model of variable air volume flow system with terminal reheat and 3 VAV zones at flexlab x1a"
 
   package MediumA = Buildings.Media.Air "Medium model for air";
@@ -345,7 +345,7 @@ partial model PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab
   Buildings.BoundaryConditions.WeatherData.Bus weaBus "Weather Data Bus"
     annotation (Placement(transformation(extent={{-330,170},{-310,190}}),
         iconTransformation(extent={{-360,170},{-340,190}})));
-  ThermalZones.Floor_spawnExperiment_Flexlab
+  ThermalZones.Floor_withAuxRooms
                                 flo(
     redeclare final package Medium = MediumA,
     final use_windPressure=use_windPressure)
@@ -506,11 +506,6 @@ public
     allowFlowReversal=allowFlowReversal,
     dp_nominal=40) "Pressure drop for return duct"
     annotation (Placement(transformation(extent={{562,38},{542,58}})));
-  Buildings.Fluid.FixedResistances.PressureDrop res1(
-    redeclare package Medium = MediumA,
-    m_flow_nominal=mPle_flow_nominal,
-    dp_nominal=50)
-    annotation (Placement(transformation(extent={{588,164},{608,184}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,-10}},
@@ -719,10 +714,12 @@ equation
           {516,-30},{516,48},{542,48}}, color={0,127,255}));
   connect(dpRetDuc1.port_a, TSupPle.port_a) annotation (Line(points={{562,48},{570,
           48},{570,76},{578,76}}, color={0,127,255}));
-  connect(VSupPle_flow.port_b, res1.port_a) annotation (Line(points={{578,138},
-          {580,138},{580,174},{588,174}}, color={0,127,255}));
-  connect(res1.port_b, splRetRoo1.port_3) annotation (Line(points={{608,174},{
-          618,174},{618,10},{620,10}}, color={0,127,255}));
+  connect(VSupPle_flow.port_b, flo.portsEas[1]) annotation (Line(points={{578,138},
+          {580,138},{580,342},{1067.73,342},{1067.73,477.108}},      color={0,
+          127,255}));
+  connect(splRetRoo1.port_3, flo.portsEas[2]) annotation (Line(points={{620,10},
+          {620,368},{1066,368},{1066,477.108},{1074.55,477.108}}, color={0,127,
+          255}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-380,
             -400},{1420,600}}), graphics={Line(points={{310,404}}, color={28,
               108,200}), Line(
@@ -825,4 +822,4 @@ This is for
 </li>
 </ul>
 </html>"));
-end PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab;
+end PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab_withAuxRooms;
