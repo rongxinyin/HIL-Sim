@@ -16,11 +16,11 @@ model
       cor(T_start=294.96),
       sou(T_start=294.96),
       idfName=Modelica.Utilities.Files.loadResource(
-          "modelica://Buildings/Resources/Data/ThermalZones/EnergyPlus_9_6_0/Examples/energyPlusFiles/X1-2021-V8_v2_correctedInternalGain.idf"),
+          "modelica://Buildings/Resources/Data/ThermalZones/EnergyPlus_9_6_0/Examples/energyPlusFiles/X1-2021-V8_v2_correctedInternalGain_highcap.idf"),
       epwName=Modelica.Utilities.Files.loadResource(
           "modelica://Buildings/Resources/weatherdata/US_Berkeley_20210913.epw"),
       weaName=Modelica.Utilities.Files.loadResource(
-          "Resources/weatherdata/US_Berkeley_20210913.mos"),
+          "modelica://Buildings/Resources/weatherdata/US_Berkeley_20210913.mos"),
       ele(T_start=294.96),
       clo(T_start=294.96),
       ple(T_start=294.96)),
@@ -148,11 +148,12 @@ model
   Modelica.Blocks.Math.Add add
     annotation (Placement(transformation(extent={{-124,446},{-144,466}})));
   Modelica.Blocks.Sources.CombiTimeTable cooSetDR(
-    table=[0,3.3667; 5,3.3667; 5,2.2556; 6,2.2556; 6,1.7; 7,1.7; 7,0.0333; 22,
+    table=[0,3.3667; 5,3.3667; 5,2.2556; 6,2.2556; 6,1.7; 7,1.7; 7,0.0333; 10,
+        0.0333; 10,-1.0778; 14,-1.0778; 14,2.2556; 18,2.2556; 18,0.0333; 22,
         0.0333; 22,3.3667; 24,3.3667],
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic,
     timeScale=3600) "cooling schedule for demand response"
-    annotation (Placement(transformation(extent={{-142,400},{-122,420}})));
+    annotation (Placement(transformation(extent={{-144,400},{-124,420}})));
   Modelica.Blocks.Sources.CombiTimeTable heaSetDR(
     table=[0,-5.5444; 5,-5.5444; 5,-3.3222; 6,-3.3222; 6,-1.6556; 7,-1.6556; 7,
         0.0111; 22,0.0111; 22,-5.5444; 24,-5.5444],
@@ -360,7 +361,7 @@ equation
           {770,110},{770,74},{924,74},{924,60},{866,60}},color={0,0,127}));
   connect(conVAVSou.yDam_actual, sou.y_actual) annotation (Line(points={{1018,38},
           {1012,38},{1012,68},{1126,68},{1126,52},{1112,52}}, color={0,0,127}));
-  connect(cooSetDR.y[1], add.u2) annotation (Line(points={{-121,410},{-92,410},
+  connect(cooSetDR.y[1], add.u2) annotation (Line(points={{-123,410},{-92,410},
           {-92,450},{-122,450}}, color={0,0,127}));
   connect(TZonSet[1].TZonCooSet, add.u1) annotation (Line(points={{-10,339},{8,
           339},{8,462},{-122,462}}, color={0,0,127}));
@@ -500,9 +501,9 @@ This is for
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/Guideline36.mos"
         "Simulate and plot"),
     experiment(
-      StartTime=21427200,
+      StartTime=21168000,
       StopTime=21513600,
-      Interval=300,
+      Interval=299.999808,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end
