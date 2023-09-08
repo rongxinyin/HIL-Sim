@@ -88,10 +88,10 @@ model Floor_withAuxRooms_noDoor "Model of a floor of the building"
   Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor(C=15*
         51.0157*1005*1.225)
     annotation (Placement(transformation(extent={{204,-66},{224,-46}})));
-  Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor1(C=10*
+  Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor1(C=15*
         51.0157*1005*1.225)
     annotation (Placement(transformation(extent={{186,26},{206,46}})));
-  Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor2(C=10*
+  Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor2(C=15*
         51.0157*1005*1.225)
     annotation (Placement(transformation(extent={{198,140},{218,160}})));
 protected

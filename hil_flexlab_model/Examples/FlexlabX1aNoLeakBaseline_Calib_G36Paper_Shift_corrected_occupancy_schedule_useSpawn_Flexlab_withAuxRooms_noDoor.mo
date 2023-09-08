@@ -16,7 +16,7 @@ model
       cor(T_start=294.96),
       sou(T_start=294.96),
       idfName=Modelica.Utilities.Files.loadResource(
-          "modelica://Buildings/Resources/Data/ThermalZones/EnergyPlus_9_6_0/Examples/energyPlusFiles/X1-2021-V8_v2_correctedInternalGain_highcap.idf"),
+          "modelica://Buildings/Resources/Data/ThermalZones/EnergyPlus_9_6_0/Examples/energyPlusFiles/X1-2021-V8_v2_correctedInternalGain.idf"),
       epwName=Modelica.Utilities.Files.loadResource(
           "modelica://Buildings/Resources/weatherdata/US_Berkeley_20210913.epw"),
       weaName=Modelica.Utilities.Files.loadResource(
