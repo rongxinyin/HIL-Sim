@@ -10,3 +10,4 @@
 *.mat
 **/spawn-*.flo
 **/buildlog.txt
+**/*.bak-mo
