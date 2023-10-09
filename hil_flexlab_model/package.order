@@ -5,15 +5,3 @@ Plants
 Examples
 Data
 Fluid
-HeatStage
-AirCooledChiller_PrimaryLoop
-AC_Chiller_PrimaryLoop
-AC_Chiller_PrimaryLoop_addpts
-AC_AWHP_PrimaryLoop_addpts
-AC_AWHP_PrimaryLoop_addpts_wTES
-AC_AWHP_PrimaryLoop_addpts_wTES_weiping062822
-BaseCoolingVarCOP_weiping_062822
-ASHPCoolingBlackBox_weiping_062822
-partialSourceCoo_weiping_062822
-Tes_weiping_062822
-Plant_Controller_weiping_062822

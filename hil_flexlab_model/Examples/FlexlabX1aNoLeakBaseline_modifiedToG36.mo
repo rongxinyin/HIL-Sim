@@ -1,6 +1,5 @@
 within hil_flexlab_model.Examples;
-model
-  FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule_useSpawn_Flexlab_withAuxRooms_noDoor
+model FlexlabX1aNoLeakBaseline_modifiedToG36
   "DR mode - Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
   extends
@@ -137,21 +136,18 @@ model
     zonToSys(final numZon=numZon) "Sum up zone calculation output"
     annotation (Placement(transformation(extent={{274,420},{294,440}})));
   hil_flexlab_model.BaseClasses.Controls.Controller_G36 conAHU(
+    TSupSetMax=291.15,
+    TSupSetUnocc=291.15,
     retDamPhyPosMax=0.7,
     outDamPhyPosMin=0.3,
-    pMinSet=250,
-    final pMaxSet=250,
-    pTriAmo=0,
-    pResAmo=0,
+    pMaxSet=250,
+    pNumIgnReq=0,
     final yFanMin=yFanMin,
     final VPriSysMax_flow=VPriSysMax_flow,
     final peaSysPop=2*sum({0.05*AFlo[i] for i in 1:numZon}),
     TSupSetMin=285.95,
-    TSupSetMax=285.95,
     TSupSetDes=285.95,
-    numIgnReqSupTem=0,
-    triAmoSupTem=0,
-    resAmoSupTem=0)                                            "AHU controller"
+    numIgnReqSupTem=0)                                         "AHU controller"
     annotation (Placement(transformation(extent={{360,418},{440,546}})));
   Modelica.Blocks.Math.Add add
     annotation (Placement(transformation(extent={{-124,446},{-144,466}})));
@@ -519,5 +515,4 @@ This is for
       Interval=299.999808,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
-end
-  FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule_useSpawn_Flexlab_withAuxRooms_noDoor;
+end FlexlabX1aNoLeakBaseline_modifiedToG36;

@@ -3646,7 +3646,7 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
     Modelica.Blocks.Sources.Constant UpperLimSup(k=273.15 + 32.2)
       "Setpoint temperature for freeze protection"
       annotation (Placement(transformation(extent={{-70,-76},{-50,-56}})));
-    hil_flexlab_model.HeatStage heatStage
+    CCC_test.obsolete.HeatStage heatStage
       annotation (Placement(transformation(extent={{74,100},{94,120}})));
     Cycle_Timer cycle_Timer
       annotation (Placement(transformation(extent={{0,-24},{18,-6}})));
@@ -3779,7 +3779,7 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
     Modelica.Blocks.Sources.Constant UpperLimSup(k=maxSAT)
       "Setpoint temperature for freeze protection"
       annotation (Placement(transformation(extent={{-80,10},{-60,30}})));
-    hil_flexlab_model.HeatStage heatStage(
+    CCC_test.obsolete.HeatStage heatStage(
       kSta1=kSta1,
       kSta2=kSta2,
       banSta1=banSta1,
@@ -4106,7 +4106,7 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
     Modelica.Blocks.Sources.Constant UpperLimSup(k=maxSAT)
       "Setpoint temperature for freeze protection"
       annotation (Placement(transformation(extent={{-80,10},{-60,30}})));
-    hil_flexlab_model.HeatStage heatStage(
+    CCC_test.obsolete.HeatStage heatStage(
       kSta1=kSta1,
       kSta2=kSta2,
       banSta1=banSta1,
@@ -4172,7 +4172,7 @@ signal <strong>u</strong> exceeds the <strong>reference</strong> signal plus hal
       annotation (Placement(transformation(extent={{102,270},{136,304}})));
     Modelica.Blocks.Logical.Switch swiCoo "Switch for turning cooling on/off"
       annotation (Placement(transformation(extent={{74,276},{94,296}})));
-    hil_flexlab_model.HeatStage heatStage1(
+    CCC_test.obsolete.HeatStage heatStage1(
       kSta1=kSta1,
       kSta2=kSta2,
       banSta1=banSta1,

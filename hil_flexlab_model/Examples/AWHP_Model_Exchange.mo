@@ -3,9 +3,9 @@ model AWHP_Model_Exchange
 
   extends Modelica.Icons.Example;
 
- AC_AWHP_PrimaryLoop_addpts cpl(TSupChi_nominal(displayUnit="degC"))
-                                   annotation (Placement(transformation(extent={{6,-28},
-            {40,-2}})));
+  CCC_test.obsolete.AC_AWHP_PrimaryLoop_addpts cpl(TSupChi_nominal(displayUnit=
+          "degC"))
+    annotation (Placement(transformation(extent={{6,-28},{40,-2}})));
 
   Modelica.Blocks.Sources.Constant m_in(k=0.255)
     annotation (Placement(transformation(extent={{-56,18},{-36,38}})));

@@ -27,7 +27,7 @@ model ChillerModel_Exchange_Weiping
     annotation (Placement(transformation(extent={{-48,72},{-28,92}})));
   Modelica.Blocks.Sources.Constant On_signal(k=1)
     annotation (Placement(transformation(extent={{-94,72},{-74,92}})));
-  hil_flexlab_model.AC_Chiller_PrimaryLoop_addpts
+  CCC_test.obsolete.AC_Chiller_PrimaryLoop_addpts
     aC_Chiller_PrimaryLoop_Weiping
     annotation (Placement(transformation(extent={{6,-22},{38,6}})));
 equation

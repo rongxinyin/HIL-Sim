@@ -114,8 +114,7 @@ partial model PartialFloor_withAuxRooms_noDoor
   Modelica.Blocks.Routing.Multiplex5 multiplex5_1
     annotation (Placement(transformation(extent={{340,280},{360,300}})));
 
-  Buildings.Fluid.Sensors.RelativePressure senRelPre(redeclare package Medium
-      =                                                                         Medium)
+  Buildings.Fluid.Sensors.RelativePressure senRelPre(redeclare package Medium = Medium)
     "Building pressure measurement"
     annotation (Placement(transformation(extent={{60,240},{40,260}})));
   Buildings.Fluid.Sources.Outside out(nPorts=1, redeclare package Medium = Medium)
