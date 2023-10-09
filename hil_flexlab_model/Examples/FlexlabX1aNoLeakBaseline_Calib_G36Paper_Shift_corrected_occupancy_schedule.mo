@@ -159,7 +159,7 @@ model
   Buildings.Fluid.Sensors.Temperature southZoneReturnAirTemperature(redeclare
       package Medium = Buildings.Media.Air)
     annotation (Placement(transformation(extent={{1182,250},{1202,270}})));
-  ExhaustDamperPositionBlock          exhaustDamperPositionBlock
+  Plants.Controls.ExhaustDamperPositionBlock exhaustDamperPositionBlock
     annotation (Placement(transformation(extent={{-88,-92},{-68,-72}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(

@@ -85,13 +85,13 @@ model Floor_withAuxRooms_noDoor "Model of a floor of the building"
     "modelica://Buildings/Resources/weatherdata/USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.mos")
     "Name of the weather file";
 
-  Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor(C=15*
+  Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor(C=18*
         51.0157*1005*1.225)
-    annotation (Placement(transformation(extent={{204,-66},{224,-46}})));
-  Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor1(C=15*
+    annotation (Placement(transformation(extent={{202,-66},{222,-46}})));
+  Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor1(C=18*
         51.0157*1005*1.225)
     annotation (Placement(transformation(extent={{186,26},{206,46}})));
-  Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor2(C=15*
+  Modelica.Thermal.HeatTransfer.Components.HeatCapacitor heatCapacitor2(C=18*
         51.0157*1005*1.225)
     annotation (Placement(transformation(extent={{198,140},{218,160}})));
 protected
@@ -222,7 +222,7 @@ equation
     annotation (Line(points={{32,78},{-30,78},{-30,66}},color={191,0,0}));
   connect(cor.heaPorAir,heaPorCor)
     annotation (Line(points={{164,80},{116,80},{116,46}},color={191,0,0}));
-  connect(heatCapacitor.port, sou.heaPorAir) annotation (Line(points={{214,-66},
+  connect(heatCapacitor.port, sou.heaPorAir) annotation (Line(points={{212,-66},
           {186,-66},{186,-22},{164,-22},{164,-24}}, color={191,0,0}));
   connect(heatCapacitor1.port, cor.heaPorAir) annotation (Line(points={{196,26},
           {196,24},{160,24},{160,52},{136,52},{136,80},{164,80}}, color={191,0,

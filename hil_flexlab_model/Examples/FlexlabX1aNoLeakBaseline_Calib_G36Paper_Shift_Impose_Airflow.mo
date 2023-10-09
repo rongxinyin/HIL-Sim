@@ -152,7 +152,7 @@ model FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_Impose_Airflow
     annotation (Placement(transformation(extent={{-230,396},{-254,420}})));
   Modelica.Blocks.Math.Add add2(k1=-1, k2=+1)
     annotation (Placement(transformation(extent={{-204,444},{-224,464}})));
-  Examples.ExhaustDamperPositionBlock exhaustDamperPositionBlock
+  Plants.Controls.ExhaustDamperPositionBlock exhaustDamperPositionBlock
     annotation (Placement(transformation(extent={{-88,-108},{-68,-88}})));
   Modelica.Blocks.Sources.CombiTimeTable floSupTable(table=[20649600,0.222;
         20650500,0.2222; 20651400,0.2222; 20652300,0.2222; 20653200,0.2221;

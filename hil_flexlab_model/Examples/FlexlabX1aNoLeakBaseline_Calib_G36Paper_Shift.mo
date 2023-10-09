@@ -143,7 +143,7 @@ model FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift
     annotation (Placement(transformation(extent={{-230,396},{-254,420}})));
   Modelica.Blocks.Math.Add add2(k1=-1, k2=+1)
     annotation (Placement(transformation(extent={{-204,444},{-224,464}})));
-  ExhaustDamperPositionBlock exhaustDamperPositionBlock
+  Plants.Controls.ExhaustDamperPositionBlock exhaustDamperPositionBlock
     annotation (Placement(transformation(extent={{-88,-108},{-68,-88}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(

@@ -173,7 +173,7 @@ model
   Buildings.Fluid.Sensors.Temperature southZoneReturnAirTemperature(redeclare
       package Medium = Buildings.Media.Air)
     annotation (Placement(transformation(extent={{1182,250},{1202,270}})));
-  ExhaustDamperPositionBlock          exhaustDamperPositionBlock
+  Plants.Controls.ExhaustDamperPositionBlock exhaustDamperPositionBlock
     annotation (Placement(transformation(extent={{-88,-92},{-68,-72}})));
   Modelica.Blocks.Sources.Constant const(k=0)
     annotation (Placement(transformation(extent={{550,188},{570,208}})));

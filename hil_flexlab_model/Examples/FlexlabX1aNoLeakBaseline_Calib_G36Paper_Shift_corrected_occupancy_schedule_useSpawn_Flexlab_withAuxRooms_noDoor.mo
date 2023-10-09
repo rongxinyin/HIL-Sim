@@ -16,7 +16,7 @@ model
       cor(T_start=294.96),
       sou(T_start=294.96),
       idfName=Modelica.Utilities.Files.loadResource(
-          "modelica://Buildings/Resources/Data/ThermalZones/EnergyPlus_9_6_0/Examples/energyPlusFiles/X1-2021-V8_v2_correctedInternalGain.idf"),
+          "modelica://Buildings/Resources/Data/ThermalZones/EnergyPlus_9_6_0/Examples/energyPlusFiles/X1-2021-V8_v2_correctedInternalGain_addGainOutputVariable.idf"),
       epwName=Modelica.Utilities.Files.loadResource(
           "modelica://Buildings/Resources/weatherdata/US_Berkeley_20210913.epw"),
       weaName=Modelica.Utilities.Files.loadResource(
@@ -25,7 +25,8 @@ model
       clo(T_start=294.96),
       ple(T_start=294.96)),
     weaDat(filNam=Modelica.Utilities.Files.loadResource(
-          "Resources/weatherdata/US_Berkeley_20210913.mos")));
+          "Resources/weatherdata/US_Berkeley_20210913.mos")),
+    dpRetDuc1(dp_nominal=30.3));
 
                               //,
     //  ple(T_start=294.96)));
@@ -42,37 +43,43 @@ model
   parameter Modelica.Units.SI.PressureDifference dpDisRetMax=40
     "Maximum return fan discharge static pressure setpoint";
 
-  Plants.Controls.Controller_modifyHeatingSequence conVAVNor(
+  Plants.Controls.Controller                       conVAVNor(
     V_flow_nominal=mNor_flow_nominal/1.2,
     AFlo=AFloNor,
     final samplePeriod=samplePeriod,
     TiCoo=60,
     TiHea=60,
     kDam=0.5,
-    VDisSetMin_flow=0.3*mNor_flow_nominal/1.2,
+    VDisCooSetMax_flow=mNor_flow_nominal/1.2,
+    VDisSetMin_flow=0.2469*mNor_flow_nominal/1.2,
+    VDisHeaSetMax_flow=mNor_flow_nominal/1.2,
     VDisConMin_flow=0.2*mNor_flow_nominal/1.2,
     dTDisZonSetMax=5,
     TDisMin=285.95) "Controller for terminal unit north zone"
     annotation (Placement(transformation(extent={{654,4},{674,24}})));
-  Plants.Controls.Controller_modifyHeatingSequence conVAVCor(
+  Plants.Controls.Controller                       conVAVCor(
     V_flow_nominal=mCor_flow_nominal/1.2,
     AFlo=AFloCor,
     final samplePeriod=samplePeriod,
     TiCoo=60,
     TiHea=60,
-    VDisSetMin_flow=0.3*mCor_flow_nominal/1.2,
+    VDisCooSetMax_flow=mCor_flow_nominal/1.2,
+    VDisSetMin_flow=0.2469*mCor_flow_nominal/1.2,
+    VDisHeaSetMax_flow=mCor_flow_nominal/1.2,
     VDisConMin_flow=0.2*mCor_flow_nominal/1.2,
     dTDisZonSetMax=5,
     TDisMin=285.95) "Controller for terminal unit mid zone"
     annotation (Placement(transformation(extent={{778,104},{798,124}})));
-  Plants.Controls.Controller_modifyHeatingSequence conVAVSou(
+  Plants.Controls.Controller                       conVAVSou(
     V_flow_nominal=mSou_flow_nominal/1.2,
     AFlo=AFloSou,
     final samplePeriod=samplePeriod,
     TiCoo=60,
     TiHea=60,
-    VDisSetMin_flow=0.2625*mSou_flow_nominal/1.2,
-    VDisConMin_flow=0.2625*mSou_flow_nominal/1.2,
+    VDisCooSetMax_flow=mSou_flow_nominal/1.2,
+    VDisSetMin_flow=0.2142*mSou_flow_nominal/1.2,
+    VDisHeaSetMax_flow=mCor_flow_nominal/1.2,
+    VDisConMin_flow=0.2142*mSou_flow_nominal/1.2,
     dTDisZonSetMax=5,
     TDisMin=285.95,
     damVal(truDel4(delayTime=0))) "Controller for terminal unit south zone"
@@ -153,13 +160,13 @@ model
         0.0333; 22,3.3667; 24,3.3667],
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic,
     timeScale=3600) "cooling schedule for demand response"
-    annotation (Placement(transformation(extent={{-144,400},{-124,420}})));
+    annotation (Placement(transformation(extent={{-146,400},{-126,420}})));
   Modelica.Blocks.Sources.CombiTimeTable heaSetDR(
     table=[0,-5.5444; 5,-5.5444; 5,-3.3222; 6,-3.3222; 6,-1.6556; 7,-1.6556; 7,
         0.0111; 22,0.0111; 22,-5.5444; 24,-5.5444],
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic,
     timeScale=3600) "heating schedule for demand response"
-    annotation (Placement(transformation(extent={{-140,222},{-120,242}})));
+    annotation (Placement(transformation(extent={{-142,222},{-122,242}})));
   Modelica.Blocks.Math.Add add1
     annotation (Placement(transformation(extent={{-122,270},{-142,290}})));
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant ecoHigCut(k=273.15 + 18)
@@ -175,10 +182,14 @@ model
   Buildings.Fluid.Sensors.Temperature southZoneReturnAirTemperature(redeclare
       package Medium = Buildings.Media.Air)
     annotation (Placement(transformation(extent={{1182,250},{1202,270}})));
-  ExhaustDamperPositionBlock          exhaustDamperPositionBlock
+  Plants.Controls.ExhaustDamperPositionBlock exhaustDamperPositionBlock
     annotation (Placement(transformation(extent={{-88,-92},{-68,-72}})));
   Modelica.Blocks.Sources.Constant const(k=0)
     annotation (Placement(transformation(extent={{550,188},{570,208}})));
+  Modelica.Blocks.Sources.BooleanConstant booleanConstant(k=false)
+    annotation (Placement(transformation(extent={{-292,494},{-272,514}})));
+  Plants.Controls.OutdoorDamperPositionBlock outdoorDamperPositionBlock
+    annotation (Placement(transformation(extent={{-76,-130},{-56,-110}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,0},{320,-10},{320,-10}},
@@ -347,10 +358,6 @@ equation
   connect(conAHU.yRetDamPos, eco.yRet) annotation (Line(points={{444,440.588},{
           444,442},{422,442},{422,202},{-16.8,202},{-16.8,-34}},
                                                              color={0,0,127}));
-  connect(conAHU.yOutDamPos, eco.yOut) annotation (Line(points={{444,429.294},{
-          416,429.294},{416,430},{420,430},{420,168},{-10,168},{-10,-34}},
-                                                                       color={0,
-          0,127}));
   connect(TZonSet[1].TZonCooSet, conAHU.TZonCooSet) annotation (Line(points={{-10,339},
           {174,339},{174,544.118},{356,544.118}},      color={0,0,127}));
   connect(TZonSet[1].TZonHeaSet, conAHU.TZonHeaSet) annotation (Line(points={{-10,332},
@@ -361,7 +368,7 @@ equation
           {770,110},{770,74},{924,74},{924,60},{866,60}},color={0,0,127}));
   connect(conVAVSou.yDam_actual, sou.y_actual) annotation (Line(points={{1018,38},
           {1012,38},{1012,68},{1126,68},{1126,52},{1112,52}}, color={0,0,127}));
-  connect(cooSetDR.y[1], add.u2) annotation (Line(points={{-123,410},{-92,410},
+  connect(cooSetDR.y[1], add.u2) annotation (Line(points={{-125,410},{-92,410},
           {-92,450},{-122,450}}, color={0,0,127}));
   connect(TZonSet[1].TZonCooSet, add.u1) annotation (Line(points={{-10,339},{8,
           339},{8,462},{-122,462}}, color={0,0,127}));
@@ -390,7 +397,7 @@ equation
           {160,130},{160,245},{174,245}}, color={0,0,127}));
   connect(TZonSet[1].TZonHeaSet, add1.u1) annotation (Line(points={{-10,332},{
           -64,332},{-64,286},{-120,286}}, color={0,0,127}));
-  connect(heaSetDR.y[1], add1.u2) annotation (Line(points={{-119,232},{-66,232},
+  connect(heaSetDR.y[1], add1.u2) annotation (Line(points={{-121,232},{-66,232},
           {-66,274},{-120,274}}, color={0,0,127}));
   connect(add1.y, conVAVNor.TZonHeaSet) annotation (Line(points={{-143,280},{
           -182,280},{-182,24},{652,24}}, color={0,0,127}));
@@ -409,8 +416,6 @@ equation
           {-266,408},{-266,450},{-276,450}}, color={0,0,127}));
   connect(add2.y, greater_unocc.u1) annotation (Line(points={{-225,454},{-251.5,
           454},{-251.5,458},{-276,458}}, color={0,0,127}));
-  connect(conAHU.u_UnOcc, greater_unocc.y) annotation (Line(points={{355.6,
-          415.741},{27.8,415.741},{27.8,458},{-299,458}}, color={255,0,255}));
   connect(splRetCor.port_2, southZoneReturnAirTemperature.port) annotation (
       Line(points={{962,0},{1156,0},{1156,238},{1174,238},{1174,250},{1192,250}},
         color={0,127,255}));
@@ -421,6 +426,14 @@ equation
     annotation (Line(points={{444,440.588},{448,440.588},{448,172},{-104,172},{
           -104,-82},{-90,-82}},
                            color={0,0,127}));
+  connect(eco.yOut, outdoorDamperPositionBlock.OutdoorDamperPosition)
+    annotation (Line(points={{-10,-34},{-10,-22},{-46,-22},{-46,-120},{-55,-120}},
+        color={0,0,127}));
+  connect(conAHU.yRetDamPos, outdoorDamperPositionBlock.ReturnDamperPosition)
+    annotation (Line(points={{444,440.588},{446,440.588},{446,172},{-106,172},{
+          -106,-120},{-78,-120}}, color={0,0,127}));
+  connect(conAHU.u_UnOcc, greater_unocc.y) annotation (Line(points={{355.6,
+          415.741},{-332,415.741},{-332,458},{-299,458}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-320},{1400,
             640}}), graphics={Line(
@@ -501,7 +514,7 @@ This is for
           "modelica://Buildings/Resources/Scripts/Dymola/Examples/VAVReheat/Guideline36.mos"
         "Simulate and plot"),
     experiment(
-      StartTime=21168000,
+      StartTime=21427200,
       StopTime=21513600,
       Interval=299.999808,
       Tolerance=1e-06,
