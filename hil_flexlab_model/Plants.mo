@@ -270,8 +270,8 @@ package Plants
             extent={{-4,-4},{4,4}},
             rotation=0,
             origin={-90,60})));
-      HeatPumps.BlackBox_Generic_TSetpoint blackBox_Generic_TSetpoint
-        annotation (Placement(transformation(
+      CCC_test.obsolete_hil_flexlab_model.HeatPumps.BlackBox_Generic_TSetpoint
+        blackBox_Generic_TSetpoint annotation (Placement(transformation(
             extent={{11,-13},{-11,13}},
             rotation=180,
             origin={-47,-7})));

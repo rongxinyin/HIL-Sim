@@ -1345,10 +1345,10 @@ equation
         points={{625.4,-289},{104,-289},{104,-42.7273},{157.2,-42.7273}},
         color={0,0,127}));
   connect(senTRA.port, flexlabXRA.portsCell[2]) annotation (Line(points={{652,
-          -334},{652,-346},{994,-346},{994,-43.5933},{996.571,-43.5933}},
+          -334},{652,-346},{994,-346},{994,-43.5933},{990.857,-43.5933}},
                                                          color={0,127,255}));
   connect(supFan.ports[1], flexlabXRA.portsCell[1]) annotation (Line(points={{526,-87},
-          {694,-87},{694,0},{970,0},{970,-43.5933},{973.714,-43.5933}},
+          {694,-87},{694,0},{970,0},{970,-43.5933},{979.429,-43.5933}},
                                                                  color={0,127,255}));
   connect(TSetRooHea.y[1], aachen_HP_2stage_FMU_wTMixCalc.u_TRooSetPoi)
     annotation (Line(points={{-106.3,-153},{112,-153},{112,-91.4545},{157.2,

@@ -1053,8 +1053,8 @@ package Controls "Package for RTU controls"
     extends BaseClasses.SZVAVBase;
 
     annotation (Icon(coordinateSystem(extent={{-100,-140},{100,180}}),
-                     graphics={Line(points={{-100,-100},{0,2},{-100,100}}, color
-              = {0,0,0})}), Diagram(coordinateSystem(extent={{-100,-140},{100,180}})),
+                     graphics={Line(points={{-100,-100},{0,2},{-100,100}}, color=
+                {0,0,0})}), Diagram(coordinateSystem(extent={{-100,-140},{100,180}})),
       experiment(
         StopTime=86400,
         Interval=60.0001344,
@@ -1482,8 +1482,8 @@ package Controls "Package for RTU controls"
       connect(hysHeaPla.y, swiHea.u2) annotation (Line(points={{-18,110},{-8,110},{
               -8,80},{58,80}}, color={255,0,255}));
       annotation (Icon(coordinateSystem(extent={{-100,-140},{100,220}}),
-                       graphics={Line(points={{-100,-100},{0,2},{-100,100}}, color
-                = {0,0,0}), Rectangle(
+                       graphics={Line(points={{-100,-100},{0,2},{-100,100}}, color=
+                  {0,0,0}), Rectangle(
               extent={{-100,220},{100,-140}},
               lineColor={0,0,129},
               fillColor={255,255,255},
