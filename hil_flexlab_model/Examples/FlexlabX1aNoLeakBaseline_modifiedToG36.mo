@@ -17,15 +17,14 @@ model FlexlabX1aNoLeakBaseline_modifiedToG36
       idfName=Modelica.Utilities.Files.loadResource(
           "modelica://Buildings/Resources/Data/ThermalZones/EnergyPlus_9_6_0/Examples/energyPlusFiles/X1-2021-V8_v2_correctedInternalGain_addGainOutputVariable.idf"),
       epwName=Modelica.Utilities.Files.loadResource(
-          "modelica://Buildings/Resources/weatherdata/USA_FL_Tampa.Intl.AP.722110_TMY3.epw"),
-
+          "modelica://Buildings/Resources/weatherdata/USA_CA_Victorville-George.AFB-So.California.Logistics.AP.723825_TMYx.epw"),
       weaName=Modelica.Utilities.Files.loadResource(
-          "modelica://Buildings/Resources/weatherdata/USA_FL_Tampa.Intl.AP.722110_TMY3.mos"),
+          "modelica://Buildings/Resources/weatherdata/USA_CA_Victorville-George.AFB-So.California.Logistics.AP.723825_TMYx.mos"),
       ele(T_start=294.96),
       clo(T_start=294.96),
       ple(T_start=294.96)),
     weaDat(filNam=Modelica.Utilities.Files.loadResource(
-          "modelica://Buildings/Resources/weatherdata/USA_FL_Tampa.Intl.AP.722110_TMY3.mos")),
+          "modelica://Buildings/Resources/weatherdata/USA_CA_Victorville-George.AFB-So.California.Logistics.AP.723825_TMYx.mos")),
     dpRetDuc1(dp_nominal=30.3));
 
                               //,
