@@ -2,7 +2,7 @@ within hil_flexlab_model.Examples;
 model FlexlabX1aBaseline_tes
   "Variable air volume flow system with terminal reheat - flexlab baseline"
   extends Modelica.Icons.Example;
-  extends BaseClasses.PartialOpenLoopX1aV1(
+  extends CCC_test.obsolete_hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV1(
     heaCoi(show_T=true),
     cooCoi(show_T=true),
     dpRetDuc1(dp_nominal=30),

@@ -116,19 +116,20 @@ equation
       points={{-70,10},{-56,10},{-56,11.4444},{-40.225,11.4444}},
       color={255,204,51},
       thickness=0.5));
-  connect(flo.TRooAir, hvac.TRoo) annotation (Line(points={{91.5217,60},{96,60},
-          {96,92},{-60,92},{-60,16.4444},{-48.75,16.4444}}, color={0,0,127}));
+  connect(flo.TRooAir, hvac.TRoo) annotation (Line(points={{91.5217,61.6667},{
+          96,61.6667},{96,92},{-60,92},{-60,16.4444},{-48.75,16.4444}},
+                                                            color={0,0,127}));
   connect(hvac.port_supAir[1], flo.portsSou[1]) annotation (Line(points={{42.275,
-          19.2222},{45.5652,19.2222},{45.5652,48.6154}}, color={0,127,255}));
+          19.2222},{46.3261,19.2222},{46.3261,49.3333}}, color={0,127,255}));
   connect(hvac.port_supAir[3], flo.portsNor[1]) annotation (Line(points={{42.275,
-          19.2222},{56,19.2222},{56,71.3846},{45.5652,71.3846}}, color={0,127,255}));
+          19.2222},{56,19.2222},{56,74},{46.3261,74}},           color={0,127,255}));
   connect(hvac.port_retAir[1], flo.portsSou[2]) annotation (Line(points={{42.275,
-          -4.38889},{48.6087,-4.38889},{48.6087,48.6154}}, color={0,127,255}));
+          -4.38889},{47.8478,-4.38889},{47.8478,49.3333}}, color={0,127,255}));
   connect(hvac.port_retAir[3], flo.portsNor[2]) annotation (Line(points={{42.275,
-          -4.38889},{58,-4.38889},{58,71.3846},{48.6087,71.3846}}, color={0,127,
+          -4.38889},{58,-4.38889},{58,74},{47.8478,74}},           color={0,127,
           255}));
   connect(weaDat.weaBus, flo.weaBus) annotation (Line(
-      points={{-70,10},{-66,10},{-66,86.1538},{64.1304,86.1538}},
+      points={{-70,10},{-66,10},{-66,90},{64.1304,90}},
       color={255,204,51},
       thickness=0.5));
   connect(souCoo.ports[1], hvac.portCooCoiSup) annotation (Line(points={{-10,
@@ -136,11 +137,11 @@ equation
   connect(sinCoo.ports[1], hvac.portCooCoiRet) annotation (Line(points={{20,-70},
           {20,-54},{6.25,-54},{6.25,-28}},
                                      color={0,127,255}));
-  connect(flo.portsCor[2], hvac.port_retAir[2]) annotation (Line(points={{48.6087,
-          60.9231},{48.6087,28.3333},{42.275,28.3333},{42.275,-4.38889}},
+  connect(flo.portsCor[2], hvac.port_retAir[2]) annotation (Line(points={{47.8478,
+          62.6667},{47.8478,28.3333},{42.275,28.3333},{42.275,-4.38889}},
         color={0,127,255}));
-  connect(flo.portsCor[1], hvac.port_supAir[2]) annotation (Line(points={{45.5652,
-          60.9231},{45.5652,40.3333},{42.275,40.3333},{42.275,19.2222}},
+  connect(flo.portsCor[1], hvac.port_supAir[2]) annotation (Line(points={{46.3261,
+          62.6667},{46.3261,40.3333},{42.275,40.3333},{42.275,19.2222}},
         color={0,127,255}));
   annotation (
     Documentation(info="<html>

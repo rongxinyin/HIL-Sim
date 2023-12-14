@@ -3,7 +3,8 @@ model FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_Impose_Airflow
   "DR mode - Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
   extends
-    hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV020123_Impose_Airflow(       occSch(
+    CCC_test.obsolete_hil_flexlab_model.BaseClasses.Controls.PartialOpenLoopX1aV020123_Impose_Airflow(
+                                                                                  occSch(
       occupancy={0,86399},
       firstEntryOccupied=true,
       period=86400), fanSup(per(use_powerCharacteristic=false, power(V_flow={
@@ -2024,7 +2025,7 @@ equation
                                       color={0,0,127}));
 
   connect(conVAVNor.yZonTemResReq, TZonResReq.u[1]) annotation (Line(points={{676,
-          15.6667},{750,15.6667},{750,224},{270,224},{270,302.667},{296,302.667}},
+          15.6667},{750,15.6667},{750,224},{270,224},{270,295.667},{296,295.667}},
                                                                          color=
           {255,127,0}));
   connect(conVAVCor.yZonTemResReq, TZonResReq.u[2]) annotation (Line(points={{800,
@@ -2032,11 +2033,11 @@ equation
                                                                      color={255,
           127,0}));
   connect(conVAVSou.yZonTemResReq, TZonResReq.u[3]) annotation (Line(points={{1042,
-          43.6667},{1054,43.6667},{1054,216},{278,216},{278,293.333},{296,
-          293.333}},
+          43.6667},{1054,43.6667},{1054,216},{278,216},{278,300.333},{296,
+          300.333}},
         color={255,127,0}));
   connect(conVAVNor.yZonPreResReq, PZonResReq.u[1]) annotation (Line(points={{676,
-          12.3333},{758,12.3333},{758,236},{284,236},{284,268.667},{298,268.667}},
+          12.3333},{758,12.3333},{758,236},{284,236},{284,261.667},{298,261.667}},
                                                                          color=
           {255,127,0}));
   connect(conVAVCor.yZonPreResReq, PZonResReq.u[2]) annotation (Line(points={{800,
@@ -2044,8 +2045,8 @@ equation
                                                                      color={255,
           127,0}));
   connect(conVAVSou.yZonPreResReq, PZonResReq.u[3]) annotation (Line(points={{1042,
-          40.3333},{1060,40.3333},{1060,224},{292,224},{292,259.333},{298,
-          259.333}},
+          40.3333},{1060,40.3333},{1060,224},{292,224},{292,266.333},{298,
+          266.333}},
         color={255,127,0}));
   connect(VSupNor_flow.V_flow,conVAVNor. VDis_flow) annotation (Line(points={{695,130},
           {632,130},{632,12.3333},{652,12.3333}},

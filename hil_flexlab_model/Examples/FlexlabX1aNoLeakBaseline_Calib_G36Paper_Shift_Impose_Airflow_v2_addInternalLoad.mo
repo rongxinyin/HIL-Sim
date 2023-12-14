@@ -4,7 +4,8 @@ model
   "DR mode - Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
   extends
-    hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV020123_Impose_Airflow_v2_addInternalLoad(       occSch(
+    CCC_test.obsolete_hil_flexlab_model.BaseClasses.Controls.PartialOpenLoopX1aV020123_Impose_Airflow_v2_addInternalLoad(
+                                                                                                     occSch(
       occupancy={0,86399},
       firstEntryOccupied=true,
       period=86400), fanSup(per(use_powerCharacteristic=false, power(V_flow={0.05,

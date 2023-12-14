@@ -345,8 +345,8 @@ partial model PartialOpenLoopX1aV020123_modifyVav
   Buildings.BoundaryConditions.WeatherData.Bus weaBus "Weather Data Bus"
     annotation (Placement(transformation(extent={{-330,170},{-310,190}}),
         iconTransformation(extent={{-360,170},{-340,190}})));
-  ThermalZones.FlexlabX1A013123_weipingCopy
-                                flo(
+  CCC_test.obsolete_hil_flexlab_model.ThermalZones.FlexlabX1A013123_weipingCopy
+    flo(
     redeclare final package Medium = MediumA,
     final use_windPressure=use_windPressure,
     lat=lat)

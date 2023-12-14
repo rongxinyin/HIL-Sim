@@ -33,7 +33,8 @@ model XRA_Baseline_AE_127
   Buildings.BoundaryConditions.WeatherData.Bus
                                      weaBus "Weather data bus"
     annotation (Placement(transformation(extent={{-194,280},{-174,300}})));
-  ThermalZones.FlexlabXRA flexlabXRA(lat=weaDat.lat)
+  CCC_test.obsolete_hil_flexlab_model.ThermalZones.FlexlabXRA flexlabXRA(lat=
+        weaDat.lat)
     annotation (Placement(transformation(extent={{736,-334},{1376,352}})));
   Modelica.Blocks.Sources.CombiTimeTable TSetRooHea(table=[3600*0,273.15 + 15.6;
         3600*5,273.15 + 15.6; 3600*5,273.15 + 17.8; 3600*6,273.15 + 17.8; 3600*
@@ -110,10 +111,10 @@ equation
           {-117.5,-104},{-117.5,-45.8818},{-38.8,-45.8818}}, color={0,0,127}));
   connect(TSetRooCoo.y[1], rTU.TSetRooCoo) annotation (Line(points={{-191,-134},
           {-114,-134},{-114,-75.0636},{-38.8,-75.0636}}, color={0,0,127}));
-  connect(flexlabXRA.portsCell[2], rtu.returnAir) annotation (Line(points={{996.571,
+  connect(flexlabXRA.portsCell[2], rtu.returnAir) annotation (Line(points={{990.857,
           -43.5933},{702.572,-43.5933},{702.572,-90},{428,-90}},         color=
           {0,127,255}));
-  connect(flexlabXRA.portsCell[1], rtu.supplyAir) annotation (Line(points={{973.714,
+  connect(flexlabXRA.portsCell[1], rtu.supplyAir) annotation (Line(points={{979.429,
           -43.5933},{705.572,-43.5933},{705.572,-43.6},{428,-43.6}},
         color={0,127,255}));
   connect(flexlabXRA.occ, rTU.occSta) annotation (Line(points={{1385.14,100.467},

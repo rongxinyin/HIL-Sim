@@ -2,7 +2,7 @@ within hil_flexlab_model.Examples;
 model FlexlabXra_Envelope_Test
   "Variable air volume flow system with terminal reheat - flexlab baseline"
   extends Modelica.Icons.Example;
-  extends BaseClasses.PartialOpenLoopXRa(
+  extends CCC_test.obsolete_hil_flexlab_model.BaseClasses.PartialOpenLoopXRa(
     heaCoi(show_T=true),
     cooCoi(show_T=true),
     dpRetDuc(dp_nominal=10));

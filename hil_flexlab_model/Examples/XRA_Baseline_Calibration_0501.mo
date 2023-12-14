@@ -7,7 +7,8 @@ model XRA_Baseline_Calibration_0501
 
   extends Modelica.Icons.Example;
 
-  ThermalZones.FlexlabXRaNorth flexlabXRA(lat=weaDat.lat)
+  CCC_test.obsolete_hil_flexlab_model.ThermalZones.FlexlabXRaNorth flexlabXRA(
+      lat=weaDat.lat)
     annotation (Placement(transformation(extent={{736,-334},{1376,352}})));
   Modelica.Blocks.Sources.CombiTimeTable TSetRooHea(table=[5097600,
         288.705555555556; 5101200,288.705555555556; 5104800,288.705555555556;
