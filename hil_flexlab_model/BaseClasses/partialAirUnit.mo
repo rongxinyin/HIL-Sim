@@ -220,10 +220,10 @@ equation
           64},{126,64},{126,-100},{210,-100}}, color={0,0,127}));
   connect(senMasFloOut.m_flow, mFloOut) annotation (Line(points={{-105,18},{
           -130,18},{-130,-120},{210,-120}}, color={0,0,127}));
-  connect(out.ports[1], ideEco.port_3) annotation (Line(points={{-160,-10},{-80,
-          -10},{-80,36}}, color={0,127,255}));
+  connect(out.ports[1], ideEco.port_3) annotation (Line(points={{-160,-13},{-80,
+          -13},{-80,36}}, color={0,127,255}));
   connect(senMasFloOut.port_a, out.ports[2]) annotation (Line(points={{-94,8},{
-          -126,8},{-126,-14},{-160,-14}}, color={0,127,255}));
+          -126,8},{-126,-11},{-160,-11}}, color={0,127,255}));
   connect(ideEco.y, uEco) annotation (Line(points={{-80,57},{-142,57},{-142,-40},
           {-220,-40}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-200,-240},

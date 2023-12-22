@@ -4,9 +4,9 @@ partial model Chiller_Prim_Loop
 
   package MediumA = Buildings.Media.Air "Medium model for air";
   package MediumW = Buildings.Media.Water "Medium model for water";
-   parameter
-    hil_flexlab_model.Data.AirCooled.ElectricEIRChiller_York_YCAL0019EE_54_2kW_2_9COP_None
-    per     "Chiller performance data"
+  parameter
+    hil_flexlab_model.Test2.Data.AirCooled.ElectricEIRChiller_York_YCAL0019EE_54_2kW_2_9COP_None
+    per "Chiller performance data"
     annotation (Placement(transformation(extent={{216,-320},{232,-304}})));
 
     constant Real QCoo_flow_nominal=-54160;

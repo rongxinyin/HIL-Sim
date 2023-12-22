@@ -59,21 +59,13 @@ model FlexlabXRA "Model of a flexlab xra"
   Modelica.Blocks.Routing.Replicator replicator(nout=1)
     annotation (Placement(transformation(extent={{42,244},{62,264}})));
   Buildings.BoundaryConditions.WeatherData.Bus weaBus "Weather bus"
-    annotation (Placement(transformation(extent={{200,224},{220,244}})));
-  Buildings.Examples.VAVReheat.ThermalZones.RoomLeakage leaPle(
-    redeclare package Medium = Medium,
-    VRoo=6.49*(3.05 + 3.05 + 3.23)*1.625,
-    s=6.49/9.33,
-    azi=Buildings.Types.Azimuth.W,
-    final use_windPressure=use_windPressure)
+    annotation (Placement(transformation(extent={{190,230},{210,250}})));
+  Buildings.Examples.VAVCO2.BaseClasses.RoomLeakage     leaPle(
+    redeclare package Medium = Medium)
     "Model for air infiltration through the envelope"
     annotation (Placement(transformation(extent={{-74,40},{-38,80}})));
-  Buildings.Examples.VAVReheat.ThermalZones.RoomLeakage leaCell(
-    redeclare package Medium = Medium,
-    VRoo=6.49*3.23*3.6576,
-    s=6.49/3.23,
-    azi=Buildings.Types.Azimuth.W,
-    final use_windPressure=use_windPressure)
+  Buildings.Examples.VAVCO2.BaseClasses.RoomLeakage     leaCell(
+    redeclare package Medium = Medium)
     "Model for air infiltration through the envelope"
     annotation (Placement(transformation(extent={{-4,150},{32,190}})));
   Modelica.Thermal.HeatTransfer.Sensors.TemperatureSensor temAirCellA
@@ -96,58 +88,54 @@ model FlexlabXRA "Model of a flexlab xra"
         origin={-170,220})));
 
   parameter
-    Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction9
+    Test2.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction9
     SouthExt
     annotation (Placement(transformation(extent={{-126,466},{-106,486}})));
   parameter
-    Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_1975Roof
+    Test2.Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_1975Roof
     R20Wal annotation (Placement(transformation(extent={{-92,466},{-72,486}})));
   parameter
-    Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
+    Test2.Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
     R52Wal annotation (Placement(transformation(extent={{-54,466},{-34,486}})));
-  parameter
-    Data.Constructions.GlazingSystems.SingleClear3
-    glaSys(haveInteriorShade=false)
+  parameter Test2.Data.Constructions.GlazingSystems.SingleClear3 glaSys(
+      haveInteriorShade=false)
     annotation (Placement(transformation(extent={{-126,434},{-106,454}})));
   parameter
-    Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionWall
+    Test2.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionWall
     parCon annotation (Placement(transformation(extent={{-12,466},{8,486}})));
   parameter
-    Data.Constructions.OpaqueConstructions.DividingWalls.TestCellDividngWall
+    Test2.Data.Constructions.OpaqueConstructions.DividingWalls.TestCellDividngWall
     celDiv annotation (Placement(transformation(extent={{30,466},{50,486}})));
   parameter
-    Data.Constructions.OpaqueConstructions.DividingWalls.TestBedDividingWall
+    Test2.Data.Constructions.OpaqueConstructions.DividingWalls.TestBedDividingWall
     bedDiv annotation (Placement(transformation(extent={{-92,434},{-72,454}})));
   parameter
-    Data.Constructions.OpaqueConstructions.DividingWalls.TestZoneDividngWall
+    Test2.Data.Constructions.OpaqueConstructions.DividingWalls.TestZoneDividngWall
     zonDiv
     annotation (Placement(transformation(extent={{-126,398},{-106,418}})));
   parameter
-    Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction1
+    Test2.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction1
     WestExt
     annotation (Placement(transformation(extent={{-126,368},{-106,388}})));
+  parameter Test2.Data.Constructions.OpaqueConstructions.Roofs.CeilingTile
+    ceiling annotation (Placement(transformation(extent={{-90,368},{-70,388}})));
   parameter
-    Data.Constructions.OpaqueConstructions.Roofs.CeilingTile
-    ceiling
-    annotation (Placement(transformation(extent={{-90,368},{-70,388}})));
-  parameter
-    Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction3
+    Test2.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction3
     NorthExt annotation (Placement(transformation(extent={{-12,434},{8,454}})));
   parameter
-    Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorInsulated
+    Test2.Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorInsulated
     extDoo annotation (Placement(transformation(extent={{30,434},{50,454}})));
   parameter
-    Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionDoor
-    parDoo
-    annotation (Placement(transformation(extent={{-56,370},{-36,390}})));
+    Test2.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionDoor
+    parDoo annotation (Placement(transformation(extent={{-56,370},{-36,390}})));
   parameter
-    Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
-    higIns
-    annotation (Placement(transformation(extent={{-10,400},{10,420}})));
+    Test2.Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
+    higIns annotation (Placement(transformation(extent={{-10,400},{10,420}})));
 
   parameter
-    Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorUninsulated
-    extDooUn annotation (Placement(transformation(extent={{-54,434},{-34,454}})));
+    Test2.Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorUninsulated
+    extDooUn
+    annotation (Placement(transformation(extent={{-54,434},{-34,454}})));
 
   parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic
     slaCon(nLay=3, material={Buildings.HeatTransfer.Data.Solids.Generic(
@@ -227,9 +215,10 @@ model FlexlabXRA "Model of a flexlab xra"
   Modelica.Fluid.Vessels.BaseClasses.VesselFluidPorts_b portsCell[2](redeclare
       package Medium = Medium) "Fluid inlets and outlets"
     annotation (Placement(transformation(extent={{38,146},{78,162}})));
-  XRA.Closet closet(redeclare package Medium = Medium)
+  Test2.ThermalZones1.XRA.Closet closet(redeclare package Medium = Medium)
     annotation (Placement(transformation(extent={{176,362},{216,402}})));
-  XRA.Electrical electrical(redeclare package Medium = Medium)
+  Test2.ThermalZones1.XRA.Electrical electrical(redeclare package Medium =
+        Medium)
     annotation (Placement(transformation(extent={{244,444},{284,484}})));
   Modelica.Blocks.Sources.Constant const(k=0)   annotation (Placement(
         transformation(extent={{318,262},{338,282}})));
@@ -244,27 +233,17 @@ equation
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
   connect(ple.weaBus, weaBus) annotation (Line(
-      points={{145.9,23.9},{206,23.9},{206,234},{210,234}},
-      color={255,204,51},
-      thickness=0.5,
-      smooth=Smooth.None));
-  connect(weaBus, leaPle.weaBus) annotation (Line(
-      points={{210,234},{-86,234},{-86,60},{-74,60}},
-      color={255,204,51},
-      thickness=0.5,
-      smooth=Smooth.None));
-  connect(weaBus, leaCell.weaBus) annotation (Line(
-      points={{210,234},{-86,234},{-86,170},{-4,170}},
+      points={{145.9,23.9},{184,23.9},{184,240},{200,240}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
   connect(leaPle.port_b, ple.ports[2]) annotation (Line(
-      points={{-38,60},{-14,60},{-14,-2},{113,-2}},
+      points={{-38,60},{-14,60},{-14,-3},{113,-3}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
   connect(out.weaBus, weaBus) annotation (Line(
-      points={{0,108.2},{-34,108.2},{-34,234},{210,234}},
+      points={{0,108.2},{-16,108.2},{-16,240},{200,240}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None), Text(
@@ -321,18 +300,20 @@ equation
   connect(temAirCellA.port, testCell.heaPorAir) annotation (Line(points={{268,180},
           {127,180}},                          color={191,0,0}));
   connect(testCell.surf_conBou[5], ple.surf_conBou[6]) annotation (Line(points={{134,164},
-          {178,164},{178,-24},{134,-24},{134,-9.16667}},
+          {178,164},{178,-24},{134,-24},{134,-9.58333}},
                                               color={191,0,0}));
-  connect(leaCell.port_b, testCell.ports[3]) annotation (Line(points={{32,170},{
-          72,170},{72,171},{113,171}}, color={0,127,255}));
-  connect(testCell.ports[1], portsCell[1]) annotation (Line(points={{113,167},{87.5,
-          167},{87.5,154},{48,154}}, color={0,127,255}));
-  connect(testCell.ports[2], portsCell[2]) annotation (Line(points={{113,169},{82,
-          169},{82,154},{68,154}},      color={0,127,255}));
+  connect(leaCell.port_b, testCell.ports[3]) annotation (Line(points={{32,170},
+          {72,170},{72,170.5},{113,170.5}},
+                                       color={0,127,255}));
+  connect(testCell.ports[1], portsCell[1]) annotation (Line(points={{113,168.5},
+          {87.5,168.5},{87.5,154},{53,154}},
+                                     color={0,127,255}));
+  connect(testCell.ports[2], portsCell[2]) annotation (Line(points={{113,169.5},
+          {82,169.5},{82,154},{63,154}},color={0,127,255}));
   connect(replicator.y, testCell.uSha) annotation (Line(points={{63,254},{76,254},
           {76,198},{106.4,198}}, color={0,0,127}));
   connect(weaBus, closet.weaBus) annotation (Line(
-      points={{210,234},{210,282},{248,282},{248,400},{213.9,400},{213.9,399.9}},
+      points={{200,240},{316,240},{316,399.9},{213.9,399.9}},
       color={255,204,51},
       thickness=0.5), Text(
       string="%first",
@@ -351,17 +332,17 @@ equation
           368},{134,368},{134,164}},
                           color={191,0,0}));
   connect(weaBus, electrical.weaBus) annotation (Line(
-      points={{210,234},{316,234},{316,482},{281.9,482},{281.9,481.9}},
+      points={{200,240},{316,240},{316,400},{296,400},{296,481.9},{281.9,481.9}},
       color={255,204,51},
       thickness=0.5), Text(
       string="%first",
       index=-1,
       extent={{-3,-6},{-3,-6}},
       horizontalAlignment=TextAlignment.Right));
-  connect(TRooAir, temAirCellA.T) annotation (Line(points={{390,166},{338,166},{
-          338,180},{288,180}}, color={0,0,127}));
+  connect(TRooAir, temAirCellA.T) annotation (Line(points={{390,166},{338,166},
+          {338,180},{289,180}},color={0,0,127}));
   connect(testCell.weaBus, weaBus) annotation (Line(
-      points={{145.9,197.9},{177.95,197.9},{177.95,234},{210,234}},
+      points={{145.9,197.9},{184,197.9},{184,240},{200,240}},
       color={255,204,51},
       thickness=0.5), Text(
       string="%second",
@@ -369,7 +350,8 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(senRelPre.port_a, testCell.ports[4]) annotation (Line(points={{100,108},
-          {106,108},{106,173},{113,173}}, color={0,127,255}));
+          {106,108},{106,171.5},{113,171.5}},
+                                          color={0,127,255}));
 
   connect(greater.y,occ)
     annotation (Line(points={{379,280},{408,280}}, color={255,0,255}));
@@ -377,6 +359,22 @@ equation
           {122,262},{-107,262}}, color={0,0,127}));
   connect(const.y, greater.u2)
     annotation (Line(points={{339,272},{356,272}}, color={0,0,127}));
+  connect(weaBus.pAtm, leaCell.p) annotation (Line(
+      points={{200,240},{86,240},{86,180},{-7.6,180},{-7.6,170}},
+      color={255,204,51},
+      thickness=0.5), Text(
+      string="%first",
+      index=-1,
+      extent={{-3,6},{-3,6}},
+      horizontalAlignment=TextAlignment.Right));
+  connect(weaBus.pAtm, leaPle.p) annotation (Line(
+      points={{200,240},{76,240},{76,234},{-77.6,234},{-77.6,60}},
+      color={255,204,51},
+      thickness=0.5), Text(
+      string="%first",
+      index=-1,
+      extent={{-3,6},{-3,6}},
+      horizontalAlignment=TextAlignment.Right));
                            annotation (choicesAllMatching=true,
               Diagram(coordinateSystem(preserveAspectRatio=true, extent={{-160,-100},
             {400,500}},

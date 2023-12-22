@@ -7,7 +7,7 @@ model XRA_Baseline_Calibration_0501
 
   extends Modelica.Icons.Example;
 
-  ThermalZones.FlexlabXRaNorth flexlabXRA(lat=weaDat.lat)
+  Test2.ThermalZones1.FlexlabXRaNorth flexlabXRA(lat=weaDat.lat)
     annotation (Placement(transformation(extent={{736,-334},{1376,352}})));
   Modelica.Blocks.Sources.CombiTimeTable TSetRooHea(table=[5097600,
         288.705555555556; 5101200,288.705555555556; 5104800,288.705555555556;
@@ -397,7 +397,8 @@ model XRA_Baseline_Calibration_0501
                                          extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "Heating setpoint for room temperature"
     annotation (Placement(transformation(extent={{-184,-190},{-110,-116}})));
-  Fluid.Aachen_HP_2stage_FMU_wTMixCalc_ReaFlo aachen_HP_2stage_FMU_wTMixCalc
+  Test2.Fluid1.Aachen_HP_2stage_FMU_wTMixCalc_ReaFlo
+    aachen_HP_2stage_FMU_wTMixCalc
     annotation (Placement(transformation(extent={{170,-128},{298,6}})));
   Buildings.Fluid.Sources.MassFlowSource_T supFan(
     redeclare package Medium = Buildings.Media.Air,
@@ -1322,7 +1323,7 @@ model XRA_Baseline_Calibration_0501
         0.154354117498977; 9370800,0.153156848862456], extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "actual OA air flow rate"
     annotation (Placement(transformation(extent={{-46,208},{28,282}})));
-  Fluid.HeatpumpFanCurve heatpumpFanCurve
+  Test2.Fluid1.HeatpumpFanCurve heatpumpFanCurve
     annotation (Placement(transformation(extent={{424,54},{536,152}})));
   Modelica.Blocks.Math.Add sumHP annotation (Placement(transformation(
         extent={{-21,-21},{21,21}},
@@ -1344,10 +1345,10 @@ equation
         points={{625.4,-289},{104,-289},{104,-42.7273},{157.2,-42.7273}},
         color={0,0,127}));
   connect(senTRA.port, flexlabXRA.portsCell[2]) annotation (Line(points={{652,
-          -334},{652,-346},{994,-346},{994,-43.5933},{996.571,-43.5933}},
+          -334},{652,-346},{994,-346},{994,-43.5933},{990.857,-43.5933}},
                                                          color={0,127,255}));
   connect(supFan.ports[1], flexlabXRA.portsCell[1]) annotation (Line(points={{526,-87},
-          {694,-87},{694,0},{970,0},{970,-43.5933},{973.714,-43.5933}},
+          {694,-87},{694,0},{970,0},{970,-43.5933},{979.429,-43.5933}},
                                                                  color={0,127,255}));
   connect(TSetRooHea.y[1], aachen_HP_2stage_FMU_wTMixCalc.u_TRooSetPoi)
     annotation (Line(points={{-106.3,-153},{112,-153},{112,-91.4545},{157.2,
@@ -1370,7 +1371,7 @@ equation
       extent={{-3,6},{-3,6}},
       horizontalAlignment=TextAlignment.Right));
   connect(weaDat.weaBus, flexlabXRA.weaBus) annotation (Line(
-      points={{-204,444},{1160,444},{1160,47.8733},{1158.86,47.8733}},
+      points={{-204,444},{1160,444},{1160,50.16},{1174.86,50.16}},
       color={255,204,51},
       thickness=0.5));
   connect(SAFloRea.y[1], supFan.m_flow_in) annotation (Line(points={{29.7,113},{

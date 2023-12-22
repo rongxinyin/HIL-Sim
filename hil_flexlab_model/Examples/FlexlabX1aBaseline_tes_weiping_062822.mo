@@ -85,8 +85,7 @@ model FlexlabX1aBaseline_tes_weiping_062822
   hil_flexlab_model.AC_AWHP_PrimaryLoop_addpts_wTES_no_y
     aC_AWHP_PrimaryLoop_addpts_wTES_weiping062822_1
     annotation (Placement(transformation(extent={{162,-216},{188,-196}})));
-  hil_flexlab_model.Data.BBR_3C_Med casDat
-    "Case study data"
+  hil_flexlab_model.Test2.Data.BBR_3C_Med casDat "Case study data"
     annotation (Placement(transformation(extent={{-180,82},{-160,102}})));
 
 

@@ -13,35 +13,43 @@ model FlexlabXra_Envelope_Test
       displayUnit="degC",
       min=0), k=273.15 + 10) "Supply air temperature setpoint for heating"
     annotation (Placement(transformation(extent={{-180,-172},{-160,-152}})));
-  Buildings.Examples.VAVReheat.Controls.FanVFD conFanSup(xSet_nominal(
+  Buildings.Examples.VAVReheat.BaseClasses.Controls.FanVFD
+                                               conFanSup(xSet_nominal(
         displayUnit="Pa") = 410, r_N_min=yFanMin) "Controller for fan"
     annotation (Placement(transformation(extent={{240,-10},{260,10}})));
-  Buildings.Examples.VAVReheat.Controls.ModeSelector modeSelector
-    annotation (Placement(transformation(extent={{-200,-320},{-180,-300}})));
-  Buildings.Examples.VAVReheat.Controls.ControlBus controlBus
+  Buildings.Examples.VAVReheat.BaseClasses.Controls.ModeSelector
+                                                     modeSelector
+    annotation (Placement(transformation(extent={{-202,-320},{-182,-300}})));
+  Buildings.Examples.VAVReheat.BaseClasses.Controls.ControlBus
+                                                   controlBus
     annotation (Placement(transformation(extent={{-250,-352},{-230,-332}})));
 
-  Buildings.Examples.VAVReheat.Controls.Economizer conEco(
-    dT=1,
+  Buildings.Examples.VAVReheat.BaseClasses.Controls.Economizer
+                                                   conEco(
+    have_frePro=true,
     VOut_flow_min=0.3*m_flow_nominal/1.2,
     Ti=600,
     k=0.1) "Controller for economizer"
     annotation (Placement(transformation(extent={{-80,140},{-60,160}})));
-  Buildings.Examples.VAVReheat.Controls.RoomTemperatureSetpoint TSetRoo(
+  Buildings.Examples.VAVReheat.BaseClasses.Controls.RoomTemperatureSetpoint
+                                                                TSetRoo(
     final THeaOn=THeaOn,
     final THeaOff=THeaOff,
     final TCooOn=273.15 + 23.3,
     final TCooOff=TCooOff)
     annotation (Placement(transformation(extent={{-300,-358},{-280,-338}})));
-  Buildings.Examples.VAVReheat.Controls.DuctStaticPressureSetpoint pSetDuc(
+  Buildings.Examples.VAVReheat.BaseClasses.Controls.DuctStaticPressureSetpoint
+                                                                   pSetDuc(
     nin=3,
     controllerType=Modelica.Blocks.Types.SimpleController.PI,
     pMin=50) "Duct static pressure setpoint"
     annotation (Placement(transformation(extent={{160,-16},{180,4}})));
-  Buildings.Examples.VAVReheat.Controls.CoolingCoilTemperatureSetpoint TSetCoo
+  Buildings.Examples.DualFanDualDuct.Controls.CoolingCoilTemperatureSetpoint
+                                                                       TSetCoo
     "Setpoint for cooling coil"
     annotation (Placement(transformation(extent={{-130,-212},{-110,-192}})));
-  Buildings.Examples.VAVReheat.Controls.RoomVAV conVAVNor
+  Buildings.Examples.VAVReheat.BaseClasses.Controls.RoomVAV
+                                                conVAVNor
     "Controller for terminal unit north"
     annotation (Placement(transformation(extent={{640,30},{660,50}})));
   Buildings.Controls.Continuous.LimPID heaCoiCon(
@@ -86,7 +94,7 @@ equation
       smooth=Smooth.None,
       pattern=LinePattern.Dot));
   connect(controlBus, modeSelector.cb) annotation (Line(
-      points={{-240,-342},{-152,-342},{-152,-303.182},{-196.818,-303.182}},
+      points={{-240,-342},{-152,-342},{-152,-303.182},{-198.818,-303.182}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None), Text(
@@ -94,18 +102,12 @@ equation
       index=-1,
       extent={{-6,3},{-6,3}}));
   connect(TRet.T, conEco.TRet) annotation (Line(
-      points={{100,151},{100,172},{-92,172},{-92,157.333},{-81.3333,157.333}},
+      points={{100,151},{100,172},{-92,172},{-92,153.333},{-81.3333,153.333}},
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
   connect(TMix.T, conEco.TMix) annotation (Line(
-      points={{40,-29},{40,168},{-90,168},{-90,153.333},{-81.3333,153.333}},
-      color={0,0,127},
-      smooth=Smooth.None,
-      pattern=LinePattern.Dash));
-  connect(conEco.TSupHeaSet, TSupSetHea.y) annotation (Line(
-      points={{-81.3333,145.333},{-156,145.333},{-156,-120},{-140,-120},{-140,
-          -162},{-159,-162}},
+      points={{40,-29},{40,168},{-90,168},{-90,148},{-81.3333,148}},
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
@@ -130,24 +132,13 @@ equation
       color={0,0,0},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
-  connect(TSetCoo.TSet, conEco.TSupCooSet) annotation (Line(
-      points={{-109,-202},{-100,-202},{-100,-114},{-150,-114},{-150,141.333},{
-          -81.3333,141.333}},
-      color={0,0,127},
-      smooth=Smooth.None,
-      pattern=LinePattern.Dash));
-  connect(TSupSetHea.y, TSetCoo.TSetHea) annotation (Line(
-      points={{-159,-162},{-140,-162},{-140,-202},{-132,-202}},
-      color={0,0,0},
-      smooth=Smooth.None,
-      pattern=LinePattern.Dash));
   connect(modeSelector.cb, TSetCoo.controlBus) annotation (Line(
-      points={{-196.818,-303.182},{-152,-303.182},{-152,-210},{-121.8,-210}},
+      points={{-198.818,-303.182},{-152,-303.182},{-152,-210},{-120,-210}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
   connect(conEco.VOut_flow, VOut1.V_flow) annotation (Line(
-      points={{-81.3333,149.333},{-90,149.333},{-90,80},{-61,80},{-61,-20.9}},
+      points={{-81.3333,142.667},{-90,142.667},{-90,80},{-61,80},{-61,-20.9}},
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
@@ -157,8 +148,8 @@ equation
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
 
-  connect(conVAVNor.TRooHeaSet, controlBus.TRooSetHea) annotation (Line(points={{638,47},
-          {594,47},{594,-342},{-240,-342}},             color={0,0,127}));
+  connect(conVAVNor.TRooHeaSet, controlBus.TRooSetHea) annotation (Line(points={{638,46},
+          {594,46},{594,-342},{-240,-342}},             color={0,0,127}));
   connect(conVAVNor.TRooCooSet, controlBus.TRooSetCoo) annotation (Line(points={{638,40},
           {594,40},{594,-342},{-240,-342}},             color={0,0,127}));
 
@@ -176,24 +167,23 @@ equation
       textString="%second",
       index=1,
       extent={{6,3},{6,3}}));
-  connect(pSetDuc.TOut, TOut.y) annotation (Line(points={{158,2},{32,2},{32,130},
-          {-160,130},{-160,180},{-279,180}}, color={0,0,127}));
   connect(TOut.y, controlBus.TOut) annotation (Line(points={{-279,180},{-240,180},
           {-240,-342}},                            color={0,0,127}), Text(
       textString="%second",
       index=1,
       extent={{6,3},{6,3}}));
   connect(conEco.controlBus, controlBus) annotation (Line(
-      points={{-76,150.667},{-76,120},{-240,120},{-240,-342}},
+      points={{-70.6667,141.467},{-70.6667,120},{-240,120},{-240,-342}},
       color={255,204,51},
       thickness=0.5));
-  connect(modeSelector.yFan, conFanSup.uFan) annotation (Line(points={{-179.545,
-          -310},{260,-310},{260,-30},{226,-30},{226,6},{238,6}}, color={255,0,
+  connect(modeSelector.yFan, conFanSup.uFan) annotation (Line(points={{-181.091,
+          -305.455},{260,-305.455},{260,-30},{226,-30},{226,6},{238,6}},
+                                                                 color={255,0,
           255}));
   connect(conFanSup.y, fanSup.y) annotation (Line(points={{261,0},{280,0},{280,
           -20},{310,-20},{310,-28}}, color={0,0,127}));
-  connect(modeSelector.yFan, swiCooCoi.u2) annotation (Line(points={{-179.545,
-          -310},{-20,-310},{-20,-248},{58,-248}},
+  connect(modeSelector.yFan, swiCooCoi.u2) annotation (Line(points={{-181.091,
+          -305.455},{-20,-305.455},{-20,-248},{58,-248}},
                                               color={255,0,255}));
   connect(swiCooCoi.u1, cooCoiCon.y) annotation (Line(points={{58,-240},{-20,
           -240},{-59,-240}},      color={0,0,127}));
@@ -225,7 +215,7 @@ equation
   connect(freSta.y, or2.u1) annotation (Line(points={{22,-92},{22,-92},{40,-92},
           {40,-150},{-20,-150},{-20,-170},{-2,-170}},        color={255,0,255}));
   connect(or2.u2, modeSelector.yFan) annotation (Line(points={{-2,-178},{-20,
-          -178},{-20,-310},{-179.545,-310}},
+          -178},{-20,-305.455},{-181.091,-305.455}},
                                      color={255,0,255}));
   connect(or2.y, swiHeaCoi.u2) annotation (Line(points={{22,-170},{40,-170},{40,
           -190},{40,-190},{40,-210},{58,-210}}, color={255,0,255}));
@@ -237,7 +227,7 @@ equation
   connect(conVAVNor.yVal, nor.yVal) annotation (Line(points={{661,35},{675.5,35},
           {675.5,32},{692,32}}, color={0,0,127}));
   connect(flexlabXRA.TRooAir, conVAVNor.TRoo) annotation (Line(points={{1002.89,
-          523.66},{1002.89,542},{550,542},{550,32},{639,32},{639,33}}, color={0,
+          523.66},{1002.89,542},{550,542},{550,32},{639,32},{639,34}}, color={0,
           0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-400},{1440,

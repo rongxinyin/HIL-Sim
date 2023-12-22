@@ -2,3 +2,17 @@
 *.yaml
 !controllers/boiler_controller_config.yaml
 **/.DS_Store
+**/*.bak-mo
+**/*.mat
+**/dsfinal.txt
+**/dslog.txt
+**/dsmodel.c
+**/dymosim
+**/buildlog.txt
+**/dsin.txt
+**/empty.txt
+**/request
+**/spawn-*/
+**/spawn-*/
+**/status
+

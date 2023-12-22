@@ -48,8 +48,8 @@ partial model partialInterface "Interface for examples"
         extent={{-4,-4},{4,4}},
         rotation=90,
         origin={64,72})));
-  replaceable hil_flexlab_model.Data.PSP_4B_Med casDat(minOAFlo=15/2118.88*casDat.occ_density*1.2*
-        roo.roo.AFlo) "Case study data"
+  replaceable hil_flexlab_model.Test2.Data.PSP_4B_Med casDat(minOAFlo=15/
+        2118.88*casDat.occ_density*1.2*roo.roo.AFlo) "Case study data"
     annotation (Placement(transformation(extent={{-180,82},{-160,102}})));
   hil_flexlab_model.BaseClasses.Controls.RTU con(
     mAir_flow_nominal=casDat.mAir_flow_nominal,
@@ -117,15 +117,17 @@ equation
       color={255,204,51},
       thickness=0.5));
   connect(totPowHVAC.y, totPow.u[1]) annotation (Line(points={{93.02,100},{96,
-          100},{96,90},{78,90},{78,82.1},{80,82.1}}, color={0,0,127}));
+          100},{96,90},{78,90},{78,78.95},{80,78.95}},
+                                                     color={0,0,127}));
   connect(roo.PIntLoa, totPow.u[2]) annotation (Line(points={{67,4},{84,4},{84,
-          48},{78,48},{78,77.9},{80,77.9}}, color={0,0,127}));
+          48},{78,48},{78,81.05},{80,81.05}},
+                                            color={0,0,127}));
   connect(totPow.y, PEle)
     annotation (Line(points={{93.02,80},{110,80}}, color={0,0,127}));
   connect(inf.port_b, roo.ports[1]) annotation (Line(points={{80,-46},{20,-46},
-          {20,-6.6},{26,-6.6}}, color={0,127,255}));
+          {20,-5.6},{26,-5.6}}, color={0,127,255}));
   connect(inf.port_a, roo.ports[2]) annotation (Line(points={{80,-54},{22,-54},
-          {22,-2.6},{26,-2.6}}, color={0,127,255}));
+          {22,-3.6},{26,-3.6}}, color={0,127,255}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end partialInterface;

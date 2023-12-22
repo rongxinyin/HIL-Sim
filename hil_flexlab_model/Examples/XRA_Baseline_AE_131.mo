@@ -23,8 +23,7 @@ model XRA_Baseline_AE_131
    Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(filNam=casDat.weaDatImport)
     annotation (Placement(transformation(extent={{-274,394},{-254,414}})));
 
-  replaceable hil_flexlab_model.Data.PSP_4B_Med
-                          casDat(weaDatImport=
+  replaceable hil_flexlab_model.Test2.Data.PSP_4B_Med casDat(weaDatImport=
         ModelicaServices.ExternalReferences.loadResource(
         "modelica://hil_flexlab_model/Resources/weatherdata/US_Berkeley_20210101.mos"))
     "Case study data"
@@ -33,7 +32,7 @@ model XRA_Baseline_AE_131
   Buildings.BoundaryConditions.WeatherData.Bus
                                      weaBus "Weather data bus"
     annotation (Placement(transformation(extent={{-194,280},{-174,300}})));
-  hil_flexlab_model.ThermalZones.FlexlabXRaNorth flexlabXRA(lat=weaDat.lat)
+  hil_flexlab_model.Test2.ThermalZones1.FlexlabXRaNorth flexlabXRA(lat=weaDat.lat)
     annotation (Placement(transformation(extent={{736,-334},{1376,352}})));
   Modelica.Blocks.Sources.CombiTimeTable TSetRooHea(table=[0*3600,15.6 + 273.15;
         5*3600,15.6 + 273.15; 5*3600,17.8 + 273.15; 6*3600,17.8 + 273.15; 6*

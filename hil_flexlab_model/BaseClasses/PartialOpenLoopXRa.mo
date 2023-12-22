@@ -193,12 +193,12 @@ partial model PartialOpenLoopXRa
         MediumA, m_flow_nominal=m_flow_nominal) "Outside air volume flow rate"
     annotation (Placement(transformation(extent={{-72,-44},{-50,-22}})));
 
-  Buildings.Examples.VAVReheat.ThermalZones.VAVBranch celA(
+  Buildings.Examples.ScalableBenchmarks.BuildingVAV.BaseClasses.VAVBranch
+                                                      celA(
     redeclare package MediumA = MediumA,
     redeclare package MediumW = MediumW,
     m_flow_nominal=mNor_flow_nominal,
-    VRoo=VRooNor,
-    allowFlowReversal=allowFlowReversal) "thermal zone"
+    VRoo=VRooNor)                        "thermal zone"
     annotation (Placement(transformation(extent={{698,18},{738,58}})));
   Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(filNam=
         Modelica.Utilities.Files.loadResource("Resources/weatherdata/US_Berkeley_2021_0822.mos"))
@@ -225,14 +225,11 @@ partial model PartialOpenLoopXRa
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={708,128})));
-  Buildings.Examples.VAVReheat.BaseClasses.MixingBox eco(
+  Buildings.Fluid.Actuators.Dampers.MixingBox        eco(
     redeclare package Medium = MediumA,
     mOut_flow_nominal=m_flow_nominal,
-    dpOut_nominal=10,
     mRec_flow_nominal=m_flow_nominal,
-    dpRec_nominal=10,
     mExh_flow_nominal=m_flow_nominal,
-    dpExh_nominal=10,
     from_dp=false) "Economizer" annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
@@ -286,11 +283,13 @@ protected
 
   end Results;
 public
-  Buildings.Controls.OBC.CDL.Continuous.Gain gaiHeaCoi(k=m_flow_nominal*1000*40
-        /4200/10) "Gain for heating coil mass flow rate"
+  Buildings.Controls.OBC.CDL.Continuous.MatrixGain
+                                             gaiHeaCoi
+                  "Gain for heating coil mass flow rate"
     annotation (Placement(transformation(extent={{100,-220},{120,-200}})));
-  Buildings.Controls.OBC.CDL.Continuous.Gain gaiCooCoi(k=m_flow_nominal*1000*15
-        /4200/10) "Gain for cooling coil mass flow rate"
+  Buildings.Controls.OBC.CDL.Continuous.MatrixGain
+                                             gaiCooCoi
+                  "Gain for cooling coil mass flow rate"
     annotation (Placement(transformation(extent={{100,-258},{120,-238}})));
   Buildings.Controls.OBC.CDL.Logical.OnOffController freSta(bandwidth=1)
     "Freeze stat for heating coil"
@@ -300,6 +299,10 @@ public
     annotation (Placement(transformation(extent={{-40,-96},{-20,-76}})));
   ThermalZones.FlexlabXRA flexlabXRA
     annotation (Placement(transformation(extent={{722,388},{1008,694}})));
+  Modelica.Blocks.Sources.Constant const(k=m_flow_nominal*1000*40/4200/10)
+    annotation (Placement(transformation(extent={{-12,-220},{8,-200}})));
+  Modelica.Blocks.Sources.Constant const1(k=m_flow_nominal*1000*15/4200/10)
+    annotation (Placement(transformation(extent={{-26,-268},{-6,-248}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,-10}},
@@ -312,7 +315,7 @@ equation
       smooth=Smooth.None,
       thickness=0.5));
   connect(amb.ports[1], VOut1.port_a) annotation (Line(
-      points={{-114,-42.0667},{-94,-42.0667},{-94,-33},{-72,-33}},
+      points={{-114,-46.4667},{-94,-46.4667},{-94,-33},{-72,-33}},
       color={0,127,255},
       smooth=Smooth.None,
       thickness=0.5));
@@ -343,7 +346,7 @@ equation
       thickness=0.5));
 
   connect(celA.port_b, TSupNor.port_a) annotation (Line(
-      points={{708,58},{708,80}},
+      points={{718,58},{718,70},{708,70},{708,80}},
       color={0,127,255},
       thickness=0.5));
 
@@ -381,7 +384,7 @@ equation
   connect(gaiCooCoi.y, souCoo.m_flow_in) annotation (Line(points={{122,-248},{
           222,-248},{222,-132}}, color={0,0,127}));
   connect(dpDisSupFan.port_b, amb.ports[3]) annotation (Line(
-      points={{320,10},{320,14},{-88,14},{-88,-47.9333},{-114,-47.9333}},
+      points={{320,10},{320,14},{-88,14},{-88,-43.5333},{-114,-43.5333}},
       color={0,0,0},
       pattern=LinePattern.Dot));
   connect(senRetFlo.port_b, TRet.port_a) annotation (Line(points={{340,140},{
@@ -406,10 +409,11 @@ equation
       points={{98,-52},{80,-52},{80,-112}},
       color={28,108,200},
       thickness=0.5));
-  connect(senSupFlo.port_b, celA.port_a) annotation (Line(points={{420,-40},{708,
-          -40},{708,18}}, color={0,127,255}));
+  connect(senSupFlo.port_b, celA.port_a) annotation (Line(points={{420,-40},{
+          718,-40},{718,18}},
+                          color={0,127,255}));
   connect(weaBus, flexlabXRA.weaBus) annotation (Line(
-      points={{-320,180},{399,180},{399,558.34},{910.964,558.34}},
+      points={{-320,180},{399,180},{399,561.4},{905.857,561.4}},
       color={255,204,51},
       thickness=0.5), Text(
       string="%first",
@@ -417,10 +421,14 @@ equation
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(VSupNor_flow.port_b, flexlabXRA.portsCell[2]) annotation (Line(points={{708,138},
-          {708,222},{878,222},{878,517.54},{838.443,517.54}},           color={0,
+          {708,222},{878,222},{878,517.54},{835.889,517.54}},           color={0,
           127,255}));
-  connect(flexlabXRA.portsCell[2], dpRetDuc.port_a) annotation (Line(points={{838.443,
+  connect(flexlabXRA.portsCell[2], dpRetDuc.port_a) annotation (Line(points={{835.889,
           517.54},{590,517.54},{590,140},{400,140}}, color={0,127,255}));
+  connect(const.y, gaiHeaCoi.u[1])
+    annotation (Line(points={{9,-210},{98,-210}}, color={0,0,127}));
+  connect(const1.y, gaiCooCoi.u[1]) annotation (Line(points={{-5,-258},{16,-258},
+          {16,-248},{98,-248}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-380,
             -400},{1420,600}}), graphics={Line(points={{310,404}}, color={28,
               108,200}), Line(

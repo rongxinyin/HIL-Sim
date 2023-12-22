@@ -7,7 +7,7 @@ model XRA_Baseline_Calibration_0410
 
   extends Modelica.Icons.Example;
 
-  ThermalZones.FlexlabXRaNorth flexlabXRA(lat=weaDat.lat)
+  Test2.ThermalZones1.FlexlabXRaNorth flexlabXRA(lat=weaDat.lat)
     annotation (Placement(transformation(extent={{736,-334},{1376,352}})));
   Modelica.Blocks.Sources.CombiTimeTable TSetRooHea(table=[5097600,
         288.705555555556; 5101200,288.705555555556; 5104800,288.705555555556;
@@ -397,7 +397,8 @@ model XRA_Baseline_Calibration_0410
                                          extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "Heating setpoint for room temperature"
     annotation (Placement(transformation(extent={{-184,-190},{-110,-116}})));
-  Fluid.Aachen_HP_2stage_FMU_wTMixCalc_ReaFlo aachen_HP_2stage_FMU_wTMixCalc
+  Test2.Fluid1.Aachen_HP_2stage_FMU_wTMixCalc_ReaFlo
+    aachen_HP_2stage_FMU_wTMixCalc
     annotation (Placement(transformation(extent={{170,-128},{298,6}})));
   Buildings.Fluid.Sources.MassFlowSource_T supFan(
     redeclare package Medium = Buildings.Media.Air,
@@ -1322,7 +1323,7 @@ model XRA_Baseline_Calibration_0410
         0.154354117498977; 9370800,0.153156848862456], extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
     "actual OA air flow rate"
     annotation (Placement(transformation(extent={{-46,208},{28,282}})));
-  Fluid.HeatpumpFanCurve heatpumpFanCurve
+  Test2.Fluid1.HeatpumpFanCurve heatpumpFanCurve
     annotation (Placement(transformation(extent={{424,54},{536,152}})));
   Modelica.Blocks.Math.Add sumHP annotation (Placement(transformation(
         extent={{-21,-21},{21,21}},

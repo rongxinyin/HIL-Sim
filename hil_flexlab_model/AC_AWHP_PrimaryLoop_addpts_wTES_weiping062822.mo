@@ -184,8 +184,7 @@ model AC_AWHP_PrimaryLoop_addpts_wTES_weiping062822
         rotation=90,
         origin={224,-238})));
 
-   hil_flexlab_model.Data.BBR_3C_Med casDat
-    "Case study data"
+  hil_flexlab_model.Test2.Data.BBR_3C_Med casDat "Case study data"
     annotation (Placement(transformation(extent={{-6,-92},{54,-152}})));
 
 equation

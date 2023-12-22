@@ -33,8 +33,8 @@ partial model partialInterface_noPV "Interface for examples"
     nPorts=2) annotation (Placement(transformation(extent={{26,-22},{66,18}})));
   Modelica.Blocks.Math.MultiSum totPowHVAC
     annotation (Placement(transformation(extent={{80,94},{92,106}})));
-  replaceable hil_flexlab_model.Data.PSP_4B_Med casDat(minOAFlo=15/2118.88*casDat.occ_density*1.2*
-        roo.roo.AFlo) "Case study data"
+  replaceable hil_flexlab_model.Test2.Data.PSP_4B_Med casDat(minOAFlo=15/
+        2118.88*casDat.occ_density*1.2*roo.roo.AFlo) "Case study data"
     annotation (Placement(transformation(extent={{-180,82},{-160,102}})));
   hil_flexlab_model.BaseClasses.Controls.RTU con(
     mAir_flow_nominal=casDat.mAir_flow_nominal,

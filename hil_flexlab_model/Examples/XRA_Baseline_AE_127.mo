@@ -23,8 +23,7 @@ model XRA_Baseline_AE_127
    Buildings.BoundaryConditions.WeatherData.ReaderTMY3 weaDat(filNam=casDat.weaDatImport)
     annotation (Placement(transformation(extent={{-274,394},{-254,414}})));
 
-  replaceable hil_flexlab_model.Data.PSP_4B_Med
-                          casDat(weaDatImport=
+  replaceable hil_flexlab_model.Test2.Data.PSP_4B_Med casDat(weaDatImport=
         ModelicaServices.ExternalReferences.loadResource(
         "modelica://hil_flexlab_model/Resources/weatherdata/US_Berkeley_20210101.mos"))
     "Case study data"

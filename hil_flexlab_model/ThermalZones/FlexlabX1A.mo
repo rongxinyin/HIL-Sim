@@ -314,57 +314,54 @@ model FlexlabX1A "Model of a flexlab x1a"
         origin={-170,220})));
 
   parameter
-    Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction9
+    Test2.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction9
     SouthExt
     annotation (Placement(transformation(extent={{-134,468},{-114,488}})));
   parameter
-    Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_1975Roof
+    Test2.Data.Constructions.OpaqueConstructions.Roofs.ASHRAE_901_1975Roof
     R20Wal annotation (Placement(transformation(extent={{-92,466},{-72,486}})));
   parameter
-    Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
+    Test2.Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
     R52Wal annotation (Placement(transformation(extent={{-50,468},{-30,488}})));
-  parameter
-    Data.Constructions.GlazingSystems.SingleClear3
-    glaSys(haveInteriorShade=false)
+  parameter Test2.Data.Constructions.GlazingSystems.SingleClear3 glaSys(
+      haveInteriorShade=false)
     annotation (Placement(transformation(extent={{-130,434},{-110,454}})));
   parameter
-    Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionWall
+    Test2.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionWall
     parCon annotation (Placement(transformation(extent={{-12,466},{8,486}})));
   parameter
-    Data.Constructions.OpaqueConstructions.DividingWalls.TestCellDividngWall
+    Test2.Data.Constructions.OpaqueConstructions.DividingWalls.TestCellDividngWall
     celDiv annotation (Placement(transformation(extent={{28,466},{48,486}})));
   parameter
-    Data.Constructions.OpaqueConstructions.DividingWalls.TestBedDividingWall
+    Test2.Data.Constructions.OpaqueConstructions.DividingWalls.TestBedDividingWall
     bedDiv annotation (Placement(transformation(extent={{12,432},{32,452}})));
   parameter
-    Data.Constructions.OpaqueConstructions.DividingWalls.TestZoneDividngWall
+    Test2.Data.Constructions.OpaqueConstructions.DividingWalls.TestZoneDividngWall
     zonDiv
     annotation (Placement(transformation(extent={{-130,398},{-110,418}})));
   parameter
-    Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction1
+    Test2.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction1
     WestExt
     annotation (Placement(transformation(extent={{-130,368},{-110,388}})));
-  parameter
-    Data.Constructions.OpaqueConstructions.Roofs.CeilingTile
+  parameter Test2.Data.Constructions.OpaqueConstructions.Roofs.CeilingTile
     ceiling
     annotation (Placement(transformation(extent={{-132,334},{-112,354}})));
   parameter
-    Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction3
+    Test2.Data.Constructions.OpaqueConstructions.ExteriorConstructions.Construction3
     NorthExt annotation (Placement(transformation(extent={{12,402},{32,422}})));
   parameter
-    Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorInsulated
+    Test2.Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorInsulated
     extDoo annotation (Placement(transformation(extent={{18,372},{38,392}})));
   parameter
-    Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionDoor
+    Test2.Data.Constructions.OpaqueConstructions.PartitionConstructions.PartitionDoor
     parDoo
     annotation (Placement(transformation(extent={{-130,306},{-110,326}})));
   parameter
-    Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
-    higIns
-    annotation (Placement(transformation(extent={{84,464},{104,484}})));
+    Test2.Data.Constructions.OpaqueConstructions.DividingWalls.CellAndElectricalDividingWall
+    higIns annotation (Placement(transformation(extent={{84,464},{104,484}})));
 
   parameter
-    Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorUninsulated
+    Test2.Data.Constructions.OpaqueConstructions.ExteriorConstructions.ExteriorDoorUninsulated
     extDooUn annotation (Placement(transformation(extent={{54,434},{74,454}})));
 
   parameter Buildings.HeatTransfer.Data.OpaqueConstructions.Generic
