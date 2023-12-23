@@ -1,6 +1,5 @@
-within hil_flexlab_model.BaseClasses;
-block ModeAndSetPoints
-  "Output zone setpoint with operation mode selection"
+within hil_flexlab_model.Test1.BaseClasses1;
+block ModeAndSetPoints "Output zone setpoint with operation mode selection"
 
   parameter Real TZonHeaOn(
     final unit="K",
@@ -246,8 +245,7 @@ protected
     final k=TZonCooOff)
     "Cooling off set point"
     annotation (Placement(transformation(extent={{-120,20},{-100,40}})));
-  OperationMode
-    opeModSel(
+  OperationMode opeModSel(
     have_winSen=have_winSen,
     final numZon=1,
     final preWarCooTim=preWarCooTim,
@@ -257,8 +255,8 @@ protected
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant tCooDowHeaUp(
     final k=warCooTim) "Cool down and heat up time (simplified as constant)"
     annotation (Placement(transformation(extent={{-120,180},{-100,200}})));
-  ZoneStatus                                                         zonSta(
-    final have_winSen=have_winSen) "Check zone temperature status"
+  ZoneStatus zonSta(final have_winSen=have_winSen)
+    "Check zone temperature status"
     annotation (Placement(transformation(extent={{-60,40},{-40,60}})));
   Buildings.Controls.OBC.CDL.Conversions.BooleanToInteger colZon
     "Check if the zone is cold zone"

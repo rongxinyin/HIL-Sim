@@ -8,6 +8,6 @@
 **/dsfinal.txt
 **/dsin.txt
 *.mat
-**/spawn-*.flo
+**/spawn-*/
 **/buildlog.txt
 **/*.bak-mo

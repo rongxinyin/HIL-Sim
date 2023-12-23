@@ -1,4 +1,4 @@
-within hil_flexlab_model.BaseClasses;
+within hil_flexlab_model.Test1.BaseClasses1;
 block ZoneStatus "Block that outputs zone temperature status"
 
   parameter Real bouLim(

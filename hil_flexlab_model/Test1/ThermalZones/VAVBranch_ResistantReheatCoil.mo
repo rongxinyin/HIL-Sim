@@ -1,5 +1,5 @@
-within hil_flexlab_model.ThermalZones;
-model VAVBranch_useResistantReheatCoil "Supply branch of a VAV system"
+within hil_flexlab_model.Test1.ThermalZones;
+model VAVBranch_ResistantReheatCoil "Supply branch of a VAV system"
   extends Modelica.Blocks.Icons.Block;
   replaceable package MediumA = Modelica.Media.Interfaces.PartialMedium
     "Medium model for air" annotation (choicesAllMatching=true);
@@ -178,4 +178,4 @@ and requires a discharge air flow rate set-point (normalized to the nominal valu
 as a control signal.
 </p>
 </html>"));
-end VAVBranch_useResistantReheatCoil;
+end VAVBranch_ResistantReheatCoil;

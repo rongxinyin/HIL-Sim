@@ -1,4 +1,4 @@
-within hil_flexlab_model.BaseClasses;
+within hil_flexlab_model.Test1.BaseClasses1;
 block OperationMode "Block that outputs the operation mode"
 
   parameter Boolean have_winSen
@@ -160,9 +160,7 @@ protected
     final uHigh=0.1)
     "Hysteresis that outputs if any zone temperature is lower than freeze protection threshold temperature"
     annotation (Placement(transformation(extent={{-140,-120},{-120,-100}})));
-  AddParameter addPar(
-    final p=TZonFreProOn,
-    final k=-1)
+  AddParameter addPar(final p=TZonFreProOn, final k=-1)
     "Calculate differential between minimum zone temperature and freeze protection threshold temperature"
     annotation (Placement(transformation(extent={{-180,-120},{-160,-100}})));
   Buildings.Controls.OBC.CDL.Continuous.Hysteresis hys10(
@@ -171,19 +169,13 @@ protected
     final uHigh=0.1)
     "Hysteresis that outputs if all zone temperature are higher than threshold temperature of ending freeze protection"
     annotation (Placement(transformation(extent={{-140,-160},{-120,-140}})));
-  AddParameter addPar1(
-    final k=1,
-    final p=(-1)*TZonFreProOff)
+  AddParameter addPar1(final k=1, final p=(-1)*TZonFreProOff)
     "Calculate differential between maximum zone temperature and threshold temperature of ending freeze protection"
     annotation (Placement(transformation(extent={{-180,-160},{-160,-140}})));
-  AddParameter                                       addPar2(
-    final p=preWarCooTim,
-    final k=-1)
+  AddParameter addPar2(final p=preWarCooTim, final k=-1)
     "Calculate the differential between maximum cool down time and the allowed maximum cool down time"
     annotation (Placement(transformation(extent={{-140,200},{-120,220}})));
-  AddParameter addPar3(
-    final p=preWarCooTim,
-    final k=-1)
+  AddParameter addPar3(final p=preWarCooTim, final k=-1)
     "Calculate the differential between maximum warm-up time and the allowed maximum warm-up time"
     annotation (Placement(transformation(extent={{-140,160},{-120,180}})));
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant maxWarCooTime(

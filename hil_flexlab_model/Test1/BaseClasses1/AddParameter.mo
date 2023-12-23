@@ -1,4 +1,4 @@
-within hil_flexlab_model.BaseClasses;
+within hil_flexlab_model.Test1.BaseClasses1;
 block AddParameter "Output the sum of an input plus a parameter"
 
   parameter Real p "Value to be added";

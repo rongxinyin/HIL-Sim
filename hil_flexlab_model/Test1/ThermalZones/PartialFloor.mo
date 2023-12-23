@@ -1,6 +1,5 @@
-within hil_flexlab_model.ThermalZones;
-partial model PartialFloor_withAuxRooms_noDoor
-  "Interface for a model of a floor of a building"
+within hil_flexlab_model.Test1.ThermalZones;
+partial model PartialFloor "Interface for a model of a floor of a building"
 
   replaceable package Medium = Modelica.Media.Interfaces.PartialMedium
     "Medium model for air" annotation (choicesAllMatching=true);
@@ -222,4 +221,4 @@ First implementation.
 </li>
 </ul>
 </html>"));
-end PartialFloor_withAuxRooms_noDoor;
+end PartialFloor;

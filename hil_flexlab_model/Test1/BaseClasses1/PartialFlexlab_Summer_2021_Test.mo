@@ -1,6 +1,5 @@
-within hil_flexlab_model.BaseClasses;
-partial model
-  PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab_withAuxRooms_noDoor
+within hil_flexlab_model.Test1.BaseClasses1;
+partial model PartialFlexlab_Summer_2021_Test
   "Validated Partial model of variable air volume flow system with terminal reheat and 3 VAV zones at flexlab x1a"
 
   package MediumA = Buildings.Media.Air "Medium model for air";
@@ -223,21 +222,21 @@ partial model
         MediumA, m_flow_nominal=m_flow_nominal) "Outside air volume flow rate"
     annotation (Placement(transformation(extent={{-72,-44},{-50,-22}})));
 
-  ThermalZones.VAVBranch_useResistantReheatCoil       nor(
+  ThermalZones.VAVBranch_ResistantReheatCoil nor(
     redeclare package MediumA = MediumA,
     redeclare package MediumW = MediumW,
     m_flow_nominal=mNor_flow_nominal,
     VRoo=VRooNor,
     allowFlowReversal=allowFlowReversal) "North-facing thermal zone"
     annotation (Placement(transformation(extent={{696,20},{736,60}})));
-  ThermalZones.VAVBranch_useResistantReheatCoil       cor(
+  ThermalZones.VAVBranch_ResistantReheatCoil cor(
     redeclare package MediumA = MediumA,
     redeclare package MediumW = MediumW,
     m_flow_nominal=mCor_flow_nominal,
     VRoo=VRooCor,
     allowFlowReversal=allowFlowReversal) "Middle thermal zone"
     annotation (Placement(transformation(extent={{824,24},{864,64}})));
-  ThermalZones.VAVBranch_useResistantReheatCoil       sou(
+  ThermalZones.VAVBranch_ResistantReheatCoil sou(
     redeclare package MediumA = MediumA,
     redeclare package MediumW = MediumW,
     m_flow_nominal=mSou_flow_nominal,
@@ -346,10 +345,8 @@ partial model
   Buildings.BoundaryConditions.WeatherData.Bus weaBus "Weather Data Bus"
     annotation (Placement(transformation(extent={{-330,170},{-310,190}}),
         iconTransformation(extent={{-360,170},{-340,190}})));
-  ThermalZones.Floor_withAuxRooms_noDoor
-                                flo(
-    redeclare final package Medium = MediumA,
-    final use_windPressure=use_windPressure)
+  ThermalZones.Floor flo(redeclare final package Medium = MediumA, final
+      use_windPressure=use_windPressure)
     "Model of a floor of the building that is served by this VAV system"
     annotation (Placement(transformation(extent={{794,384},{1108,562}})));
 
@@ -411,7 +408,7 @@ partial model
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={1080,128})));
-  MixingBox                                          eco(
+  MixingBox eco(
     redeclare package Medium = MediumA,
     mOut_flow_nominal=m_flow_nominal,
     dpOut_nominal=10,
@@ -823,4 +820,4 @@ This is for
 </li>
 </ul>
 </html>"));
-end PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab_withAuxRooms_noDoor;
+end PartialFlexlab_Summer_2021_Test;

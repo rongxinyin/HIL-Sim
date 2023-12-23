@@ -1,6 +1,5 @@
-within hil_flexlab_model.BaseClasses;
-model MixingBox
-  "Outside air mixing box with non-interlocked air dampers"
+within hil_flexlab_model.Test1.BaseClasses1;
+model MixingBox "Outside air mixing box with non-interlocked air dampers"
 
   replaceable package Medium =
       Modelica.Media.Interfaces.PartialMedium "Medium in the component"
@@ -217,7 +216,6 @@ model MixingBox
         origin={80,0},
         extent={{-10,-10},{10,10}},
         rotation=90)));
-
 
 protected
   parameter Medium.Density rho_default=Medium.density(sta_default)

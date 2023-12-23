@@ -1,6 +1,6 @@
-within hil_flexlab_model.ThermalZones;
-model Floor_withAuxRooms_noDoor "Model of a floor of the building"
-  extends hil_flexlab_model.ThermalZones.PartialFloor_withAuxRooms_noDoor(
+within hil_flexlab_model.Test1.ThermalZones;
+model Floor "Model of a floor of the building"
+  extends hil_flexlab_model.Test1.ThermalZones.PartialFloor(
     leaPle(s=6.49/9.33, azi=Buildings.Types.Azimuth.W),
     VRooCor=cor.V,
     VRooSou=sou.V,
@@ -405,4 +405,4 @@ to be parameters does not imply that the whole record has the variability of a p
 </li>
 </ul>
 </html>"));
-end Floor_withAuxRooms_noDoor;
+end Floor;

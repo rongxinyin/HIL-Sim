@@ -1,10 +1,8 @@
-within hil_flexlab_model.Examples;
-model
-  FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule_useSpawn_Flexlab_withAuxRooms_noDoor
+within hil_flexlab_model.Test1.Examples;
+model Flexlab_Summer_2021_Test_LoadShed
   "DR mode - Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
-  extends
-    hil_flexlab_model.BaseClasses.PartialOpenLoopX1aV020123_modifyVav_useSpawn_Flexlab_withAuxRooms_noDoor(
+  extends hil_flexlab_model.Test1.BaseClasses1.PartialFlexlab_Summer_2021_Test(
     occSch(
       occupancy={0,86399},
       firstEntryOccupied=true,
@@ -16,16 +14,16 @@ model
       cor(T_start=294.96),
       sou(T_start=294.96),
       idfName=Modelica.Utilities.Files.loadResource(
-          "modelica://Buildings/Resources/Data/ThermalZones/EnergyPlus_9_6_0/Examples/energyPlusFiles/X1-2021-V8_v2_correctedInternalGain_addGainOutputVariable.idf"),
+          "modelica://hil_flexlab_model/Resources/energyPlusFiles/X1-2021-V8_v2_correctedInternalGain.idf"),
       epwName=Modelica.Utilities.Files.loadResource(
-          "modelica://Buildings/Resources/weatherdata/USA_CA_Victorville-George.AFB-So.California.Logistics.AP.723825_TMYx.epw"),
+          "modelica://hil_flexlab_model/Resources/weatherdata/US_Berkeley_20210913.epw"),
       weaName=Modelica.Utilities.Files.loadResource(
-          "modelica://Buildings/Resources/weatherdata/USA_CA_Victorville-George.AFB-So.California.Logistics.AP.723825_TMYx.mos"),
+          "modelica://hil_flexlab_model/Resources/weatherdata/US_Berkeley_20210913.mos"),
       ele(T_start=294.96),
       clo(T_start=294.96),
       ple(T_start=294.96)),
     weaDat(filNam=Modelica.Utilities.Files.loadResource(
-          "modelica://Buildings/Resources/weatherdata/USA_CA_Victorville-George.AFB-So.California.Logistics.AP.723825_TMYx.mos")),
+          "modelica://hil_flexlab_model/Resources/weatherdata/US_Berkeley_20210913.mos")),
     dpRetDuc1(dp_nominal=30.3));
 
                               //,
@@ -43,7 +41,7 @@ model
   parameter Modelica.Units.SI.PressureDifference dpDisRetMax=40
     "Maximum return fan discharge static pressure setpoint";
 
-  Plants.Controls.Controller                       conVAVNor(
+  Plants1.Controls.Controller conVAVNor(
     V_flow_nominal=mNor_flow_nominal/1.2,
     AFlo=AFloNor,
     final samplePeriod=samplePeriod,
@@ -57,7 +55,7 @@ model
     dTDisZonSetMax=5,
     TDisMin=285.95) "Controller for terminal unit north zone"
     annotation (Placement(transformation(extent={{654,4},{674,24}})));
-  Plants.Controls.Controller                       conVAVCor(
+  Plants1.Controls.Controller conVAVCor(
     V_flow_nominal=mCor_flow_nominal/1.2,
     AFlo=AFloCor,
     final samplePeriod=samplePeriod,
@@ -70,7 +68,7 @@ model
     dTDisZonSetMax=5,
     TDisMin=285.95) "Controller for terminal unit mid zone"
     annotation (Placement(transformation(extent={{778,104},{798,124}})));
-  Plants.Controls.Controller                       conVAVSou(
+  Plants1.Controls.Controller conVAVSou(
     V_flow_nominal=mSou_flow_nominal/1.2,
     AFlo=AFloSou,
     final samplePeriod=samplePeriod,
@@ -111,7 +109,7 @@ model
   Buildings.Controls.OBC.CDL.Routing.BooleanScalarReplicator booRep(final nout=
         numZon) "Replicate boolean input"
     annotation (Placement(transformation(extent={{-146,316},{-126,336}})));
-  BaseClasses.ModeAndSetPoints                                  TZonSet[numZon](
+  BaseClasses1.ModeAndSetPoints TZonSet[numZon](
     final TZonHeaOn=fill(273.15 + 21.1, numZon),
     final TZonHeaOff=fill(THeaOff, numZon),
     TZonCooOn=fill(273.15 + 23.3, numZon),
@@ -135,7 +133,7 @@ model
   Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow.SumZone
     zonToSys(final numZon=numZon) "Sum up zone calculation output"
     annotation (Placement(transformation(extent={{274,420},{294,440}})));
-  hil_flexlab_model.BaseClasses.Controls.Controller_G36 conAHU(
+  hil_flexlab_model.Test1.BaseClasses1.Controls.Controller_G36 conAHU(
     retDamPhyPosMax=0.7,
     outDamPhyPosMin=0.3,
     pMinSet=250,
@@ -150,13 +148,14 @@ model
     TSupSetDes=285.95,
     numIgnReqSupTem=0,
     triAmoSupTem=0,
-    resAmoSupTem=0)                                            "AHU controller"
+    resAmoSupTem=0) "AHU controller"
     annotation (Placement(transformation(extent={{360,418},{440,546}})));
   Modelica.Blocks.Math.Add add
     annotation (Placement(transformation(extent={{-124,446},{-144,466}})));
   Modelica.Blocks.Sources.CombiTimeTable cooSetDR(
-    table=[0,3.3667; 5,3.3667; 5,2.2556; 6,2.2556; 6,1.7; 7,1.7; 7,0.0333; 22,
-        0.0333; 22,3.3667; 24,3.3667],
+    table=[0,3.3667; 5,3.3667; 5,2.2556; 6,2.2556; 6,1.7; 7,1.7; 7,0.0333; 14,
+        0.0333; 14,2.2556; 18,2.2556; 18,0.0333; 22,0.0333; 22,3.3667; 24,
+        3.3667],
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic,
     timeScale=3600) "cooling schedule for demand response"
     annotation (Placement(transformation(extent={{-148,400},{-128,420}})));
@@ -181,13 +180,13 @@ model
   Buildings.Fluid.Sensors.Temperature southZoneReturnAirTemperature(redeclare
       package Medium = Buildings.Media.Air)
     annotation (Placement(transformation(extent={{1182,250},{1202,270}})));
-  Plants.Controls.ExhaustDamperPositionBlock exhaustDamperPositionBlock
+  Plants1.Controls.ExhaustDamperPositionBlock exhaustDamperPositionBlock
     annotation (Placement(transformation(extent={{-88,-92},{-68,-72}})));
   Modelica.Blocks.Sources.Constant const(k=0)
     annotation (Placement(transformation(extent={{550,188},{570,208}})));
   Modelica.Blocks.Sources.BooleanConstant booleanConstant(k=false)
     annotation (Placement(transformation(extent={{-292,494},{-272,514}})));
-  Plants.Controls.OutdoorDamperPositionBlock outdoorDamperPositionBlock
+  Plants1.Controls.OutdoorDamperPositionBlock outdoorDamperPositionBlock
     annotation (Placement(transformation(extent={{-76,-130},{-56,-110}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
@@ -518,5 +517,4 @@ This is for
       Interval=299.999808,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
-end
-  FlexlabX1aNoLeakBaseline_Calib_G36Paper_Shift_corrected_occupancy_schedule_useSpawn_Flexlab_withAuxRooms_noDoor;
+end Flexlab_Summer_2021_Test_LoadShed;
