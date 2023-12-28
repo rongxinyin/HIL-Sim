@@ -281,7 +281,7 @@ The supply fan is off (<code>uSupFan = false</code>),
 </li>
 <li>
 the freeze protection stage
-<a href=\"modelica://Buildings.Controls.OBC.ASHRAE.G36_PR1.Types.FreezeProtectionStages\">
+<a href=\"modelica://Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.Types.FreezeProtectionStages\">
 Buildings.Controls.OBC.ASHRAE.G36_PR1.Types.FreezeProtectionStages</a>
 is not <code>stage0</code>.
 </li>

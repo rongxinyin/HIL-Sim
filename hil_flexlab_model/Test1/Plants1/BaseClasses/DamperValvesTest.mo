@@ -322,8 +322,7 @@ protected
     annotation (Placement(transformation(extent={{-240,220},{-220,240}})));
   Buildings.Controls.OBC.CDL.Integers.Equal isUno "Output true if the operation mode is unoccupied"
     annotation (Placement(transformation(extent={{220,-322},{240,-302}})));
-  Buildings.Controls.OBC.CDL.Integers.Sources.Constant unOcc(
-    final k=Buildings.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.unoccupied)
+  Buildings.Controls.OBC.CDL.Integers.Sources.Constant unOcc(final k=Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.unoccupied)
     "Constant signal for unoccupied mode"
     annotation (Placement(transformation(extent={{170,-322},{190,-302}})));
   Buildings.Controls.OBC.CDL.Continuous.Switch watValPosUno

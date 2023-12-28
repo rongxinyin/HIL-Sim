@@ -115,7 +115,7 @@ model Flexlab_Summer_2021_Test_NoDemandFlexibility
     TZonCooOn=fill(273.15 + 23.3, numZon),
     final TZonCooOff=fill(TCooOff, numZon)) "Zone setpoint temperature"
     annotation (Placement(transformation(extent={{-32,322},{-12,342}})));
-  Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow.Zone
+  Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow.Zone
     zonOutAirSet[numZon](
     final AFlo=AFlo,
     final have_occSen=fill(false, numZon),
@@ -130,7 +130,7 @@ model Flexlab_Summer_2021_Test_NoDemandFlexibility
   Buildings.Controls.OBC.CDL.Routing.BooleanScalarReplicator booRep1(final nout=
        numZon) "Replicate signal whether the outdoor airflow is required"
     annotation (Placement(transformation(extent={{480,438},{500,458}})));
-  Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow.SumZone
+  Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow.SumZone
     zonToSys(final numZon=numZon) "Sum up zone calculation output"
     annotation (Placement(transformation(extent={{274,420},{294,440}})));
   hil_flexlab_model.Test1.BaseClasses1.Controls.Controller_G36 conAHU(
@@ -456,7 +456,7 @@ for a description of the HVAC system and the building envelope.
 <p>
 The control is based on ASHRAE Guideline 36, and implemented
 using the sequences from the library
-<a href=\"modelica://Buildings.Controls.OBC.ASHRAE.G36_PR1\">
+<a href=\"modelica://Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1\">
 Buildings.Controls.OBC.ASHRAE.G36_PR1</a> for
 multi-zone VAV systems with economizer. The schematic diagram of the HVAC and control
 sequence is shown in the figure below.

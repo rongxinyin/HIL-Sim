@@ -680,8 +680,8 @@ package Plants
         annotation (Placement(transformation(extent={{-240,220},{-220,240}})));
       Buildings.Controls.OBC.CDL.Integers.Equal isUno "Output true if the operation mode is unoccupied"
         annotation (Placement(transformation(extent={{220,-322},{240,-302}})));
-      Buildings.Controls.OBC.CDL.Integers.Sources.Constant unOcc(
-        final k=Buildings.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.unoccupied)
+      Buildings.Controls.OBC.CDL.Integers.Sources.Constant unOcc(final k=
+            Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.unoccupied)
         "Constant signal for unoccupied mode"
         annotation (Placement(transformation(extent={{170,-322},{190,-302}})));
       Buildings.Controls.OBC.CDL.Continuous.Switch watValPosUno
@@ -2027,7 +2027,7 @@ First implementation.
         annotation (Placement(transformation(extent={{140,-140},{180,-100}}),
             iconTransformation(extent={{100,-100},{140,-60}})));
 
-      Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Reheat.SetPoints.ActiveAirFlow
+      Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Reheat.SetPoints.ActiveAirFlow
         actAirSet(
         final AFlo=AFlo,
         final have_occSen=have_occSen,
@@ -2039,8 +2039,7 @@ First implementation.
         final VDisConMin_flow=VDisConMin_flow,
         final VOutPerAre_flow=VOutPerAre_flow,
         final VOutPerPer_flow=VOutPerPer_flow,
-        final CO2Set=CO2Set)
-        "Active airflow rate setpoint"
+        final CO2Set=CO2Set) "Active airflow rate setpoint"
         annotation (Placement(transformation(extent={{-40,60},{-20,80}})));
       hil_flexlab_model.Plants.BaseClasses.DamperValvesTest_modifyHeatingSequence
         damVal(
@@ -2057,7 +2056,8 @@ First implementation.
         V_flow_nominal=max(VDisCooSetMax_flow, VDisHeaSetMax_flow))
         "Damper and valve controller"
         annotation (Placement(transformation(extent={{20,-20},{40,0}})));
-      Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Reheat.SystemRequests sysReq(
+      Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Reheat.SystemRequests
+        sysReq(
         final samplePeriod=samplePeriod,
         final have_heaWatCoi=have_heaWatCoi,
         final have_heaPla=have_heaPla,
@@ -2067,8 +2067,7 @@ First implementation.
         final errTDis_2=errTDis_2,
         final durTimTem=durTimTem,
         final durTimFlo=durTimFlo,
-        final durTimDisAir=durTimDisAir)
-        "Number of system requests"
+        final durTimDisAir=durTimDisAir) "Number of system requests"
         annotation (Placement(transformation(extent={{80,-100},{100,-80}})));
       Buildings.Controls.Continuous.LimPID         conHeaLoo(
         final controllerType=controllerTypeHea,
@@ -2094,8 +2093,8 @@ First implementation.
       Buildings.Controls.OBC.CDL.Integers.Equal isUnOcc
         "Output true if unoccupied"
         annotation (Placement(transformation(extent={{-18,-160},{2,-140}})));
-      Buildings.Controls.OBC.CDL.Integers.Sources.Constant conIntUn(
-        final k=Buildings.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.unoccupied)
+      Buildings.Controls.OBC.CDL.Integers.Sources.Constant conIntUn(final k=
+            Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.unoccupied)
         "Constant signal for unoccupied mode"
         annotation (Placement(transformation(extent={{-60,-160},{-40,-140}})));
       Buildings.Controls.OBC.CDL.Logical.Not isNotUn
@@ -2319,7 +2318,7 @@ temperature <code>TZon</code>, zone setpoints temperatures <code>TZonHeaSet</cod
 This sequence sets the active maximum and minimum airflow according to
 Part 5.E.3-5. Depending on operation modes <code>uOpeMod</code>, it sets the
 airflow rate limits for cooling and heating supply. See
-<a href=\"modelica://Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Reheat.SetPoints.ActiveAirFlow\">
+<a href=\"modelica://Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Reheat.SetPoints.ActiveAirFlow\">
 Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Reheat.SetPoints.ActiveAirFlow</a>.
 </p>
 <h4>c. Damper and valve control</h4>
@@ -2330,7 +2329,7 @@ control loop signal, it calculates the discharge air temperature setpoint
 <code>TDisHeaSet</code>. Along with the defined maximum and minimum airflow, measured
 zone temperature, the sequence outputs <code>yDam</code>, <code>yVal</code>,
 <code>TDisHeaSet</code> and discharge airflow rate setpoint <code>VDisSet_flow</code>.
-See <a href=\"modelica://Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Reheat.DamperValves\">
+See <a href=\"modelica://Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Reheat.DamperValves\">
 Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Reheat.DamperValves</a>.
 </p>
 <h4>d. System reset requests generation</h4>
@@ -2340,7 +2339,7 @@ cooling supply air temperature reset requests <code>yZonTemResReq</code>,
 static pressure reset requests <code>yZonPreResReq</code>, hot water reset
 requests <code>yHeaValResReq</code>, and the boiler plant reset requests
 <code>yHeaPlaReq</code>. See
-<a href=\"modelica://Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Reheat.SystemRequests\">
+<a href=\"modelica://Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Reheat.SystemRequests\">
 Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.Reheat.SystemRequests</a>.
 </p>
 </html>",     revisions="<html>

@@ -139,12 +139,10 @@ block ModeAndSetPoints "Output zone setpoint with operation mode selection"
     final quantity="TemperatureDifference")=2.2
     "Heating setpoint decrease value when heating demand limit level 3 is imposed"
     annotation (Dialog(tab="Setpoint adjust", group="Demands settings"));
-  parameter Integer cooDemLimLevCon=Buildings.Controls.OBC.ASHRAE.G36_PR1.Types.DemandLimitLevels.cooling0
-    "Cooling demand limit level"
-    annotation (Dialog(tab="Setpoint adjust"));
-  parameter Integer heaDemLimLevCon=Buildings.Controls.OBC.ASHRAE.G36_PR1.Types.DemandLimitLevels.heating0
-    "Heating demand limit level"
-    annotation (Dialog(tab="Setpoint adjust"));
+  parameter Integer cooDemLimLevCon=Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.Types.DemandLimitLevels.cooling0
+    "Cooling demand limit level" annotation (Dialog(tab="Setpoint adjust"));
+  parameter Integer heaDemLimLevCon=Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.Types.DemandLimitLevels.heating0
+    "Heating demand limit level" annotation (Dialog(tab="Setpoint adjust"));
   parameter Boolean winStaCon=false
     "Window status, set to true if window is open"
     annotation (Dialog(tab="Setpoint adjust"));
@@ -201,7 +199,7 @@ block ModeAndSetPoints "Output zone setpoint with operation mode selection"
       iconTransformation(extent={{100,-90},{140,-50}})));
 
 protected
-  Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.SetPoints.ZoneTemperatures
+  Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.SetPoints.ZoneTemperatures
     TZonSet(
     final have_occSen=have_occSen,
     final have_winSen=have_winSen,
@@ -445,7 +443,7 @@ cool-down, setback, freeze protection setback, setup, unoccupied) according
 to current time, the time to next occupied hours <code>tNexOcc</code> and
 current zone temperature <code>TZon</code>.
 See
-<a href=\"modelica://Buildings.Controls.OBC.ASHRAE.G36_PR1.Generic.SetPoints.OperationMode\">
+<a href=\"modelica://Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.Generic.SetPoints.OperationMode\">
 Buildings.Controls.OBC.ASHRAE.G36_PR1.Generic.SetPoints.OperationMode</a>.
 </p>
 <h4>Zone setpoint temperature reset</h4>
@@ -454,14 +452,14 @@ This sequence is implemented according to Part 5.B.3. It sets the zone temperatu
 according to the globally specified setpoints, the local setpoint adjustments, the demand
 limits adjustment, the window status and the occupancy status.
 See
-<a href=\"modelica://Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.SetPoints.ZoneTemperatures\">
+<a href=\"modelica://Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.SetPoints.ZoneTemperatures\">
 Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.SetPoints.ZoneTemperatures</a>.
 </p>
 <h4>Usage</h4>
 <p>
 This version is for a single zone only to be used in the Single Zone VAV sequence.
 For multizone systems, use
-<a href=\"modelica://Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.ModeAndSetPoints\">
+<a href=\"modelica://Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.ModeAndSetPoints\">
 Buildings.Controls.OBC.ASHRAE.G36_PR1.TerminalUnits.ModeAndSetPoints</a>.
 </p>
 </html>", revisions="<html>

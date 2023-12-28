@@ -86,8 +86,8 @@ block OperationMode "Block that outputs the operation mode"
         iconTransformation(extent={{100,-20},{140,20}})));
 
 protected
-  Buildings.Controls.OBC.CDL.Continuous.Sources.Constant occModInd(
-    final k=Buildings.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.occupied)
+  Buildings.Controls.OBC.CDL.Continuous.Sources.Constant occModInd(final k=
+        Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.occupied)
     "Occupied mode "
     annotation (Placement(transformation(extent={{200,300},{220,320}})));
   Buildings.Controls.OBC.CDL.Continuous.Sources.Constant unoPerInd(
@@ -218,28 +218,28 @@ protected
   Buildings.Controls.OBC.CDL.Conversions.RealToInteger setUpMod
     "Convert Real number to Integer number"
     annotation (Placement(transformation(extent={{200,-220},{220,-200}})));
-  Buildings.Controls.OBC.CDL.Conversions.BooleanToInteger booToInt1(
-    final integerTrue=Buildings.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.warmUp)
+  Buildings.Controls.OBC.CDL.Conversions.BooleanToInteger booToInt1(final
+      integerTrue=Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.warmUp)
     "Convert Boolean to Integer number"
     annotation (Placement(transformation(extent={{260,170},{280,190}})));
-  Buildings.Controls.OBC.CDL.Conversions.BooleanToInteger booToInt(
-    final integerTrue=Buildings.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.coolDown)
+  Buildings.Controls.OBC.CDL.Conversions.BooleanToInteger booToInt(final
+      integerTrue=Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.coolDown)
     "Convert Boolean to Integer number"
     annotation (Placement(transformation(extent={{260,210},{280,230}})));
-  Buildings.Controls.OBC.CDL.Conversions.BooleanToInteger booToInt3(
-    final integerTrue=Buildings.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.unoccupied)
+  Buildings.Controls.OBC.CDL.Conversions.BooleanToInteger booToInt3(final
+      integerTrue=Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.unoccupied)
     "Convert Boolean to Integer "
     annotation (Placement(transformation(extent={{220,-340},{240,-320}})));
-  Buildings.Controls.OBC.CDL.Conversions.BooleanToReal booToRea6(
-    final realTrue=Buildings.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.setUp)
+  Buildings.Controls.OBC.CDL.Conversions.BooleanToReal booToRea6(final realTrue
+      =Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.setUp)
     "Convert Boolean to Real "
     annotation (Placement(transformation(extent={{60,-220},{80,-200}})));
-  Buildings.Controls.OBC.CDL.Conversions.BooleanToReal booToRea4(
-    final realTrue=Buildings.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.freezeProtection)
+  Buildings.Controls.OBC.CDL.Conversions.BooleanToReal booToRea4(final realTrue
+      =Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.freezeProtection)
     "Convert Boolean to Real "
     annotation (Placement(transformation(extent={{60,-120},{80,-100}})));
-  Buildings.Controls.OBC.CDL.Conversions.BooleanToReal booToRea3(
-    final realTrue=Buildings.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.setBack)
+  Buildings.Controls.OBC.CDL.Conversions.BooleanToReal booToRea3(final realTrue
+      =Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.Types.OperationModes.setBack)
     "Convert Boolean to Real "
     annotation (Placement(transformation(extent={{60,-20},{80,0}})));
   Buildings.Controls.OBC.CDL.Utilities.Assert assMes(

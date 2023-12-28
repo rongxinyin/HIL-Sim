@@ -13,12 +13,11 @@ package Fluid "HP models are stored here"
       dp_nominal=0,
       Q_flow_nominal=QHea_flow_nominal) "Heating coil"
       annotation (Placement(transformation(extent={{30,30},{50,50}})));
-    Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.VariableSpeed
-                                                  cooCoil(
+    Buildings.Fluid.DXSystems.Cooling.AirSource.VariableSpeed cooCoil(
       datCoi=datCoi,
       redeclare package Medium = MediumA,
       dp_nominal=0,
-      minSpeRat=0)                       "Cooling coil"
+      minSpeRat=0) "Cooling coil"
       annotation (Placement(transformation(extent={{70,30},{90,50}})));
     Modelica.Blocks.Interfaces.RealOutput PHea
       "Heating thermal power consumption"
@@ -26,31 +25,31 @@ package Fluid "HP models are stored here"
     Modelica.Blocks.Interfaces.RealOutput PCoo
       "Cooling electrical power consumption"
       annotation (Placement(transformation(extent={{200,90},{220,110}})));
-    Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.DXCoil datCoi(
+    Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.DXCoil datCoi(
       nSta=1,
       minSpeRat=0,
       sta={
-          Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.Stage(
-          spe=1,
-          nomVal=
-            Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.NominalValues(
-            Q_flow_nominal=-QCoo_flow_nominal,
-            COP_nominal=COP_cooling,
-            SHR_nominal=0.7,
-            m_flow_nominal=mAir_flow_nominal),
-          perCur=
-            Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.PerformanceCurve(
-            capFunT={1,0,0,0,0,0},
-            capFunFF={1,0,0,0},
-            EIRFunT={1,0,0,0,0,0},
-            EIRFunFF={1,0,0,0},
-            TConInMin=273.15 + 0,
-            TConInMax=273.15 + 50,
-            TEvaInMin=273.15 + 0,
-            TEvaInMax=273.15 + 50,
-            ffMin=0,
-            ffMax=10))},
-      m_flow_small=0.0001*mAir_flow_nominal)      "Coil data"
+          Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.Stage(
+            spe=1,
+            nomVal=
+            Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.NominalValues(
+              Q_flow_nominal=-QCoo_flow_nominal,
+              COP_nominal=COP_cooling,
+              SHR_nominal=0.7,
+              m_flow_nominal=mAir_flow_nominal),
+            perCur=
+            Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.PerformanceCurve(
+              capFunT={1,0,0,0,0,0},
+              capFunFF={1,0,0,0},
+              EIRFunT={1,0,0,0,0,0},
+              EIRFunFF={1,0,0,0},
+              TConInMin=273.15 + 0,
+              TConInMax=273.15 + 50,
+              TEvaInMin=273.15 + 0,
+              TEvaInMax=273.15 + 50,
+              ffMin=0,
+              ffMax=10))},
+      m_flow_small=0.0001*mAir_flow_nominal) "Coil data"
       annotation (Placement(transformation(extent={{90,-20},{110,0}})));
 
     Modelica.Blocks.Math.Add add
@@ -83,7 +82,7 @@ package Fluid "HP models are stored here"
       annotation (Line(points={{30,40},{20,40}}, color={0,127,255}));
     connect(uCoo, cooCoil.speRat) annotation (Line(points={{-220,20},{-160,20},{
             -160,90},{64,90},{64,48},{69,48}}, color={0,0,127}));
-    connect(weaBus.TDryBul, cooCoil.TConIn) annotation (Line(
+    connect(weaBus.TDryBul, cooCoil.TOut) annotation (Line(
         points={{-180,170},{-180,100},{62,100},{62,43},{69,43}},
         color={255,204,51},
         thickness=0.5), Text(
@@ -149,12 +148,11 @@ package Fluid "HP models are stored here"
       dp_nominal=0,
       Q_flow_nominal=QHea_flow_nominal) "Heating coil"
       annotation (Placement(transformation(extent={{30,30},{50,50}})));
-    Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.VariableSpeed
-                                                  cooCoil(
+    Buildings.Fluid.DXSystems.Cooling.AirSource.VariableSpeed cooCoil(
       datCoi=datCoi,
       redeclare package Medium = MediumA,
       dp_nominal=0,
-      minSpeRat=0)                       "Cooling coil"
+      minSpeRat=0) "Cooling coil"
       annotation (Placement(transformation(extent={{70,30},{90,50}})));
     Modelica.Blocks.Interfaces.RealOutput PHea
       "Heating thermal power consumption"
@@ -162,31 +160,31 @@ package Fluid "HP models are stored here"
     Modelica.Blocks.Interfaces.RealOutput PCoo
       "Cooling electrical power consumption"
       annotation (Placement(transformation(extent={{200,90},{220,110}})));
-    Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.DXCoil datCoi(
+    Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.DXCoil datCoi(
       nSta=1,
       minSpeRat=0,
       sta={
-          Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.Stage(
-          spe=1,
-          nomVal=
-            Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.NominalValues(
-            Q_flow_nominal=-QCoo_flow_nominal,
-            COP_nominal=COP_cooling,
-            SHR_nominal=0.7,
-            m_flow_nominal=mAir_flow_nominal),
-          perCur=
-            Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.PerformanceCurve(
-            capFunT={1,0,0,0,0,0},
-            capFunFF={1,0,0,0},
-            EIRFunT={1,0,0,0,0,0},
-            EIRFunFF={1,0,0,0},
-            TConInMin=273.15 + 0,
-            TConInMax=273.15 + 50,
-            TEvaInMin=273.15 + 0,
-            TEvaInMax=273.15 + 50,
-            ffMin=0,
-            ffMax=10))},
-      m_flow_small=0.0001*mAir_flow_nominal)      "Coil data"
+          Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.Stage(
+            spe=1,
+            nomVal=
+            Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.NominalValues(
+              Q_flow_nominal=-QCoo_flow_nominal,
+              COP_nominal=COP_cooling,
+              SHR_nominal=0.7,
+              m_flow_nominal=mAir_flow_nominal),
+            perCur=
+            Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.PerformanceCurve(
+              capFunT={1,0,0,0,0,0},
+              capFunFF={1,0,0,0},
+              EIRFunT={1,0,0,0,0,0},
+              EIRFunFF={1,0,0,0},
+              TConInMin=273.15 + 0,
+              TConInMax=273.15 + 50,
+              TEvaInMin=273.15 + 0,
+              TEvaInMax=273.15 + 50,
+              ffMin=0,
+              ffMax=10))},
+      m_flow_small=0.0001*mAir_flow_nominal) "Coil data"
       annotation (Placement(transformation(extent={{90,-20},{110,0}})));
 
     Modelica.Blocks.Math.Add add
@@ -220,7 +218,7 @@ package Fluid "HP models are stored here"
       annotation (Line(points={{30,40},{20,40}}, color={0,127,255}));
     connect(uCoo, cooCoil.speRat) annotation (Line(points={{-220,20},{-160,20},{
             -160,90},{64,90},{64,48},{69,48}}, color={0,0,127}));
-    connect(weaBus.TDryBul, cooCoil.TConIn) annotation (Line(
+    connect(weaBus.TDryBul, cooCoil.TOut) annotation (Line(
         points={{-180,170},{-180,100},{62,100},{62,43},{69,43}},
         color={255,204,51},
         thickness=0.5), Text(
@@ -287,11 +285,10 @@ package Fluid "HP models are stored here"
       dp_nominal=0,
       Q_flow_nominal=QHea_flow_nominal) "Heating coil"
       annotation (Placement(transformation(extent={{30,30},{50,50}})));
-    Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.MultiStage
-                                                  cooCoil(
+    Buildings.Fluid.DXSystems.Cooling.AirSource.MultiStage cooCoil(
       datCoi=datCoi,
       redeclare package Medium = MediumA,
-      dp_nominal=0)                       "Cooling coil"
+      dp_nominal=0) "Cooling coil"
       annotation (Placement(transformation(extent={{70,30},{90,50}})));
     Modelica.Blocks.Interfaces.RealOutput PHea
       "Heating thermal power consumption"
@@ -299,51 +296,51 @@ package Fluid "HP models are stored here"
     Modelica.Blocks.Interfaces.RealOutput PCoo
       "Cooling electrical power consumption"
       annotation (Placement(transformation(extent={{200,90},{220,110}})));
-    Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.DXCoil datCoi(
+    Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.DXCoil datCoi(
       nSta=2,
       minSpeRat=0,
       sta={
-      Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.Stage(
-          spe=0.66,
-          nomVal=
-          Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.NominalValues(
-             Q_flow_nominal=-QCoo_flow_nominal*0.66,
-            COP_nominal=COP_cooling,
-            SHR_nominal=0.7,
-            m_flow_nominal=mAir_flow_nominal),
-          perCur=
-            Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.PerformanceCurve(
-            capFunT={1,0,0,0,0,0},
-            capFunFF={1,0,0,0},
-            EIRFunT={1,0,0,0,0,0},
-            EIRFunFF={1,0,0,0},
-            TConInMin=273.15 + 0,
-            TConInMax=273.15 + 50,
-            TEvaInMin=273.15 + 0,
-            TEvaInMax=273.15 + 50,
-            ffMin=0,
-            ffMax=10)),
-            Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.Stage(
-          spe=1,
-          nomVal=
-            Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.NominalValues(
-            Q_flow_nominal=-QCoo_flow_nominal,
-            COP_nominal=COP_cooling,
-            SHR_nominal=0.7,
-            m_flow_nominal=mAir_flow_nominal),
-          perCur=
-            Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.PerformanceCurve(
-            capFunT={1,0,0,0,0,0},
-            capFunFF={1,0,0,0},
-            EIRFunT={1,0,0,0,0,0},
-            EIRFunFF={1,0,0,0},
-            TConInMin=273.15 + 0,
-            TConInMax=273.15 + 50,
-            TEvaInMin=273.15 + 0,
-            TEvaInMax=273.15 + 50,
-            ffMin=0,
-            ffMax=10))},
-      m_flow_small=0.0001*mAir_flow_nominal)      "Coil data"
+          Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.Stage(
+            spe=0.66,
+            nomVal=
+            Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.NominalValues(
+              Q_flow_nominal=-QCoo_flow_nominal*0.66,
+              COP_nominal=COP_cooling,
+              SHR_nominal=0.7,
+              m_flow_nominal=mAir_flow_nominal),
+            perCur=
+            Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.PerformanceCurve(
+              capFunT={1,0,0,0,0,0},
+              capFunFF={1,0,0,0},
+              EIRFunT={1,0,0,0,0,0},
+              EIRFunFF={1,0,0,0},
+              TConInMin=273.15 + 0,
+              TConInMax=273.15 + 50,
+              TEvaInMin=273.15 + 0,
+              TEvaInMax=273.15 + 50,
+              ffMin=0,
+              ffMax=10)),
+          Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.Stage(
+            spe=1,
+            nomVal=
+            Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.NominalValues(
+              Q_flow_nominal=-QCoo_flow_nominal,
+              COP_nominal=COP_cooling,
+              SHR_nominal=0.7,
+              m_flow_nominal=mAir_flow_nominal),
+            perCur=
+            Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.PerformanceCurve(
+              capFunT={1,0,0,0,0,0},
+              capFunFF={1,0,0,0},
+              EIRFunT={1,0,0,0,0,0},
+              EIRFunFF={1,0,0,0},
+              TConInMin=273.15 + 0,
+              TConInMax=273.15 + 50,
+              TEvaInMin=273.15 + 0,
+              TEvaInMax=273.15 + 50,
+              ffMin=0,
+              ffMax=10))},
+      m_flow_small=0.0001*mAir_flow_nominal) "Coil data"
       annotation (Placement(transformation(extent={{90,-20},{110,0}})));
 
     Modelica.Blocks.Math.Add add
@@ -376,7 +373,7 @@ package Fluid "HP models are stored here"
       annotation (Line(points={{50,40},{70,40}}, color={0,127,255}));
     connect(heaCoi.port_a, totalRes.port_b)
       annotation (Line(points={{30,40},{20,40}}, color={0,127,255}));
-    connect(weaBus.TDryBul, cooCoil.TConIn) annotation (Line(
+    connect(weaBus.TDryBul, cooCoil.TOut) annotation (Line(
         points={{-180,170},{-180,100},{62,100},{62,43},{69,43}},
         color={255,204,51},
         thickness=0.5), Text(
@@ -448,31 +445,31 @@ package Fluid "HP models are stored here"
     Modelica.Blocks.Interfaces.RealOutput PHea
       "Heating thermal power consumption"
       annotation (Placement(transformation(extent={{200,110},{220,130}})));
-    Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.DXCoil datCoi(
+    Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.DXCoil datCoi(
       nSta=1,
       minSpeRat=0,
       sta={
-          Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.Stage(
-          spe=1,
-          nomVal=
-            Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.NominalValues(
-            Q_flow_nominal=-QCoo_flow_nominal,
-            COP_nominal=COP_cooling,
-            SHR_nominal=0.7,
-            m_flow_nominal=mAir_flow_nominal),
-          perCur=
-            Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.PerformanceCurve(
-            capFunT={1,0,0,0,0,0},
-            capFunFF={1,0,0,0},
-            EIRFunT={1,0,0,0,0,0},
-            EIRFunFF={1,0,0,0},
-            TConInMin=273.15 + 0,
-            TConInMax=273.15 + 50,
-            TEvaInMin=273.15 + 0,
-            TEvaInMax=273.15 + 50,
-            ffMin=0,
-            ffMax=10))},
-      m_flow_small=0.0001*mAir_flow_nominal)      "Coil data"
+          Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.Stage(
+            spe=1,
+            nomVal=
+            Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.NominalValues(
+              Q_flow_nominal=-QCoo_flow_nominal,
+              COP_nominal=COP_cooling,
+              SHR_nominal=0.7,
+              m_flow_nominal=mAir_flow_nominal),
+            perCur=
+            Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.PerformanceCurve(
+              capFunT={1,0,0,0,0,0},
+              capFunFF={1,0,0,0},
+              EIRFunT={1,0,0,0,0,0},
+              EIRFunFF={1,0,0,0},
+              TConInMin=273.15 + 0,
+              TConInMax=273.15 + 50,
+              TEvaInMin=273.15 + 0,
+              TEvaInMax=273.15 + 50,
+              ffMin=0,
+              ffMax=10))},
+      m_flow_small=0.0001*mAir_flow_nominal) "Coil data"
       annotation (Placement(transformation(extent={{90,-20},{110,0}})));
 
     Modelica.Blocks.Math.Gain TDryBul(k=1)
@@ -2766,51 +2763,51 @@ defined as parameters.
     Modelica.Blocks.Interfaces.RealOutput PCoo
       "Cooling electrical power consumption"
       annotation (Placement(transformation(extent={{200,90},{220,110}})));
-    Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.DXCoil datCoi(
+    Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.DXCoil datCoi(
       nSta=2,
       minSpeRat=0,
       sta={
-      Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.Stage(
-          spe=0.66,
-          nomVal=
-          Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.NominalValues(
-             Q_flow_nominal=-QCoo_flow_nominal*0.66,
-            COP_nominal=COP_cooling,
-            SHR_nominal=0.7,
-            m_flow_nominal=mAir_flow_nominal),
-          perCur=
-            Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.PerformanceCurve(
-            capFunT={1,0,0,0,0,0},
-            capFunFF={1,0,0,0},
-            EIRFunT={1,0,0,0,0,0},
-            EIRFunFF={1,0,0,0},
-            TConInMin=273.15 + 0,
-            TConInMax=273.15 + 50,
-            TEvaInMin=273.15 + 0,
-            TEvaInMax=273.15 + 50,
-            ffMin=0,
-            ffMax=10)),
-            Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.Stage(
-          spe=1,
-          nomVal=
-            Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.NominalValues(
-            Q_flow_nominal=-QCoo_flow_nominal,
-            COP_nominal=COP_cooling,
-            SHR_nominal=0.7,
-            m_flow_nominal=mAir_flow_nominal),
-          perCur=
-            Buildings.Fluid.HeatExchangers.DXCoils.AirCooled.Data.Generic.BaseClasses.PerformanceCurve(
-            capFunT={1,0,0,0,0,0},
-            capFunFF={1,0,0,0},
-            EIRFunT={1,0,0,0,0,0},
-            EIRFunFF={1,0,0,0},
-            TConInMin=273.15 + 0,
-            TConInMax=273.15 + 50,
-            TEvaInMin=273.15 + 0,
-            TEvaInMax=273.15 + 50,
-            ffMin=0,
-            ffMax=10))},
-      m_flow_small=0.0001*mAir_flow_nominal)      "Coil data"
+          Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.Stage(
+            spe=0.66,
+            nomVal=
+            Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.NominalValues(
+              Q_flow_nominal=-QCoo_flow_nominal*0.66,
+              COP_nominal=COP_cooling,
+              SHR_nominal=0.7,
+              m_flow_nominal=mAir_flow_nominal),
+            perCur=
+            Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.PerformanceCurve(
+              capFunT={1,0,0,0,0,0},
+              capFunFF={1,0,0,0},
+              EIRFunT={1,0,0,0,0,0},
+              EIRFunFF={1,0,0,0},
+              TConInMin=273.15 + 0,
+              TConInMax=273.15 + 50,
+              TEvaInMin=273.15 + 0,
+              TEvaInMax=273.15 + 50,
+              ffMin=0,
+              ffMax=10)),
+          Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.Stage(
+            spe=1,
+            nomVal=
+            Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.NominalValues(
+              Q_flow_nominal=-QCoo_flow_nominal,
+              COP_nominal=COP_cooling,
+              SHR_nominal=0.7,
+              m_flow_nominal=mAir_flow_nominal),
+            perCur=
+            Buildings.Fluid.DXSystems.Cooling.AirSource.Data.Generic.BaseClasses.PerformanceCurve(
+              capFunT={1,0,0,0,0,0},
+              capFunFF={1,0,0,0},
+              EIRFunT={1,0,0,0,0,0},
+              EIRFunFF={1,0,0,0},
+              TConInMin=273.15 + 0,
+              TConInMax=273.15 + 50,
+              TEvaInMin=273.15 + 0,
+              TEvaInMax=273.15 + 50,
+              ffMin=0,
+              ffMax=10))},
+      m_flow_small=0.0001*mAir_flow_nominal) "Coil data"
       annotation (Placement(transformation(extent={{90,-20},{110,0}})));
 
     Modelica.Blocks.Math.Add add

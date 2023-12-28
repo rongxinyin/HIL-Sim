@@ -611,7 +611,7 @@ block Controller_G36
     "Average of all zone set points"
     annotation (Placement(transformation(extent={{-160,270},{-140,290}})));
 
-  Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.SupplyFan
+  Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.SupplyFan
     supFan(
     final samplePeriod=samplePeriod,
     final have_perZonRehBox=have_perZonRehBox,
@@ -630,11 +630,10 @@ block Controller_G36
     final Ti=TiFanSpe,
     final Td=TdFanSpe,
     final yFanMax=yFanMax,
-    final yFanMin=yFanMin)
-    "Supply fan controller"
+    final yFanMin=yFanMin) "Supply fan controller"
     annotation (Placement(transformation(extent={{-160,200},{-140,220}})));
 
-  Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.SupplyTemperature
+  Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.SupplyTemperature
     supTemSetPoi(
     final samplePeriod=samplePeriod,
     final TSupSetMin=TSupSetMin,
@@ -652,12 +651,13 @@ block Controller_G36
     final maxRes=maxResSupTem) "Setpoint for supply temperature"
     annotation (Placement(transformation(extent={{0,170},{20,190}})));
 
-  Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow.AHU
+  Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow.AHU
     sysOutAirSet(final VPriSysMax_flow=VPriSysMax_flow, final peaSysPop=
         peaSysPop) "Minimum outdoor airflow setpoint"
     annotation (Placement(transformation(extent={{-40,70},{-20,90}})));
 
-  Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.Economizers.Controller eco(
+  Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.Economizers.Controller
+    eco(
     final use_enthalpy=use_enthalpy,
     final delTOutHis=delTOutHis,
     final delEntHis=delEntHis,
@@ -685,7 +685,8 @@ block Controller_G36
     final use_G36FrePro=use_G36FrePro) "Economizer controller"
     annotation (Placement(transformation(extent={{140,-170},{160,-150}})));
 
-  Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.SupplySignals val(
+  Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.SupplySignals
+    val(
     final controllerType=controllerTypeTSup,
     final kTSup=kTSup,
     final TiTSup=TiTSup,
@@ -981,7 +982,7 @@ from the VAV zones controller, the
 sequence resets the duct pressure setpoint, and uses this setpoint
 to modulate the fan speed <code>ySupFanSpe</code> using a PI controller.
 See
-<a href=\"modelica://Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.SupplyFan\">
+<a href=\"modelica://Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.SupplyFan\">
 Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.SupplyFan</a>
 for more detailed description.
 </p>
@@ -991,7 +992,7 @@ According to current occupany, supply operation status <code>ySupFan</code>,
 zone temperatures and the discharge air temperature, the sequence computes the
 minimum outdoor airflow rate setpoint, which is used as input for the economizer control.
 More detailed information can be found in
-<a href=\"modelica://Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow\">
+<a href=\"modelica://Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow\">
 Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow</a>.
 </p>
 <h4>Economizer control</h4>
@@ -1003,7 +1004,7 @@ on the outdoor condition. The dampers are modulated to track the supply air temp
 loop signal, which is calculated from the sequence below, subject to the minimum outdoor airflow
 requirement and economizer availability. Optionally, there is also an override for freeze protection.
 See
-<a href=\"modelica://Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.Economizers.Controller\">
+<a href=\"modelica://Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.Economizers.Controller\">
 Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.Economizers.Controller</a>
 for more detailed description.
 </p>
@@ -1014,7 +1015,7 @@ based on reset requests collected from each zone <code>uZonTemResReq</code>. The
 outdoor temperature <code>TOut</code> and operation mode <code>uOpeMod</code> are used
 along with the maximum supply air temperature, for computing the supply air temperature
 setpoint. See
-<a href=\"modelica://Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.SupplyTemperature\">
+<a href=\"modelica://Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.SupplyTemperature\">
 Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.SupplyTemperature</a>
 for more detailed description.
 </p>
@@ -1023,7 +1024,7 @@ for more detailed description.
 The subsequence retrieves supply air temperature setpoint from previous sequence.
 Along with the measured supply air temperature and the supply fan status, it
 generates coil valve positions. See
-<a href=\"modelica://Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.SupplySignals\">
+<a href=\"modelica://Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.SupplySignals\">
 Buildings.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.SupplySignals</a>
 </p>
 </html>",
