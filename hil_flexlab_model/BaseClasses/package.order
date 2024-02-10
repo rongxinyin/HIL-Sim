@@ -12,3 +12,7 @@ partialInterface_noPV
 partialAirUnit_noCool
 Chiller_Prim_Loop
 GreaterThreshold
+PartialOpenLoopX1aNoLeakage
+HVACBuilding
+Guideline36
+PartialHVAC
