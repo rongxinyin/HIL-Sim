@@ -135,7 +135,7 @@ equation
       color={255,204,51},
       thickness=0.5));
   connect(weaDat.weaBus, flo.weaBus) annotation (Line(
-      points={{-70,10},{-66,10},{-66,90},{64.1304,90}},
+      points={{-70,10},{-66,10},{-66,86.1538},{64.1304,86.1538}},
       color={255,204,51},
       thickness=0.5));
   connect(souCoo.ports[1], hvac.portCooCoiSup) annotation (Line(points={{-10,
@@ -144,18 +144,20 @@ equation
           {20,-54},{6.25,-54},{6.25,-28}},
                                      color={0,127,255}));
   connect(hvac.port_supAir[1], flo.portsNor[1]) annotation (Line(points={{42.275,
-          19.2222},{60,19.2222},{60,74},{46.3261,74}}, color={0,127,255}));
+          19.2222},{60,19.2222},{60,71.3846},{46.3261,71.3846}},
+                                                       color={0,127,255}));
   connect(hvac.port_supAir[2], flo.portsCor[1]) annotation (Line(points={{42.275,
-          19.2222},{54,19.2222},{54,62.6667},{46.3261,62.6667}}, color={0,127,255}));
+          19.2222},{54,19.2222},{54,60.9231},{46.3261,60.9231}}, color={0,127,255}));
   connect(hvac.port_supAir[3], flo.portsSou[1]) annotation (Line(points={{42.275,
-          19.2222},{54,19.2222},{54,49.3333},{46.3261,49.3333}}, color={0,127,255}));
+          19.2222},{54,19.2222},{54,48.6154},{46.3261,48.6154}}, color={0,127,255}));
   connect(hvac.port_retAir[1], flo.portsNor[2]) annotation (Line(points={{42.275,
-          -4.38889},{70,-4.38889},{70,74},{47.8478,74}}, color={0,127,255}));
+          -4.38889},{70,-4.38889},{70,71.3846},{47.8478,71.3846}},
+                                                         color={0,127,255}));
   connect(hvac.port_retAir[2], flo.portsCor[2]) annotation (Line(points={{42.275,
-          -4.38889},{74,-4.38889},{74,62.6667},{47.8478,62.6667}}, color={0,127,
+          -4.38889},{74,-4.38889},{74,60.9231},{47.8478,60.9231}}, color={0,127,
           255}));
   connect(hvac.port_retAir[3], flo.portsSou[2]) annotation (Line(points={{42.275,
-          -4.38889},{78,-4.38889},{78,49.3333},{47.8478,49.3333}}, color={0,127,
+          -4.38889},{78,-4.38889},{78,48.6154},{47.8478,48.6154}}, color={0,127,
           255}));
   annotation (
     Documentation(info="<html>

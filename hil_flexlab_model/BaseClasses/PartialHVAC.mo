@@ -16,6 +16,7 @@ partial model PartialHVAC
 
   constant Real conv=1.2/3600 "Conversion factor for nominal mass flow rate";
 
+
   parameter Modelica.Units.SI.HeatFlowRate QHeaAHU_flow_nominal(min=0) = mHeaAir_flow_nominal * cpAir * (THeaAirSup_nominal-THeaAirMix_nominal)
     "Nominal heating heat flow rate of air handler unit coil";
 
@@ -88,6 +89,7 @@ partial model PartialHVAC
     "Building static pressure";
   parameter Real yFanMin = 0.1 "Minimum fan speed";
 
+
   parameter Modelica.Units.SI.Temperature TCooAirMix_nominal(displayUnit="degC")=303.15
     "Mixed air temperature during cooling nominal conditions (used to size cooling coil)"
     annotation (Dialog(group="Air handler unit nominal temperatures and humidity"));
@@ -100,6 +102,7 @@ partial model PartialHVAC
    parameter Modelica.Units.SI.Temperature TCooWatInl_nominal(displayUnit="degC") = 279.15
     "Cooling coil nominal inlet water temperature"
     annotation (Dialog(group="Air handler unit nominal temperatures and humidity"));
+
 
   parameter Modelica.Units.SI.Temperature THeaAirMix_nominal(displayUnit="degC")=277.15
     "Mixed air temperature during heating nominal conditions (used to size heating coil)"
@@ -183,11 +186,10 @@ partial model PartialHVAC
     allowFlowReversal=allowFlowReversal,
     dp_nominal=40) "Pressure drop for return duct"
     annotation (Placement(transformation(extent={{400,130},{380,150}})));
-  Buildings.Fluid.Movers.SpeedControlled_y fanSup(
+  Buildings.Fluid.Movers.Preconfigured.SpeedControlled_y fanSup(
     redeclare package Medium = MediumA,
-    per(pressure(
-      V_flow={0,mAir_flow_nominal/1.2*2},
-      dp=2*{780 + 10 + dpBuiStaSet,0})),
+    m_flow_nominal=mAir_flow_nominal,
+    dp_nominal=780 + 10 + dpBuiStaSet,
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial) "Supply air fan"
     annotation (Placement(transformation(extent={{300,-50},{320,-30}})));
 
@@ -229,7 +231,8 @@ partial model PartialHVAC
   Buildings.Fluid.Sensors.TemperatureTwoPort TMix(
     redeclare package Medium = MediumA,
     m_flow_nominal=mAir_flow_nominal,
-    allowFlowReversal=allowFlowReversal) "Mixed air temperature sensor"
+    allowFlowReversal=allowFlowReversal,
+    transferHeat=true) "Mixed air temperature sensor"
     annotation (Placement(transformation(extent={{30,-50},{50,-30}})));
   Buildings.Fluid.Sensors.VolumeFlowRate VOut1(redeclare package Medium =
         MediumA, m_flow_nominal=mAir_flow_nominal)
@@ -285,7 +288,7 @@ partial model PartialHVAC
     redeclare package Medium = MediumW,
     m_flow_nominal=mCooWat_flow_nominal,
     dpValve_nominal=6000,
-    dpFixed_nominal=0) "Valve for cooling coil" annotation (Placement(
+    dpFixed_nominal=0) "Valve for cooling coil"    annotation (Placement(
         transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
@@ -305,17 +308,18 @@ partial model PartialHVAC
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={180,-170})));
-  Buildings.Fluid.Movers.SpeedControlled_y pumCooCoi(
+  Buildings.Fluid.Movers.Preconfigured.SpeedControlled_y pumCooCoi(
     redeclare package Medium = MediumW,
-    per(pressure(V_flow={0,mCooWat_flow_nominal/1000*2}, dp=2*{3000,0})),
+    m_flow_nominal=mCooWat_flow_nominal,
+    dp_nominal=3000,
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial) "Supply air fan"
-    annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}},
         rotation=270,
         origin={180,-120})));
-  Buildings.Fluid.Movers.SpeedControlled_y pumHeaCoi(
+  Buildings.Fluid.Movers.Preconfigured.SpeedControlled_y pumHeaCoi(
     redeclare package Medium = MediumW,
-    per(pressure(V_flow={0,mHeaWat_flow_nominal/1000*2}, dp=2*{3000,0})),
+    m_flow_nominal=mHeaWat_flow_nominal,
+    dp_nominal=3000,
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial)
     "Pump for heating coil" annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -361,6 +365,7 @@ partial model PartialHVAC
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={128,-170})));
+
 
   Modelica.Fluid.Interfaces.FluidPort_a portHeaCoiSup(redeclare package Medium =
         MediumW) "Heating coil loop supply"
@@ -443,6 +448,24 @@ partial model PartialHVAC
     dp_nominal=200 + 200 + 100 + 40) "Pressure drop for supply duct"
     annotation (Placement(transformation(extent={{250,-50},{270,-30}})));
 
+  Buildings.Fluid.FixedResistances.Junction splRetOut(
+    redeclare package Medium = MediumA,
+    tau=15,
+    m_flow_nominal=mAir_flow_nominal*{1,1,1},
+    energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
+    dp_nominal(each displayUnit="Pa") = {0,0,0},
+    portFlowDirection_1=if allowFlowReversal then Modelica.Fluid.Types.PortFlowDirection.Bidirectional
+         else Modelica.Fluid.Types.PortFlowDirection.Entering,
+    portFlowDirection_2=if allowFlowReversal then Modelica.Fluid.Types.PortFlowDirection.Bidirectional
+         else Modelica.Fluid.Types.PortFlowDirection.Leaving,
+    portFlowDirection_3=if allowFlowReversal then Modelica.Fluid.Types.PortFlowDirection.Bidirectional
+         else Modelica.Fluid.Types.PortFlowDirection.Entering,
+    linearized=true)
+    "Flow splitter"
+    annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=0,
+        origin={0,-40})));
 protected
   constant Modelica.Units.SI.SpecificHeatCapacity cpAir=Buildings.Utilities.Psychrometrics.Constants.cpAir
     "Air specific heat capacity";
@@ -509,7 +532,7 @@ equation
       smooth=Smooth.None,
       thickness=0.5));
   connect(weaBus.TDryBul, TOut.u) annotation (Line(
-      points={{-320,180},{-302,180}},
+      points={{-319.95,180.05},{-310,180.05},{-310,180},{-302,180}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
@@ -518,6 +541,7 @@ equation
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
+
 
   connect(senRetFlo.port_a, dpRetDuc.port_b)
     annotation (Line(points={{360,140},{380,140}}, color={0,127,255}));
@@ -541,12 +565,8 @@ equation
       thickness=0.5));
   connect(VOut1.port_b, damOut.port_a)
     annotation (Line(points={{-70,-40},{-50,-40}}, color={0,127,255}));
-  connect(damOut.port_b, TMix.port_a)
-    annotation (Line(points={{-30,-40},{30,-40}}, color={0,127,255}));
   connect(damRet.port_a, TRet.port_b)
     annotation (Line(points={{0,0},{0,140},{90,140}}, color={0,127,255}));
-  connect(damRet.port_b, TMix.port_a)
-    annotation (Line(points={{0,-20},{0,-40},{30,-40}}, color={0,127,255}));
   connect(pumHeaCoi.port_b, heaCoi.port_a1) annotation (Line(points={{128,-110},
           {128,-52},{118,-52}}, color={0,127,255}));
   connect(cooCoi.port_b1,pumCooCoi. port_a) annotation (Line(points={{190,-52},{
@@ -617,6 +637,12 @@ equation
     annotation (Line(points={{210,-40},{250,-40}}, color={0,127,255}));
   connect(dpSupDuc.port_b, fanSup.port_a)
     annotation (Line(points={{270,-40},{300,-40}}, color={0,127,255}));
+  connect(damOut.port_b, splRetOut.port_1)
+    annotation (Line(points={{-30,-40},{-10,-40}}, color={0,127,255}));
+  connect(splRetOut.port_2, TMix.port_a)
+    annotation (Line(points={{10,-40},{30,-40}}, color={0,127,255}));
+  connect(damRet.port_b, splRetOut.port_3) annotation (Line(points={{-5.55112e-16,
+          -20},{-5.55112e-16,-25},{0,-25},{0,-30}}, color={0,127,255}));
   annotation (
   Diagram(
     coordinateSystem(
@@ -647,7 +673,28 @@ Buildings.Examples.VAVReheat.Guideline36</a>.
 </html>", revisions="<html>
 <ul>
 <li>
-November 9, 2021, by Baptiste:<br/>
+February 7, 2023, by Jianjun Hu:<br/>
+Set the value of parameter <code>transferHeat</code> to <code>true</code> for the mixed air temperature sensor.
+</li>
+<li>
+February 6, 2023, by Jianjun Hu:<br/>
+Added junction to mix the return and outdoor air.<br/>
+This is for <a href=\"https://github.com/lbl-srg/modelica-buildings/issues/3230\">issue #3230</a>.
+</li>
+<li>
+August 22, 2022, by Hongxiang Fu:<br/>
+Replaced fan and pump models with preconfigured mover models.
+This is for
+<a href=\"https://github.com/lbl-srg/modelica-buildings/issues/2668\">issue #2668</a>.
+</li>
+<li>
+April 26, 2022, by Michael Wetter:<br/>
+Changed fan efficiency calculation to use Euler number.<br/>
+This is for
+<a href=\"https://github.com/lbl-srg/modelica-buildings/issues/2668\">#2668</a>.
+</li>
+<li>
+November 9, 2021, by Baptiste Ravache:<br/>
 Vectorized the terminal boxes to be expanded to any number of zones.<br/>
 This is for <a href=\"https://github.com/lbl-srg/modelica-buildings/issues/2735\">issue #2735</a>.
 </li>

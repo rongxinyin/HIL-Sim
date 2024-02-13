@@ -492,7 +492,7 @@ equation
       thickness=0.5,
       smooth=Smooth.None));
   connect(weaBus.TDryBul, TOut.u) annotation (Line(
-      points={{-320,180},{-302,180}},
+      points={{-319.95,180.05},{-310,180.05},{-310,180},{-302,180}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));

@@ -101,7 +101,7 @@ protected
     weaName=weaName,
     computeWetBulbTemperature=false) "Building-level declarations"
     annotation (Placement(transformation(extent={{140,460},{160,480}})));
-  Buildings.Controls.OBC.CDL.Continuous.Sources.Constant qGai_flow[3](
+  Buildings.Controls.OBC.CDL.Reals.Sources.Constant      qGai_flow[3](
     k={0,0,0})
     "Internal heat gain (computed already in EnergyPlus"
     annotation (Placement(transformation(extent={{-140,-40},{-120,-20}})));
