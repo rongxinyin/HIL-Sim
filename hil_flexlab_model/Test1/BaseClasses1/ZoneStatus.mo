@@ -111,16 +111,16 @@ block ZoneStatus "Block that outputs zone temperature status"
         iconTransformation(extent={{100,-110},{140,-70}})));
 
 protected
-  Buildings.Controls.OBC.CDL.Continuous.Multiply pro
+  Buildings.Controls.OBC.CDL.Reals.Multiply pro
     "Decide if the cool down time of one zone should be ignored: if window is open, then output zero, otherwise, output cool-down time from optimal cool-down block"
     annotation (Placement(transformation(extent={{80,210},{100,230}})));
-  Buildings.Controls.OBC.CDL.Continuous.Multiply pro1
+  Buildings.Controls.OBC.CDL.Reals.Multiply pro1
     "Decide if the warm-up time of one zone should be ignored: if window is open, then output zero, otherwise, output warm-up time from optimal warm-up block"
     annotation (Placement(transformation(extent={{80,150},{100,170}})));
   Modelica.Blocks.Math.Add                  add(final k2=-1)
     "Calculate differential between minimum zone temperature and the heating setpoint"
     annotation (Placement(transformation(extent={{-20,60},{0,80}})));
-  Buildings.Controls.OBC.CDL.Continuous.Hysteresis hys(
+  Buildings.Controls.OBC.CDL.Reals.Hysteresis hys(
     final pre_y_start=false,
     final uLow=-0.1,
     final uHigh=0.1)
@@ -129,7 +129,7 @@ protected
   Modelica.Blocks.Math.Add add1(final k1=-1)
     "Calculate differential between maximum zone temperature and the cooling setpoint"
     annotation (Placement(transformation(extent={{-20,10},{0,30}})));
-  Buildings.Controls.OBC.CDL.Continuous.Hysteresis hys1(
+  Buildings.Controls.OBC.CDL.Reals.Hysteresis hys1(
     final pre_y_start=false,
     final uLow=-0.1,
     final uHigh=0.1)
@@ -138,7 +138,7 @@ protected
   Modelica.Blocks.Math.Add add2(final k1=-1)
     "Calculate zone temperature difference to setpoint"
     annotation (Placement(transformation(extent={{40,-70},{60,-50}})));
-  Buildings.Controls.OBC.CDL.Continuous.Hysteresis hys2(
+  Buildings.Controls.OBC.CDL.Reals.Hysteresis hys2(
     final pre_y_start=false,
     final uLow=-0.1,
     final uHigh=0.1)
@@ -147,7 +147,7 @@ protected
   Modelica.Blocks.Math.Add add3(final k2=-1)
     "Calculate the difference between minimum zone temperature and unoccupied heating setpoint"
     annotation (Placement(transformation(extent={{40,-120},{60,-100}})));
-  Buildings.Controls.OBC.CDL.Continuous.Hysteresis hys3(
+  Buildings.Controls.OBC.CDL.Reals.Hysteresis hys3(
     final uLow=-0.5*bouLim,
     final uHigh=0.5*bouLim,
     final pre_y_start=false)
@@ -156,7 +156,7 @@ protected
   Modelica.Blocks.Math.Add add5(final k2=-1)
     "Calculate zone temperature difference to setpoint"
     annotation (Placement(transformation(extent={{40,-230},{60,-210}})));
-  Buildings.Controls.OBC.CDL.Continuous.Hysteresis hys5(
+  Buildings.Controls.OBC.CDL.Reals.Hysteresis hys5(
     final pre_y_start=false,
     final uLow=-0.1,
     final uHigh=0.1)
@@ -165,7 +165,7 @@ protected
   Modelica.Blocks.Math.Add add4(final k2=-1)
     "Calculate the difference between maximum zone temperature and unoccupied cooling setpoint"
     annotation (Placement(transformation(extent={{40,-180},{60,-160}})));
-  Buildings.Controls.OBC.CDL.Continuous.Hysteresis hys4(
+  Buildings.Controls.OBC.CDL.Reals.Hysteresis hys4(
     final pre_y_start=false,
     final uLow=-0.5*bouLim,
     final uHigh=0.5*bouLim)
@@ -175,12 +175,10 @@ protected
     annotation (Placement(transformation(extent={{-20,110},{0,130}})));
   Buildings.Controls.OBC.CDL.Conversions.BooleanToReal booToRea "Convert Boolean to Real number"
     annotation (Placement(transformation(extent={{20,110},{40,130}})));
-  Buildings.Controls.OBC.CDL.Continuous.Switch
-                                            swi
+  Buildings.Controls.OBC.CDL.Reals.Switch   swi
     "Decide if the temperature difference to setpoint should be ignored: if the zone window is open, then output setpoint temperature, otherwise, output zone temperature"
     annotation (Placement(transformation(extent={{-20,-70},{0,-50}})));
-  Buildings.Controls.OBC.CDL.Continuous.Switch
-                                            swi1
+  Buildings.Controls.OBC.CDL.Reals.Switch   swi1
     "Decide if the temperature difference to setpoint should be ignored: if the zone window is open, then output setpoint temperature, otherwise, output zone temperature"
     annotation (Placement(transformation(extent={{-20,-230},{0,-210}})));
   Buildings.Controls.OBC.CDL.Logical.Sources.Constant con(final k=false) if not have_winSen

@@ -123,7 +123,7 @@ model Flexlab_Summer_2021_Test_NoDemandFlexibility
     final desZonPop={0.05*AFlo[i] for i in 1:numZon},
     final minZonPriFlo=minZonPriFlo)
     "Zone level calculation of the minimum outdoor airflow setpoint"
-    annotation (Placement(transformation(extent={{228,420},{248,440}})));
+    annotation (Placement(transformation(extent={{228,382},{248,402}})));
   Buildings.Controls.OBC.CDL.Routing.RealScalarReplicator reaRep1(final nout=
         numZon) "Replicate design uncorrected minimum outdoor airflow setpoint"
     annotation (Placement(transformation(extent={{480,478},{500,498}})));
@@ -271,32 +271,35 @@ equation
           {54,4},{54,325},{-10,325}},  color={255,127,0}));
   connect(flo.TRooAir, TZonSet.TZon) annotation (Line(points={{1114.83,473},{
           1096,473},{1096,604},{-54,604},{-54,335},{-34,335}},    color={0,0,127}));
-  connect(TDis.y, zonOutAirSet.TDis) annotation (Line(points={{131,286},{132,286},
-          {132,427},{226,427}}, color={0,0,127}));
+  connect(TDis.y, zonOutAirSet.TDis) annotation (Line(points={{131,286},{226,
+          286},{226,389}},      color={0,0,127}));
   connect(VDis_flow.y, zonOutAirSet.VDis_flow) annotation (Line(points={{197,252},
-          {210,252},{210,424},{226,424}}, color={0,0,127}));
-  connect(zonOutAirSet.VUncOut_flow_nominal, reaRep1.y) annotation (Line(points=
-         {{226,421},{216,421},{216,358},{514,358},{514,488},{502,488}}, color={0,
+          {226,252},{226,386}},           color={0,0,127}));
+  connect(zonOutAirSet.VUncOut_flow_nominal, reaRep1.y) annotation (Line(points={{226,383},
+          {216,383},{216,408},{520,408},{520,488},{502,488}},           color={0,
           0,127}));
-  connect(zonOutAirSet.uReqOutAir, booRep1.y) annotation (Line(points={{226,433},
-          {204,433},{204,352},{510,352},{510,448},{502,448}}, color={255,0,255}));
+  connect(zonOutAirSet.uReqOutAir, booRep1.y) annotation (Line(points={{226,395},
+          {208,395},{208,376},{232,376},{232,368},{528,368},{528,448},{502,448}},
+                                                              color={255,0,255}));
   connect(flo.TRooAir, zonOutAirSet.TZon) annotation (Line(points={{1114.83,473},
-          {1072,473},{1072,620},{210,620},{210,430},{226,430}},    color={0,0,127}));
+          {1096,473},{1096,608},{-56,608},{-56,392},{226,392}},    color={0,0,127}));
   connect(zonOutAirSet.yDesZonPeaOcc, zonToSys.uDesZonPeaOcc) annotation (Line(
-        points={{250,439},{262,439},{262,438},{272,438}}, color={0,0,127}));
+        points={{250,401},{250,416},{272,416},{272,438}}, color={0,0,127}));
   connect(zonOutAirSet.VDesPopBreZon_flow, zonToSys.VDesPopBreZon_flow)
-    annotation (Line(points={{250,436},{272,436}}, color={0,0,127}));
+    annotation (Line(points={{250,398},{250,416},{272,416},{272,436}},
+                                                   color={0,0,127}));
   connect(zonOutAirSet.VDesAreBreZon_flow, zonToSys.VDesAreBreZon_flow)
-    annotation (Line(points={{250,433},{262,433},{262,434},{272,434}}, color={0,
+    annotation (Line(points={{250,395},{250,408},{272,408},{272,434}}, color={0,
           0,127}));
   connect(zonOutAirSet.yDesPriOutAirFra, zonToSys.uDesPriOutAirFra) annotation (
-     Line(points={{250,430},{262,430},{262,428},{272,428}}, color={0,0,127}));
+     Line(points={{250,392},{250,408},{272,408},{272,428}}, color={0,0,127}));
   connect(zonOutAirSet.VUncOutAir_flow, zonToSys.VUncOutAir_flow) annotation (
-      Line(points={{250,427},{262,427},{262,426},{272,426}}, color={0,0,127}));
+      Line(points={{250,389},{256,389},{256,426},{272,426}}, color={0,0,127}));
   connect(zonOutAirSet.yPriOutAirFra, zonToSys.uPriOutAirFra)
-    annotation (Line(points={{250,424},{272,424}}, color={0,0,127}));
+    annotation (Line(points={{250,386},{250,400},{272,400},{272,424}},
+                                                   color={0,0,127}));
   connect(zonOutAirSet.VPriAir_flow, zonToSys.VPriAir_flow) annotation (Line(
-        points={{250,421},{262,421},{262,422},{272,422}}, color={0,0,127}));
+        points={{250,383},{250,400},{272,400},{272,422}}, color={0,0,127}));
   connect(zonToSys.ySumDesZonPop, conAHU.sumDesZonPop) annotation (Line(points={{296,439},
           {296,522},{356,522},{356,521.529}},           color={0,0,127}));
   connect(zonToSys.VSumDesPopBreZon_flow, conAHU.VSumDesPopBreZon_flow)

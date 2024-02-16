@@ -6,15 +6,13 @@ model FlexlabX1aNoLeakG36Baseline
     flo(
       idfName=Modelica.Utilities.Files.loadResource(
           "modelica://hil_flexlab_model/Resources/energyPlusFiles/X1-2021-V8_v2_correctedInternalGain.idf"),
-
       epwName=Modelica.Utilities.Files.loadResource(
           "modelica://hil_flexlab_model/Resources/weatherdata/US_Berkeley_20210913.epw"),
-
       weaName=Modelica.Utilities.Files.loadResource(
           "modelica://hil_flexlab_model/Resources/weatherdata/US_Berkeley_20210913.mos")),
-
     weaDat(filNam=Modelica.Utilities.Files.loadResource(
           "modelica://hil_flexlab_model/Resources/weatherdata/US_Berkeley_20210913.mos")));
+
 //  extends BaseClasses.PartialOpenLoopX1aV1(min(nin=3),
 //      ave(nin=3));
 
@@ -57,7 +55,7 @@ model FlexlabX1aNoLeakG36Baseline
     "Outdoor air damper control signal"
     annotation (Placement(transformation(extent={{-40,-20},{-20,0}})));
 
-  Buildings.Controls.OBC.CDL.Logical.Switch swiFreSta "Switch for freeze stat"
+  Buildings.Controls.OBC.CDL.Reals.Switch   swiFreSta "Switch for freeze stat"
     annotation (Placement(transformation(extent={{60,-202},{80,-182}})));
   Buildings.Controls.OBC.CDL.Reals.Sources.Constant      freStaSetPoi1(k=273.15
          + 3) "Freeze stat for heating coil"
@@ -85,7 +83,7 @@ model FlexlabX1aNoLeakG36Baseline
     final desZonPop={0.05*AFlo[i] for i in 1:numZon},
     final minZonPriFlo=minZonPriFlo)
     "Zone level calculation of the minimum outdoor airflow setpoint"
-    annotation (Placement(transformation(extent={{228,420},{248,440}})));
+    annotation (Placement(transformation(extent={{228,414},{248,434}})));
   Buildings.Controls.OBC.CDL.Routing.RealScalarReplicator
                                                     reaRep1(final nout=numZon)
     "Replicate design uncorrected minimum outdoor airflow setpoint"
@@ -119,6 +117,10 @@ model FlexlabX1aNoLeakG36Baseline
     annotation (Placement(transformation(extent={{-140,222},{-120,242}})));
   Modelica.Blocks.Math.Add add1
     annotation (Placement(transformation(extent={{-122,270},{-142,290}})));
+  Modelica.Blocks.Sources.BooleanConstant booleanConstant[numZon](k=false)
+    annotation (Placement(transformation(extent={{-264,478},{-244,498}})));
+  Modelica.Blocks.Sources.IntegerConstant integerConstant[numZon](k=0)
+    annotation (Placement(transformation(extent={{-260,524},{-240,544}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,0},{320,-10},{320,-10}},
@@ -204,32 +206,35 @@ equation
           {54,4},{54,325},{-10,325}},  color={255,127,0}));
   connect(flo.TRooAir, TZonSet.TZon) annotation (Line(points={{1147.26,476},{
           1096,476},{1096,604},{-54,604},{-54,335},{-34,335}},    color={0,0,127}));
-  connect(TDis.y, zonOutAirSet.TDis) annotation (Line(points={{131,286},{132,286},
-          {132,427},{226,427}}, color={0,0,127}));
+  connect(TDis.y, zonOutAirSet.TDis) annotation (Line(points={{131,286},{132,
+          286},{132,421},{226,421}},
+                                color={0,0,127}));
   connect(VDis_flow.y, zonOutAirSet.VDis_flow) annotation (Line(points={{197,252},
-          {210,252},{210,424},{226,424}}, color={0,0,127}));
-  connect(zonOutAirSet.VUncOut_flow_nominal, reaRep1.y) annotation (Line(points=
-         {{226,421},{216,421},{216,358},{514,358},{514,488},{502,488}}, color={0,
+          {210,252},{210,418},{226,418}}, color={0,0,127}));
+  connect(zonOutAirSet.VUncOut_flow_nominal, reaRep1.y) annotation (Line(points={{226,415},
+          {216,415},{216,358},{514,358},{514,488},{502,488}},           color={0,
           0,127}));
-  connect(zonOutAirSet.uReqOutAir, booRep1.y) annotation (Line(points={{226,433},
-          {204,433},{204,352},{510,352},{510,448},{502,448}}, color={255,0,255}));
+  connect(zonOutAirSet.uReqOutAir, booRep1.y) annotation (Line(points={{226,427},
+          {204,427},{204,352},{510,352},{510,448},{502,448}}, color={255,0,255}));
   connect(flo.TRooAir, zonOutAirSet.TZon) annotation (Line(points={{1147.26,476},
-          {1072,476},{1072,620},{210,620},{210,430},{226,430}},    color={0,0,127}));
+          {1072,476},{1072,620},{210,620},{210,424},{226,424}},    color={0,0,127}));
   connect(zonOutAirSet.yDesZonPeaOcc, zonToSys.uDesZonPeaOcc) annotation (Line(
-        points={{250,439},{262,439},{262,438},{272,438}}, color={0,0,127}));
+        points={{250,433},{262,433},{262,438},{272,438}}, color={0,0,127}));
   connect(zonOutAirSet.VDesPopBreZon_flow, zonToSys.VDesPopBreZon_flow)
-    annotation (Line(points={{250,436},{272,436}}, color={0,0,127}));
+    annotation (Line(points={{250,430},{262,430},{262,436},{272,436}},
+                                                   color={0,0,127}));
   connect(zonOutAirSet.VDesAreBreZon_flow, zonToSys.VDesAreBreZon_flow)
-    annotation (Line(points={{250,433},{262,433},{262,434},{272,434}}, color={0,
+    annotation (Line(points={{250,427},{262,427},{262,434},{272,434}}, color={0,
           0,127}));
   connect(zonOutAirSet.yDesPriOutAirFra, zonToSys.uDesPriOutAirFra) annotation (
-     Line(points={{250,430},{262,430},{262,428},{272,428}}, color={0,0,127}));
+     Line(points={{250,424},{262,424},{262,428},{272,428}}, color={0,0,127}));
   connect(zonOutAirSet.VUncOutAir_flow, zonToSys.VUncOutAir_flow) annotation (
-      Line(points={{250,427},{262,427},{262,426},{272,426}}, color={0,0,127}));
+      Line(points={{250,421},{262,421},{262,426},{272,426}}, color={0,0,127}));
   connect(zonOutAirSet.yPriOutAirFra, zonToSys.uPriOutAirFra)
-    annotation (Line(points={{250,424},{272,424}}, color={0,0,127}));
+    annotation (Line(points={{250,418},{262,418},{262,424},{272,424}},
+                                                   color={0,0,127}));
   connect(zonOutAirSet.VPriAir_flow, zonToSys.VPriAir_flow) annotation (Line(
-        points={{250,421},{262,421},{262,422},{272,422}}, color={0,0,127}));
+        points={{250,415},{262,415},{262,422},{272,422}}, color={0,0,127}));
   connect(zonToSys.ySumDesZonPop, conAHU.sumDesZonPop) annotation (Line(points={{296,439},
           {296,522},{356,522},{356,521.529}},           color={0,0,127}));
   connect(zonToSys.VSumDesPopBreZon_flow, conAHU.VSumDesPopBreZon_flow)
@@ -341,6 +346,12 @@ equation
           280},{-182,110},{298,110},{298,124},{778,124}},      color={0,0,127}));
   connect(add1.y, conVAVSou.TZonHeaSet) annotation (Line(points={{-143,280},{-182,
           280},{-182,52},{1018,52}},      color={0,0,127}));
+  connect(zonOutAirSet.nOcc, integerConstant.y) annotation (Line(points={{226,
+          433},{168,433},{168,432},{-224,432},{-224,534},{-239,534}}, color={
+          255,127,0}));
+  connect(zonOutAirSet.uWin, booleanConstant.y) annotation (Line(points={{226,
+          430},{144,430},{144,470},{-234,470},{-234,488},{-243,488}}, color={
+          255,0,255}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-320},{1400,
             640}}), graphics={Line(

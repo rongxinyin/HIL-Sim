@@ -7,18 +7,18 @@ partial model PartialOpenLoopX1aNoLeakage
 
   constant Integer numZon=3 "Total number of served VAV boxes";
   constant Real leakageFrac=0.2 "Leakage fraction of AHU upstream duct";
-  parameter Modelica.Units.SI.Volume VRooCor=AFloCor*flo.hRoo
+  parameter Modelica.Units.SI.Volume VRooCor=flo.VRooCor
     "Room volume core";
-  parameter Modelica.Units.SI.Volume VRooSou=AFloSou*flo.hRoo
+  parameter Modelica.Units.SI.Volume VRooSou=flo.VRooSou
     "Room volume south";
-  parameter Modelica.Units.SI.Volume VRooNor=AFloNor*flo.hRoo
+  parameter Modelica.Units.SI.Volume VRooNor=flo.VRooNor
     "Room volume north";
-  parameter Modelica.Units.SI.Volume VRooPle=AFloPle*flo.hRoo "Room volume plenum";
+  //parameter Modelica.Units.SI.Volume VRooPle=AFloPle*flo.hRoo "Room volume plenum";
 
   parameter Modelica.Units.SI.Area AFloCor=flo.cor.AFlo "Floor area core";
   parameter Modelica.Units.SI.Area AFloSou=flo.sou.AFlo "Floor area south";
   parameter Modelica.Units.SI.Area AFloNor=flo.nor.AFlo "Floor area north";
-  parameter Modelica.Units.SI.Area AFloPle=flo.ple.AFlo "Floor area plenum";
+  //parameter Modelica.Units.SI.Area AFloPle=flo.ple.AFlo "Floor area plenum";
 
   parameter Modelica.Units.SI.Area AFlo[numZon]={flo.cor.AFlo,flo.sou.AFlo,
       flo.nor.AFlo} "Floor area of each zone";
@@ -388,9 +388,10 @@ partial model PartialOpenLoopX1aNoLeakage
   Results res(
     final A=ATot,
     PFan=fanSup.P + 0,
-    PHea=heaCoi.Q2_flow + cor.terHea.Q1_flow + sou.terHea.Q1_flow + nor.terHea.Q1_flow,
     PCooSen=cooCoi.QSen2_flow,
+    PHea=heaCoi.Q2_flow + cor.terHea.Q_flow + sou.terHea.Q_flow + nor.terHea.Q_flow,
     PCooLat=cooCoi.QLat2_flow) "Results of the simulation";
+
   /*fanRet*/
 
 protected

@@ -607,7 +607,7 @@ block Controller_G36
     annotation (Placement(transformation(extent={{200,-210},{240,-170}}),
         iconTransformation(extent={{200,-320},{240,-280}})));
 
-  Buildings.Controls.OBC.CDL.Continuous.Average TZonSetPoiAve
+  Buildings.Controls.OBC.CDL.Reals.Average TZonSetPoiAve
     "Average of all zone set points"
     annotation (Placement(transformation(extent={{-160,270},{-140,290}})));
 
@@ -699,15 +699,15 @@ block Controller_G36
     "True if zone setpoints are in occ window" annotation (Placement(
         transformation(extent={{-240,-354},{-200,-314}}), iconTransformation(
           extent={{-242,-392},{-202,-352}})));
-  Buildings.Controls.OBC.CDL.Continuous.Switch swiFreSta
+  Buildings.Controls.OBC.CDL.Reals.Switch swiFreSta
     "Switch for SAT setpoint"
     annotation (Placement(transformation(extent={{-58,-338},{-38,-318}})));
-  Buildings.Controls.OBC.CDL.Continuous.Sources.Constant ySupSetUnocc(k=
+  Buildings.Controls.OBC.CDL.Reals.Sources.Constant ySupSetUnocc(k=
         TSupSetUnocc)
     "Outdoor air damper control signal"
     annotation (Placement(transformation(extent={{-132,-328},{-112,-308}})));
 protected
-  Buildings.Controls.OBC.CDL.Continuous.Divide VOut_flow_normalized(
+  Buildings.Controls.OBC.CDL.Reals.Divide VOut_flow_normalized(
     u1(final unit="m3/s"),
     u2(final unit="m3/s"),
     y(final unit="1"))
