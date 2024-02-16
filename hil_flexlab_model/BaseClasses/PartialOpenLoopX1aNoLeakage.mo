@@ -7,55 +7,55 @@ partial model PartialOpenLoopX1aNoLeakage
 
   constant Integer numZon=3 "Total number of served VAV boxes";
   constant Real leakageFrac=0.2 "Leakage fraction of AHU upstream duct";
-  parameter Modelica.SIunits.Volume VRooCor=AFloCor*flo.hRoo
+  parameter Modelica.Units.SI.Volume VRooCor=AFloCor*flo.hRoo
     "Room volume core";
-  parameter Modelica.SIunits.Volume VRooSou=AFloSou*flo.hRoo
+  parameter Modelica.Units.SI.Volume VRooSou=AFloSou*flo.hRoo
     "Room volume south";
-  parameter Modelica.SIunits.Volume VRooNor=AFloNor*flo.hRoo
+  parameter Modelica.Units.SI.Volume VRooNor=AFloNor*flo.hRoo
     "Room volume north";
-  parameter Modelica.SIunits.Volume VRooPle=AFloPle*flo.hRoo "Room volume plenum";
+  parameter Modelica.Units.SI.Volume VRooPle=AFloPle*flo.hRoo "Room volume plenum";
 
-  parameter Modelica.SIunits.Area AFloCor=flo.cor.AFlo "Floor area core";
-  parameter Modelica.SIunits.Area AFloSou=flo.sou.AFlo "Floor area south";
-  parameter Modelica.SIunits.Area AFloNor=flo.nor.AFlo "Floor area north";
-  parameter Modelica.SIunits.Area AFloPle=flo.ple.AFlo "Floor area plenum";
+  parameter Modelica.Units.SI.Area AFloCor=flo.cor.AFlo "Floor area core";
+  parameter Modelica.Units.SI.Area AFloSou=flo.sou.AFlo "Floor area south";
+  parameter Modelica.Units.SI.Area AFloNor=flo.nor.AFlo "Floor area north";
+  parameter Modelica.Units.SI.Area AFloPle=flo.ple.AFlo "Floor area plenum";
 
-  parameter Modelica.SIunits.Area AFlo[numZon]={flo.cor.AFlo,flo.sou.AFlo,
+  parameter Modelica.Units.SI.Area AFlo[numZon]={flo.cor.AFlo,flo.sou.AFlo,
       flo.nor.AFlo} "Floor area of each zone";
-  final parameter Modelica.SIunits.Area ATot=sum(AFlo) "Total floor area";
+  final parameter Modelica.Units.SI.Area ATot=sum(AFlo) "Total floor area";
 
   constant Real conv=1.2/3600 "Conversion factor for nominal mass flow rate";
-    parameter Modelica.SIunits.MassFlowRate mCor_flow_nominal=0.106*1.2
+    parameter Modelica.Units.SI.MassFlowRate mCor_flow_nominal=0.106*1.2
     "Design mass flow rate core";
-  parameter Modelica.SIunits.MassFlowRate mSou_flow_nominal=0.189*1.2
+  parameter Modelica.Units.SI.MassFlowRate mSou_flow_nominal=0.189*1.2
     "Design mass flow rate perimeter 1";
-  parameter Modelica.SIunits.MassFlowRate mNor_flow_nominal=0.106*1.2
+  parameter Modelica.Units.SI.MassFlowRate mNor_flow_nominal=0.106*1.2
     "Design mass flow rate perimeter 3";
- // parameter Modelica.SIunits.MassFlowRate mCor_flow_nominal=6*VRooCor*conv
+ // parameter Modelica.Units.SI.MassFlowRate mCor_flow_nominal=6*VRooCor*conv
  //   "Design mass flow rate core";
- // parameter Modelica.SIunits.MassFlowRate mSou_flow_nominal=6*VRooSou*conv
+ // parameter Modelica.Units.SI.MassFlowRate mSou_flow_nominal=6*VRooSou*conv
  //   "Design mass flow rate perimeter 1";
- // parameter Modelica.SIunits.MassFlowRate mPle_flow_nominal=9*VRooPle*conv
+ // parameter Modelica.Units.SI.MassFlowRate mPle_flow_nominal=9*VRooPle*conv
  //   "Design mass flow rate perimeter 2";
- // parameter Modelica.SIunits.MassFlowRate mNor_flow_nominal=6*VRooNor*conv
+ // parameter Modelica.Units.SI.MassFlowRate mNor_flow_nominal=6*VRooNor*conv
  //   "Design mass flow rate perimeter 3";
-  parameter Modelica.SIunits.MassFlowRate m_flow_nominal=1.0*(mCor_flow_nominal
+  parameter Modelica.Units.SI.MassFlowRate m_flow_nominal=1.0*(mCor_flow_nominal
        + mSou_flow_nominal + mNor_flow_nominal) "Nominal mass flow rate";
-  parameter Modelica.SIunits.Angle lat=37.87*3.14159/180 "Latitude";
+  parameter Modelica.Units.SI.Angle lat=37.87*3.14159/180 "Latitude";
 
-  parameter Modelica.SIunits.Temperature THeaOn=293.15
+  parameter Modelica.Units.SI.Temperature THeaOn=293.15
     "Heating setpoint during on";
-  parameter Modelica.SIunits.Temperature THeaOff=285.15
+  parameter Modelica.Units.SI.Temperature THeaOff=285.15
     "Heating setpoint during off";
-  parameter Modelica.SIunits.Temperature TCooOn=273.15 + 23.3
+  parameter Modelica.Units.SI.Temperature TCooOn=273.15 + 23.3
     "Cooling setpoint during on";
-  parameter Modelica.SIunits.Temperature TCooOff=303.15
+  parameter Modelica.Units.SI.Temperature TCooOff=303.15
     "Cooling setpoint during off";
-  parameter Modelica.SIunits.PressureDifference dpBuiStaSet(min=0) = 12
+  parameter Modelica.Units.SI.PressureDifference dpBuiStaSet(min=0) = 12
     "Building static pressure";
   parameter Real yFanMin = 0.1 "Minimum fan speed";
 
-//  parameter Modelica.SIunits.HeatFlowRate QHeaCoi_nominal= 2.5*yFanMin*m_flow_nominal*1000*(20 - 4)
+//  parameter Modelica.Units.SI.HeatFlowRate QHeaCoi_nominal= 2.5*yFanMin*m_flow_nominal*1000*(20 - 4)
 //    "Nominal capacity of heating coil";
 
   parameter Boolean allowFlowReversal=true
@@ -218,21 +218,21 @@ partial model PartialOpenLoopX1aNoLeakage
         MediumA, m_flow_nominal=m_flow_nominal) "Outside air volume flow rate"
     annotation (Placement(transformation(extent={{-72,-44},{-50,-22}})));
 
-  Buildings.Examples.VAVReheat.ThermalZones.VAVBranch nor(
+  Test1.ThermalZones.VAVBranch_ResistantReheatCoil    nor(
     redeclare package MediumA = MediumA,
     redeclare package MediumW = MediumW,
     m_flow_nominal=mNor_flow_nominal,
     VRoo=VRooNor,
     allowFlowReversal=allowFlowReversal) "North-facing thermal zone"
     annotation (Placement(transformation(extent={{698,18},{738,58}})));
-  Buildings.Examples.VAVReheat.ThermalZones.VAVBranch cor(
+  Test1.ThermalZones.VAVBranch_ResistantReheatCoil    cor(
     redeclare package MediumA = MediumA,
     redeclare package MediumW = MediumW,
     m_flow_nominal=mCor_flow_nominal,
     VRoo=VRooCor,
     allowFlowReversal=allowFlowReversal) "Middle thermal zone"
     annotation (Placement(transformation(extent={{870,24},{910,64}})));
-  Buildings.Examples.VAVReheat.ThermalZones.VAVBranch sou(
+  Test1.ThermalZones.VAVBranch_ResistantReheatCoil    sou(
     redeclare package MediumA = MediumA,
     redeclare package MediumW = MediumW,
     m_flow_nominal=mSou_flow_nominal,
@@ -309,13 +309,11 @@ partial model PartialOpenLoopX1aNoLeakage
   Buildings.BoundaryConditions.WeatherData.Bus weaBus "Weather Data Bus"
     annotation (Placement(transformation(extent={{-330,170},{-310,190}}),
         iconTransformation(extent={{-360,170},{-340,190}})));
-  ThermalZones.FlexlabX1A flo(
+  Test1.ThermalZones.Floor flo(
     redeclare final package Medium = MediumA,
-    final lat=lat,
-    final use_windPressure=use_windPressure,
-    final sampleModel=sampleModel)
+    final use_windPressure=use_windPressure)
     "Model of a floor of the building that is served by this VAV system"
-    annotation (Placement(transformation(extent={{794,384},{1034,642}})));
+    annotation (Placement(transformation(extent={{806,382},{1140,570}})));
   Modelica.Blocks.Routing.DeMultiplex3 TRooAir(u(each unit="K", each
         displayUnit="degC")) "Demultiplex for room air temperature"
     annotation (Placement(transformation(extent={{490,160},{510,180}})));
@@ -374,7 +372,7 @@ partial model PartialOpenLoopX1aNoLeakage
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={1080,128})));
-  Buildings.Examples.VAVReheat.BaseClasses.MixingBox eco(
+  Test1.BaseClasses1.MixingBox                       eco(
     redeclare package Medium = MediumA,
     mOut_flow_nominal=m_flow_nominal,
     dpOut_nominal=10,
@@ -397,11 +395,11 @@ partial model PartialOpenLoopX1aNoLeakage
 
 protected
   model Results "Model to store the results of the simulation"
-    parameter Modelica.SIunits.Area A "Floor area";
-    input Modelica.SIunits.Power PFan "Fan energy";
-    input Modelica.SIunits.Power PHea "Heating energy";
-    input Modelica.SIunits.Power PCooSen "Sensible cooling energy";
-    input Modelica.SIunits.Power PCooLat "Latent cooling energy";
+    parameter Modelica.Units.SI.Area A "Floor area";
+    input Modelica.Units.SI.Power PFan "Fan energy";
+    input Modelica.Units.SI.Power PHea "Heating energy";
+    input Modelica.Units.SI.Power PCooSen "Sensible cooling energy";
+    input Modelica.Units.SI.Power PCooLat "Latent cooling energy";
 
     Real EFan(
       unit="J/m2",
@@ -434,16 +432,18 @@ protected
 
   end Results;
 public
-  Buildings.Controls.OBC.CDL.Continuous.Gain gaiHeaCoi(k=m_flow_nominal*1000*40
+  Buildings.Controls.OBC.CDL.Reals.MultiplyByParameter
+                                             gaiHeaCoi(k=m_flow_nominal*1000*40
         /4200/10) "Gain for heating coil mass flow rate"
     annotation (Placement(transformation(extent={{100,-220},{120,-200}})));
-  Buildings.Controls.OBC.CDL.Continuous.Gain gaiCooCoi(k=m_flow_nominal*1000*15
+  Buildings.Controls.OBC.CDL.Reals.MultiplyByParameter
+                                             gaiCooCoi(k=m_flow_nominal*1000*15
         /4200/10) "Gain for cooling coil mass flow rate"
     annotation (Placement(transformation(extent={{100,-258},{120,-238}})));
   Buildings.Controls.OBC.CDL.Logical.OnOffController freSta(bandwidth=1)
     "Freeze stat for heating coil"
     annotation (Placement(transformation(extent={{0,-102},{20,-82}})));
-  Buildings.Controls.OBC.CDL.Continuous.Sources.Constant freStaTSetPoi(k=273.15
+  Buildings.Controls.OBC.CDL.Reals.Sources.Constant      freStaTSetPoi(k=273.15
          + 3) "Freeze stat set point for heating coil"
     annotation (Placement(transformation(extent={{-40,-96},{-20,-76}})));
 equation
@@ -502,23 +502,22 @@ equation
       thickness=0.5,
       smooth=Smooth.None));
   connect(weaBus, flo.weaBus) annotation (Line(
-      points={{-320,180},{-320,527.62},{952.571,527.62}},
+      points={{-320,180},{-320,598.923},{1016.57,598.923}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));
   connect(flo.TRooAir, min.u) annotation (Line(
-      points={{1028.86,494.94},{1164.7,494.94},{1164.7,450},{1198,450}},
+      points={{1147.26,476},{1176,476},{1176,450},{1198,450}},
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
   connect(flo.TRooAir, ave.u) annotation (Line(
-      points={{1028.86,494.94},{1166,494.94},{1166,420},{1198,420}},
+      points={{1147.26,476},{1176,476},{1176,420},{1198,420}},
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
   connect(TRooAir.u, flo.TRooAir) annotation (Line(
-      points={{488,170},{480,170},{480,538},{1164,538},{1164,494.94},{1028.86,
-          494.94}},
+      points={{488,170},{472,170},{472,208},{1168,208},{1168,476},{1147.26,476}},
       color={0,0,127},
       smooth=Smooth.None,
       pattern=LinePattern.Dash));
@@ -612,20 +611,23 @@ equation
   connect(sou.port_a, splSupCor.port_2) annotation (Line(points={{1080,16},{1080,
           -40},{844,-40}}, color={0,127,255}));
   connect(VSupNor_flow.port_b, flo.portsNor[1]) annotation (Line(points={{708,138},
-          {708,481.18},{899,481.18}},     color={0,127,255}));
+          {708,200},{760,200},{760,456},{912,456},{912,529.508},{931.613,
+          529.508}},                      color={0,127,255}));
   connect(VSupCor_flow.port_b, flo.portsCor[1]) annotation (Line(points={{880,144},
-          {880,248},{800,248},{800,446},{858,446},{858,446.78},{899,446.78}},
+          {880,168},{1000,168},{1000,304},{864,304},{864,480.338},{931.613,
+          480.338}},
         color={0,127,255}));
   connect(VSupSou_flow.port_b, flo.portsSou[1]) annotation (Line(points={{1080,
-          138},{1080,378},{898,378},{898,412.38},{899,412.38}},color={0,127,255}));
+          138},{1080,192},{1096,192},{1096,422.492},{931.613,422.492}},
+                                                               color={0,127,255}));
   connect(splRetCor.port_2, flo.portsSou[2]) annotation (Line(points={{1008,0},
-          {1156,0},{1156,412.38},{903.286,412.38}},
-                                              color={0,127,255}));
+          {1040,0},{1040,160},{1080,160},{1080,192},{1096,192},{1096,422.492},{
+          938.874,422.492}},                  color={0,127,255}));
   connect(splRetCor.port_3, flo.portsCor[2]) annotation (Line(points={{998,10},
-          {998,304},{864,304},{864,428},{906,428},{906,446.78},{903.286,446.78}},
+          {998,304},{864,304},{864,480.338},{938.874,480.338}},
         color={0,127,255}));
   connect(splRetNor.port_3, flo.portsNor[2]) annotation (Line(points={{756,10},
-          {756,458},{908,458},{908,482},{903.286,482},{903.286,481.18}},color={0,
+          {756,456},{912,456},{912,529.508},{938.874,529.508}},         color={0,
           127,255}));
   connect(senSupFlo.port_b, splSupNor.port_1)
     annotation (Line(points={{420,-40},{698,-40}}, color={0,127,255}));

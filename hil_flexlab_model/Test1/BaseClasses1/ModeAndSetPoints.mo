@@ -227,19 +227,19 @@ protected
   Buildings.Controls.OBC.CDL.Integers.Sources.Constant heaDemLimLev(
     final k=heaDemLimLevCon) "Heating demand limit level"
     annotation (Placement(transformation(extent={{0,-210},{20,-190}})));
-  Buildings.Controls.OBC.CDL.Continuous.Sources.Constant TSetRooHeaOn(
+  Buildings.Controls.OBC.CDL.Reals.Sources.Constant TSetRooHeaOn(
     final k=TZonHeaOn)
     "Heating on setpoint"
     annotation (Placement(transformation(extent={{-120,140},{-100,160}})));
-  Buildings.Controls.OBC.CDL.Continuous.Sources.Constant TSetRooHeaOff(
+  Buildings.Controls.OBC.CDL.Reals.Sources.Constant TSetRooHeaOff(
     final k=TZonHeaOff)
     "Heating off set point"
     annotation (Placement(transformation(extent={{-120,60},{-100,80}})));
-  Buildings.Controls.OBC.CDL.Continuous.Sources.Constant TSetRooCooOn(
+  Buildings.Controls.OBC.CDL.Reals.Sources.Constant TSetRooCooOn(
     final k=TZonCooOn)
     "Cooling on setpoint"
     annotation (Placement(transformation(extent={{-120,100},{-100,120}})));
-  Buildings.Controls.OBC.CDL.Continuous.Sources.Constant TSetRooCooOff(
+  Buildings.Controls.OBC.CDL.Reals.Sources.Constant TSetRooCooOff(
     final k=TZonCooOff)
     "Cooling off set point"
     annotation (Placement(transformation(extent={{-120,20},{-100,40}})));
@@ -250,7 +250,7 @@ protected
     final TZonFreProOn=TZonFreProOn,
     final TZonFreProOff=TZonFreProOff) "Operation mode selector"
     annotation (Placement(transformation(extent={{40,-20},{60,0}})));
-  Buildings.Controls.OBC.CDL.Continuous.Sources.Constant tCooDowHeaUp(
+  Buildings.Controls.OBC.CDL.Reals.Sources.Constant tCooDowHeaUp(
     final k=warCooTim) "Cool down and heat up time (simplified as constant)"
     annotation (Placement(transformation(extent={{-120,180},{-100,200}})));
   ZoneStatus zonSta(final have_winSen=have_winSen)
