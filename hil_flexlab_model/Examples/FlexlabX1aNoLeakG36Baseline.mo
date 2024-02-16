@@ -101,7 +101,7 @@ model FlexlabX1aNoLeakG36Baseline
     final yFanMin=yFanMin,
     final VPriSysMax_flow=VPriSysMax_flow,
     final peaSysPop=1.2*sum({0.05*AFlo[i] for i in 1:numZon}),
-    numIgnReqSupTem=0)                                         "AHU controller"
+    numIgnReqSupTem=0) "AHU controller"
     annotation (Placement(transformation(extent={{360,418},{440,546}})));
   Modelica.Blocks.Math.Add add
     annotation (Placement(transformation(extent={{-124,446},{-144,466}})));
@@ -121,6 +121,9 @@ model FlexlabX1aNoLeakG36Baseline
     annotation (Placement(transformation(extent={{-264,478},{-244,498}})));
   Modelica.Blocks.Sources.IntegerConstant integerConstant[numZon](k=0)
     annotation (Placement(transformation(extent={{-260,524},{-240,544}})));
+  Modelica.Blocks.Sources.BooleanConstant booleanConstant1(k=false)
+    "if building is unoccupied"
+    annotation (Placement(transformation(extent={{-266,406},{-246,426}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,0},{320,-10},{320,-10}},
@@ -196,8 +199,6 @@ equation
           -216},{-232,326},{-148,326}}, color={255,0,255}));
   connect(reaRep.y, TZonSet.tNexOcc) annotation (Line(points={{-122,360},{-78,360},
           {-78,341},{-34,341}}, color={0,0,127}));
-  connect(booRep.y, TZonSet.uOcc) annotation (Line(points={{-124,326},{-80,326},
-          {-80,338.025},{-34,338.025}}, color={255,0,255}));
   connect(conVAVSou.uOpeMod, TZonSet[1].yOpeMod) annotation (Line(points={{1018,32},
           {502,32},{502,325},{-10,325}},       color={255,127,0}));
   connect(conVAVCor.uOpeMod, TZonSet[1].yOpeMod) annotation (Line(points={{778,104},
@@ -352,6 +353,11 @@ equation
   connect(zonOutAirSet.uWin, booleanConstant.y) annotation (Line(points={{226,
           430},{144,430},{144,470},{-234,470},{-234,488},{-243,488}}, color={
           255,0,255}));
+  connect(booleanConstant1.y, conAHU.u_UnOcc) annotation (Line(points={{-245,
+          416},{-208,416},{-208,420},{355.6,420},{355.6,415.741}}, color={255,0,
+          255}));
+  connect(booRep.y, TZonSet.uOcc) annotation (Line(points={{-124,326},{-124,
+          338.025},{-34,338.025}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-320},{1400,
             640}}), graphics={Line(

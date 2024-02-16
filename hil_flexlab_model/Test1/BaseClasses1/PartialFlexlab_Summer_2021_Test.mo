@@ -468,16 +468,16 @@ protected
 
   end Results;
 public
-  Buildings.Controls.OBC.CDL.Continuous.MultiplyByParameter gaiHeaCoi(k=
+  Buildings.Controls.OBC.CDL.Reals.MultiplyByParameter gaiHeaCoi(k=
         m_flow_nominal*1000*40/4200/10) "Gain for heating coil mass flow rate"
     annotation (Placement(transformation(extent={{100,-220},{120,-200}})));
-  Buildings.Controls.OBC.CDL.Continuous.MultiplyByParameter gaiCooCoi(k=
+  Buildings.Controls.OBC.CDL.Reals.MultiplyByParameter gaiCooCoi(k=
         m_flow_nominal*1000*15/4200/10) "Gain for cooling coil mass flow rate"
     annotation (Placement(transformation(extent={{100,-258},{120,-238}})));
   Buildings.Controls.OBC.CDL.Logical.OnOffController freSta(bandwidth=1)
     "Freeze stat for heating coil"
     annotation (Placement(transformation(extent={{0,-102},{20,-82}})));
-  Buildings.Controls.OBC.CDL.Continuous.Sources.Constant freStaTSetPoi(k=273.15
+  Buildings.Controls.OBC.CDL.Reals.Sources.Constant freStaTSetPoi(k=273.15
          + 3) "Freeze stat set point for heating coil"
     annotation (Placement(transformation(extent={{-40,-96},{-20,-76}})));
   Buildings.Fluid.Sensors.TemperatureTwoPort TSupPle(
@@ -565,7 +565,7 @@ equation
       thickness=0.5,
       smooth=Smooth.None));
   connect(weaBus.TDryBul, TOut.u) annotation (Line(
-      points={{-320,180},{-302,180}},
+      points={{-319.95,180.05},{-310,180.05},{-310,180},{-302,180}},
       color={255,204,51},
       thickness=0.5,
       smooth=Smooth.None));

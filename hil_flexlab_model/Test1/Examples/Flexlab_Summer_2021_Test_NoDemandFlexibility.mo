@@ -7,8 +7,7 @@ model Flexlab_Summer_2021_Test_NoDemandFlexibility
       occupancy={0,86399},
       firstEntryOccupied=true,
       period=86400),
-    fanSup(per(use_powerCharacteristic=true, power(V_flow={0.05,0.4}, P=1*{167,
-              370}))),
+    fanSup(per(power(V_flow={0.05,0.4}, P=1*{167,370}))),
     flo(
       nor(T_start=294.96),
       cor(T_start=294.96),
@@ -94,13 +93,13 @@ model Flexlab_Summer_2021_Test_NoDemandFlexibility
     "Number of zone pressure requests"
     annotation (Placement(transformation(extent={{300,254},{320,274}})));
 
-  Buildings.Controls.OBC.CDL.Continuous.Switch swiFreSta
+  Buildings.Controls.OBC.CDL.Reals.Switch swiFreSta
     "Switch for freeze stat"
     annotation (Placement(transformation(extent={{60,-202},{80,-182}})));
-  Buildings.Controls.OBC.CDL.Continuous.Sources.Constant freStaSetPoi1(k=273.15
+  Buildings.Controls.OBC.CDL.Reals.Sources.Constant freStaSetPoi1(k=273.15
          + 3) "Freeze stat for heating coil"
     annotation (Placement(transformation(extent={{-40,-96},{-20,-76}})));
-  Buildings.Controls.OBC.CDL.Continuous.Sources.Constant yFreHeaCoi(final k=1)
+  Buildings.Controls.OBC.CDL.Reals.Sources.Constant yFreHeaCoi(final k=1)
     "Flow rate signal for heating coil when freeze stat is on"
     annotation (Placement(transformation(extent={{0,-192},{20,-172}})));
   Buildings.Controls.OBC.CDL.Routing.RealScalarReplicator reaRep(final nout=
@@ -166,12 +165,12 @@ model Flexlab_Summer_2021_Test_NoDemandFlexibility
     annotation (Placement(transformation(extent={{-142,222},{-122,242}})));
   Modelica.Blocks.Math.Add add1
     annotation (Placement(transformation(extent={{-122,270},{-142,290}})));
-  Buildings.Controls.OBC.CDL.Continuous.Sources.Constant ecoHigCut(k=273.15 + 18)
+  Buildings.Controls.OBC.CDL.Reals.Sources.Constant ecoHigCut(k=273.15 + 18)
     "economizer high cut off temp"
     annotation (Placement(transformation(extent={{66,472},{86,492}})));
   Modelica.Blocks.Logical.Greater greater_unocc
     annotation (Placement(transformation(extent={{-278,448},{-298,468}})));
-  Buildings.Controls.OBC.CDL.Continuous.Sources.Constant ecoHigCut1(k=11)
+  Buildings.Controls.OBC.CDL.Reals.Sources.Constant ecoHigCut1(k=11)
     "economizer high cut off temp"
     annotation (Placement(transformation(extent={{-230,396},{-254,420}})));
   Modelica.Blocks.Math.Add add2(k1=-1, k2=+1)
@@ -187,6 +186,11 @@ model Flexlab_Summer_2021_Test_NoDemandFlexibility
     annotation (Placement(transformation(extent={{-292,494},{-272,514}})));
   Plants1.Controls.OutdoorDamperPositionBlock outdoorDamperPositionBlock
     annotation (Placement(transformation(extent={{-76,-130},{-56,-110}})));
+  Modelica.Blocks.Sources.IntegerConstant integerConstant[numZon](k=0)
+    annotation (Placement(transformation(extent={{-206,538},{-186,558}})));
+  Modelica.Blocks.Sources.BooleanConstant booleanConstant1
+                                                         [numZon](k=false)
+    annotation (Placement(transformation(extent={{-210,492},{-190,512}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,0},{320,-10},{320,-10}},
@@ -434,6 +438,12 @@ equation
           -106,-120},{-78,-120}}, color={0,0,127}));
   connect(conAHU.u_UnOcc, greater_unocc.y) annotation (Line(points={{355.6,
           415.741},{-332,415.741},{-332,458},{-299,458}}, color={255,0,255}));
+  connect(zonOutAirSet.nOcc, integerConstant.y) annotation (Line(points={{226,
+          401},{188,401},{188,400},{-168,400},{-168,548},{-185,548}}, color={
+          255,127,0}));
+  connect(zonOutAirSet.uWin, booleanConstant1.y) annotation (Line(points={{226,
+          398},{196,398},{196,396},{-178,396},{-178,502},{-189,502}}, color={
+          255,0,255}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-320},{1400,
             640}}), graphics={Line(
@@ -516,7 +526,7 @@ This is for
     experiment(
       StartTime=21427200,
       StopTime=21513600,
-      Interval=299.999808,
+      Interval=60,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end Flexlab_Summer_2021_Test_NoDemandFlexibility;
