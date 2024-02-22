@@ -265,7 +265,7 @@ protected
   Buildings.Controls.OBC.CDL.Logical.Or or6
     "Check if it is in any of the 6 modes except unoccupied mode"
     annotation (Placement(transformation(extent={{120,-340},{140,-320}})));
-  Buildings.Controls.OBC.CDL.Reals.Switch   swi
+  Modelica.Blocks.Logical.Switch            switch1
     "Switch between occupied mode index and unoccupied period index"
     annotation (Placement(transformation(extent={{260,270},{280,290}})));
   Buildings.Controls.OBC.CDL.Reals.Switch   swi3
@@ -299,15 +299,16 @@ protected
     annotation (Placement(transformation(extent={{340,40},{360,60}})));
 
 equation
-  connect(swi.y, occMod.u)
-    annotation (Line(points={{282,280},{298,280}},
-      color={0,0,127}));
-  connect(occModInd.y, swi.u1)
-    annotation (Line(points={{222,310},{240,310},{240,288},{258,288}},
-      color={0,0,127}, pattern=LinePattern.Dash));
-  connect(unoPerInd.y, swi.u3)
-    annotation (Line(points={{122,260},{150,260},{150,272},{258,272}},
-      color={0,0,127}, pattern=LinePattern.Dash));
+  connect(switch1.y, occMod.u)
+    annotation (Line(points={{281,280},{298,280}}, color={0,0,127}));
+  connect(occModInd.y, switch1.u1) annotation (Line(
+      points={{222,310},{240,310},{240,288},{258,288}},
+      color={0,0,127},
+      pattern=LinePattern.Dash));
+  connect(unoPerInd.y, switch1.u3) annotation (Line(
+      points={{122,260},{150,260},{150,272},{258,272}},
+      color={0,0,127},
+      pattern=LinePattern.Dash));
   connect(intGreThr.y, or1.u1)
     annotation (Line(points={{-158,-10},{-102,-10}},
       color={255,0,255}));
@@ -392,9 +393,8 @@ equation
     annotation (Line(points={{222,180},{240,180},{240,90},{-10,90},{-10,38},{-2,
           38}},
       color={255,0,255}));
-  connect(uOcc, swi.u2)
-    annotation (Line(points={{-280,330},{-220,330},{-220,280},{258,280}},
-      color={255,0,255}));
+  connect(uOcc, switch1.u2) annotation (Line(points={{-280,330},{-220,330},{-220,
+          280},{258,280}}, color={255,0,255}));
   connect(uOcc, or3.u3)
     annotation (Line(points={{-280,330},{-220,330},{-220,22},{-2,22}},
       color={255,0,255}));

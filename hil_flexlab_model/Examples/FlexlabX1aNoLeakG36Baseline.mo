@@ -68,13 +68,13 @@ model FlexlabX1aNoLeakG36Baseline
     annotation (Placement(transformation(extent={{-144,350},{-124,370}})));
   Buildings.Controls.OBC.CDL.Routing.BooleanScalarReplicator booRep(final nout=numZon)
     "Replicate boolean input"
-    annotation (Placement(transformation(extent={{-146,316},{-126,336}})));
+    annotation (Placement(transformation(extent={{-148,316},{-128,336}})));
   Test1.BaseClasses1.ModeAndSetPoints                                  TZonSet[numZon](
     final TZonHeaOn=fill(273.15 + 21.1, numZon),
     final TZonHeaOff=fill(THeaOff, numZon),
     TZonCooOn=fill(273.15 + 23.3, numZon),
     final TZonCooOff=fill(TCooOff, numZon)) "Zone setpoint temperature"
-    annotation (Placement(transformation(extent={{-32,322},{-12,342}})));
+    annotation (Placement(transformation(extent={{-34,322},{-14,342}})));
   Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.SetPoints.OutdoorAirFlow.Zone
     zonOutAirSet[numZon](
     final AFlo=AFlo,
@@ -196,17 +196,18 @@ equation
   connect(occSch.tNexNonOcc, reaRep.u) annotation (Line(points={{-297,-210},{-236,
           -210},{-236,360},{-146,360}}, color={0,0,127}));
   connect(occSch.occupied, booRep.u) annotation (Line(points={{-297,-216},{-232,
-          -216},{-232,326},{-148,326}}, color={255,0,255}));
-  connect(reaRep.y, TZonSet.tNexOcc) annotation (Line(points={{-122,360},{-78,360},
-          {-78,341},{-34,341}}, color={0,0,127}));
+          -216},{-232,326},{-150,326}}, color={255,0,255}));
+  connect(reaRep.y, TZonSet.tNexOcc) annotation (Line(points={{-122,360},{-78,
+          360},{-78,341},{-36,341}},
+                                color={0,0,127}));
   connect(conVAVSou.uOpeMod, TZonSet[1].yOpeMod) annotation (Line(points={{1018,32},
-          {502,32},{502,325},{-10,325}},       color={255,127,0}));
+          {502,32},{502,325},{-12,325}},       color={255,127,0}));
   connect(conVAVCor.uOpeMod, TZonSet[1].yOpeMod) annotation (Line(points={{778,104},
-          {34,104},{34,325},{-10,325}},color={255,127,0}));
+          {34,104},{34,325},{-12,325}},color={255,127,0}));
   connect(conVAVNor.uOpeMod, TZonSet[1].yOpeMod) annotation (Line(points={{652,4},
-          {54,4},{54,325},{-10,325}},  color={255,127,0}));
+          {54,4},{54,325},{-12,325}},  color={255,127,0}));
   connect(flo.TRooAir, TZonSet.TZon) annotation (Line(points={{1147.26,476},{
-          1096,476},{1096,604},{-54,604},{-54,335},{-34,335}},    color={0,0,127}));
+          1096,476},{1096,604},{-54,604},{-54,335},{-36,335}},    color={0,0,127}));
   connect(TDis.y, zonOutAirSet.TDis) annotation (Line(points={{131,286},{132,
           286},{132,421},{226,421}},
                                 color={0,0,127}));
@@ -270,7 +271,7 @@ equation
   connect(TMix.T, conAHU.TMix) annotation (Line(points={{40,-29},{40,446.235},{
           356,446.235}},
                      color={0,0,127}));
-  connect(TZonSet[1].yOpeMod, conAHU.uOpeMod) annotation (Line(points={{-10,325},
+  connect(TZonSet[1].yOpeMod, conAHU.uOpeMod) annotation (Line(points={{-12,325},
           {158,325},{158,438.706},{356,438.706}}, color={255,127,0}));
   connect(TZonResReq.y, conAHU.uZonTemResReq) annotation (Line(points={{320,298},
           {322,298},{322,433.059},{356,433.059}}, color={255,127,0}));
@@ -301,9 +302,9 @@ equation
           416,429.294},{416,430},{420,430},{420,168},{-10,168},{-10,-34}},
                                                                        color={0,
           0,127}));
-  connect(TZonSet[1].TZonCooSet, conAHU.TZonCooSet) annotation (Line(points={{-10,339},
+  connect(TZonSet[1].TZonCooSet, conAHU.TZonCooSet) annotation (Line(points={{-12,339},
           {174,339},{174,544.118},{356,544.118}},      color={0,0,127}));
-  connect(TZonSet[1].TZonHeaSet, conAHU.TZonHeaSet) annotation (Line(points={{-10,332},
+  connect(TZonSet[1].TZonHeaSet, conAHU.TZonHeaSet) annotation (Line(points={{-12,332},
           {174,332},{174,549.765},{356,549.765}},      color={0,0,127}));
   connect(conVAVNor.yDam_actual, nor.y_actual) annotation (Line(points={{652,10},
           {642,10},{642,72},{746,72},{746,54},{740,54}}, color={0,0,127}));
@@ -313,7 +314,7 @@ equation
           {1012,38},{1012,68},{1126,68},{1126,52},{1112,52}}, color={0,0,127}));
   connect(cooSetDR.y[1], add.u2) annotation (Line(points={{-121,410},{-92,410},
           {-92,450},{-122,450}}, color={0,0,127}));
-  connect(TZonSet[1].TZonCooSet, add.u1) annotation (Line(points={{-10,339},{8,
+  connect(TZonSet[1].TZonCooSet, add.u1) annotation (Line(points={{-12,339},{8,
           339},{8,462},{-122,462}}, color={0,0,127}));
   connect(add.y, conVAVSou.TZonCooSet) annotation (Line(points={{-145,456},{-162,
           456},{-162,50},{1018,50}},      color={0,0,127}));
@@ -337,7 +338,7 @@ equation
           {148,128},{148,259},{174,259}}, color={0,0,127}));
   connect(VSupNor_flow.V_flow, VDis_flow.u3[1]) annotation (Line(points={{697,128},
           {160,128},{160,245},{174,245}}, color={0,0,127}));
-  connect(TZonSet[1].TZonHeaSet, add1.u1) annotation (Line(points={{-10,332},{
+  connect(TZonSet[1].TZonHeaSet, add1.u1) annotation (Line(points={{-12,332},{
           -64,332},{-64,286},{-120,286}}, color={0,0,127}));
   connect(heaSetDR.y[1], add1.u2) annotation (Line(points={{-119,232},{-66,232},
           {-66,274},{-120,274}}, color={0,0,127}));
@@ -356,8 +357,8 @@ equation
   connect(booleanConstant1.y, conAHU.u_UnOcc) annotation (Line(points={{-245,
           416},{-208,416},{-208,420},{355.6,420},{355.6,415.741}}, color={255,0,
           255}));
-  connect(booRep.y, TZonSet.uOcc) annotation (Line(points={{-124,326},{-124,
-          338.025},{-34,338.025}}, color={255,0,255}));
+  connect(booRep.y, TZonSet.uOcc) annotation (Line(points={{-126,326},{-126,
+          338.025},{-36,338.025}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-320},{1400,
             640}}), graphics={Line(

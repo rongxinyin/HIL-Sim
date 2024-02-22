@@ -656,7 +656,7 @@ block Controller_G36
         peaSysPop) "Minimum outdoor airflow setpoint"
     annotation (Placement(transformation(extent={{-40,70},{-20,90}})));
 
-  Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.AHUs.MultiZone.VAV.Economizers.Controller
+  EconomizerController
     eco(
     final use_enthalpy=use_enthalpy,
     final delTOutHis=delTOutHis,
