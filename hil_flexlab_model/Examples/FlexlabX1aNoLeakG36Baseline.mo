@@ -123,7 +123,14 @@ model FlexlabX1aNoLeakG36Baseline
     annotation (Placement(transformation(extent={{-260,524},{-240,544}})));
   Modelica.Blocks.Sources.BooleanConstant booleanConstant1(k=false)
     "if building is unoccupied"
-    annotation (Placement(transformation(extent={{-266,406},{-246,426}})));
+    annotation (Placement(transformation(extent={{-458,428},{-438,448}})));
+  Modelica.Blocks.Math.Add add2(k1=-1, k2=+1)
+    annotation (Placement(transformation(extent={{-336,372},{-356,392}})));
+  Buildings.Controls.OBC.CDL.Reals.Sources.Constant ecoHigCut1(k=11)
+    "economizer high cut off temp"
+    annotation (Placement(transformation(extent={{-362,324},{-386,348}})));
+  Modelica.Blocks.Logical.Greater greater_unocc
+    annotation (Placement(transformation(extent={{-410,376},{-430,396}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,0},{320,-10},{320,-10}},
@@ -354,11 +361,20 @@ equation
   connect(zonOutAirSet.uWin, booleanConstant.y) annotation (Line(points={{226,
           430},{144,430},{144,470},{-234,470},{-234,488},{-243,488}}, color={
           255,0,255}));
-  connect(booleanConstant1.y, conAHU.u_UnOcc) annotation (Line(points={{-245,
-          416},{-208,416},{-208,420},{355.6,420},{355.6,415.741}}, color={255,0,
-          255}));
   connect(booRep.y, TZonSet.uOcc) annotation (Line(points={{-126,326},{-126,
           338.025},{-36,338.025}}, color={255,0,255}));
+  connect(add2.y,greater_unocc. u1) annotation (Line(points={{-357,382},{-382.5,
+          382},{-382.5,386},{-408,386}}, color={0,0,127}));
+  connect(ecoHigCut1.y,greater_unocc. u2) annotation (Line(points={{-388.4,336},
+          {-388.4,352},{-408,352},{-408,378}},
+                                             color={0,0,127}));
+  connect(add.y, add2.u2) annotation (Line(points={{-145,456},{-145,464},{-160,
+          464},{-160,376},{-334,376}}, color={0,0,127}));
+  connect(add1.y, add2.u1) annotation (Line(points={{-143,280},{-448,280},{-448,
+          416},{-368,416},{-368,388},{-334,388}}, color={0,0,127}));
+  connect(greater_unocc.y, conAHU.u_UnOcc) annotation (Line(points={{-431,386},
+          {-414,386},{-414,438},{264,438},{264,415.741},{355.6,415.741}}, color
+        ={255,0,255}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-320},{1400,
             640}}), graphics={Line(
