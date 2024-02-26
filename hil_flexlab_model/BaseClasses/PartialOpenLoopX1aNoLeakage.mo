@@ -25,12 +25,14 @@ partial model PartialOpenLoopX1aNoLeakage
   final parameter Modelica.Units.SI.Area ATot=sum(AFlo) "Total floor area";
 
   constant Real conv=1.2/3600 "Conversion factor for nominal mass flow rate";
-    parameter Modelica.Units.SI.MassFlowRate mCor_flow_nominal=0.106*1.2
-    "Design mass flow rate core";
-  parameter Modelica.Units.SI.MassFlowRate mSou_flow_nominal=0.189*1.2
-    "Design mass flow rate perimeter 1";
-  parameter Modelica.Units.SI.MassFlowRate mNor_flow_nominal=0.106*1.2
-    "Design mass flow rate perimeter 3";
+  parameter Modelica.Units.SI.MassFlowRate mCor_flow_nominal=0.130*1.2
+    "*1.2Design mass flow rate core";
+  parameter Modelica.Units.SI.MassFlowRate mSou_flow_nominal=0.2313*1.2
+    "*1.2Design mass flow rate perimeter 1";
+  parameter Modelica.Units.SI.MassFlowRate mPle_flow_nominal=0.03*1.2
+    "Design mass flow rate perimeter 2";
+  parameter Modelica.Units.SI.MassFlowRate mNor_flow_nominal=0.130*1.2
+    "*1.2Design mass flow rate perimeter 3";
  // parameter Modelica.Units.SI.MassFlowRate mCor_flow_nominal=6*VRooCor*conv
  //   "Design mass flow rate core";
  // parameter Modelica.Units.SI.MassFlowRate mSou_flow_nominal=6*VRooSou*conv
@@ -39,8 +41,9 @@ partial model PartialOpenLoopX1aNoLeakage
  //   "Design mass flow rate perimeter 2";
  // parameter Modelica.Units.SI.MassFlowRate mNor_flow_nominal=6*VRooNor*conv
  //   "Design mass flow rate perimeter 3";
-  parameter Modelica.Units.SI.MassFlowRate m_flow_nominal=1.0*(mCor_flow_nominal
-       + mSou_flow_nominal + mNor_flow_nominal) "Nominal mass flow rate";
+  parameter Modelica.Units.SI.MassFlowRate m_flow_nominal=1.0*(
+      mCor_flow_nominal + mSou_flow_nominal + mNor_flow_nominal +
+      mPle_flow_nominal) "Nominal mass flow rate";
   parameter Modelica.Units.SI.Angle lat=37.87*3.14159/180 "Latitude";
 
   parameter Modelica.Units.SI.Temperature THeaOn=293.15
@@ -447,6 +450,62 @@ public
   Buildings.Controls.OBC.CDL.Reals.Sources.Constant      freStaTSetPoi(k=273.15
          + 3) "Freeze stat set point for heating coil"
     annotation (Placement(transformation(extent={{-40,-96},{-20,-76}})));
+  Buildings.Fluid.Sensors.VolumeFlowRate VSupPle_flow(
+    redeclare package Medium = MediumA,
+    initType=Modelica.Blocks.Types.Init.InitialState,
+    m_flow_nominal=mPle_flow_nominal,
+    allowFlowReversal=allowFlowReversal) "Discharge air flow rate" annotation (
+      Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={624,126})));
+  Buildings.Fluid.Sensors.TemperatureTwoPort TSupPle(
+    redeclare package Medium = MediumA,
+    initType=Modelica.Blocks.Types.Init.InitialState,
+    m_flow_nominal=mPle_flow_nominal,
+    allowFlowReversal=allowFlowReversal) "Discharge air temperature"
+    annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={624,84})));
+  Buildings.Fluid.FixedResistances.PressureDrop dpRetDuc1(
+    m_flow_nominal=mPle_flow_nominal,
+    redeclare package Medium = MediumA,
+    allowFlowReversal=allowFlowReversal,
+    dp_nominal=40) "Pressure drop for return duct"
+    annotation (Placement(transformation(extent={{558,38},{538,58}})));
+  Buildings.Fluid.FixedResistances.Junction splSupRoo(
+    redeclare package Medium = MediumA,
+    m_flow_nominal={m_flow_nominal,m_flow_nominal - mPle_flow_nominal,
+        mPle_flow_nominal},
+    from_dp=true,
+    linearized=true,
+    energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
+    dp_nominal(each displayUnit="Pa") = {0,0,0},
+    portFlowDirection_1=if allowFlowReversal then Modelica.Fluid.Types.PortFlowDirection.Bidirectional
+         else Modelica.Fluid.Types.PortFlowDirection.Entering,
+    portFlowDirection_2=if allowFlowReversal then Modelica.Fluid.Types.PortFlowDirection.Bidirectional
+         else Modelica.Fluid.Types.PortFlowDirection.Leaving,
+    portFlowDirection_3=if allowFlowReversal then Modelica.Fluid.Types.PortFlowDirection.Bidirectional
+         else Modelica.Fluid.Types.PortFlowDirection.Leaving)
+    "Splitter for room supply into the plenum and other vav zones"
+    annotation (Placement(transformation(extent={{564,-30},{584,-50}})));
+  Buildings.Fluid.FixedResistances.Junction splRetRoo1(
+    redeclare package Medium = MediumA,
+    m_flow_nominal={m_flow_nominal,m_flow_nominal - mPle_flow_nominal,
+        mPle_flow_nominal},
+    from_dp=false,
+    linearized=true,
+    energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
+    dp_nominal(each displayUnit="Pa") = {0,0,0},
+    portFlowDirection_1=if allowFlowReversal then Modelica.Fluid.Types.PortFlowDirection.Bidirectional
+         else Modelica.Fluid.Types.PortFlowDirection.Leaving,
+    portFlowDirection_2=if allowFlowReversal then Modelica.Fluid.Types.PortFlowDirection.Bidirectional
+         else Modelica.Fluid.Types.PortFlowDirection.Entering,
+    portFlowDirection_3=if allowFlowReversal then Modelica.Fluid.Types.PortFlowDirection.Bidirectional
+         else Modelica.Fluid.Types.PortFlowDirection.Entering)
+    "Splitter for room return"
+    annotation (Placement(transformation(extent={{636,10},{656,-10}})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,-10}},
@@ -630,10 +689,25 @@ equation
   connect(splRetNor.port_3, flo.portsNor[2]) annotation (Line(points={{756,10},
           {756,456},{912,456},{912,529.508},{938.874,529.508}},         color={0,
           127,255}));
-  connect(senSupFlo.port_b, splSupNor.port_1)
-    annotation (Line(points={{420,-40},{698,-40}}, color={0,127,255}));
-  connect(dpRetDuc.port_a, splRetNor.port_1) annotation (Line(points={{400,140},
-          {584,140},{584,0},{746,0}}, color={0,127,255}));
+  connect(VSupPle_flow.port_a, TSupPle.port_b)
+    annotation (Line(points={{624,116},{624,94}}, color={0,127,255}));
+  connect(TSupPle.port_a, dpRetDuc1.port_a)
+    annotation (Line(points={{624,74},{624,48},{558,48}}, color={0,127,255}));
+  connect(senSupFlo.port_b, splSupRoo.port_1)
+    annotation (Line(points={{420,-40},{564,-40}}, color={0,127,255}));
+  connect(splSupRoo.port_2, splSupNor.port_1)
+    annotation (Line(points={{584,-40},{698,-40}}, color={0,127,255}));
+  connect(dpRetDuc1.port_b, splSupRoo.port_3) annotation (Line(points={{538,48},
+          {534,48},{534,-30},{574,-30}}, color={0,127,255}));
+  connect(dpRetDuc.port_a, splRetRoo1.port_1) annotation (Line(points={{400,140},
+          {584,140},{584,0},{636,0}}, color={0,127,255}));
+  connect(splRetRoo1.port_2, splRetNor.port_1)
+    annotation (Line(points={{656,0},{746,0}}, color={0,127,255}));
+  connect(VSupPle_flow.port_b, flo.portsEas[1]) annotation (Line(points={{624,136},
+          {618,136},{618,344},{1048,344},{1048,480.338},{1097.16,480.338}},
+        color={0,127,255}));
+  connect(flo.portsEas[2], splRetRoo1.port_3) annotation (Line(points={{1104.42,
+          480.338},{1104.42,290},{646,290},{646,10}}, color={0,127,255}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-380,
             -400},{1420,600}}), graphics={Line(points={{310,404}}, color={28,
               108,200}), Line(

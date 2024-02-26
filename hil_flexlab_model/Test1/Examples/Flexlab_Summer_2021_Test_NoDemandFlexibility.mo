@@ -7,7 +7,6 @@ model Flexlab_Summer_2021_Test_NoDemandFlexibility
       occupancy={0,86399},
       firstEntryOccupied=true,
       period=86400),
-    fanSup(per(power(V_flow={0.05,0.4}, P=1*{167,370}))),
     flo(
       nor(T_start=294.96),
       cor(T_start=294.96),
@@ -175,9 +174,6 @@ model Flexlab_Summer_2021_Test_NoDemandFlexibility
     annotation (Placement(transformation(extent={{-230,396},{-254,420}})));
   Modelica.Blocks.Math.Add add2(k1=-1, k2=+1)
     annotation (Placement(transformation(extent={{-204,444},{-224,464}})));
-  Buildings.Fluid.Sensors.Temperature southZoneReturnAirTemperature(redeclare
-      package Medium = Buildings.Media.Air)
-    annotation (Placement(transformation(extent={{1182,250},{1202,270}})));
   Plants1.Controls.ExhaustDamperPositionBlock exhaustDamperPositionBlock
     annotation (Placement(transformation(extent={{-88,-92},{-68,-72}})));
   Modelica.Blocks.Sources.Constant const(k=0)
@@ -420,9 +416,6 @@ equation
           {-266,408},{-266,450},{-276,450}}, color={0,0,127}));
   connect(add2.y, greater_unocc.u1) annotation (Line(points={{-225,454},{-251.5,
           454},{-251.5,458},{-276,458}}, color={0,0,127}));
-  connect(splRetCor.port_2, southZoneReturnAirTemperature.port) annotation (
-      Line(points={{962,0},{1156,0},{1156,238},{1174,238},{1174,250},{1192,250}},
-        color={0,127,255}));
   connect(eco.yExh, exhaustDamperPositionBlock.ExhaustDamperPosition)
     annotation (Line(points={{-3,-34},{-3,-10},{-56,-10},{-56,-82},{-67,-82}},
         color={0,0,127}));

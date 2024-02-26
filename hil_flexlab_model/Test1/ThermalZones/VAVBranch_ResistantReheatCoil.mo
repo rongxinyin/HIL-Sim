@@ -13,7 +13,7 @@ model VAVBranch_ResistantReheatCoil "Supply branch of a VAV system"
     "Mass flow rate of this thermal zone";
   parameter Modelica.Units.SI.Volume VRoo "Room volume";
 
-  Buildings.Fluid.Actuators.Dampers.PressureIndependent vav(
+  Buildings.Fluid.Actuators.Dampers.Exponential         vav(
     redeclare package Medium = MediumA,
     m_flow_nominal=m_flow_nominal,
     dpDamper_nominal=220 + 20,

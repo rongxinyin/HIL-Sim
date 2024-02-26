@@ -315,6 +315,7 @@ block Controller "Controller for room VAV box"
     final kVal=kVal,
     final TiVal=TiVal,
     final TdVal=TdVal,
+    have_pressureIndependentDamper=false,
     final controllerTypeDam=controllerTypeDam,
     final kDam=kDam,
     final TiDam=TiDam,

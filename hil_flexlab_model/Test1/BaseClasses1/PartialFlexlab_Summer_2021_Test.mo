@@ -26,13 +26,13 @@ partial model PartialFlexlab_Summer_2021_Test
   final parameter Modelica.Units.SI.Area ATot=sum(AFlo) "Total floor area";
 
   constant Real conv=1.2/3600 "Conversion factor for nominal mass flow rate";
-  parameter Modelica.Units.SI.MassFlowRate mCor_flow_nominal=0.130*1.2
+  parameter Modelica.Units.SI.MassFlowRate mCor_flow_nominal=0.1557
     "*1.2Design mass flow rate core";
-  parameter Modelica.Units.SI.MassFlowRate mSou_flow_nominal=0.2313*1.2
+  parameter Modelica.Units.SI.MassFlowRate mSou_flow_nominal=0.2775
     "*1.2Design mass flow rate perimeter 1";
-  parameter Modelica.Units.SI.MassFlowRate mPle_flow_nominal=0.03*1.2
+  parameter Modelica.Units.SI.MassFlowRate mPle_flow_nominal=0.1982
     "Design mass flow rate perimeter 2";
-  parameter Modelica.Units.SI.MassFlowRate mNor_flow_nominal=0.130*1.2
+  parameter Modelica.Units.SI.MassFlowRate mNor_flow_nominal=0.1557
     "*1.2Design mass flow rate perimeter 3";
  // parameter Modelica.SIunits.MassFlowRate mCor_flow_nominal=6*VRooCor*conv
  //   "Design mass flow rate core";
