@@ -8,8 +8,6 @@ XRA_Baseline_Calibration_0524
 ChillerModel_Exchange
 ChillerModel_Exchange_Weiping
 AWHP_Model_Exchange
-FlexlabX1aNoLeakG36Baseline
-FlexlabX1aNoLeakG36DR
-FlexlabX1aNoLeakG36Shift
-FlexlabX1aGuideline36
 FlexlabX1aG36NoDemandFlexibility
+FlexlabX1aG36LoadShed
+FlexlabX1aG36LoadShift

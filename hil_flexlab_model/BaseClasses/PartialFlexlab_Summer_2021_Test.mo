@@ -1,4 +1,4 @@
-within hil_flexlab_model.Test1.BaseClasses1;
+within hil_flexlab_model.BaseClasses;
 partial model PartialFlexlab_Summer_2021_Test
   "Validated Partial model of variable air volume flow system with terminal reheat and 3 VAV zones at flexlab x1a"
 
@@ -30,7 +30,7 @@ partial model PartialFlexlab_Summer_2021_Test
     "*1.2Design mass flow rate core";
   parameter Modelica.Units.SI.MassFlowRate mSou_flow_nominal=0.2775
     "*1.2Design mass flow rate perimeter 1";
-  parameter Modelica.Units.SI.MassFlowRate mPle_flow_nominal=0.1133
+  parameter Modelica.Units.SI.MassFlowRate mPle_flow_nominal=0.1982
     "Design mass flow rate perimeter 2";
   parameter Modelica.Units.SI.MassFlowRate mNor_flow_nominal=0.1557
     "*1.2Design mass flow rate perimeter 3";
@@ -176,8 +176,8 @@ partial model PartialFlexlab_Summer_2021_Test
     m_flow_nominal=m_flow_nominal,
     allowFlowReversal=allowFlowReversal)
     annotation (Placement(transformation(extent={{330,-50},{350,-30}})));
-  Buildings.Fluid.Sensors.RelativePressure dpDisSupFan(redeclare package Medium =
-        MediumA) "Supply fan static discharge pressure" annotation (Placement(
+  Buildings.Fluid.Sensors.RelativePressure dpDisSupFan(redeclare package Medium
+      = MediumA) "Supply fan static discharge pressure" annotation (Placement(
         transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
@@ -222,21 +222,21 @@ partial model PartialFlexlab_Summer_2021_Test
         MediumA, m_flow_nominal=m_flow_nominal) "Outside air volume flow rate"
     annotation (Placement(transformation(extent={{-72,-44},{-50,-22}})));
 
-  ThermalZones.VAVBranch_ResistantReheatCoil nor(
+  Test1.ThermalZones.VAVBranch_ResistantReheatCoil nor(
     redeclare package MediumA = MediumA,
     redeclare package MediumW = MediumW,
     m_flow_nominal=mNor_flow_nominal,
     VRoo=VRooNor,
     allowFlowReversal=allowFlowReversal) "North-facing thermal zone"
     annotation (Placement(transformation(extent={{696,20},{736,60}})));
-  ThermalZones.VAVBranch_ResistantReheatCoil cor(
+  Test1.ThermalZones.VAVBranch_ResistantReheatCoil cor(
     redeclare package MediumA = MediumA,
     redeclare package MediumW = MediumW,
     m_flow_nominal=mCor_flow_nominal,
     VRoo=VRooCor,
     allowFlowReversal=allowFlowReversal) "Middle thermal zone"
     annotation (Placement(transformation(extent={{824,24},{864,64}})));
-  ThermalZones.VAVBranch_ResistantReheatCoil sou(
+  Test1.ThermalZones.VAVBranch_ResistantReheatCoil sou(
     redeclare package MediumA = MediumA,
     redeclare package MediumW = MediumW,
     m_flow_nominal=mSou_flow_nominal,
@@ -345,7 +345,7 @@ partial model PartialFlexlab_Summer_2021_Test
   Buildings.BoundaryConditions.WeatherData.Bus weaBus "Weather Data Bus"
     annotation (Placement(transformation(extent={{-330,170},{-310,190}}),
         iconTransformation(extent={{-360,170},{-340,190}})));
-  ThermalZones.Floor flo(redeclare final package Medium = MediumA, final
+  Test1.ThermalZones.Floor flo(redeclare final package Medium = MediumA, final
       use_windPressure=use_windPressure)
     "Model of a floor of the building that is served by this VAV system"
     annotation (Placement(transformation(extent={{794,384},{1108,562}})));
@@ -408,7 +408,7 @@ partial model PartialFlexlab_Summer_2021_Test
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={1080,128})));
-  MixingBox eco(
+  Test1.BaseClasses1.MixingBox eco(
     redeclare package Medium = MediumA,
     mOut_flow_nominal=m_flow_nominal,
     dpOut_nominal=10,

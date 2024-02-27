@@ -1,8 +1,8 @@
-within hil_flexlab_model.Examples;
-model FlexlabX1aG36NoDemandFlexibility
+within hil_flexlab_model.Test1.Examples;
+model FlexlabX1aNonG36LoadShed
   "DR mode - Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
-  extends hil_flexlab_model.BaseClasses.PartialFlexlab_Summer_2021_Test(
+  extends hil_flexlab_model.Test1.BaseClasses1.PartialFlexlab_Summer_2021_Test(
     occSch(
       occupancy={0,86399},
       firstEntryOccupied=true,
@@ -39,14 +39,13 @@ model FlexlabX1aG36NoDemandFlexibility
   parameter Modelica.Units.SI.PressureDifference dpDisRetMax=40
     "Maximum return fan discharge static pressure setpoint";
 
-  hil_flexlab_model.Test1.Plants1.Controls.Controller conVAVNor(
+  Plants1.Controls.Controller conVAVNor(
     V_flow_nominal=mNor_flow_nominal/1.2,
     AFlo=AFloNor,
     final samplePeriod=samplePeriod,
     TiCoo=60,
     TiHea=60,
     TiVal=60,
-    kDam=0.5,
     TiDam=60,
     VDisCooSetMax_flow=mNor_flow_nominal/1.2,
     VDisSetMin_flow=0.0385/1.2,
@@ -55,7 +54,7 @@ model FlexlabX1aG36NoDemandFlexibility
     dTDisZonSetMax=5,
     TDisMin=285.95) "Controller for terminal unit north zone"
     annotation (Placement(transformation(extent={{654,4},{674,24}})));
-  hil_flexlab_model.Test1.Plants1.Controls.Controller conVAVCor(
+  Plants1.Controls.Controller conVAVCor(
     V_flow_nominal=mCor_flow_nominal/1.2,
     AFlo=AFloCor,
     final samplePeriod=samplePeriod,
@@ -70,7 +69,7 @@ model FlexlabX1aG36NoDemandFlexibility
     dTDisZonSetMax=5,
     TDisMin=285.95) "Controller for terminal unit mid zone"
     annotation (Placement(transformation(extent={{778,104},{798,124}})));
-  hil_flexlab_model.Test1.Plants1.Controls.Controller conVAVSou(
+  Plants1.Controls.Controller conVAVSou(
     V_flow_nominal=mSou_flow_nominal/1.2,
     AFlo=AFloSou,
     final samplePeriod=samplePeriod,
@@ -112,7 +111,7 @@ model FlexlabX1aG36NoDemandFlexibility
   Buildings.Controls.OBC.CDL.Routing.BooleanScalarReplicator booRep(final nout=
         numZon) "Replicate boolean input"
     annotation (Placement(transformation(extent={{-146,316},{-126,336}})));
-  hil_flexlab_model.Test1.BaseClasses1.ModeAndSetPoints TZonSet[numZon](
+  BaseClasses1.ModeAndSetPoints TZonSet[numZon](
     final TZonHeaOn=fill(273.15 + 21.1, numZon),
     final TZonHeaOff=fill(THeaOff, numZon),
     TZonCooOn=fill(273.15 + 23.3, numZon),
@@ -140,29 +139,28 @@ model FlexlabX1aG36NoDemandFlexibility
     samplePeriod=samplePeriod,
     retDamPhyPosMax=0.7,
     outDamPhyPosMin=0.3,
-    pIniSet=120,
+    pMinSet=250,
     final pMaxSet=250,
-    pDelTim=300,
     pNumIgnReq=0,
-    pResAmo=25,
+    pTriAmo=0,
+    pResAmo=0,
     final yFanMin=yFanMin,
     final VPriSysMax_flow=VPriSysMax_flow,
     final peaSysPop=2*sum({0.05*AFlo[i] for i in 1:numZon}),
-    iniSetSupTem=291.45,
-    maxSetSupTem=291.45,
-    minSetSupTem=285.95,
-    delTimSupTem=300,
+    TSupSetMin=285.95,
+    TSupSetMax=285.95,
+    TSupSetDes=285.95,
     numIgnReqSupTem=0,
-    triAmoSupTem=0.0833,
-    resAmoSupTem=-0.1667,
-    maxResSupTem=-0.6667,
+    triAmoSupTem=0,
+    resAmoSupTem=0,
     TiTSup=60)      "AHU controller"
     annotation (Placement(transformation(extent={{360,418},{440,546}})));
   Modelica.Blocks.Math.Add add
     annotation (Placement(transformation(extent={{-124,446},{-144,466}})));
   Modelica.Blocks.Sources.CombiTimeTable cooSetDR(
-    table=[0,3.3667; 5,3.3667; 5,2.2556; 6,2.2556; 6,1.7; 7,1.7; 7,0.0333; 22,
-        0.0333; 22,3.3667; 24,3.3667],
+    table=[0,3.3667; 5,3.3667; 5,2.2556; 6,2.2556; 6,1.7; 7,1.7; 7,0.0333; 14,
+        0.0333; 14,2.2556; 18,2.2556; 18,0.0333; 22,0.0333; 22,3.3667; 24,
+        3.3667],
     extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic,
     timeScale=3600) "cooling schedule for demand response"
     annotation (Placement(transformation(extent={{-148,400},{-128,420}})));
@@ -184,11 +182,13 @@ model FlexlabX1aG36NoDemandFlexibility
     annotation (Placement(transformation(extent={{-230,396},{-254,420}})));
   Modelica.Blocks.Math.Add add2(k1=-1, k2=+1)
     annotation (Placement(transformation(extent={{-204,444},{-224,464}})));
-  hil_flexlab_model.Test1.Plants1.Controls.ExhaustDamperPositionBlock exhaustDamperPositionBlock
+  Plants1.Controls.ExhaustDamperPositionBlock exhaustDamperPositionBlock
     annotation (Placement(transformation(extent={{-88,-92},{-68,-72}})));
+  Modelica.Blocks.Sources.Constant const(k=0)
+    annotation (Placement(transformation(extent={{550,188},{570,208}})));
   Modelica.Blocks.Sources.BooleanConstant booleanConstant(k=false)
     annotation (Placement(transformation(extent={{-292,494},{-272,514}})));
-  hil_flexlab_model.Test1.Plants1.Controls.OutdoorDamperPositionBlock outdoorDamperPositionBlock
+  Plants1.Controls.OutdoorDamperPositionBlock outdoorDamperPositionBlock
     annotation (Placement(transformation(extent={{-76,-130},{-56,-110}})));
   Modelica.Blocks.Sources.IntegerConstant integerConstant[numZon](k=0)
     annotation (Placement(transformation(extent={{-206,538},{-186,558}})));
@@ -530,4 +530,4 @@ This is for
       Interval=60,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
-end FlexlabX1aG36NoDemandFlexibility;
+end FlexlabX1aNonG36LoadShed;

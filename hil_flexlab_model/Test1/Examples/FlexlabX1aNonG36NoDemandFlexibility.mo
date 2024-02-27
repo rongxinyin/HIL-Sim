@@ -1,5 +1,5 @@
 within hil_flexlab_model.Test1.Examples;
-model Flexlab_Summer_2021_Test_NoDemandFlexibility
+model FlexlabX1aNonG36NoDemandFlexibility
   "DR mode - Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
   extends hil_flexlab_model.Test1.BaseClasses1.PartialFlexlab_Summer_2021_Test(
@@ -22,7 +22,7 @@ model Flexlab_Summer_2021_Test_NoDemandFlexibility
       ple(T_start=294.96)),
     weaDat(filNam=Modelica.Utilities.Files.loadResource(
           "modelica://hil_flexlab_model/Resources/weatherdata/US_Berkeley_20210913.mos")),
-    dpRetDuc1(dp_nominal=30.3));
+    dpRetDuc1(dp_nominal=240));
 
                               //,
     //  ple(T_start=294.96)));
@@ -34,7 +34,7 @@ model Flexlab_Summer_2021_Test_NoDemandFlexibility
   parameter Modelica.Units.SI.VolumeFlowRate minZonPriFlo[numZon]={
       mCor_flow_nominal,mSou_flow_nominal,mNor_flow_nominal}/1.2
     "Minimum expected zone primary flow rate";
-  parameter Modelica.Units.SI.Time samplePeriod=120
+  parameter Modelica.Units.SI.Time samplePeriod=180
     "Sample period of component, set to the same value as the trim and respond that process yPreSetReq";
   parameter Modelica.Units.SI.PressureDifference dpDisRetMax=40
     "Maximum return fan discharge static pressure setpoint";
@@ -45,11 +45,12 @@ model Flexlab_Summer_2021_Test_NoDemandFlexibility
     final samplePeriod=samplePeriod,
     TiCoo=60,
     TiHea=60,
-    kDam=0.5,
+    TiVal=60,
+    TiDam=60,
     VDisCooSetMax_flow=mNor_flow_nominal/1.2,
-    VDisSetMin_flow=0.2469*mNor_flow_nominal/1.2,
-    VDisHeaSetMax_flow=mNor_flow_nominal/1.2,
-    VDisConMin_flow=0.2*mNor_flow_nominal/1.2,
+    VDisSetMin_flow=0.0385/1.2,
+    VDisHeaSetMax_flow=0.0385/1.2,
+    VDisConMin_flow=0.0385/1.2,
     dTDisZonSetMax=5,
     TDisMin=285.95) "Controller for terminal unit north zone"
     annotation (Placement(transformation(extent={{654,4},{674,24}})));
@@ -59,10 +60,12 @@ model Flexlab_Summer_2021_Test_NoDemandFlexibility
     final samplePeriod=samplePeriod,
     TiCoo=60,
     TiHea=60,
+    TiVal=60,
+    TiDam=60,
     VDisCooSetMax_flow=mCor_flow_nominal/1.2,
-    VDisSetMin_flow=0.2469*mCor_flow_nominal/1.2,
-    VDisHeaSetMax_flow=mCor_flow_nominal/1.2,
-    VDisConMin_flow=0.2*mCor_flow_nominal/1.2,
+    VDisSetMin_flow=0.0385/1.2,
+    VDisHeaSetMax_flow=0.0385/1.2,
+    VDisConMin_flow=0.0385/1.2,
     dTDisZonSetMax=5,
     TDisMin=285.95) "Controller for terminal unit mid zone"
     annotation (Placement(transformation(extent={{778,104},{798,124}})));
@@ -72,13 +75,14 @@ model Flexlab_Summer_2021_Test_NoDemandFlexibility
     final samplePeriod=samplePeriod,
     TiCoo=60,
     TiHea=60,
+    TiVal=60,
+    TiDam=60,
     VDisCooSetMax_flow=mSou_flow_nominal/1.2,
-    VDisSetMin_flow=0.2142*mSou_flow_nominal/1.2,
-    VDisHeaSetMax_flow=mCor_flow_nominal/1.2,
-    VDisConMin_flow=0.2142*mSou_flow_nominal/1.2,
+    VDisSetMin_flow=0.0595/1.2,
+    VDisHeaSetMax_flow=0.0595/1.2,
+    VDisConMin_flow=0.0595/1.2,
     dTDisZonSetMax=5,
-    TDisMin=285.95,
-    damVal(truDel4(delayTime=0))) "Controller for terminal unit south zone"
+    TDisMin=285.95)               "Controller for terminal unit south zone"
     annotation (Placement(transformation(extent={{1020,32},{1040,52}})));
   Modelica.Blocks.Routing.Multiplex3 TDis "Discharge air temperatures"
     annotation (Placement(transformation(extent={{110,276},{130,296}})));
@@ -132,10 +136,12 @@ model Flexlab_Summer_2021_Test_NoDemandFlexibility
     zonToSys(final numZon=numZon) "Sum up zone calculation output"
     annotation (Placement(transformation(extent={{274,420},{294,440}})));
   hil_flexlab_model.Test1.BaseClasses1.Controls.Controller_G36 conAHU(
+    samplePeriod=samplePeriod,
     retDamPhyPosMax=0.7,
     outDamPhyPosMin=0.3,
     pMinSet=250,
     final pMaxSet=250,
+    pNumIgnReq=0,
     pTriAmo=0,
     pResAmo=0,
     final yFanMin=yFanMin,
@@ -146,7 +152,8 @@ model Flexlab_Summer_2021_Test_NoDemandFlexibility
     TSupSetDes=285.95,
     numIgnReqSupTem=0,
     triAmoSupTem=0,
-    resAmoSupTem=0) "AHU controller"
+    resAmoSupTem=0,
+    TiTSup=60)      "AHU controller"
     annotation (Placement(transformation(extent={{360,418},{440,546}})));
   Modelica.Blocks.Math.Add add
     annotation (Placement(transformation(extent={{-124,446},{-144,466}})));
@@ -164,7 +171,7 @@ model Flexlab_Summer_2021_Test_NoDemandFlexibility
     annotation (Placement(transformation(extent={{-142,222},{-122,242}})));
   Modelica.Blocks.Math.Add add1
     annotation (Placement(transformation(extent={{-122,270},{-142,290}})));
-  Buildings.Controls.OBC.CDL.Reals.Sources.Constant ecoHigCut(k=273.15 + 18)
+  Buildings.Controls.OBC.CDL.Reals.Sources.Constant ecoHigCut(k=273.15 + 17.78)
     "economizer high cut off temp"
     annotation (Placement(transformation(extent={{66,472},{86,492}})));
   Modelica.Blocks.Logical.Greater greater_unocc
@@ -522,4 +529,4 @@ This is for
       Interval=60,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
-end Flexlab_Summer_2021_Test_NoDemandFlexibility;
+end FlexlabX1aNonG36NoDemandFlexibility;
