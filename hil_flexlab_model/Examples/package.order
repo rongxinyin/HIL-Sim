@@ -8,6 +8,4 @@ XRA_Baseline_Calibration_0524
 ChillerModel_Exchange
 ChillerModel_Exchange_Weiping
 AWHP_Model_Exchange
-FlexlabX1aG36NoDemandFlexibility
-FlexlabX1aG36LoadShed
-FlexlabX1aG36LoadShift
+testHilParameterChange

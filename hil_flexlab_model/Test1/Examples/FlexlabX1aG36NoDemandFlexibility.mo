@@ -1,4 +1,4 @@
-within hil_flexlab_model.Examples;
+within hil_flexlab_model.Test1.Examples;
 model FlexlabX1aG36NoDemandFlexibility
   "DR mode - Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;

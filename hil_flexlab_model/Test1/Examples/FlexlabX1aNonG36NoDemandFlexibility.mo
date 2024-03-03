@@ -1,6 +1,7 @@
 within hil_flexlab_model.Test1.Examples;
 model FlexlabX1aNonG36NoDemandFlexibility
   "DR mode - Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
+
   extends Modelica.Icons.Example;
   extends hil_flexlab_model.Test1.BaseClasses1.PartialFlexlab_Summer_2021_Test(
     occSch(
@@ -13,15 +14,12 @@ model FlexlabX1aNonG36NoDemandFlexibility
       sou(T_start=294.96),
       idfName=Modelica.Utilities.Files.loadResource(
           "modelica://hil_flexlab_model/Resources/energyPlusFiles/X1-2021-V8_v2_correctedInternalGain.idf"),
-      epwName=Modelica.Utilities.Files.loadResource(
-          "modelica://hil_flexlab_model/Resources/weatherdata/US_Berkeley_20210913.epw"),
-      weaName=Modelica.Utilities.Files.loadResource(
-          "modelica://hil_flexlab_model/Resources/weatherdata/US_Berkeley_20210913.mos"),
+      epwName=Modelica.Utilities.Files.loadResource("modelica://hil_flexlab_model/Resources/weatherdata/US_Berkeley_20210913.epw"),
+      weaName=Modelica.Utilities.Files.loadResource("modelica://hil_flexlab_model/Resources/weatherdata/US_Berkeley_20210913.mos"),
       ele(T_start=294.96),
       clo(T_start=294.96),
       ple(T_start=294.96)),
-    weaDat(filNam=Modelica.Utilities.Files.loadResource(
-          "modelica://hil_flexlab_model/Resources/weatherdata/US_Berkeley_20210913.mos")),
+    weaDat(filNam=Modelica.Utilities.Files.loadResource("modelica://hil_flexlab_model/Resources/weatherdata/US_Berkeley_20210913.mos")),
     dpRetDuc1(dp_nominal=240));
 
                               //,
@@ -82,7 +80,7 @@ model FlexlabX1aNonG36NoDemandFlexibility
     VDisHeaSetMax_flow=0.0595/1.2,
     VDisConMin_flow=0.0595/1.2,
     dTDisZonSetMax=5,
-    TDisMin=285.95)               "Controller for terminal unit south zone"
+    TDisMin=285.95) "Controller for terminal unit south zone"
     annotation (Placement(transformation(extent={{1020,32},{1040,52}})));
   Modelica.Blocks.Routing.Multiplex3 TDis "Discharge air temperatures"
     annotation (Placement(transformation(extent={{110,276},{130,296}})));
