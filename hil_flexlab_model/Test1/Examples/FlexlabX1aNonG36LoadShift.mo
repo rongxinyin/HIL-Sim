@@ -136,6 +136,7 @@ model FlexlabX1aNonG36LoadShift
     zonToSys(final numZon=numZon) "Sum up zone calculation output"
     annotation (Placement(transformation(extent={{274,420},{294,440}})));
   hil_flexlab_model.Test1.BaseClasses1.Controls.Controller_G36 conAHU(
+    TSupSetUnocc=291.45,
     samplePeriod=samplePeriod,
     retDamPhyPosMax=0.7,
     outDamPhyPosMin=0.3,
@@ -147,12 +148,19 @@ model FlexlabX1aNonG36LoadShift
     final yFanMin=yFanMin,
     final VPriSysMax_flow=VPriSysMax_flow,
     final peaSysPop=2*sum({0.05*AFlo[i] for i in 1:numZon}),
-    TSupSetMin=285.95,
+    TSupSetMin=284.85,
     TSupSetMax=285.95,
     TSupSetDes=285.95,
+    TOutMin=291.45,
+    TOutMax=294.25,
+    iniSetSupTem=285.95,
+    maxSetSupTem=285.95,
+    minSetSupTem=285.95,
+    delTimSupTem=300,
     numIgnReqSupTem=0,
     triAmoSupTem=0,
     resAmoSupTem=0,
+    maxResSupTem=0,
     TiTSup=60)      "AHU controller"
     annotation (Placement(transformation(extent={{360,418},{440,546}})));
   Modelica.Blocks.Math.Add add

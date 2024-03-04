@@ -137,6 +137,8 @@ model FlexlabX1aG36NoDemandFlexibility
     zonToSys(final numZon=numZon) "Sum up zone calculation output"
     annotation (Placement(transformation(extent={{274,420},{294,440}})));
   hil_flexlab_model.Test1.BaseClasses1.Controls.Controller_G36 conAHU(
+    TSupSetMax=291.45,
+    TSupSetUnocc=291.45,
     samplePeriod=samplePeriod,
     retDamPhyPosMax=0.7,
     outDamPhyPosMin=0.3,
@@ -148,6 +150,10 @@ model FlexlabX1aG36NoDemandFlexibility
     final yFanMin=yFanMin,
     final VPriSysMax_flow=VPriSysMax_flow,
     final peaSysPop=2*sum({0.05*AFlo[i] for i in 1:numZon}),
+    TSupSetMin=284.85,
+    TSupSetDes=285.95,
+    TOutMin=291.45,
+    TOutMax=294.25,
     iniSetSupTem=291.45,
     maxSetSupTem=291.45,
     minSetSupTem=285.95,
