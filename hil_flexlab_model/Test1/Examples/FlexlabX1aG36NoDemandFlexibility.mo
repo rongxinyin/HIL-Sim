@@ -141,6 +141,7 @@ model FlexlabX1aG36NoDemandFlexibility
     TSupSetUnocc=291.45,
     samplePeriod=samplePeriod,
     retDamPhyPosMax=0.7,
+    outDamPhyPosMax=0.96,
     outDamPhyPosMin=0.3,
     pIniSet=120,
     final pMaxSet=250,
@@ -194,7 +195,7 @@ model FlexlabX1aG36NoDemandFlexibility
     annotation (Placement(transformation(extent={{-88,-92},{-68,-72}})));
   Modelica.Blocks.Sources.BooleanConstant booleanConstant(k=false)
     annotation (Placement(transformation(extent={{-292,494},{-272,514}})));
-  hil_flexlab_model.Test1.Plants1.Controls.OutdoorDamperPositionBlock outdoorDamperPositionBlock
+  BaseClasses1.Eco_Enable_OAT                                         eco_Enable_OAT
     annotation (Placement(transformation(extent={{-76,-130},{-56,-110}})));
   Modelica.Blocks.Sources.IntegerConstant integerConstant[numZon](k=0)
     annotation (Placement(transformation(extent={{-206,538},{-186,558}})));
@@ -437,12 +438,9 @@ equation
     annotation (Line(points={{444,440.588},{448,440.588},{448,172},{-104,172},{
           -104,-82},{-90,-82}},
                            color={0,0,127}));
-  connect(eco.yOut, outdoorDamperPositionBlock.OutdoorDamperPosition)
-    annotation (Line(points={{-10,-34},{-10,-22},{-46,-22},{-46,-120},{-55,-120}},
-        color={0,0,127}));
-  connect(conAHU.yRetDamPos, outdoorDamperPositionBlock.ReturnDamperPosition)
-    annotation (Line(points={{444,440.588},{446,440.588},{446,172},{-106,172},{
-          -106,-120},{-78,-120}}, color={0,0,127}));
+  connect(eco.yOut, eco_Enable_OAT.OutdoorDamperPosition) annotation (Line(
+        points={{-10,-34},{-10,-22},{-46,-22},{-46,-118.2},{-55,-118.2}}, color
+        ={0,0,127}));
   connect(conAHU.u_UnOcc, greater_unocc.y) annotation (Line(points={{355.6,
           415.741},{-332,415.741},{-332,458},{-299,458}}, color={255,0,255}));
   connect(zonOutAirSet.nOcc, integerConstant.y) annotation (Line(points={{226,
@@ -451,6 +449,11 @@ equation
   connect(zonOutAirSet.uWin, booleanConstant1.y) annotation (Line(points={{226,
           398},{196,398},{196,396},{-178,396},{-178,502},{-189,502}}, color={
           255,0,255}));
+  connect(ecoHigCut.y, eco_Enable_OAT.TOutCut) annotation (Line(points={{88,482},
+          {106,482},{106,696},{-444,696},{-444,-112},{-78,-112}}, color={0,0,
+          127}));
+  connect(TOut.y, eco_Enable_OAT.TOut) annotation (Line(points={{-279,180},{
+          -274,180},{-274,-106},{-78,-106},{-78,-110}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-320},{1400,
             640}}), graphics={Line(

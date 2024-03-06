@@ -242,6 +242,7 @@ protected
   Buildings.Controls.OBC.CDL.Reals.MovingAverage movAve(final delta=delta)
     "Moving average of outdoor air flow measurement, normalized by design minimum outdoor airflow rate"
     annotation (Placement(transformation(extent={{-140,10},{-120,30}})));
+public
   Buildings.Controls.OBC.CDL.Reals.Min outDamMaxFre
     "Maximum control signal for outdoor air damper due to freeze protection"
     annotation (Placement(transformation(extent={{120,-50},{140,-30}})));
@@ -251,12 +252,13 @@ protected
   Buildings.Controls.OBC.CDL.Reals.Sources.Constant noTMix(k=0) if not use_TMix
     "Ignore max evaluation if there is no mixed air temperature sensor"
     annotation (Placement(transformation(extent={{76,36},{96,56}})));
-  Buildings.Controls.OBC.CDL.Reals.Sources.Constant noTMix1(k=1) if not use_TMix
+  Buildings.Controls.OBC.CDL.Reals.Sources.Constant noTMix1(k=1) if not
+    use_TMix
     "Ignore min evaluation if there is no mixed air temperature sensor"
     annotation (Placement(transformation(extent={{80,-56},{100,-36}})));
   Buildings.Controls.OBC.CDL.Integers.Sources.Constant freProSta(
     final k=Buildings.Obsolete.Controls.OBC.ASHRAE.G36_PR1.Types.FreezeProtectionStages.stage0)
-                                                                                       if not use_G36FrePro
+    if not use_G36FrePro
     "Freeze protection status is 0. Use if G36 freeze protection is not implemented"
     annotation (Placement(transformation(extent={{-140,-140},{-120,-120}})));
 
