@@ -2,7 +2,8 @@ within hil_flexlab_model.Test1.Examples;
 model FlexlabX1aG36NoDemandFlexibility
   "DR mode - Variable air volume flow system with terminal reheat and five thermal zones at Flexlab X1 cell"
   extends Modelica.Icons.Example;
-  extends hil_flexlab_model.BaseClasses.PartialFlexlab_Summer_2021_Test(
+  extends
+    hil_flexlab_model.Test1.BaseClasses1.PartialFlexlab_Summer_2021_Test_G36(
     occSch(
       occupancy={0,86399},
       firstEntryOccupied=true,
@@ -22,7 +23,8 @@ model FlexlabX1aG36NoDemandFlexibility
       ple(T_start=294.96)),
     weaDat(filNam=Modelica.Utilities.Files.loadResource(
           "modelica://hil_flexlab_model/Resources/weatherdata/US_Berkeley_20210913.mos")),
-    dpRetDuc1(dp_nominal=240));
+    dpRetDuc1(dp_nominal=240),
+    fanSup(addPowerToMedium=false));
 
                               //,
     //  ple(T_start=294.96)));
@@ -144,6 +146,7 @@ model FlexlabX1aG36NoDemandFlexibility
     outDamPhyPosMax=0.96,
     outDamPhyPosMin=0.3,
     pIniSet=120,
+    pMinSet=45,
     final pMaxSet=250,
     pDelTim=300,
     pNumIgnReq=0,
@@ -151,7 +154,7 @@ model FlexlabX1aG36NoDemandFlexibility
     final yFanMin=yFanMin,
     final VPriSysMax_flow=VPriSysMax_flow,
     final peaSysPop=2*sum({0.05*AFlo[i] for i in 1:numZon}),
-    TSupSetMin=284.85,
+    TSupSetMin=285.95,
     TSupSetDes=285.95,
     TOutMin=291.45,
     TOutMax=294.25,
@@ -367,9 +370,6 @@ equation
   connect(conAHU.yHea, swiFreSta.u3) annotation (Line(points={{444,463.176},{
           444,-240},{40,-240},{40,-200},{58,-200}},
                                                 color={0,0,127}));
-  connect(conAHU.yCoo, gaiCooCoi.u) annotation (Line(points={{444,451.882},{460,
-          451.882},{460,-272},{80,-272},{80,-248},{98,-248}},
-                                                     color={0,0,127}));
   connect(conAHU.yRetDamPos, eco.yRet) annotation (Line(points={{444,440.588},{
           444,442},{422,442},{422,202},{-16.8,202},{-16.8,-34}},
                                                              color={0,0,127}));
@@ -454,6 +454,8 @@ equation
           127}));
   connect(TOut.y, eco_Enable_OAT.TOut) annotation (Line(points={{-279,180},{
           -274,180},{-274,-106},{-78,-106},{-78,-110}}, color={0,0,127}));
+  connect(gaiCooCoi.u, conAHU.yCoo) annotation (Line(points={{98,-248},{30,-248},
+          {30,444},{444,444},{444,451.882}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-320},{1400,
             640}}), graphics={Line(
