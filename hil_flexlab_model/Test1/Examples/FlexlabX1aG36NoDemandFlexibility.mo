@@ -454,8 +454,9 @@ equation
           127}));
   connect(TOut.y, eco_Enable_OAT.TOut) annotation (Line(points={{-279,180},{
           -274,180},{-274,-106},{-78,-106},{-78,-110}}, color={0,0,127}));
-  connect(gaiCooCoi.u, conAHU.yCoo) annotation (Line(points={{98,-248},{30,-248},
-          {30,444},{444,444},{444,451.882}}, color={0,0,127}));
+  connect(parallelValvesFlow.CoolingSignal, conAHU.yCoo) annotation (Line(
+        points={{250,-140},{226,-140},{226,-272},{96,-272},{96,-250},{56,-250},
+          {56,442},{444,442},{444,451.882}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-320},{1400,
             640}}), graphics={Line(

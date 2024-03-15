@@ -157,14 +157,6 @@ partial model PartialFlexlab_Summer_2021_Test_G36
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={80,-122})));
-  Buildings.Fluid.Sources.Boundary_pT sinCoo(
-    redeclare package Medium = MediumW,
-    p=300000,
-    T=285.15,
-    nPorts=1) "Sink for cooling coil" annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={180,-120})));
   Modelica.Blocks.Routing.RealPassThrough TOut(y(
       final quantity="ThermodynamicTemperature",
       final unit="K",
@@ -176,8 +168,8 @@ partial model PartialFlexlab_Summer_2021_Test_G36
     m_flow_nominal=m_flow_nominal,
     allowFlowReversal=allowFlowReversal)
     annotation (Placement(transformation(extent={{330,-50},{350,-30}})));
-  Buildings.Fluid.Sensors.RelativePressure dpDisSupFan(redeclare package Medium =
-        MediumA) "Supply fan static discharge pressure" annotation (Placement(
+  Buildings.Fluid.Sensors.RelativePressure dpDisSupFan(redeclare package Medium
+      = MediumA) "Supply fan static discharge pressure" annotation (Placement(
         transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
@@ -190,15 +182,6 @@ partial model PartialFlexlab_Summer_2021_Test_G36
   Buildings.Utilities.Math.Average ave(nin=3)
     "Compute average of room temperatures"
     annotation (Placement(transformation(extent={{1200,410},{1220,430}})));
-  Buildings.Fluid.Sources.MassFlowSource_T souCoo(
-    redeclare package Medium = MediumW,
-    T=279.15,
-    nPorts=1,
-    use_m_flow_in=true) "Source for cooling coil" annotation (Placement(
-        transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={230,-120})));
   Buildings.Fluid.Sensors.TemperatureTwoPort TRet(
     redeclare package Medium = MediumA,
     m_flow_nominal=m_flow_nominal,
@@ -471,9 +454,12 @@ public
   Buildings.Controls.OBC.CDL.Reals.MultiplyByParameter gaiHeaCoi(k=
         m_flow_nominal*1000*40/4200/10) "Gain for heating coil mass flow rate"
     annotation (Placement(transformation(extent={{100,-220},{120,-200}})));
-  Buildings.Controls.OBC.CDL.Reals.MultiplyByParameter gaiCooCoi(k=
-        m_flow_nominal*1000*15/4200/10) "Gain for cooling coil mass flow rate"
-    annotation (Placement(transformation(extent={{100,-258},{120,-238}})));
+  ParallelValvesFlow                                   parallelValvesFlow(
+      redeclare package Medium = MediumW)
+    "determine the cooling coil mass flow rate"
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={242,-128})));
   Buildings.Controls.OBC.CDL.Logical.OnOffController freSta(bandwidth=1)
     "Freeze stat for heating coil"
     annotation (Placement(transformation(extent={{0,-102},{20,-82}})));
@@ -504,6 +490,28 @@ public
     allowFlowReversal=allowFlowReversal,
     dp_nominal=40) "Pressure drop for return duct"
     annotation (Placement(transformation(extent={{562,38},{542,58}})));
+  Buildings.Fluid.Sources.Boundary_pT sinCoo1(redeclare package Medium =
+        MediumW, nPorts=1)
+              "Sink for cooling coil" annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={180,-128})));
+  Modelica.Blocks.Sources.Constant
+                               const(k=1)
+    annotation (Placement(transformation(extent={{180,-198},{200,-178}})));
+  Buildings.Fluid.Movers.SpeedControlled_y fanSup1(
+    redeclare package Medium = MediumW,
+    redeclare Buildings.Fluid.Movers.Data.Fans.Greenheck.BIDW18 per,
+    addPowerToMedium=false)                                    "Supply air fan"
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={258,-182})));
+  Buildings.Fluid.Sources.Boundary_pT souCoo1(redeclare package Medium =
+        MediumW, nPorts=1)
+              "Sink for cooling coil" annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={252,-230})));
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,-10}},
@@ -554,10 +562,6 @@ equation
       points={{834,-30},{834,24}},
       color={0,127,255},
       smooth=Smooth.None,
-      thickness=0.5));
-  connect(cooCoi.port_b1, sinCoo.ports[1]) annotation (Line(
-      points={{190,-52},{180,-52},{180,-110}},
-      color={28,108,200},
       thickness=0.5));
   connect(weaDat.weaBus, weaBus) annotation (Line(
       points={{-340,180},{-320,180}},
@@ -649,14 +653,8 @@ equation
     annotation (Line(points={{350,-40},{400,-40}}, color={0,127,255}));
   connect(senSupFlo.port_b, splSupRoo.port_1)
     annotation (Line(points={{420,-40},{570,-40}}, color={0,127,255}));
-  connect(cooCoi.port_a1, souCoo.ports[1]) annotation (Line(
-      points={{210,-52},{230,-52},{230,-110}},
-      color={28,108,200},
-      thickness=0.5));
   connect(gaiHeaCoi.y, souHea.m_flow_in) annotation (Line(points={{122,-210},{
           124,-210},{124,-132}}, color={0,0,127}));
-  connect(gaiCooCoi.y, souCoo.m_flow_in) annotation (Line(points={{122,-248},{
-          222,-248},{222,-132}}, color={0,0,127}));
   connect(dpDisSupFan.port_b, amb.ports[3]) annotation (Line(
       points={{320,10},{320,14},{-88,14},{-88,-43.5333},{-114,-43.5333}},
       color={0,0,0},
@@ -718,6 +716,16 @@ equation
   connect(splRetRoo1.port_3, flo.portsEas[2]) annotation (Line(points={{620,10},
           {620,368},{1066,368},{1066,477.108},{1074.55,477.108}}, color={0,127,
           255}));
+  connect(cooCoi.port_b1, sinCoo1.ports[1]) annotation (Line(points={{190,-52},
+          {180,-52},{180,-118}}, color={0,127,255}));
+  connect(const.y, fanSup1.y) annotation (Line(points={{201,-188},{223.5,-188},
+          {223.5,-182},{246,-182}}, color={0,0,127}));
+  connect(souCoo1.ports[1], fanSup1.port_a) annotation (Line(points={{262,-230},
+          {262,-216},{258,-216},{258,-192}}, color={0,127,255}));
+  connect(fanSup1.port_b, parallelValvesFlow.port_a) annotation (Line(points={{
+          258,-172},{242,-172},{242,-138}}, color={0,127,255}));
+  connect(parallelValvesFlow.port_b, cooCoi.port_a1) annotation (Line(points={{
+          242,-117.8},{242,-54},{210,-54},{210,-52}}, color={0,127,255}));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-380,
             -400},{1420,600}}), graphics={Line(points={{310,404}}, color={28,
               108,200}), Line(

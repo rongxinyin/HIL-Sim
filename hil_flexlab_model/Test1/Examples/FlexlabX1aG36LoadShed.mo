@@ -367,9 +367,9 @@ equation
   connect(conAHU.yHea, swiFreSta.u3) annotation (Line(points={{444,463.176},{
           444,-240},{40,-240},{40,-200},{58,-200}},
                                                 color={0,0,127}));
-  connect(conAHU.yCoo, gaiCooCoi.u) annotation (Line(points={{444,451.882},{460,
-          451.882},{460,-272},{80,-272},{80,-248},{98,-248}},
-                                                     color={0,0,127}));
+  connect(conAHU.yCoo, parallelValvesFlow.u) annotation (Line(points={{444,
+          451.882},{460,451.882},{460,-272},{80,-272},{80,-248},{98,-248}},
+        color={0,0,127}));
   connect(conAHU.yRetDamPos, eco.yRet) annotation (Line(points={{444,440.588},{
           444,442},{422,442},{422,202},{-16.8,202},{-16.8,-34}},
                                                              color={0,0,127}));
