@@ -205,21 +205,24 @@ partial model PartialFlexlab_Summer_2021_Test_G36
         MediumA, m_flow_nominal=m_flow_nominal) "Outside air volume flow rate"
     annotation (Placement(transformation(extent={{-72,-44},{-50,-22}})));
 
-  Test1.ThermalZones.VAVBranch_ResistantReheatCoil nor(
+  ThermalZones.VAVBranch_ResistantReheatCoil_WithLeakage
+                                                   nor(
     redeclare package MediumA = MediumA,
     redeclare package MediumW = MediumW,
     m_flow_nominal=mNor_flow_nominal,
     VRoo=VRooNor,
     allowFlowReversal=allowFlowReversal) "North-facing thermal zone"
     annotation (Placement(transformation(extent={{696,20},{736,60}})));
-  Test1.ThermalZones.VAVBranch_ResistantReheatCoil cor(
+  ThermalZones.VAVBranch_ResistantReheatCoil_WithLeakage
+                                                   cor(
     redeclare package MediumA = MediumA,
     redeclare package MediumW = MediumW,
     m_flow_nominal=mCor_flow_nominal,
     VRoo=VRooCor,
     allowFlowReversal=allowFlowReversal) "Middle thermal zone"
     annotation (Placement(transformation(extent={{824,24},{864,64}})));
-  Test1.ThermalZones.VAVBranch_ResistantReheatCoil sou(
+  ThermalZones.VAVBranch_ResistantReheatCoil_WithLeakage
+                                                   sou(
     redeclare package MediumA = MediumA,
     redeclare package MediumW = MediumW,
     m_flow_nominal=mSou_flow_nominal,
@@ -507,7 +510,8 @@ public
         rotation=90,
         origin={258,-182})));
   Buildings.Fluid.Sources.Boundary_pT souCoo1(redeclare package Medium =
-        MediumW, nPorts=1)
+        MediumW,
+    T=279.15,    nPorts=1)
               "Sink for cooling coil" annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,

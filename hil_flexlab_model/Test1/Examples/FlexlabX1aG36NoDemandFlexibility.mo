@@ -205,6 +205,12 @@ model FlexlabX1aG36NoDemandFlexibility
   Modelica.Blocks.Sources.BooleanConstant booleanConstant1
                                                          [numZon](k=false)
     annotation (Placement(transformation(extent={{-210,492},{-190,512}})));
+  Modelica.Blocks.Sources.CombiTimeTable leakageReheatSignal(
+    table=[0.0,0.02; 36000,0.02; 36000,0.05; 64800,0.05; 64800,0.02; 86400,0.02],
+    smoothness=Modelica.Blocks.Types.Smoothness.LinearSegments,
+    extrapolation=Modelica.Blocks.Types.Extrapolation.Periodic)
+    annotation (Placement(transformation(extent={{652,-172},{672,-152}})));
+
 equation
   connect(fanSup.port_b, dpDisSupFan.port_a) annotation (Line(
       points={{320,-40},{320,0},{320,-10},{320,-10}},
@@ -457,6 +463,12 @@ equation
   connect(parallelValvesFlow.CoolingSignal, conAHU.yCoo) annotation (Line(
         points={{250,-140},{226,-140},{226,-272},{96,-272},{96,-250},{56,-250},
           {56,442},{444,442},{444,451.882}}, color={0,0,127}));
+  connect(leakageReheatSignal.y[1], sou.yLea) annotation (Line(points={{673,-162},
+          {1066,-162},{1066,16.4}}, color={0,0,127}));
+  connect(leakageReheatSignal.y[1], cor.yLea) annotation (Line(points={{673,-162},
+          {820,-162},{820,24.4}}, color={0,0,127}));
+  connect(leakageReheatSignal.y[1], nor.yLea) annotation (Line(points={{673,-162},
+          {692,-162},{692,20.4},{692,20.4}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio=false,extent={{-380,-320},{1400,
             640}}), graphics={Line(
